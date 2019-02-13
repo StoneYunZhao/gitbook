@@ -4,11 +4,15 @@
 
 ## JAVA-se
 
+* [自增](java-se/zi-zeng.md)
+
 ## JVM
 
 ## kotlin
 
 ## design patterns
+
+* [Singleton](design-patterns/singleton.md)
 
 ## Algorithm
 
