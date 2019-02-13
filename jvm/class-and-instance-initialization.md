@@ -45,6 +45,77 @@
 分析下面代码的执行结果：
 
 ```java
+public class Father {
+    private int i = test();
+    private static int j = method();
 
+    static {
+        System.out.print(1);
+    }
+
+    public Father() {
+        System.out.print(2);
+    }
+
+    {
+        System.out.print(3);
+    }
+
+    public int test() {
+        System.out.print(4);
+        return 1;
+    }
+
+    public static int method(){
+        System.out.print(5);
+        return 1;
+    }
+}
+
+public class Son extends Father {
+    private int i = test();
+    private static int j = method();
+
+    static {
+        System.out.print(6);
+    }
+
+    public Son() {
+        System.out.print(7);
+    }
+
+    {
+        System.out.print(8);
+    }
+
+    public int test() {
+        System.out.print(9);
+        return 1;
+    }
+
+    public static int method(){
+        System.out.print(10);
+        return 1;
+    }
+
+    public static void main(String[] args) {
+        Son s1=new Son();
+        System.out.println();
+        Son s2 = new Son();
+    }
+}
+```
+
+结果：
+
+```text
+51106932987
+932987
+```
+
+若main函数改为空函数，则结果为：
+
+```text
+51106
 ```
 
