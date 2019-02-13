@@ -8,6 +8,8 @@
 
 ## JVM
 
+* [Class & Instance Initialization](jvm/class-and-instance-initialization.md)
+
 ## kotlin
 
 ## design patterns
