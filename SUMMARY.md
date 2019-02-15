@@ -4,12 +4,11 @@
 
 ## JAVA-se
 
-* [Operator](java-se/zi-zeng.md)
-* [Override](java-se/override.md)
-
-## JVM
-
-* [Class & Instance Initialization](jvm/class-and-instance-initialization.md)
+* [Java-SE](java-se/java-se/README.md)
+  * [Override](java-se/java-se/override-1.md)
+  * [Operator](java-se/java-se/operator.md)
+* [JVM](java-se/jvm/README.md)
+  * [Class & Instance Initialization](java-se/jvm/class-and-instance-initialization.md)
 
 ## kotlin
 
