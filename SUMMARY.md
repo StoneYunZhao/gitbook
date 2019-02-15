@@ -2,7 +2,7 @@
 
 * [Introduce](README.md)
 
-## JAVA-se
+## JAVA
 
 * [Java-SE](java-se/java-se/README.md)
   * [Operator](java-se/java-se/operator.md)
