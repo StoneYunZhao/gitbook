@@ -8,6 +8,8 @@
 * [Override](java-se/override-1.md)
 * [Variable](java-se/variable.md)
 * [Class & Instance Initialization](java-se/class-and-instance-initialization.md)
+* [Runtime Data Area](java-se/runtime-data-area.md)
+* [JMM\(Java Memory Model\)](java-se/jmm-java-memory-model.md)
 
 ## kotlin
 
