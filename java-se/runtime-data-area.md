@@ -44,7 +44,7 @@ JVM = 类加载器\(ClassLoader\) + 执行引擎\(Execution engine\) + 运行时
 * Class 文件中的常量池（编译器生成的各种字面量和符号引用）会在类加载后被放入这个区域。
 * 除了在编译期生成的常量，还允许动态生成，例如 String 类的 intern\(\)。这部分常量也会被放入运行时常量池。
 
-### Java虚拟机栈（VM stack）
+### Java虚拟机栈
 
 * Java虚拟机栈（VM stack）是**线程私有**。
 * 生命周期与线程相同。
@@ -58,11 +58,25 @@ JVM = 类加载器\(ClassLoader\) + 执行引擎\(Execution engine\) + 运行时
 
 ![](../.gitbook/assets/image%20%285%29.png)
 
-### 本地方法栈（Native method stack）
+### 本地方法栈
 
-### 程序计数器（Program Counter ）
+* 本地方法栈（Native method stack）是**线程私有**。
+* 与Java虚拟机栈类似，虚拟机栈执行Java方法，本地方法栈执行Native方法。
+* 会抛出**StackOverflowError**和**OutOfMemoryError**异常。
+
+### 程序计数器
+
+* 程序计数器（Program Counter ）是**线程私有**。
+* 可以看做是当前线程所执行的字节码的行号指示器。
+* Java会有线程切换，正是这个计数器来保证线程切换回来后能够恢复到正确的执行位置。
+* 如果这个线程执行的是Java方法，则计数器的值为正在执行的字节码指令的地址；如果是Native方式，则这个计数器值则为空（Undefined）。
+* 唯一不会抛出OutOfMemoryError异常。
 
 ### 直接内存
+
+* 直接内存（Direct Memory）并不是虚拟机运行时区域的一部分，也不是虚拟机规范中定义的内存区域。
+* NIO可以直接分配堆外内存，可以不用在本地方法栈和虚拟机栈中复制数据，通过一个存储在 Java 堆里的 DirectByteBuffer 对象作为这块内存的引用进行操作。
+* 也可能导致OutOfMemoryError。
 
 ### 
 
