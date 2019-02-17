@@ -4,6 +4,7 @@
 
 ## JAVA
 
+* [Data Types](java-se/data-types.md)
 * [Operator](java-se/operator.md)
 * [Override](java-se/override-1.md)
 * [Variable](java-se/variable.md)
