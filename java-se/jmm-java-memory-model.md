@@ -1,2 +1,0 @@
-# JMM\(Java Memory Model\)
-
