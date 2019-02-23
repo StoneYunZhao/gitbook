@@ -22,4 +22,5 @@
 ## distributed system
 
 * [Introduction](distributed-system/introduction.md)
+* [Message Queue](distributed-system/message-queue.md)
 
