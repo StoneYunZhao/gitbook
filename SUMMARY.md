@@ -19,3 +19,7 @@
 
 * [Transaction](database/transaction.md)
 
+## distributed system
+
+* [Introduction](distributed-system/introduction.md)
+
