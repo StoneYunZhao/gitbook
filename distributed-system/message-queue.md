@@ -32,9 +32,72 @@
 
 ### 消息队列产品比较
 
+市面上常用的消息队列产品有ActiveMQ、RabbitMQ、RocketMQ、Kafka等。
 
+<table>
+  <thead>
+    <tr>
+      <th style="text-align:center">特性</th>
+      <th style="text-align:center">ActiveMQ</th>
+      <th style="text-align:center">RabbitMQ</th>
+      <th style="text-align:center">RocketMQ</th>
+      <th style="text-align:center">Kafka</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:center">单机吞吐量</td>
+      <td style="text-align:center">万级</td>
+      <td style="text-align:center">万级</td>
+      <td style="text-align:center">10万级</td>
+      <td style="text-align:center">10万级</td>
+    </tr>
+    <tr>
+      <td style="text-align:center">topic</td>
+      <td style="text-align:center"></td>
+      <td style="text-align:center"></td>
+      <td style="text-align:center">topic可以达到几百，几千个的级别，吞吐量会有较小幅度的下降</td>
+      <td style="text-align:center">
+        <p>topic从几十个到几百个的时候，吞吐量会大幅度下降</p>
+        <p></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:center">时效性</td>
+      <td style="text-align:center">ms级</td>
+      <td style="text-align:center">us级</td>
+      <td style="text-align:center">ms级</td>
+      <td style="text-align:center">ms级</td>
+    </tr>
+    <tr>
+      <td style="text-align:center">可用性</td>
+      <td style="text-align:center">高，主从</td>
+      <td style="text-align:center">高，主从</td>
+      <td style="text-align:center">非常高，分布式</td>
+      <td style="text-align:center">非常高，分布式</td>
+    </tr>
+    <tr>
+      <td style="text-align:center">消息可靠性</td>
+      <td style="text-align:center">有较低的概率丢失数据</td>
+      <td style="text-align:center"></td>
+      <td style="text-align:center">经过参数优化配置，可以做到0丢失</td>
+      <td style="text-align:center">经过参数优化配置，消息可以做到0丢失</td>
+    </tr>
+    <tr>
+      <td style="text-align:center">功能支持</td>
+      <td style="text-align:center">MQ领域的功能极其完备</td>
+      <td style="text-align:center">基于erlang开发，所以并发能力很强，性能极其好，延时很低</td>
+      <td style="text-align:center">功能较为完善，还是分布式的，扩展性好</td>
+      <td style="text-align:center">功能较为简单，主要支持简单的MQ功能，在大数据领域的实时计算以及日志采集被大规模使用，是事实上的标准</td>
+    </tr>
+  </tbody>
+</table>综上所述：
 
+**ActiveMQ：**早期都用这个，但是现在确实大家用的不多了，没经过大规模吞吐量场景的验证，社区也不是很活跃，不推荐。
 
+**RabbitMQ：**erlang语言阻止了大量的java工程师去深入研究和掌控他，对公司而言，几乎处于不可控的状态，但是确实人是开源的，比较稳定的支持，活跃度也高。
 
+**RocketMQ：**有阿里品牌保障，日处理消息上百亿之多，可以做到大规模吞吐，性能也非常好，分布式扩展也很方便。Java编写的，我们可以自己阅读源码，定制自己公司的MQ。
 
+**Kafka：**仅仅提供较少的核心功能，但是提供超高的吞吐量，ms级的延迟，极高的可用性以及可靠性，而且分布式可以任意扩展。如果是大数据领域的实时计算、日志采集等场景，Kafka用是业内标准的，社区活跃度很高，何况几乎是全世界这个领域的事实性规范。
 
