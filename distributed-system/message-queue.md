@@ -193,3 +193,21 @@ MQ 的基本原则是数据不能多也不能少，不能多就是上面讲的�
 
 和 RabbitMQ 类似，消费者会自动提交 Offset ，只需要关闭自动提交即可，当处理完消息后才手动提交 Offset。
 
+## 5. 消息顺序的保证
+
+### 5.1 RabbitMQ
+
+一个 Queue 多个 Consumer，那么消息顺序性就会被打乱。RabbitMQ 不保证消费顺序，因为消耗太大，所以应该在应用层面保证顺序性。
+
+**方法一：**每个 Queue 对应一个 Consumer。
+
+**方法二：**一个Queue 对应一个 Consumer，然后这个 Consumer 内部做排序后，再分发给下面的 Worker。
+
+### 5.2 Kafka
+
+Kafka 有个特性，一个 Partition 只能被一个固定的 Consumer 消费。
+
+**全局有序：**比如 MySQL BinLog 传输，通常采用一个 Producer，一个 Partition， 一个 Consumer。当然不同的表可以使用不同的 Topic 或者 Partition。
+
+**局部有序：**大部分业务仅需要局部有序，可以在 Producer 写入数据的时候控制统一个 Key 写入同一个 Partition，所以对同一个 Key 的消息是有序的。
+
