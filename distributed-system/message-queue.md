@@ -199,7 +199,7 @@ MQ 的基本原则是数据不能多也不能少，不能多就是上面讲的�
 
 一个 Queue 多个 Consumer，那么消息顺序性就会被打乱。RabbitMQ 不保证消费顺序，因为消耗太大，所以应该在应用层面保证顺序性。
 
-**方法一：**每个 Queue 对应一个 Consumer。
+**方法一：**拆分多个 Queue，每个 Queue 对应一个 Consumer。
 
 **方法二：**一个Queue 对应一个 Consumer，然后这个 Consumer 内部做排序后，再分发给下面的 Worker。
 
