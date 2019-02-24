@@ -174,7 +174,22 @@ MQ 的基本原则是数据不能多也不能少，不能多就是上面讲的�
 
 #### 4.2.1 生产者丢失数据
 
+`acks=all`，要求每条数据，必须写入所有 Replica 之后，才能认为是写成功了。
+
+`retries = Integer.MAX`，这个是要求一旦写入失败，就无限重试。
+
 #### 4.2.2 MQ 丢失数据
 
+若某个 Broker 挂了，上面的 Leader 也挂了，此时需要重新选举 Leader，而此时 Follower 刚好还有些数据没有同步完成，那么就会丢失一些数据。
+
+设置四个参数：
+
+1. `topic参数：replication.factor > 1`，Topic 的每个 Partition 至少有2个副本。
+2. `Kafka服务端参数：min.insync.replicas > 1`，要求一个 Leader 至少感知到有至少一个 Follower 还跟自己保持联系，这样才能在 Leader 挂了之后，还有 Follower 可以选举。
+3. `Producer端参数：acks = all`。
+4. `Producer端参数：retries = Integer.MAX`。
+
 #### 4.2.3 消费者丢失数据
+
+和 RabbitMQ 类似，消费者会自动提交 Offset ，只需要关闭自动提交即可，当处理完消息后才手动提交 Offset。
 
