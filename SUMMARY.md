@@ -11,6 +11,10 @@
 * [Class & Instance Initialization](java-se/class-and-instance-initialization.md)
 * [Runtime Data Area](java-se/runtime-data-area.md)
 
+## Python
+
+* [Anaconda And Conda](python/anaconda-and-conda.md)
+
 ## design patterns
 
 * [Singleton](design-patterns/singleton.md)
@@ -18,6 +22,10 @@
 ## database
 
 * [Transaction](database/transaction.md)
+
+## redis
+
+* [Basic](redis/basic.md)
 
 ## distributed system
 
