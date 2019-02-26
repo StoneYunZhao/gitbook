@@ -8,6 +8,7 @@
 * [Operator](java-se/operator.md)
 * [Override](java-se/override-1.md)
 * [Variable](java-se/variable.md)
+* [Collection](java-se/collection.md)
 * [Class & Instance Initialization](java-se/class-and-instance-initialization.md)
 * [Runtime Data Area](java-se/runtime-data-area.md)
 
