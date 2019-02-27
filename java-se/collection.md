@@ -61,7 +61,25 @@ Queue 用于模拟队列这种数据结构，队列通常是指“先进先出�
 
 ![Map &#x7C7B;&#x7EE7;&#x627F;&#x5173;&#x7CFB;](../.gitbook/assets/image%20%281%29.png)
 
+Map保存的是键值对，键要求保持唯一性，值可以重复。
 
+### 3.1 HashMap
+
+基于**哈希表**结构实现的，所以存储自定义对象作为键时，必须重写`hasCode`和`equals`方法。**存取无序**的。
+
+### 3.2 LinkedHashMap
+
+基于**链表**和**哈希表**结构的，所以具有**存取有序**。
+
+### 3.3 TreeMap
+
+TreeMap 底层使用的**二叉树**，其中存放进去的所有数据都需要排序，所以要求对象具备比较功能。与 TreeSet 类似，存取的元素需要实现`Comparable`接口，或者给 TreeMap 集合传递一个`Comparator`接口对象。
+
+### 3.4 HashTable
+
+HashTable 是一个**线程安全**的 Map 实现，其它与 HashMap（非线程安全）类似。
+
+HashTable 不允许`Null`作为 Key 和 Value，但是 HashMap 可以。
 
 ## 参考
 
