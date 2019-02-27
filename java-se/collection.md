@@ -81,12 +81,5 @@ HashTable 是一个**线程安全**的 Map 实现，其它与 HashMap（非线�
 
 HashTable 不允许`Null`作为 Key 和 Value，但是 HashMap 可以。
 
-## 参考
-
-* [https://juejin.im/post/5ad82dbef265da503825b240](https://juejin.im/post/5ad82dbef265da503825b240)
-* [http://www.cnblogs.com/CarpenterLee/p/5545987.html](http://www.cnblogs.com/CarpenterLee/p/5545987.html)
-* [https://www.jianshu.com/nb/9135895](https://www.jianshu.com/nb/9135895)
-* [https://www.javatpoint.com/collections-in-java](https://www.javatpoint.com/collections-in-java)
-
 
 

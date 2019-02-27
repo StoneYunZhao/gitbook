@@ -75,8 +75,3 @@
 
 **`RandomAccessFile`：**随机文件操作，它的功能丰富，可以从文件的任意位置进行存取（输入输出）操作。
 
-## 参考
-
-* [http://www.importnew.com/23708.html](http://www.importnew.com/23708.html)
-* [https://juejin.im/post/5af79bcc51882542ad771546](https://juejin.im/post/5af79bcc51882542ad771546)
-
