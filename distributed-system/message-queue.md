@@ -37,7 +37,7 @@
 <table>
   <thead>
     <tr>
-      <th style="text-align:center">特性</th>
+      <th style="text-align:center">&#x7279;&#x6027;</th>
       <th style="text-align:center">ActiveMQ</th>
       <th style="text-align:center">RabbitMQ</th>
       <th style="text-align:center">RocketMQ</th>
@@ -46,49 +46,55 @@
   </thead>
   <tbody>
     <tr>
-      <td style="text-align:center">单机吞吐量</td>
-      <td style="text-align:center">万级</td>
-      <td style="text-align:center">万级</td>
-      <td style="text-align:center">10万级</td>
-      <td style="text-align:center">10万级</td>
+      <td style="text-align:center">&#x5355;&#x673A;&#x541E;&#x5410;&#x91CF;</td>
+      <td style="text-align:center">&#x4E07;&#x7EA7;</td>
+      <td style="text-align:center">&#x4E07;&#x7EA7;</td>
+      <td style="text-align:center">10&#x4E07;&#x7EA7;</td>
+      <td style="text-align:center">10&#x4E07;&#x7EA7;</td>
     </tr>
     <tr>
       <td style="text-align:center">topic</td>
       <td style="text-align:center"></td>
       <td style="text-align:center"></td>
-      <td style="text-align:center">topic可以达到几百，几千个的级别，吞吐量会有较小幅度的下降</td>
-      <td style="text-align:center">
-        <p>topic从几十个到几百个的时候，吞吐量会大幅度下降</p>
+      <td style="text-align:center">topic&#x53EF;&#x4EE5;&#x8FBE;&#x5230;&#x51E0;&#x767E;&#xFF0C;&#x51E0;&#x5343;&#x4E2A;&#x7684;&#x7EA7;&#x522B;&#xFF0C;&#x541E;&#x5410;&#x91CF;&#x4F1A;&#x6709;&#x8F83;&#x5C0F;&#x5E45;&#x5EA6;&#x7684;&#x4E0B;&#x964D;</td>
+      <td
+      style="text-align:center">
+        <p>topic&#x4ECE;&#x51E0;&#x5341;&#x4E2A;&#x5230;&#x51E0;&#x767E;&#x4E2A;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x541E;&#x5410;&#x91CF;&#x4F1A;&#x5927;&#x5E45;&#x5EA6;&#x4E0B;&#x964D;</p>
         <p></p>
-      </td>
+        </td>
     </tr>
     <tr>
-      <td style="text-align:center">时效性</td>
-      <td style="text-align:center">ms级</td>
-      <td style="text-align:center">us级</td>
-      <td style="text-align:center">ms级</td>
-      <td style="text-align:center">ms级</td>
+      <td style="text-align:center">&#x65F6;&#x6548;&#x6027;</td>
+      <td style="text-align:center">ms&#x7EA7;</td>
+      <td style="text-align:center">us&#x7EA7;</td>
+      <td style="text-align:center">ms&#x7EA7;</td>
+      <td style="text-align:center">ms&#x7EA7;</td>
     </tr>
     <tr>
-      <td style="text-align:center">可用性</td>
-      <td style="text-align:center">高，主从</td>
-      <td style="text-align:center">高，主从</td>
-      <td style="text-align:center">非常高，分布式</td>
-      <td style="text-align:center">非常高，分布式</td>
+      <td style="text-align:center">&#x53EF;&#x7528;&#x6027;</td>
+      <td style="text-align:center">&#x9AD8;&#xFF0C;&#x4E3B;&#x4ECE;</td>
+      <td style="text-align:center">&#x9AD8;&#xFF0C;&#x4E3B;&#x4ECE;</td>
+      <td style="text-align:center">&#x975E;&#x5E38;&#x9AD8;&#xFF0C;&#x5206;&#x5E03;&#x5F0F;</td>
+      <td style="text-align:center">&#x975E;&#x5E38;&#x9AD8;&#xFF0C;&#x5206;&#x5E03;&#x5F0F;</td>
     </tr>
     <tr>
-      <td style="text-align:center">消息可靠性</td>
-      <td style="text-align:center">有较低的概率丢失数据</td>
-      <td style="text-align:center"></td>
-      <td style="text-align:center">经过参数优化配置，可以做到0丢失</td>
-      <td style="text-align:center">经过参数优化配置，消息可以做到0丢失</td>
+      <td style="text-align:center">&#x6D88;&#x606F;&#x53EF;&#x9760;&#x6027;</td>
+      <td style="text-align:center">&#x6709;&#x8F83;&#x4F4E;&#x7684;&#x6982;&#x7387;&#x4E22;&#x5931;&#x6570;&#x636E;</td>
+      <td
+      style="text-align:center"></td>
+        <td style="text-align:center">&#x7ECF;&#x8FC7;&#x53C2;&#x6570;&#x4F18;&#x5316;&#x914D;&#x7F6E;&#xFF0C;&#x53EF;&#x4EE5;&#x505A;&#x5230;0&#x4E22;&#x5931;</td>
+        <td
+        style="text-align:center">&#x7ECF;&#x8FC7;&#x53C2;&#x6570;&#x4F18;&#x5316;&#x914D;&#x7F6E;&#xFF0C;&#x6D88;&#x606F;&#x53EF;&#x4EE5;&#x505A;&#x5230;0&#x4E22;&#x5931;</td>
     </tr>
     <tr>
-      <td style="text-align:center">功能支持</td>
-      <td style="text-align:center">MQ领域的功能极其完备</td>
-      <td style="text-align:center">基于erlang开发，所以并发能力很强，性能极其好，延时很低</td>
-      <td style="text-align:center">功能较为完善，还是分布式的，扩展性好</td>
-      <td style="text-align:center">功能较为简单，主要支持简单的MQ功能，在大数据领域的实时计算以及日志采集被大规模使用，是事实上的标准</td>
+      <td style="text-align:center">&#x529F;&#x80FD;&#x652F;&#x6301;</td>
+      <td style="text-align:center">MQ&#x9886;&#x57DF;&#x7684;&#x529F;&#x80FD;&#x6781;&#x5176;&#x5B8C;&#x5907;</td>
+      <td
+      style="text-align:center">&#x57FA;&#x4E8E;erlang&#x5F00;&#x53D1;&#xFF0C;&#x6240;&#x4EE5;&#x5E76;&#x53D1;&#x80FD;&#x529B;&#x5F88;&#x5F3A;&#xFF0C;&#x6027;&#x80FD;&#x6781;&#x5176;&#x597D;&#xFF0C;&#x5EF6;&#x65F6;&#x5F88;&#x4F4E;</td>
+        <td
+        style="text-align:center">&#x529F;&#x80FD;&#x8F83;&#x4E3A;&#x5B8C;&#x5584;&#xFF0C;&#x8FD8;&#x662F;&#x5206;&#x5E03;&#x5F0F;&#x7684;&#xFF0C;&#x6269;&#x5C55;&#x6027;&#x597D;</td>
+          <td
+          style="text-align:center">&#x529F;&#x80FD;&#x8F83;&#x4E3A;&#x7B80;&#x5355;&#xFF0C;&#x4E3B;&#x8981;&#x652F;&#x6301;&#x7B80;&#x5355;&#x7684;MQ&#x529F;&#x80FD;&#xFF0C;&#x5728;&#x5927;&#x6570;&#x636E;&#x9886;&#x57DF;&#x7684;&#x5B9E;&#x65F6;&#x8BA1;&#x7B97;&#x4EE5;&#x53CA;&#x65E5;&#x5FD7;&#x91C7;&#x96C6;&#x88AB;&#x5927;&#x89C4;&#x6A21;&#x4F7F;&#x7528;&#xFF0C;&#x662F;&#x4E8B;&#x5B9E;&#x4E0A;&#x7684;&#x6807;&#x51C6;</td>
     </tr>
   </tbody>
 </table>综上所述：
