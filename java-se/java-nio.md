@@ -31,7 +31,7 @@
 
 ## 2. Unix IO 模型
 
-![&#x4E00;&#x4E2A; IO &#x7684;&#x57FA;&#x672C;&#x8FC7;&#x7A0B;](../.gitbook/assets/image%20%289%29.png)
+![&#x4E00;&#x4E2A; IO &#x7684;&#x57FA;&#x672C;&#x8FC7;&#x7A0B;](../.gitbook/assets/image%20%2812%29.png)
 
 **用户空间**和**内核空间：**系统为了保护内核数据，会将寻址空间分为用户空间和内核空间，32 位机器为例，高 1G 字节作为内核空间，低 3G 字节作为用户空间。当用户程序读取数据的时候，会经历两个过程：**磁盘到内核空间**（这块消耗性能，下面简称内核数据准备），**内核空间拷贝到用户空间**（下面简称用户空间拷贝）。
 
@@ -39,29 +39,40 @@
 
 内核数据准备这部分是由 DMA 芯片实现的，而用户空间拷贝的实现则是由 CPU 实现的，后者非常快，能到 1G 以上，所以，所谓的阻塞基本是内核数据准备的过程，这块消耗时间。
 
+Linux 的内核将所有外部设备**都看做一个文件来操作**，对一个文件的读写操作会**调用内核提供的系统命令\(api\)**，返回一个`file descriptor`（fd 文件描述符）。而对一个socket的读写也会有响应的描述符，称为`socket fd`（socket 文件描述符），描述符就是一个数字，**指向内核中的一个结构体**（文件路径，数据区等一些属性）。
+
+> 所以说：在Linux下对文件的操作是**利用文件描述符\(file descriptor\)来实现的**。
+
 ### 2.1 阻塞 IO
 
-![](../.gitbook/assets/image%20%2818%29.png)
+![](../.gitbook/assets/image%20%2817%29.png)
 
 **同步阻塞：**用户态进程调用`recvfrom`系统调用接收数据，当前内核中并没有准备好数据，该用户态进程将一直在此等待，不会进行其他的操作，待内核态准备好数据，将数据从内核态拷贝到用户空间内存，然后`recvfrom`返回成功的指示，此时用户态进行才解除阻塞的状态，处理收到的数据。
 
 ### 2.2 非阻塞 IO
 
-![](../.gitbook/assets/image%20%2811%29.png)
+![](../.gitbook/assets/image%20%2825%29.png)
 
 **同步非阻塞：**用户进程调用`recvform`系统调用接收数据之后，进程并没有被阻塞，内核马上返回给进程，如果数据还没准备好，此时会返回一个 error。进程在返回之后，可以干点别的事情，然后再发起`recvform`系统调用。如此循环的进行`recvform`系统调用，检查内核数据，直到数据准备好，再拷贝数据到进程。**拷贝数据整个过程，进程仍然是属于阻塞的状态**。
 
 ### 2.3 多路复用 IO
 
-![](../.gitbook/assets/image%20%2813%29.png)
+![](../.gitbook/assets/image%20%2811%29.png)
 
-用户进程采用`select`的方法，通过`select`可以等待多个不同类型的消息，如果其中有一个类型的消息准备好，则`select`会返回信息，然后用户态进程调用`recvfrom`接收数据。
+用户进程采用`select/poll/epoll/pselect`的其中一个方法，以 `select` 为例，通过`select`可以等待多个不同类型的消息，如果其中有一个类型的消息准备好，则`select`会返回信息，然后用户态进程调用`recvfrom`接收数据。步骤如下：
+
+* 当用户进程调用了`select`，那么整个进程会被 block；
+* 而同时，kernel 会“监视”所有 select 负责的 socket；
+* 当任何一个 socket 中的数据准备好了，select 就会返回；
+* 这个时候用户进程再调用 read 操作，将数据从 kernel 拷贝到用户进程\(空间\)。
+
+所以，I/O 多路复用的特点是**通过一种机制一个进程能同时等待多个文件描述符**，而这些文件描述符**其中的任意一个进入读就绪状态**，`select()`函数**就可以返回**。
 
 I/O 复用和阻塞 I/O 很相似，不同的是，I/O 复用等待多类事件，阻塞式 I/O 只等待一类事件，另外，在 I/O 复用中，会产生两个系统调用（`select`和`recvfrom`），而阻塞式 I/O 只产生一个系统调用。那么这就涉及到具体的性能问题，当只存在一类事件的时候，使用阻塞式 I/O 模型的性能会更好，当存在多种不同类型的事件时，I/O 复用的性能要好的多，因为阻塞式 I/O 模型只能监听一类事件，所以这个时候需要使用多线程进行处理。
 
 ### 2.4 信号驱动 IO
 
-![](../.gitbook/assets/image%20%284%29.png)
+![](../.gitbook/assets/image%20%286%29.png)
 
 用户进程会向内核发送一个信号，告诉内核我要什么数据，然后用户态就不管了，做别的事情去了，而当内核态中的数据准备好之后，内核立马发给用户态一个信号，告知用户进程数据准备好了，用户态进程收到之后，立马调用`recvfrom` ，等待数据从内核空间复制到用户空间，待完成之后`recvfrom`返回成功指示，用户态进程才处理别的事情。
 
@@ -69,7 +80,7 @@ I/O 复用和阻塞 I/O 很相似，不同的是，I/O 复用等待多类事件�
 
 ### 2.5 异步 IO
 
-![](../.gitbook/assets/image%20%2819%29.png)
+![](../.gitbook/assets/image%20%2824%29.png)
 
 用户进程进行`aio_read`系统调用之后，无论内核数据是否准备好，都会直接返回给用户进程，然后用户态进程可以去做别的事情。内核等待用户态需要的数据准备好，然后将数据复制到用户空间，然后从内核向用户进程发送通知，告知用户进程数据已经复制完成。
 
@@ -77,20 +88,42 @@ I/O 复用和阻塞 I/O 很相似，不同的是，I/O 复用等待多类事件�
 
 ### 2.6 比较
 
-![](../.gitbook/assets/image%20%2816%29.png)
+![](../.gitbook/assets/image%20%2821%29.png)
 
 * 阻塞 IO、非阻塞 IO、多路复用 IO、信号驱动 IO **都是同步 IO**。因为其中真正的 IO 操作（`recvfrom`）将阻塞进程。
 
 ## 3. Java NIO
 
+Java NIO\(no-blocking io 或 new io\)是 JDK 1.4 中新引入的 IO 库，目的是提高速度。实际上旧的 IO 已经用 NIO 重新实现过，所以即使我们不使用 NIO 编程，也能从中受益。
+
+![IO &#x548C; NIO &#x7684;&#x533A;&#x522B;](../.gitbook/assets/image%20%282%29.png)
+
 ### 3.1 Buffer
+
+![](../.gitbook/assets/image%20%284%29.png)
+
+Capacity：Buffer 的大小。
+
+Position：
 
 ### 3.2 Channel
 
 ### 3.3 Selector
 
+### 3.4 与 Unix IO 的关系
+
+* Java 标准 IO 属于阻塞 IO（Blocking IO）。
+* NIO 中的实现了SelectableChannel类的对象有方法`configureBlocking(boolean block)`：
+  * 若设置为 `ture`，则 属于**阻塞 IO**。
+  * 若设置为 `false`，则属于**非阻塞 IO**（non-blocking IO）。
+  * `Selector` 可监听多个 NIO 对象，所以属于**多路复用 IO**（IO multiplexing）
+  * Java 7 中增加了**异步 IO**。
+
+![](../.gitbook/assets/image%20%2814%29.png)
+
 ## 参考
 
 * [http://www.importnew.com/18763.html](http://www.importnew.com/18763.html)
 * [https://blog.csdn.net/historyasamirror/article/details/5778378](https://blog.csdn.net/historyasamirror/article/details/5778378)
+* [https://juejin.im/post/5af942c6f265da0b7026050c](https://juejin.im/post/5af942c6f265da0b7026050c#heading-14)
 
