@@ -28,10 +28,8 @@
 ## database
 
 * [Transaction](database/transaction.md)
-
-## redis
-
-* [Basic](redis/basic.md)
+* [Redis](database/basic.md)
+* [Elasticsearch](database/elasticsearch.md)
 
 ## distributed system
 
