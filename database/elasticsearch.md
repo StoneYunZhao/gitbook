@@ -146,3 +146,13 @@ GET /_cluster/allocation/explain
 GET _tasks
 ```
 
+### Shard allocation 的三个重要参数
+
+{% embed url="https://www.elastic.co/guide/en/elasticsearch/reference/current/shards-allocation.html" %}
+
+{% embed url="https://www.elastic.co/guide/en/elasticsearch/reference/current/disk-allocator.html" %}
+
+* cluster.routing.allocation.enable
+* cluster.routing.rebalance.enable
+* cluster.routing.allocation.disk.threshold\_enabled
+
