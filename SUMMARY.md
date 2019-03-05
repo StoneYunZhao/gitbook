@@ -30,6 +30,7 @@
 * [Transaction](database/transaction.md)
 * [Redis](database/basic.md)
 * [Elasticsearch](database/elasticsearch.md)
+* [HBase](database/hbase.md)
 
 ## distributed system
 
