@@ -128,6 +128,14 @@ PUT _template/my_logstash
     "number_of_shards": 1
   }
 }
+
+# 当 node 丢失的时候，shard 重新分配延迟时间
+PUT _all/_settings
+{
+  "settings": {
+    "index.unassigned.node_left.delayed_timeout": "5m"
+  }
+}
 ```
 
 ### Cluster API
@@ -146,13 +154,30 @@ GET /_cluster/allocation/explain
 GET _tasks
 ```
 
-### Shard allocation 的三个重要参数
+### Shard Allocation
 
 {% embed url="https://www.elastic.co/guide/en/elasticsearch/reference/current/shards-allocation.html" %}
 
 {% embed url="https://www.elastic.co/guide/en/elasticsearch/reference/current/disk-allocator.html" %}
 
-* cluster.routing.allocation.enable
-* cluster.routing.rebalance.enable
-* cluster.routing.allocation.disk.threshold\_enabled
+* **cluster.routing.allocation.enable**
+  * `all` - \(default\) Allows shard allocation for all kinds of shards.
+  * `primaries` - Allows shard allocation only for primary shards.
+  * `new_primaries` - Allows shard allocation only for primary shards for new indices.
+  * `none` - No shard allocations of any kind are allowed for any indices.
+* **cluster.routing.rebalance.enable**
+  * `all` - \(default\) Allows shard balancing for all kinds of shards.
+  * `primaries` - Allows shard balancing only for primary shards.
+  * `replicas` - Allows shard balancing only for replica shards.
+  * `none` - No shard balancing of any kind are allowed for any indices.
+* **cluster.routing.allocation.allow\_rebalance**
+  * `always` - Always allow rebalancing.
+  * `indices_primaries_active` - Only when all primaries in the cluster are allocated.
+  * `indices_all_active` - \(default\) Only when all shards \(primaries and replicas\) in the cluster are allocated.
+* **cluster.routing.allocation.disk.threshold\_enabled**
+  * `true` - default
+  * `false`
+* **index.unassigned.node\_left.delayed\_timeout**
+  * 见 Index API。
+  * 注意：此配置是 **index 级别**的，所以就算配置的时候指定为`_all`，**新建的** index 也不会有这个配置。可以用 template 的方式增加此配置。
 
