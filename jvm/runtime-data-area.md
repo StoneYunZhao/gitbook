@@ -33,8 +33,10 @@ JVM = 类加载器\(ClassLoader\) + 执行引擎\(Execution engine\) + 运行时
 #### 永久代与元空间
 
 * JDK1.7之前，HotSpot 使用永久代实现方法区。 
-* JDK1.7 ，HotSpot 中符号引用（Symbols）被移动到 Native Heap中，字面量\(interned strings\)转移到了java heap；类的静态变量\(class statics\)转移到了java heap。
-* 在 JDK1.8 中，永久代已完全被**元空间\(Meatspace\)**所取代。元空间的本质和永久代类似，都是对JVM规范中方法区的实现。不过元空间与永久代之间最大的区别在于：元空间并不在虚拟机中，而是**使用本地内存**。因此，默认情况下，元空间的大小仅受本地内存限制。**​**
+* JDK1.7 ，HotSpot 中符号引用（Symbols）被移动到 Native Heap中，字面量\(interned strings\)转移到了java heap；类的静态变量\(class statics\)转移到了java heap\(移动到了`java.lang.Class`对象中\)。
+* 在 JDK1.8 中，永久代已完全被**元空间\(Meatspace\)**所取代。元空间的本质和永久代类似，都是对JVM规范中方法区的实现。不过元空间与永久代之间有两个区别：
+  * **存储位置**：元空间并不在虚拟机中，而是**使用本地内存**。因此，默认情况下，元空间的大小仅受本地内存限制。**​**
+  * **存储内容**：元空间存储类的元信息，静态变量和常量池等并入堆中。也就是说永久代的数据被分到了堆和元空间。
 * **PermSize**和**MaxPermSize**参数已移除。
 * 元空间常用的参数：
   1. **MetaspaceSize**：初始化的Metaspace大小，控制元空间发生GC的阈值。GC后，动态增加或降低MetaspaceSize。
