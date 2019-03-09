@@ -11,6 +11,7 @@
 * [Collection](java-se/collection.md)
 * [Java IO](java-se/java-io.md)
 * [Java NIO](java-se/java-nio.md)
+* [JDK Release Note](java-se/jdk-release-note.md)
 
 ## JVM
 
