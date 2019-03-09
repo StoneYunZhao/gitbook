@@ -4,10 +4,9 @@
 
 ## JAVA
 
-* [Data Types](java-se/data-types.md)
-* [Operator](java-se/operator.md)
-* [Override](java-se/override-1.md)
-* [Variable](java-se/variable.md)
+* [Grammar](java-se/grammar/README.md)
+  * [Data Types](java-se/grammar/data-types.md)
+  * [Operator](java-se/grammar/operator.md)
 * [Collection](java-se/collection.md)
 * [Java IO](java-se/java-io.md)
 * [Java NIO](java-se/java-nio.md)
