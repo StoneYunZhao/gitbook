@@ -8,9 +8,10 @@
   * [Data Types](java-se/grammar/data-types.md)
   * [Operator](java-se/grammar/operator.md)
 * [Collection](java-se/collection.md)
-* [Java IO](java-se/java-io.md)
-* [Java NIO](java-se/java-nio.md)
-* [JDK Release Note](java-se/jdk-release-note.md)
+* [IO](java-se/java-io.md)
+* [NIO](java-se/java-nio.md)
+* [Concurrency](java-se/concurrency.md)
+* [Release Note](java-se/jdk-release-note.md)
 
 ## JVM
 

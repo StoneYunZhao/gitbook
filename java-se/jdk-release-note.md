@@ -1,4 +1,4 @@
-# JDK Release Note
+# Release Note
 
 ## JDK 1.7 新特性
 
