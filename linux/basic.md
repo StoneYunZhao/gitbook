@@ -39,6 +39,25 @@ ssh -o ProxyCommand='nc -x 10.211.55.4:1081 %h %p' root@10.5.3.33
 ssh -D 0.0.0.0:1082 -f -C -q -N -o ProxyCommand='nc -x 192.166.127.15:1031 %h %p' root@192.166.127.32
 ```
 
+通过跳板机直连 
+
+```bash
+cat ~/.ssh/config
+
+Host 172.16.1.*
+        User root
+        Port 22
+        ProxyCommand ssh root@10.0.197.12 -W %h:%p
+Host test
+        User root
+        Port 22
+        HostName 172.16.1.4
+        ProxyCommand ssh root@10.0.197.12 -W %h:%p
+```
+
+* `ssh 172.16.1.*` 可以直接通过跳板机 `10.0.197.12` 连接`172.16.1.*`，即支持通配符。
+* `ssh test` 可以直接通过跳板机 `10.0.197.12` 连接`172.16.1.4`。
+
 ## NFS
 
 ```bash
