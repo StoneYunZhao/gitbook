@@ -32,6 +32,7 @@
 * [Redis](database/basic.md)
 * [Elasticsearch](database/elasticsearch.md)
 * [HBase](database/hbase.md)
+* [MySQL](database/mysql.md)
 
 ## distributed system
 
