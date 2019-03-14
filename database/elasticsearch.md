@@ -114,6 +114,14 @@ PUT _settings
   }
 }
 
+# 修改某个 index 的配置
+PUT portal/_settings
+{
+  "index": {
+    "number_of_replicas":1
+  }
+}
+
 # 获取所有 index 的配置
 GET _settings
 

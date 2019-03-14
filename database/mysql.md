@@ -19,5 +19,7 @@ mysql -u {username} -p {password} \
     -D {DB name}
     
 mysql -u pcopadm -h 127.0.0.1 -P 3306 -p
+
+drop schema XXX;
 ```
 

@@ -2,6 +2,13 @@
 
 ## Command
 
+cat
+
+```bash
+# 合并多个文件
+cat file1.sql doc*.sql >> merge.sql
+```
+
 ### find
 
 ```bash
