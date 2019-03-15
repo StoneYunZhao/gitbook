@@ -136,3 +136,168 @@ class TopLevel{}
 * 接口表示 has-a 的关系，而抽象类表示 is-a 的关系。
 * 接口可以继承接口，抽象类可以实现接口，抽象类可以继承实体类。
 
+## Object 的所有方法
+
+```java
+public class Object {
+    private static native void registerNatives();
+    static {
+        registerNatives();
+    }
+    
+    // 经常被覆盖的方法
+    public boolean equals(Object obj) {
+        return (this == obj);
+    }
+    public String toString() {
+        return getClass().getName() + "@" + Integer.toHexString(hashCode());
+    }
+    
+    // native 方法
+    public native int hashCode();
+    protected native Object clone() throws CloneNotSupportedException;
+    
+    // final 方法
+    public final native Class<?> getClass();
+    public final native void notify();
+    public final native void notifyAll();
+    public final native void wait(long timeout) throws InterruptedException;
+    public final void wait(long timeout, int nanos) throws InterruptedException;
+    public final void wait() throws InterruptedException {
+        wait(0);
+    }
+    
+    // 不建议使用的方法
+    protected void finalize() throws Throwable { }
+}
+```
+
+### `getClass()`
+
+`final` 方法不允许重写，返回**运行时**的 Class 对象。
+
+### `hashCode()`
+
+默认实现是将对象的内部地址转换成一个整数。可以被覆盖，覆盖的约定如下：
+
+* 若对象没有被改变，则无论调用多少次 `hashCode()`，都会返回相同的整数值。
+* 没有必要在不同的程序中保持相同的值。
+* 若 `equals()`返回 `true`，则 `hashCode()`必须相等。
+* 若 `equals()`返回 `false`，`hashCode()`可以相同；但是尽量不相同，可以提高 hash 表的性能。
+
+### `equals()`
+
+默认实现是比较两个对象的地址是否相等。可以被覆盖，约定如下：
+
+* 自反性，`x.equals(x) == true`。
+* 对称性，若`x.equals(y) == true`，则`y.equals(x) == true`。
+* 传递性，若`x.equals(y) == true && y.equals(z) == true`，则`x.equals(z) == true`
+* `x.equals(null) == false`。
+
+### `clone()`
+
+由于 `Object` 本身没有实现 `Cloneable` 接口，所以不重写 `clone()`方法会抛出异常。
+
+返回对象的**浅拷贝**。
+
+### `wait()`、`wait(long)`、`wait(long, int)`
+
+* 让当前线程等待。
+* 当前线程必须是调用`wait()`方法对象的监视器所有者，否则会发生`IllegalMonitorStateException`异常。
+* `wait()`方法会将当前线程放置在对象的等待集中，并让当前线程放弃该对象监视器的所有权，即**放弃了锁**。
+* 会被以下事件唤醒：
+  * 其它线程调用此对象的`notify()`方法，并恰巧此线程被选中。
+  * 其它线程调用此对象的`notifyAll()`方法。
+  * 其它线程调用 `Thread.interrupt()`方法中断此线程。
+  * 若设置了超时时间，时间超过后。
+* 被唤醒后，线程在等待集中被移除，以常规方式与其它线程竞争，获取该对象的监视器所有权，一旦获得，则 `wait()`方法返回。
+
+{% hint style="warning" %}
+### 注意
+
+在没有被通知、中断或超时的情况下，线程还可以唤醒一个所谓的虚假唤醒 \(spurious wakeup\)。虽然这种情况在实践中很少发生，但是应用程序必须通过以下方式防止其发生。
+{% endhint %}
+
+```java
+synchronized (obj) {
+    while (<condition does not hold>)
+        obj.wait(timeout);
+        ... // Perform action appropriate to condition
+}
+```
+
+若要成为某个对象监视器的所有者，可以有以下几种方式：
+
+* 执行对象的同步实例方法。
+* 使用 synchronized内置锁。
+* 对于 Class 对象，执行该类的同步静态方法。
+
+一个线程只能有一个对象的监视器。所以 wait、notify 方法**只能在同步代码块或同步方法中使用**。
+
+{% hint style="info" %}
+`wait()`释放了锁，而 `sleep()`仍然持有锁。
+{% endhint %}
+
+### `notify()`、`notifyAll()`
+
+* 唤醒一个或全部在此对象监视器上等待的线程。
+* 若是一个，则是随机选取一个。
+* 直到当前线程放弃了对象上的锁后，被唤醒的线程才会继续竞争锁。即 notify 方法**不会立即释放锁**。
+* 当前线程必须是该对象监视器的所有者，不然会抛出 IllegalMonitorStateException。
+
+wait 和 notify 一般配套使用，见下面的例子：
+
+```java
+public class ThreadTest {
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        MyRunnable r = new MyRunnable();
+        Thread t = new Thread(r);
+        t.start();
+        synchronized (r) {
+            try {
+                System.out.println("main thread 等待t线程执行完");
+                r.wait();
+                System.out.println("被notity唤醒，得以继续执行");
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                System.out.println("main thread 本想等待，但被意外打断了");
+            }
+            System.out.println("线程t执行相加结果" + r.getTotal());
+        }
+    }
+}
+ 
+class MyRunnable implements Runnable {
+    private int total;
+    
+    @Override
+    public void run() {
+        // TODO Auto-generated method stub
+        synchronized (this) {
+            System.out.println("Thread name is:" + Thread.currentThread().getName());
+            for (int i = 0; i < 10; i++) {
+                total += i;
+            }
+            notify();
+            System.out.println("执行notif后同步代码块中依然可以继续执行直至完毕");
+        }
+        System.out.println("执行notif后且同步代码块外的代码执行时机取决于线程调度");
+    }
+    
+    public int getTotal() {
+        return total;
+    }
+}
+```
+
+```text
+main thread 等待t线程执行完
+Thread name is:Thread-0
+执行notif后同步代码块中依然可以继续执行直至完毕
+执行notif后且同步代码块外的代码执行时机取决于线程调度
+被notity唤醒，得以继续执行
+线程t执行相加结果45
+```
+
