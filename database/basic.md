@@ -1,5 +1,15 @@
 # Redis
 
+## 安装
+
+```bash
+yum intall -y redis
+
+redis-cli -h 172.16.1.18
+
+keys abc*
+```
+
 ## 持久化
 
 提供了多种不同级别的持久化方式:一种是 **RDB**，另一种是 **AOF。**
