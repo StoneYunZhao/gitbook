@@ -39,6 +39,7 @@
 
 * [Introduction](distributed-system/introduction.md)
 * [Message Queue](distributed-system/message-queue.md)
+* [Cache](distributed-system/cache.md)
 
 ## linux
 
