@@ -40,6 +40,8 @@
 * [Introduction](distributed-system/introduction.md)
 * [Message Queue](distributed-system/message-queue.md)
 * [Cache](distributed-system/cache.md)
+* [Consistent Hashing](distributed-system/consistent-hashing.md)
+* [Gossip](distributed-system/gossip.md)
 
 ## linux
 

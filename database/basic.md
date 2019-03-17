@@ -130,3 +130,11 @@ Reis 使用定时删除和惰性删除结合：
 * **allkeys-random**：从数据集（server.db\[i\].dict）中任意选择数据淘汰
 * **no-enviction**（驱逐）：禁止驱逐数据，一般没人用。
 
+## 主从模式
+
+## Cluster 模式
+
+节点间采用 gossip 协议。
+
+与 gossip 协议对应的是集中式（Storm），即所有元数据集中在一个地方（如 zookeeper）。
+
