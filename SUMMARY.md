@@ -18,9 +18,9 @@
 * [Class & Instance Initialization](jvm/class-and-instance-initialization.md)
 * [Runtime Data Area](jvm/runtime-data-area.md)
 
-## Python
+## Algorithm
 
-* [Anaconda And Conda](python/anaconda-and-conda.md)
+* [Tree](algorithm/tree.md)
 
 ## design patterns
 
@@ -43,15 +43,10 @@
 * [Consistent Hashing](distributed-system/consistent-hashing.md)
 * [Gossip](distributed-system/gossip.md)
 
-## linux
+## Other
 
-* [Basic](linux/basic.md)
-
-## Docker & Kubernetes
-
-* [Kubernetes](docker-and-kubernetes/kubernetes.md)
-
-## Tools
-
-* [Maven](tools/maven.md)
+* [Linux](other/basic.md)
+* [Kubernetes](other/kubernetes.md)
+* [Anaconda And Conda](other/anaconda-and-conda.md)
+* [Maven](other/maven.md)
 
