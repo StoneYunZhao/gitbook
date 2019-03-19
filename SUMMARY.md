@@ -20,6 +20,7 @@
 
 ## Algorithm
 
+* [List](algorithm/list.md)
 * [Tree](algorithm/tree.md)
 
 ## design patterns
