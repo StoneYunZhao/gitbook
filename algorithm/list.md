@@ -39,7 +39,91 @@
 
 链表检测题：
 
-* 单链表反转。
+## 代码
+
+### 链表
+
+```java
+/**
+ * 有头结点的列表
+ */
+public class LNode {
+    Integer data;
+    LNode next;
+
+    public LNode() {
+    }
+
+    public LNode(int data) {
+        this.data = data;
+    }
+
+    public static void printList(LNode head) {
+        if (head == null) {
+            System.out.println("null");
+        }
+
+        StringBuilder result = new StringBuilder();
+        for (LNode current = head; current != null; current = current.next) {
+            result.append(current.data).append(" ");
+        }
+        System.out.println(result);
+    }
+}
+```
+
+### 链表反转
+
+都是针对带头链表。
+
+```java
+public class ReverseList {
+
+    /**
+     * 就地逆序，遍历，让列表的结点指向其前驱结点，
+     */
+    private static void reverseInPlace(LNode head) {
+        System.out.println("reverse in place");
+        if (head == null || head.next == null || head.next.next == null) {
+            return;
+        }
+        LNode first, second;
+
+        for (first = head.next, second = first.next; second != null; ) {
+            LNode tmp = second.next;
+            second.next = first;
+            first = second;
+            second = tmp;
+        }
+        head.next.next = null;
+        head.next = first;
+    }
+
+    /**
+     * 插入法，遍历列表，每次将遍历到的结点插入 head 结点之后
+     */
+    private static void reverseInsert(LNode head) {
+        System.out.println("reverse by insert");
+        if (head == null || head.next == null) {
+            return;
+        }
+        LNode end = head.next;
+
+        for (LNode current = head.next; current != null; ) {
+            LNode tmp = current.next;
+            current.next = head.next;
+            head.next = current;
+            current = tmp;
+        }
+        end.next = null;
+    }
+}
+```
+
+### 无序链表移除重复项
+
+
+
 * 链表中检测环。
 * 两个有序链表合并。
 * 删除链表倒数第n个结点。
