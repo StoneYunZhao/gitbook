@@ -1,6 +1,4 @@
-# Concurrency
-
-## CAS
+# CAS
 
 CAS（Compare and Swap），即比较与交换。Doug Lea 在 Java 同步框架中大量使用了 CAS。
 
@@ -46,6 +44,4 @@ public final int getAndAddInt(Object var1, long var2, int var4) {
 {% hint style="warning" %}
 CAS 有 **ABA 问题**：如果变量 V 初次读取的时候是 A，并且在准备赋值的时候检查到它仍然是 A，那也不能说明在这期间没有被修改过，可能在这期间被修改成 B，然后又被修改成 A。有一个带有标记的原子引用类`AtomicStampedReference`，它可以通过控制变量值的版本来保证CAS的正确性。
 {% endhint %}
-
-参考[占小狼的博客](https://www.jianshu.com/p/24ffe531e9ee)。
 

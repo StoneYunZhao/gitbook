@@ -5,12 +5,15 @@
 ## JAVA
 
 * [Grammar](java-se/grammar/README.md)
+  * [Basic](java-se/grammar/basic.md)
   * [Data Types](java-se/grammar/data-types.md)
   * [Operator](java-se/grammar/operator.md)
 * [Collection](java-se/collection.md)
 * [IO](java-se/java-io.md)
 * [NIO](java-se/java-nio.md)
-* [Concurrency](java-se/concurrency.md)
+* [Concurrency](java-se/concurrency/README.md)
+  * [Synchronized](java-se/concurrency/synchronized.md)
+  * [CAS](java-se/concurrency/cas.md)
 * [Release Note](java-se/jdk-release-note.md)
 
 ## JVM
