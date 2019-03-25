@@ -14,6 +14,7 @@
 * [Concurrency](java-se/concurrency/README.md)
   * [Synchronized](java-se/concurrency/synchronized.md)
   * [CAS](java-se/concurrency/cas.md)
+  * [AQS](java-se/concurrency/aqs.md)
 * [Release Note](java-se/jdk-release-note.md)
 
 ## JVM
