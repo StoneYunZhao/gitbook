@@ -4,6 +4,10 @@
 
 Spring 容器是生成 Bean 实例的工厂，并且管理容器中的 Bean。有两个核心的接口`BeanFactory`和`ApplicationContext`。
 
+BeanFactory 是**延迟加载**的，在第一调用 getBean 方法后才会加载 Bean，若有异常，此时才会抛出。BeanFactory 提供了基本功能，但是不能提供 AOP 等功能。
+
+ApplicationContext 继承自 BeanFactory，并提供了额外的功能，比如 MessageSource 提供国际化的消息访问、事件传播等。ApplicationContext 在**初始化**的时候就**加载所有**的 Bean。
+
 ![](../.gitbook/assets/image%20%2833%29.png)
 
 ![](../.gitbook/assets/image%20%2838%29.png)
