@@ -52,6 +52,44 @@ server {
 # 与 n ingress 的定义（匹配来自任何 host /n 路径）不符。
 ```
 
+## 外部 service
+
+### 指定 Endpoint
+
+```yaml
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: minio
+subsets:
+  - addresses:
+    - ip: 172.16.1.18
+    ports:
+    - port: 9000
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: minio
+spec:
+  ports:
+  - port: 80
+    targetPort: 9000
+```
+
+### ExternalName
+
+```yaml
+kind: Service
+apiVersion: v1
+metadata:
+  name: m
+spec:
+  type: ExternalName
+  externalName: bf-dev-databag.oss-cn-hangzhou-internal.aliyuncs.com
+```
+
 ## 安装
 
 ```bash
