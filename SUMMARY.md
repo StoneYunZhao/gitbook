@@ -55,4 +55,5 @@
 * [Kubernetes](other/kubernetes.md)
 * [Anaconda And Conda](other/anaconda-and-conda.md)
 * [Maven](other/maven.md)
+* [Git](other/git.md)
 
