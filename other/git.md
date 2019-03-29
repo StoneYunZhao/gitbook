@@ -10,3 +10,15 @@ git stash apply # 使用某个暂存，但是不会删除这个暂存
 git stash clear # 清空所有的暂存
 ```
 
+## Remote
+
+```bash
+git remote -v # 查看 remote 详情
+
+git remote set-url origin [url] # 重新设置 remote 的 url
+
+git remote rm origin
+git remote add origin [url]
+
+```
+
