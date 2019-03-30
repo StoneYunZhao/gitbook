@@ -138,3 +138,28 @@ Reis 使用定时删除和惰性删除结合：
 
 与 gossip 协议对应的是集中式（Storm），即所有元数据集中在一个地方（如 zookeeper）。
 
+## 分布式锁
+
+### 普通模式
+
+**获取锁**：
+
+* `SET [key] [random] NX PX 30000`。
+* NX 表示只有 key 不存在的时候才会设置成功。
+* PX 30000 表示30秒后锁自动释放。
+* 随机值的意义在于获取锁后，超过30秒才完成，然后删除锁，随机值用于删除正确的锁。
+
+**释放锁**：
+
+```lua
+if redis.call('get', KEYS[1]) == ARGV[1] then 
+    return redis.call('del', KEYS[1]) 
+else 
+    return 0 
+end
+```
+
+### RedLock
+
+遭到质疑。详情 Google。
+
