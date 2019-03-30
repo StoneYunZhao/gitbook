@@ -39,6 +39,7 @@
 * [HBase](database/hbase.md)
 * [MySQL](database/mysql.md)
 * [MongoDB](database/mongodb.md)
+* [ZooKeeper](database/zookeeper.md)
 
 ## distributed system
 
