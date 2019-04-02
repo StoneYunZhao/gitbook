@@ -41,6 +41,7 @@
 * [MySQL](database/mysql.md)
 * [MongoDB](database/mongodb.md)
 * [ZooKeeper](database/zookeeper-1.md)
+* [Kafka](database/kafka.md)
 
 ## distributed system
 
