@@ -2,11 +2,11 @@
 
 JVM = 类加载器\(ClassLoader\) + 执行引擎\(Execution engine\) + 运行时数据区域\(Runtime data area\) 。如下图所示：
 
-![](../.gitbook/assets/image%20%2842%29.png)
+![](../.gitbook/assets/image%20%2850%29.png)
 
 **Runtime data area：**Java虚拟机在执行Java程序的过程中会把它所管理的内存划分为若干个不同的区域。如下图是运行时数据区域的详细结构：
 
-![](../.gitbook/assets/image%20%2843%29.png)
+![](../.gitbook/assets/image%20%2851%29.png)
 
 ### Java堆
 

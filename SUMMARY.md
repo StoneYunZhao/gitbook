@@ -21,6 +21,7 @@
 
 * [Class & Instance Initialization](jvm/class-and-instance-initialization.md)
 * [Runtime Data Area](jvm/runtime-data-area.md)
+* [Garbage Collection](jvm/garbage-collection.md)
 
 ## Algorithm
 
