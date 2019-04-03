@@ -56,7 +56,7 @@
 * [Spring](other/spring.md)
 * [Linux](other/basic.md)
 * [Kubernetes](other/kubernetes.md)
-* [Anaconda And Conda](other/anaconda-and-conda.md)
-* [Maven](other/maven.md)
 * [Git](other/git.md)
+* [Maven](other/maven.md)
+* [Anaconda And Conda](other/anaconda-and-conda.md)
 
