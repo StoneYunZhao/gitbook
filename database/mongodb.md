@@ -15,6 +15,5 @@ EOF
 yum install mongodb-org-shell -y
 
 mongo remotedb.mlab.com:27017/<dbname> -u <user> -p <pass>
-
 ```
 
