@@ -6,7 +6,7 @@ Java 集合框架和分为 Collection 和 Map 两大类。其中 Collection 又�
 
 ## 2. Collection
 
-![Collection &#x7C7B;&#x7EE7;&#x627F;&#x5173;&#x7CFB;](../.gitbook/assets/image%20%2837%29.png)
+![Collection &#x7C7B;&#x7EE7;&#x627F;&#x5173;&#x7CFB;](../.gitbook/assets/image%20%2838%29.png)
 
 ### 2.1 List
 
@@ -59,7 +59,7 @@ Queue 用于模拟队列这种数据结构，队列通常是指“先进先出�
 
 
 
-![Map &#x7C7B;&#x7EE7;&#x627F;&#x5173;&#x7CFB;](../.gitbook/assets/image%20%284%29.png)
+![Map &#x7C7B;&#x7EE7;&#x627F;&#x5173;&#x7CFB;](../.gitbook/assets/image%20%285%29.png)
 
 Map保存的是键值对，键要求保持唯一性，值可以重复。
 
