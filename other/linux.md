@@ -16,6 +16,119 @@
 
 ![](../.gitbook/assets/image%20%2846%29.png)
 
+## 常用命令
+
+### 用户管理
+
+```bash
+# 创建用户
+# 创建之后不会让你输入密码，需要通过 passwd 设置密码
+# 若没有指定组，则默认创建一个同名的组
+useradd [username]
+
+# 设置密码
+passwd
+
+# 用户名:密码:用户ID:组ID:用户描述:用户目录:默认命令行
+/etc/passwd
+root:x:0:0:root:/root:/bin/zsh
+...
+
+# 组名::组ID
+/etc/group
+root:x:0:
+...
+```
+
+### 文件管理
+
+```bash
+# 切换目录
+cd
+
+# 查看目录
+ls
+
+# 打印文件内容到命令行
+cat
+
+# 编辑文件
+vim
+
+# 修改文件所属用户
+chown
+
+# 修改文件所属组
+chgrp
+
+# 下载文件
+wget
+
+# 过滤文件
+grep
+
+# 分页查看文件，仅支持向后翻页
+more
+
+# 分页查看文件，可以前后翻页
+less
+```
+
+### 软件管理
+
+```bash
+# 安装
+
+# 查找
+
+# 列表
+
+# 搜索
+
+# 安装
+
+# 删除
+
+# 配置文件
+
+```
+
+### 运行程序
+
+```bash
+# 运行当前目录的一个程序
+./program
+# 退出该程序
+ctrl + c
+
+# 后台运行
+nohup [command] > [filename] 2>&1 &
+# 退出一个进程
+ps -ef |grep [keyword] |awk '{print $2}'  |xargs kill -9
+
+# 设置开机启动
+systemctl enable XXX
+# 启动
+systemctl start XXX
+# 关闭
+systemctl stop XXX
+```
+
+### 系统管理
+
+```bash
+# 立即关机
+shutdown -h now
+
+# 重启
+reboot
+
+# 环境变量
+.bashrc
+
+export XXX=sss
+```
+
 ## Command
 
 cat

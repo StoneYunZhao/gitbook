@@ -54,7 +54,7 @@
 ## Other
 
 * [Spring](other/spring.md)
-* [Linux](other/basic.md)
+* [Linux](other/linux.md)
 * [Kubernetes](other/kubernetes.md)
 * [Git](other/git.md)
 * [Maven](other/maven.md)
