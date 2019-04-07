@@ -43,14 +43,26 @@ root:x:0:
 ### 文件管理
 
 ```bash
-# 切换目录
+# 切换目录 change directory
 cd
+cd ..
 
-# 查看目录
+# 查看目录 list
 ls
+
+# 第一个字符是文件类型，d 表示目录
+# 剩下的9个是权限位，三个一组，分别为用户、组、其它。
+# 第二个字段是硬链接（hard link）数目
+# 第三个是所属用户，第四个是所属组，第五个是文件大小，第六个是被修改日期
+ls -l
+drwxr-xr-x 11 root root 4096 Mar 29 17:25 resource
+-rw-r--r--  1 root root   24 Mar 18 11:23 token
 
 # 打印文件内容到命令行
 cat
+
+# 合并多个文件
+cat file1.sql doc*.sql >> merge.sql
 
 # 编辑文件
 vim
@@ -76,20 +88,36 @@ less
 
 ### 软件管理
 
+Linux 常用的有两种体系，CentOS 和 Ubuntu，前者使用 rpm 安装软件，后者使用 deb 安装软件。
+
 ```bash
-# 安装
+# 安装 -i: install
+rpm -i XXX.rpm # CentOS
+dpkg -i XXX.rpm # Ubuntu
 
 # 查找
-
-# 列表
-
-# 搜索
-
-# 安装
+rpm -qa # q: query, a: all
+dpkg -l # l: list
 
 # 删除
+rpm -e # e: erase
+dpkg -r # r: remove
+
+# 搜索
+yum search jdk
+apt-cache jdk
+
+# 安装
+yum install XXX
+apt-get install XXX
+
+# 删除
+yum erase XXX
+apt-get purge XXX
 
 # 配置文件
+/etc/yum.repos.d/
+/etc/apt/sources.list
 
 ```
 
@@ -101,12 +129,15 @@ less
 # 退出该程序
 ctrl + c
 
-# 后台运行
+# 后台运行 no hang up
+# 1文件描述符表示标准输出，2表示标准错误输出，&表示合并
+# 最后一个&表示后台运行
 nohup [command] > [filename] 2>&1 &
+
 # 退出一个进程
 ps -ef |grep [keyword] |awk '{print $2}'  |xargs kill -9
 
-# 设置开机启动
+# 设置开机启动 /usr/lib/systemd/system 会创建一个 XXX.service
 systemctl enable XXX
 # 启动
 systemctl start XXX
@@ -127,15 +158,6 @@ reboot
 .bashrc
 
 export XXX=sss
-```
-
-## Command
-
-cat
-
-```bash
-# 合并多个文件
-cat file1.sql doc*.sql >> merge.sql
 ```
 
 ### find
@@ -224,7 +246,7 @@ vi /etc/exports
 exportfs -a
 ```
 
-### Reference
+#### Reference
 
 * [http://blog.topspeedsnail.com/archives/4109](http://blog.topspeedsnail.com/archives/4109)
 * [https://www.howtoforge.com/tutorial/setting-up-an-nfs-server-and-client-on-centos-7/](https://www.howtoforge.com/tutorial/setting-up-an-nfs-server-and-client-on-centos-7/)
