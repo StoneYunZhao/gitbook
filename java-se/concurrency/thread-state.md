@@ -39,3 +39,23 @@ public class Thread implements Runnable {
 4. Java 不需要 running 状态是因为没有必要去区分，操作系统的 CPU 时间片段一般很小，10-20ms 左右，Java 去区分是没有意义的。
 {% endhint %}
 
+每个对象锁都对应一个等待队列和一个同步队列，详情见下一节。
+
+![&#x7B49;&#x5F85;&#x961F;&#x5217;&#x4E0E;&#x540C;&#x6B65;&#x961F;&#x5217;](../../.gitbook/assets/image%20%2827%29.png)
+
+![&#x7EBF;&#x7A0B;&#x72B6;&#x6001;&#x7684;&#x53D8;&#x5316;](../../.gitbook/assets/image%20%2828%29.png)
+
+1. Thread.sleep\(long millis\)，一定是当前线程调用此方法，当前线程进入TIMED\_WAITING状态，但不释放对象锁，millis后线程自动苏醒进入就绪状态。作用：给其它线程执行机会的最佳方式。 
+2. Thread.yield\(\)，一定是当前线程调用此方法，当前线程放弃获取的CPU时间片，但不释放锁资源，由运行状态变为就绪状态，让OS再次选择线程。作用：让相同优先级的线程轮流执行，但并不保证一定会轮流执行。实际中无法保证yield\(\)达到让步目的，因为让步的线程还有可能被线程调度程序再次选中。Thread.yield\(\)不会导致阻塞。该方法与sleep\(\)类似，只是不能由用户指定暂停多长时间。 
+3. thread.join\(\)/thread.join\(long millis\)，当前线程里调用其它线程t的join方法，当前线程进入WAITING/TIMED\_WAITING状态，当前线程不会释放已经持有的对象锁。线程t执行完毕或者millis时间到，当前线程一般情况下进入RUNNABLE状态，也有可能进入BLOCKED状态（因为join是基于wait实现的）。 
+4. obj.wait\(\)，当前线程调用对象的wait\(\)方法，当前线程释放对象锁，进入等待队列。依靠notify\(\)/notifyAll\(\)唤醒或者wait\(long timeout\) timeout时间到自动唤醒。
+5. obj.notify\(\)唤醒在此对象监视器上等待的单个线程，选择是任意性的。notifyAll\(\)唤醒在此对象监视器上等待的所有线程。
+6. LockSupport.park\(\)/LockSupport.parkNanos\(long nanos\),LockSupport.parkUntil\(long deadlines\), 当前线程进入WAITING/TIMED\_WAITING状态。对比wait方法,不需要获得锁就可以让线程进入WAITING/TIMED\_WAITING状态，需要通过LockSupport.unpark\(Thread thread\)唤醒。
+
+* [https://blog.csdn.net/pange1991/article/details/53860651](https://blog.csdn.net/pange1991/article/details/53860651)
+* [https://www.zhihu.com/question/56494969](https://www.zhihu.com/question/56494969)
+
+
+
+
+
