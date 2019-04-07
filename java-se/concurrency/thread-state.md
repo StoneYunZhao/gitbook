@@ -52,7 +52,45 @@ public class Thread implements Runnable {
 5. **`obj.notify()`**：唤醒在此对象监视器上等待的单个线程，选择是任意性的。`notifyAll()`唤醒在此对象监视器上等待的所有线程。
 6. **`LockSupport.park(), LockSupport.parkUntil(long deadlines)`**：当前线程进入 WAITING/TIMED\_WAITING 状态。对比`wait()`方法，不需要获得锁就可以让线程进入 WAITING/TIMED\_WAITING状态，需要通过`LockSupport.unpark(Thread thread)`唤醒。
 
+### `join()`的本质
 
+`join()`的本质是先调用`synchronized`方法获取线程的锁，然后调用`wait()`方法，当线程 terminate 的时候，会调用`notifyAll()`方法。
+
+```java
+public class Thread implements Runnable {
+    /**
+     * As a thread terminates the {@code this.notifyAll} method is invoked. 
+     * It is recommended that applications 
+     * not use {@code wait}, {@code notify}, or
+     * {@code notifyAll} on {@code Thread} instances.
+     */
+    public final synchronized void join(long millis) throws InterruptedException {
+        long base = System.currentTimeMillis();
+        long now = 0;
+
+        if (millis < 0) {
+            throw new IllegalArgumentException("timeout value is negative");
+        }
+
+        if (millis == 0) {
+            while (isAlive()) {
+                wait(0);
+            }
+        } else {
+            while (isAlive()) {
+                long delay = millis - now;
+                if (delay <= 0) {
+                    break;
+                }
+                wait(delay);
+                now = System.currentTimeMillis() - base;
+            }
+        }
+    }
+}
+```
+
+### Reference
 
 * [https://blog.csdn.net/pange1991/article/details/53860651](https://blog.csdn.net/pange1991/article/details/53860651)
 * [https://www.zhihu.com/question/56494969](https://www.zhihu.com/question/56494969)
