@@ -103,6 +103,21 @@ B.join()
 // 此例中，var==66
 ```
 
+## final
+
+被`final`修饰的字段在构造器中一旦被初始化完成，并且构造器没有把`this`传递出去（this 引用逃逸是一件很危险的事情，其他线程有可能通过这个引用访问到“初始化了一半”的对象），那么在其他线程就能看见`final`字段的值（无须同步）。
+
+```java
+final int x;
+// 错误的构造函数
+public FinalFieldExample() { 
+  x = 3;
+  y = 4;
+  // 此处就是讲 this 逸出，
+  global.obj = this;
+}
+```
+
 ## Reference
 
 * [https://zhuanlan.zhihu.com/p/29881777](https://zhuanlan.zhihu.com/p/29881777)
