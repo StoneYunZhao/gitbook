@@ -13,6 +13,7 @@
 * [NIO](java-se/java-nio.md)
 * [Concurrency](java-se/concurrency/README.md)
   * [Preface](java-se/concurrency/preface.md)
+  * [JMM](java-se/concurrency/jmm.md)
   * [Thread State](java-se/concurrency/thread-state.md)
   * [Synchronized](java-se/concurrency/synchronized.md)
   * [CAS](java-se/concurrency/cas.md)
