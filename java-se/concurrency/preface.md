@@ -129,7 +129,7 @@ public class Singleton {
 锁的过度使用可能导致串行化的范围过大，这样就不能够发挥多线程的优势了。
 
 * **无锁的算法和数据结构**：线程本地存储 \(Thread Local Storage, TLS\)、写入时复制 \(Copy-on-write\)、乐观锁等；原子类是无锁的数据结构；Disruptor 是一个无锁的内存队列。
-* **减少锁持有的时间**：使用细粒度的锁（如 ConcurrentHashMap），读写锁等。
+* **减少锁持有的时间**：使用细粒度的锁（如 ConcurrentHashMap 1.8之前），读写锁等。
 
 性能指标：
 
