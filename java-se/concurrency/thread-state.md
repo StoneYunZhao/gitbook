@@ -82,6 +82,49 @@ public class Thread implements Runnable {
 5. **`obj.notify()`**：唤醒在此对象监视器上等待的单个线程，选择是任意性的。`notifyAll()`唤醒在此对象监视器上等待的所有线程。
 6. **`LockSupport.park(), LockSupport.parkUntil(long deadlines)`**：当前线程进入 WAITING/TIMED\_WAITING 状态。对比`wait()`方法，不需要获得锁就可以让线程进入 WAITING/TIMED\_WAITING状态，需要通过`LockSupport.unpark(Thread thread)`唤醒。
 
+### 终止线程
+
+线程执行完 run\(\) 方法后，会自动转换到 TERMINATED 状态，当然如果执行 run\(\) 方法的时候异常抛出，也会导致线程终止。
+
+有时候我们需要强制终止线程，`Thread.stop()` 可以做到，不过已经标记为 `@Deprecated`，所以不建议使用了。应该调用 `interrupt()` 方法。
+
+`stop()` 会真的杀死线程，不给线程喘息的机会，如果线程持有 synchronized 隐式锁，也**不会释放**，很危险。类似的方法还有 `suspend()` 和 `resume()` 方法，这两个方法同样也都不建议使用了。
+
+`interrupt()` 就好多了，仅仅是通知线程。
+
+* **`interrupt()`**：给线程发一个中断信号。
+* **`isInterrupted()`**：判断线程是否中断，不会清除中断状态。
+* **`interrupted()`**：判断线程是否中断，会清除中断状态。
+* **抛出中断异常**：会清除中断状态，表示可以接受下一个中断信号了。
+
+```java
+public
+class Thread implements Runnable {
+    public static boolean interrupted() {
+        return currentThread().isInterrupted(true);
+    }
+    
+    public boolean isInterrupted() {
+        return isInterrupted(false);
+    }
+    
+    /**
+     * Tests if some Thread has been interrupted.  The interrupted state
+     * is reset or not based on the value of ClearInterrupted that is
+     * passed.
+     */
+    private native boolean isInterrupted(boolean ClearInterrupted);
+    
+    /**
+     * @throws  InterruptedException
+     *          if any thread has interrupted the current thread. The
+     *          <i>interrupted status</i> of the current thread is
+     *          cleared when this exception is thrown.
+     */
+    public static native void sleep(long millis) throws InterruptedException;
+}
+```
+
 ### `join()`的本质
 
 `join()`的本质是先调用`synchronized`方法获取线程的锁，然后调用`wait()`方法，当线程 terminate 的时候，会调用`notifyAll()`方法。
