@@ -86,6 +86,33 @@ class Account {
 }
 ```
 
+这种方法正确性没有问题，但是效率在并发量大时会有问题，应该用**等待-通知**机制。
+
+**等待 - 通知机制：**线程首先获取互斥锁，当线程要求的条件不满足时，释放互斥锁，进入等待状态；当要求的条件满足时，通知等待的线程，重新获取互斥锁。
+
+```java
+class Allocator {
+  private List<Object> als;
+  // 一次性申请所有资源
+  synchronized void apply(Object from, Object to){
+    // 经典写法
+    while(als.contains(from) || als.contains(to)){
+      try{
+        wait();
+      }catch(Exception e){}   
+    } 
+    als.add(from);
+    als.add(to);  
+  }
+  // 归还资源
+  synchronized void free(Object from, Object to){
+    als.remove(from);
+    als.remove(to);
+    notifyAll();
+  }
+}
+```
+
 ### 破坏不可抢占
 
 这一点 synchronized 没法做到，但是 J.U.C 里面的 Lock 可以轻松解决。
