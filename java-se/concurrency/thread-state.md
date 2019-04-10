@@ -98,8 +98,7 @@ public class Thread implements Runnable {
 * **抛出中断异常**：会清除中断状态，表示可以接受下一个中断信号了。
 
 ```java
-public
-class Thread implements Runnable {
+public class Thread implements Runnable {
     public static boolean interrupted() {
         return currentThread().isInterrupted(true);
     }
