@@ -115,7 +115,7 @@ class Allocator {
 
 ### 破坏不可抢占
 
-这一点 synchronized 没法做到，但是 J.U.C 里面的 Lock 可以轻松解决。
+这一点 synchronized 没法做到，但是 J.U.C 里面的 [Lock](lock-and-condition.md#lock) 可以轻松解决。
 
 ### 破坏循环等待
 
