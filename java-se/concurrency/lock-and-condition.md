@@ -50,3 +50,54 @@ Lock 有一个实现类 `ReentrantLock`，即可重入锁：**线程可以重复
 
 ## Condition
 
+Condition 实现了管程模型里面的条件变量。一个 Lock 可以有多个条件变量，这个是与 synchronized 一个很大的区别。
+
+#### 利用两个条件变量实现阻塞队列
+
+```java
+public class BlockedQueue<T>{
+  final Lock lock = new ReentrantLock();
+  // 条件变量：队列不满  
+  final Condition notFull = lock.newCondition();
+  // 条件变量：队列不空  
+  final Condition notEmpty = lock.newCondition();
+ 
+  // 入队
+  void enq(T x) {
+    lock.lock();
+    try {
+      while (队列已满){
+        // 等待队列不满
+        notFull.await();
+      }  
+      // 省略入队操作...
+      // 入队后, 通知可出队
+      notEmpty.signal();
+    }finally {
+      lock.unlock();
+    }
+  }
+  // 出队
+  void deq(){
+    lock.lock();
+    try {
+      while (队列已空){
+        // 等待队列不空
+        notEmpty.await();
+      }  
+      // 省略出队操作...
+      // 出队后，通知可入队
+      notFull.signal();
+    }finally {
+      lock.unlock();
+    }  
+  }
+}
+```
+
+由此可见：
+
+* `Condition.await()` 对应 `Object.wait()`
+* `Condition.signal()` 对应 `Object.notify()`
+* `Condition.signalAll()` 对应 `Object.notifyAll()`
+
