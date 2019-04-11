@@ -8,8 +8,6 @@
 
 管程有三种模型：**Hasen 模型**、**Hoare 模型**、**MESA 模型**。
 
-`synchronized`、`wait()`、`notify()` 不过是操作系统领域里管程模型的一种实现而已。Java SDK 并发包里的 `Lock` 和 `Condition` 是管程的另一种实现。
-
 ### MESA 模型
 
 应用最广泛的事 MESA 模型。
@@ -62,9 +60,10 @@ while(条件不满足) {
 
 管程有三种模型，Java 参考了 MESA 模型，并实现了它。
 
-内置的 synchronized 是对 MESA 模型的精简，MESA 模型可以有多个条件变量，synchronized 只有一个。但是使用简单，会自动加锁、解锁。
+`synchronized`、`wait()`、`notify()` 不过是操作系统领域里管程模型的一种实现而已。Java SDK 并发包里的 `Lock` 和 `Condition` 是管程的另一种实现。
 
-JDK 并发包的 Lock 和 Condition 是另一套实现，支持多个条件变量，但是需要手动加锁和解锁。
+* 内置的 `synchronized` 是对 MESA 模型的精简，MESA 模型可以有多个条件变量，synchronized 只有一个。但是使用简单，会自动加锁、解锁。
+* JDK 并发包的 `Lock` 和 `Condition` 是另一套实现，支持多个条件变量，但是需要手动加锁和解锁。
 
 ## 分工、同步、互斥
 
