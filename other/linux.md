@@ -219,6 +219,23 @@ Host test
 * `ssh 172.16.1.*` 可以直接通过跳板机 `10.0.197.12` 连接`172.16.1.*`，即支持通配符。
 * `ssh test` 可以直接通过跳板机 `10.0.197.12` 连接`172.16.1.4`。
 
+### ssh 免密登录
+
+​SSH 是一个安全性协议，默认 SSH 链接需要密码，可以通过添加配置公钥、私钥来实现免密码登录。
+
+​对信息的加密采用 private key，对信息的解密采用 public key。若客户端A想要登录服务器B，public key 放在 B 上，private key 放在 A 上;
+
+​当 A 连接 B 时，B 生成一个随机数并用 public key 加密发送给 A，A 用 private key 解密发送给 B，B 确认无误后，允许 A 登录。
+
+```bash
+ssh-keygen -t rsa
+
+ip="10.4.34.47" && \
+ssh root@${ip} 'mkdir -p ~/.ssh' && \
+cat ~/.ssh/id_rsa.pub | ssh root@${ip} 'cat >> ~/.ssh/authorized_keys' && \
+ssh root@${ip} 'chmod 600 .ssh/authorized_keys'
+```
+
 ## 系统调用
 
 `strace` 可以跟踪进程执行时系统调用和所接受的信号量。
