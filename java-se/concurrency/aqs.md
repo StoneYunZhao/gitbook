@@ -2,9 +2,7 @@
 
 ## AbstractQueuedSynchronizer
 
-## CountDownLatch
 
-state = N
 
 
 
