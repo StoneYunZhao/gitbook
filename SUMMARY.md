@@ -18,6 +18,8 @@
   * [Deadlock](java-se/concurrency/deadlock.md)
   * [Thread](java-se/concurrency/thread-state.md)
   * [Lock & Condition](java-se/concurrency/lock-and-condition.md)
+  * [Semaphore](java-se/concurrency/semaphore.md)
+  * [ReadWriteLock](java-se/concurrency/readwritelock.md)
   * [CAS](java-se/concurrency/cas.md)
   * [AQS](java-se/concurrency/aqs.md)
 * [Release Note](java-se/jdk-release-note.md)

@@ -32,9 +32,11 @@ public interface Lock {
 
 但是 Lock 怎么保证可见性呢？Lock 内部持有一个 volatile 变量 state，获取和释放锁的时候都会读写 state，所以利用 [顺序性规则](jmm.md#cheng-xu-shun-xu-xing-gui-ze)、[volatile 变量规则](jmm.md#volatile-bian-liang-gui-ze)、[传递性](jmm.md#chuan-di-xing)，Lock 就可以保证可见性。
 
-### 可重入锁
+### ReentrantLock
 
 Lock 有一个实现类 `ReentrantLock`，即可重入锁：**线程可以重复获取同一把锁**。
+
+底层基于 AQS，每当同一个线程获得一次这把锁，state 变量加1，释放一次 state 变量减1，最终当线程不持有锁时，state 为0。
 
 ### 公平锁与非公平锁
 
