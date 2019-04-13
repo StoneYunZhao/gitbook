@@ -21,6 +21,8 @@
   * [Semaphore](java-se/concurrency/semaphore.md)
   * [ReadWriteLock](java-se/concurrency/readwritelock.md)
   * [StampedLock](java-se/concurrency/stampedlock.md)
+  * [CountDownLatch](java-se/concurrency/countdownlatch.md)
+  * [CyclicBarrier](java-se/concurrency/cyclicbarrier.md)
   * [CAS](java-se/concurrency/cas.md)
   * [AQS](java-se/concurrency/aqs.md)
 * [Release Note](java-se/jdk-release-note.md)
