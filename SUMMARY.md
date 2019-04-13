@@ -20,6 +20,7 @@
   * [Lock & Condition](java-se/concurrency/lock-and-condition.md)
   * [Semaphore](java-se/concurrency/semaphore.md)
   * [ReadWriteLock](java-se/concurrency/readwritelock.md)
+  * [StampedLock](java-se/concurrency/stampedlock.md)
   * [CAS](java-se/concurrency/cas.md)
   * [AQS](java-se/concurrency/aqs.md)
 * [Release Note](java-se/jdk-release-note.md)
