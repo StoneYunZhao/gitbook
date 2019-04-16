@@ -44,11 +44,12 @@
 
 ## database
 
+* [MySQL](database/mysql/README.md)
+  * [Basic](database/mysql/basic.md)
 * [Transaction](database/transaction.md)
 * [Redis](database/basic.md)
 * [Elasticsearch](database/elasticsearch.md)
 * [HBase](database/hbase.md)
-* [MySQL](database/mysql.md)
 * [MongoDB](database/mongodb.md)
 * [ZooKeeper](database/zookeeper-1.md)
 * [Kafka](database/kafka.md)

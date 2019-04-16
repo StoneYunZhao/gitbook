@@ -1,4 +1,4 @@
-# MySQL
+# Basic
 
 ## 安装
 
