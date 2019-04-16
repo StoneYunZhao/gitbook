@@ -46,6 +46,7 @@
 
 * [MySQL](database/mysql/README.md)
   * [Basic](database/mysql/basic.md)
+  * [Architecture](database/mysql/architecture.md)
 * [Transaction](database/transaction.md)
 * [Redis](database/basic.md)
 * [Elasticsearch](database/elasticsearch.md)

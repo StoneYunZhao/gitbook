@@ -60,7 +60,7 @@ Redis 基于 **Reactor 模式**开发了网络事件处理器，叫做**文件�
 * 文件事件处理器采用 **IO 多路复用**模型，同时监听多个 Socket。
 * 若被监听的 Socket 准备好执行accept、read、write、close等操作的时，就会产生对应的文件事件，文件事件处理器就会调用套接字之前关联好的事件处理器来处理这些事件。
 
-![](../.gitbook/assets/image%20%2843%29.png)
+![](../.gitbook/assets/image%20%2844%29.png)
 
 文件事件处理器的结构包含4个部分：
 
@@ -82,7 +82,7 @@ Redis 基于 **Reactor 模式**开发了网络事件处理器，叫做**文件�
 
 通过包装常见的 `select` 、 `epoll` 、 `evport` 和 `kqueue` 这些 I/O 多路复用函数库来实现的，Redis 会选择效率最高的实现方式。
 
-![](../.gitbook/assets/image%20%2851%29.png)
+![](../.gitbook/assets/image%20%2852%29.png)
 
 ### 文件事件
 

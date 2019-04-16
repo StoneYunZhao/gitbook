@@ -6,7 +6,7 @@ Java 集合框架和分为 Collection 和 Map 两大类。其中 Collection 又�
 
 ## 2. Collection
 
-![Collection &#x7C7B;&#x7EE7;&#x627F;&#x5173;&#x7CFB;](../.gitbook/assets/image%20%2845%29.png)
+![Collection &#x7C7B;&#x7EE7;&#x627F;&#x5173;&#x7CFB;](../.gitbook/assets/image%20%2846%29.png)
 
 ### 2.1 List
 
