@@ -160,6 +160,9 @@ GET /_cluster/allocation/explain
 
 # 获取各个节点上的 task
 GET _tasks
+
+# 获取所有数据节点和存储空间
+GET _cat/allocation?v
 ```
 
 ### Shard Allocation
