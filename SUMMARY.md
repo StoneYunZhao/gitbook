@@ -23,6 +23,7 @@
   * [StampedLock](java-se/concurrency/stampedlock.md)
   * [CountDownLatch](java-se/concurrency/countdownlatch.md)
   * [CyclicBarrier](java-se/concurrency/cyclicbarrier.md)
+  * [Thread-safe Collection](java-se/concurrency/thread-safe-collection.md)
   * [CAS](java-se/concurrency/cas.md)
   * [AQS](java-se/concurrency/aqs.md)
 * [Release Note](java-se/jdk-release-note.md)

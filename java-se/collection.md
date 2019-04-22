@@ -4,9 +4,11 @@
 
 Java 集合框架和分为 Collection 和 Map 两大类。其中 Collection 又由 Set、List、Queue 三类组成。
 
+本节主要讲线程不安全的容器，线程安全的容器见 [Thread-safe Collection](concurrency/thread-safe-collection.md)。
+
 ## 2. Collection
 
-![Collection &#x7C7B;&#x7EE7;&#x627F;&#x5173;&#x7CFB;](../.gitbook/assets/image%20%2848%29.png)
+![Collection &#x7C7B;&#x7EE7;&#x627F;&#x5173;&#x7CFB;](../.gitbook/assets/image%20%2849%29.png)
 
 ### 2.1 List
 
