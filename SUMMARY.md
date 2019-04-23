@@ -25,6 +25,7 @@
   * [CyclicBarrier](java-se/concurrency/cyclicbarrier.md)
   * [Thread-safe Collection](java-se/concurrency/thread-safe-collection.md)
   * [CAS](java-se/concurrency/cas.md)
+  * [Thread Pool](java-se/concurrency/thread-pool.md)
   * [AQS](java-se/concurrency/aqs.md)
 * [Release Note](java-se/jdk-release-note.md)
 
