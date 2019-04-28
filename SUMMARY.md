@@ -28,6 +28,7 @@
   * [Thread Pool](java-se/concurrency/thread-pool.md)
   * [Future](java-se/concurrency/future.md)
   * [CompletableFuture](java-se/concurrency/completablefuture.md)
+  * [CompletionService](java-se/concurrency/completionservice.md)
   * [AQS](java-se/concurrency/aqs.md)
 * [Release Note](java-se/jdk-release-note.md)
 
