@@ -4,8 +4,12 @@
 
 ```bash
 yum intall -y redis
+brew install redis
 
 redis-cli -h 172.16.1.18
+
+redis-cli -h 10.129.60.199 -p 31919
+10.129.60.199:31919> auth 123qwe!@#
 
 keys abc*
 ```
