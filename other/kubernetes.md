@@ -185,5 +185,12 @@ journalctl -l -u kubelet
 # 确认 kubernetes 安装成功
 curl http://kubernetes-dashboard.kube-system/api/v1/login/status
 
+# 重新生产 join token
+kubeadm token list
+kubeadm token create
+openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
+# or
+kubeadm token create --print-join-command
+
 ```
 
