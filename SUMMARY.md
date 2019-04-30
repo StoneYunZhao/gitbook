@@ -4,8 +4,8 @@
 
 ## JAVA
 
+* [Preface](java-se/preface.md)
 * [Grammar](java-se/grammar/README.md)
-  * [Preface](java-se/grammar/preface.md)
   * [Basic](java-se/grammar/basic.md)
   * [Data Types](java-se/grammar/data-types.md)
   * [Operator](java-se/grammar/operator.md)
@@ -31,22 +31,24 @@
   * [CompletableFuture](java-se/concurrency/completablefuture.md)
   * [CompletionService](java-se/concurrency/completionservice.md)
   * [AQS](java-se/concurrency/aqs.md)
-* [Release Note](java-se/jdk-release-note.md)
+* [JVM](java-se/jvm/README.md)
+  * [Class & Instance Initialization](java-se/jvm/class-and-instance-initialization.md)
+  * [Runtime Data Area](java-se/jvm/runtime-data-area.md)
+  * [Garbage Collection](java-se/jvm/garbage-collection.md)
 
-## JVM
+## Computer Science
 
-* [Class & Instance Initialization](jvm/class-and-instance-initialization.md)
-* [Runtime Data Area](jvm/runtime-data-area.md)
-* [Garbage Collection](jvm/garbage-collection.md)
-
-## Algorithm
-
-* [List](algorithm/list.md)
-* [Tree](algorithm/tree.md)
-
-## design patterns
-
-* [Singleton](design-patterns/singleton.md)
+* [Algorithm](computer-science/algorithm/README.md)
+  * [List](computer-science/algorithm/list.md)
+  * [Tree](computer-science/algorithm/tree.md)
+* [Design Patterns](computer-science/design-patterns/README.md)
+  * [Singleton](computer-science/design-patterns/singleton.md)
+* [Distributed System](computer-science/distributed-system/README.md)
+  * [Introduction](computer-science/distributed-system/introduction.md)
+  * [Message Queue](computer-science/distributed-system/message-queue.md)
+  * [Cache](computer-science/distributed-system/cache.md)
+  * [Consistent Hashing](computer-science/distributed-system/consistent-hashing.md)
+  * [Gossip](computer-science/distributed-system/gossip.md)
 
 ## database
 
@@ -54,21 +56,13 @@
   * [Basic](database/mysql/basic.md)
   * [Architecture](database/mysql/architecture.md)
   * [Log](database/mysql/log.md)
-* [Transaction](database/transaction.md)
+  * [Transaction](database/mysql/transaction.md)
 * [Redis](database/basic.md)
 * [Elasticsearch](database/elasticsearch.md)
 * [HBase](database/hbase.md)
 * [MongoDB](database/mongodb.md)
 * [ZooKeeper](database/zookeeper-1.md)
 * [Kafka](database/kafka.md)
-
-## distributed system
-
-* [Introduction](distributed-system/introduction.md)
-* [Message Queue](distributed-system/message-queue.md)
-* [Cache](distributed-system/cache.md)
-* [Consistent Hashing](distributed-system/consistent-hashing.md)
-* [Gossip](distributed-system/gossip.md)
 
 ## Other
 

@@ -54,7 +54,7 @@ Cache Aside Pattern：
 
 **解决方案**：分布式锁+时间戳。
 
-![](../.gitbook/assets/01redis-bing-fa-jing-zheng-wen-ti-yi-ji-jie-jue-fang-an.png)
+![](../../.gitbook/assets/01redis-bing-fa-jing-zheng-wen-ti-yi-ji-jie-jue-fang-an.png)
 
 
 
