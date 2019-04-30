@@ -1,6 +1,6 @@
 # Thread-safe Collection
 
-在 [Collection](../collection.md) 一节中提到，Java 容器有四大类：List、Set、Queue、Map。
+在 [Collection](../class-libraries/collection.md) 一节中提到，Java 容器有四大类：List、Set、Queue、Map。
 
 ## Synchronized Collection
 
