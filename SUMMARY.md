@@ -72,10 +72,7 @@
 * [Git](other/git.md)
 * [Maven](other/maven.md)
 * [Anaconda And Conda](other/anaconda-and-conda.md)
-
-## fuck! shit!
-
-* [Fuck! Shit!](fuck-shit/fuck-shit.md)
-* [Remove Final by Reflection](fuck-shit/remove-final-by-reflection.md)
-* [Ingress Host](fuck-shit/ingress-host.md)
+* [Fuck! Shit!](other/fuck-shit/README.md)
+  * [Remove Final by Reflection](other/fuck-shit/remove-final-by-reflection.md)
+  * [Ingress Host](other/fuck-shit/ingress-host.md)
 
