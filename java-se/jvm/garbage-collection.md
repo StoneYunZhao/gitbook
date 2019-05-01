@@ -117,7 +117,7 @@ JDK1.7及之后版本的 JVM 已经将运行时常量池从方法区中移了出
 
 将内存分为大小相同的两块，每次使用其中的一块。当这一块的内存使用完后，就将还存活的对象复制到另一块去，然后再把使用的空间一次清理掉。
 
-![](../../.gitbook/assets/image%20%2883%29.png)
+![](../../.gitbook/assets/image%20%2884%29.png)
 
 收集器：Serial、ParNew、Parallel Scavenge、
 
