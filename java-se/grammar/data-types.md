@@ -2,7 +2,7 @@
 
 Java是一门强类型语言，意味着Java中的每个变量都申明了类型。Java中有8种基本数据类型和引用类型。
 
-### 基本数据类型
+## 基本数据类型
 
 | 类型 | 所占空间\(byte\) | 数据范围 | 默认值 | 包装类 |
 | :---: | :---: | :---: | :---: | :---: |
@@ -18,13 +18,13 @@ Java是一门强类型语言，意味着Java中的每个变量都申明了类型
 * Java中的数值类型**都是有符号的**，不存在无符号的数值类型。
 * Java中还存在一种基本类型void，有对应的包装类Void。
 
-### 类型的自动转换
+## 类型的自动转换
 
-### 类型的强制转换
+## 类型的强制转换
 
-### 不可变类
+## 不可变类
 
-#### Integer
+### Integer
 
 ```java
 public class Main {
@@ -110,7 +110,5 @@ public final class Integer extends Number implements Comparable<Integer> {
 }
 ```
 
-#### String
-
-
+### String
 
