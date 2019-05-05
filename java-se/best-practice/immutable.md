@@ -134,11 +134,11 @@ String 是不可变类，所以它原生保证了线程安全。也因为无法�
 
 Java 1.6 提供了 intern 方法，目的是把 String 缓存起来，起初缓存在方法区（PermGen）里面，由于容易导致 OOM，所以 1.7 移到了堆中，详见[方法区](../jvm/runtime-data-area.md#yong-jiu-dai-yu-yuan-kong-jian)。默认缓存大小也在不断扩大，最初是 1009，7u40被改为60013，可以使用`-XX:+PrintStringTableStatistics`打印，也可以使用`-XX:StringTableSize=N`修改。
 
-intern 是一种显示得排重，8u20 后推出了 G1 GC 下的字符串排重，通过将相同数据的字符串指向同一份数据，默认关闭的。需要使用 G1，并开启参数：`-XX:+UseStringDeduplication`。
-
-由于 String 是不可变类，所以拼接、裁剪等操作都会产生新的 String 对象。StringBuffer 正是解决产生太多中间对象而设计的类。
+intern 是一种显式排重，8u20 后推出了 G1 GC 下的字符串排重，通过将相同数据的字符串指向同一份数据，默认关闭的。需要使用 G1，并开启参数：`-XX:+UseStringDeduplication`。
 
 ### StringBuffer
+
+由于 String 是不可变类，所以拼接、裁剪等操作都会产生新的 String 对象。StringBuffer 正是解决产生太多中间对象而设计的类。
 
 * 本质是一个线程安全的可修改字符序列。
 * 它通过给修改数据的方法都加上 synchronized 关键字来实现线程安全（这种方式可以用在我们平时开发线程安全的类，”过早优化是万恶之源“）。
