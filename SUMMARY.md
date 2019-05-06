@@ -28,7 +28,7 @@
   * [CyclicBarrier](java-se/concurrency/cyclicbarrier.md)
   * [Thread-safe Collection](java-se/concurrency/thread-safe-collection.md)
   * [CAS](java-se/concurrency/cas.md)
-  * [Thread Pool](java-se/concurrency/thread-pool.md)
+  * [Thread PoolExecutor](java-se/concurrency/thread-pool.md)
   * [Future](java-se/concurrency/future.md)
   * [CompletableFuture](java-se/concurrency/completablefuture.md)
   * [CompletionService](java-se/concurrency/completionservice.md)
