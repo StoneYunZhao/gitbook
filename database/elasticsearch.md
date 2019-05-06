@@ -132,6 +132,7 @@ GET _template
 PUT _template/my_logstash
 {
   "index_patterns": ["logstash-*"],
+  "order": 1,
   "settings": {
     "number_of_shards": 1
   }
@@ -191,4 +192,44 @@ GET _cat/allocation?v
 * **index.unassigned.node\_left.delayed\_timeout**
   * 见 Index API。
   * 注意：此配置是 **index 级别**的，所以就算配置的时候指定为`_all`，**新建的** index 也不会有这个配置。可以用 template 的方式增加此配置。
+
+## 2. Tuning
+
+* `index.refresh_interval`：由 Buffer 写入 Segment（在 OS cache 中） 的频率，默认 1s。
+* `index.merge.scheduler.max_thread_count`：merge 操作的最大线程，默认有个公式，详情[参考官方](https://www.elastic.co/guide/en/elasticsearch/reference/6.2/index-modules-merge.html)。
+* `index.translog.durability`：默认 request，表示同步写入，参考[官方文档](https://www.elastic.co/guide/en/elasticsearch/reference/6.2/index-modules-translog.html)。
+* `index.translog.sync_interval`：默认 5s，表示 translog 由 OS cache 写入硬盘的频率。需要 close index 才能修改。
+
+对于已存在的 index：
+
+```bash
+PUT .monitoring-*/_settings
+{
+  "index": {
+  	"refresh_interval": "30s",
+    "translog.durability": "async",
+    "merge.scheduler.max_thread_count": 1
+  }
+}
+```
+
+对于以后创建的 index：
+
+* `order`：数值越大越后执行，会覆盖数值小的。
+
+```bash
+PUT _template/my_config
+{
+  "index_patterns": ["*"],
+  "order" : 1, 
+  "settings": {
+    "index": {
+        "refresh_interval": "30s",
+        "translog.durability": "async",
+        "translog.sync_interval": "100s",
+        "merge.scheduler.max_thread_count": 1
+      }
+  }
+}
+```
 
