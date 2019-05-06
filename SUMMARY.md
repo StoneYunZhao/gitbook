@@ -64,9 +64,11 @@
 * [Redis](database/basic.md)
 * [Elasticsearch](database/elasticsearch.md)
 * [HBase](database/hbase.md)
-* [MongoDB](database/mongodb.md)
+* [Kafka](database/kafka/README.md)
+  * [Preface](database/kafka/preface.md)
+  * [Client](database/kafka/client.md)
 * [ZooKeeper](database/zookeeper-1.md)
-* [Kafka](database/kafka.md)
+* [MongoDB](database/mongodb.md)
 
 ## Other
 
