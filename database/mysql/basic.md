@@ -10,6 +10,18 @@ yum install mysql
 yum install mysql-server
 ```
 
+## \# Docker 启动
+
+```bash
+docker pull mysql:8.0.16
+
+docker run -d --name mysql \
+-p 3306:3306 \
+-e MYSQL_ROOT_PASSWORD=123qwe \
+-v /Users/zhaoyun/Downloads/mysql:/var/lib/mysql \
+mysql:8.0.16
+```
+
 ## 基本命令
 
 ```bash

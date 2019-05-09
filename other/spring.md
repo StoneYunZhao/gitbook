@@ -8,13 +8,13 @@ BeanFactory 是**延迟加载**的，在第一调用 getBean 方法后才会加�
 
 ApplicationContext 继承自 BeanFactory，并提供了额外的功能，比如 MessageSource 提供国际化的消息访问、事件传播等。ApplicationContext 在**初始化**的时候就**加载所有**的 Bean。
 
-![](../.gitbook/assets/image%20%2865%29.png)
+![](../.gitbook/assets/image%20%2876%29.png)
 
-![](../.gitbook/assets/image%20%2874%29.png)
+![](../.gitbook/assets/image%20%2885%29.png)
 
 ## Bean 的生命周期
 
-![](../.gitbook/assets/image%20%2842%29.png)
+![](../.gitbook/assets/image%20%2849%29.png)
 
 1. **实例化 Bean**：容器通过 BeanDefinition 中的信息进行实例化，实例化的对象包装在 BeanWrapper 中。
 2. **依赖注入**：通过 BeanWrapper 的接口根据 BeanDefinition 中的信息进行注入。若注入的是其它 Bean，则会先初始化 依赖的 Bean。
@@ -28,8 +28,4 @@ ApplicationContext 继承自 BeanFactory，并提供了额外的功能，比如 
 10. **@PreDestroy**：指定此注解的方法。
 11. **DisposableBean**：若实现了该接口，则调用 `destroy` 方法。
 12. **destroy-method**：和 `init-method` 一样，通过指定**`destroy-method`**属性所对应的方法名，也会执行对应方法。
-
-* [http://www.importnew.com/22350.html](http://www.importnew.com/22350.html)
-* [https://www.zhihu.com/question/38597960](https://www.zhihu.com/question/38597960)
-* [https://juejin.im/post/5ab1bf19f265da23771947f1](https://juejin.im/post/5ab1bf19f265da23771947f1)
 

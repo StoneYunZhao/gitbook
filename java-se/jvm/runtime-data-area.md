@@ -2,11 +2,11 @@
 
 JVM = 类加载器\(ClassLoader\) + 执行引擎\(Execution engine\) + 运行时数据区域\(Runtime data area\) 。如下图所示：
 
-![](../../.gitbook/assets/image%20%2879%29.png)
+![](../../.gitbook/assets/image%20%2890%29.png)
 
 **Runtime data area：**Java虚拟机在执行Java程序的过程中会把它所管理的内存划分为若干个不同的区域。如下图是运行时数据区域的详细结构：
 
-![](../../.gitbook/assets/image%20%2882%29.png)
+![](../../.gitbook/assets/image%20%2893%29.png)
 
 ### Java堆
 
@@ -44,7 +44,7 @@ JVM = 类加载器\(ClassLoader\) + 执行引擎\(Execution engine\) + 运行时
   3. **MinMetaspaceFreeRatio**：当进行过Metaspace GC之后，会计算当前Metaspace的空闲空间比，如果空闲比小于这个参数（即实际非空闲占比过大，内存不够用），那么虚拟机将增长Metaspace的大小。默认值为40，也就是40%。
   4. **MaxMetasaceFreeRatio**：当进行过Metaspace GC之后， 会计算当前Metaspace的空闲空间比，如果空闲比大于这个参数，那么虚拟机会释放Metaspace的部分空间。默认值为70，也就是70%。
 
-![JDK8&#x6C38;&#x4E45;&#x4EE3;&#x53D8;&#x5316;](../../.gitbook/assets/image.png)
+![JDK8&#x6C38;&#x4E45;&#x4EE3;&#x53D8;&#x5316;](../../.gitbook/assets/image%20%281%29.png)
 
 ### Java虚拟机栈
 

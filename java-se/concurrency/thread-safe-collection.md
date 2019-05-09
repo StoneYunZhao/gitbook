@@ -33,7 +33,7 @@ synchronized (list) {
 
 同步容器性能较差，因此 Java 1.5提供了**并发容器**。
 
-![](../../.gitbook/assets/image%20%2859%29.png)
+![](../../.gitbook/assets/image%20%2869%29.png)
 
 ### List
 
@@ -48,7 +48,7 @@ List 里面只有一个实现类就是 `CopyOnWriteArrayList`。
 
 注意：迭代器是只读的，因为迭代器遍历的仅仅是一个快照。
 
-![](../../.gitbook/assets/image%20%2820%29.png)
+![](../../.gitbook/assets/image%20%2824%29.png)
 
 ### Map
 
@@ -60,7 +60,7 @@ key 是无序的。
 
 key 是有序的。基于跳表实现，插入、删除、查询的平均时间复杂度为 O\(logn\)。
 
-![](../../.gitbook/assets/image%20%2861%29.png)
+![](../../.gitbook/assets/image%20%2871%29.png)
 
 ### Set
 

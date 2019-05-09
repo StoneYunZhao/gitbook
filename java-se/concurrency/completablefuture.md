@@ -8,7 +8,7 @@ Java 8 提供了 `CompletableFuture`来支持异步编程，Java 9 提供了更�
 
 以上节[烧水泡茶](future.md#futuretask)为例：
 
-![](../../.gitbook/assets/image%20%2864%29.png)
+![](../../.gitbook/assets/image%20%2874%29.png)
 
 ```java
 //任务1：洗⽔壶->烧开⽔ 

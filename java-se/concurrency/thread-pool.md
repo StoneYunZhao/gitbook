@@ -1,4 +1,4 @@
-# Thread PoolExecutor
+# ThreadPoolExecutor
 
 Java 创建线程需要调用操作系统内核 API，然后操作系统分配一系列资源，所以**创建线程是一个重量级操作，应该避免频繁创建于销毁**。所以需要线程池来解决上述问题。
 
