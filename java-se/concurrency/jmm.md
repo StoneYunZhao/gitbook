@@ -118,7 +118,69 @@ public FinalFieldExample() {
 }
 ```
 
+## 案例
+
+下面代码运行后，会一直运行，CPU 一直使用率很高，8 个线程一直处于 while 循环，控制台没有任何输出。原因是 get 方法无法看见 set 方法的结果，不能从 Happens-Before 原则中导出 get 能看到 set 对 result 的修改。
+
+```java
+public class HappensBefore {
+    private int result;
+
+    private int getResult() {
+        return result;
+    }
+
+    private synchronized void setResult(int result) {
+        this.result = result;
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        HappensBefore target = new HappensBefore();
+
+        class Task implements Callable<Void> {
+            @Override
+            public Void call() {
+                int x = 0;
+                while (target.getResult() < 100) {
+                    x++;
+                }
+                System.out.println(x);
+                return null;
+            }
+        }
+
+        ExecutorService threadPool = Executors.newFixedThreadPool(8);
+        for (int i = 0; i < 8; i++) {
+            threadPool.submit(new Task());
+        }
+        Thread.sleep(1000);
+        target.setResult(200);
+        threadPool.shutdown();
+    }
+}
+```
+
+需要解决上面问题，仅需要把 result 增加 volatile 修饰，甚至 set 方法的 synchronized 可以去掉。
+
+```java
+private volatile int result;
+private void setResult(int result) {
+    this.result = result;
+}
+
+// 输出
+1259427188
+1197924672
+1236734699
+1206846947
+1204081779
+1217966593
+1200072101
+1211415784
+```
+
 ## Reference
 
 * [https://zhuanlan.zhihu.com/p/29881777](https://zhuanlan.zhihu.com/p/29881777)
+* [https://mp.weixin.qq.com/s/i9ES7u5MPWCv1n8jYU\_q\_w](https://mp.weixin.qq.com/s/i9ES7u5MPWCv1n8jYU_q_w)
 
