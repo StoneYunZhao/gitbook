@@ -75,8 +75,6 @@
 
 ### 类加载与实例加载顺序
 
-分析下面代码的执行结果：
-
 ```java
 public class Father {
     private int i = test();
@@ -154,10 +152,6 @@ public class Son extends Father {
 
 ### 常量引用
 
-下面代码只会输出 hello，因为在编译阶段 ”hello“ 会存储在 ConstantReference 类的常量池中。
-
-若把 HELLO 的 final 修饰符去掉，则会先打印 ”ConstClass init.“
-
 ```java
 public class ConstantReference {
     public static void main(String[] args) {
@@ -173,6 +167,10 @@ public class ConstantReference {
     }
 }
 ```
+
+上面代码只会输出 hello，因为在编译阶段 ”hello“ 会存储在 ConstantReference 类的常量池中。
+
+若把 HELLO 的 final 修饰符去掉，则会先打印 ”ConstClass init.“
 
 ### 父类静态变量引用
 
@@ -203,7 +201,7 @@ SuperClass init!
 123
 ```
 
-上述代码没有输出 ”SubClass init!“，对于静态字段，只有直接定义这个字段的类才会被初始化。
+上面代码没有输出 ”SubClass init!“，对于静态字段，只有直接定义这个字段的类才会被初始化。
 
 ### 数组引用
 
