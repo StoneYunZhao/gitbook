@@ -73,6 +73,8 @@
 
 ## 案例
 
+### 类加载与实例加载顺序
+
 分析下面代码的执行结果：
 
 ```java
@@ -149,4 +151,75 @@ public class Son extends Father {
 ```text
 51106
 ```
+
+### 常量引用
+
+下面代码只会输出 hello，因为在编译阶段 ”hello“ 会存储在 ConstantReference 类的常量池中。
+
+若把 HELLO 的 final 修饰符去掉，则会先打印 ”ConstClass init.“
+
+```java
+public class ConstantReference {
+    public static void main(String[] args) {
+        System.out.println(ConstClass.HELLO);
+    }
+
+    private static class ConstClass{
+        private static final String HELLO = "hello";
+
+        static {
+            System.out.println("ConstClass init.");
+        }
+    }
+}
+```
+
+### 父类静态变量引用
+
+```java
+public class SuperStaticReference {
+
+    public static void main(String[] args) {
+        System.out.println(SubClass.value);
+    }
+
+    private static class SuperClass {
+        static {
+            System.out.println("SuperClass init!");
+        }
+
+        static int value = 123;
+    }
+
+    private static class SubClass extends SuperClass {
+        static {
+            System.out.println("SubClass init!");
+        }
+    }
+}
+
+// output
+SuperClass init!
+123
+```
+
+上述代码没有输出 ”SubClass init!“，对于静态字段，只有直接定义这个字段的类才会被初始化。
+
+### 数组引用
+
+```java
+public class ArrayReference {
+    public static void main(String[] args) {
+        SuperClass[] a = new SuperClass[10];
+    }
+
+    private static class SuperClass {
+        static {
+            System.out.println("SuperClass init!");
+        }
+    }
+}
+```
+
+上面代码不会输出 ”SuperClass init!“。
 
