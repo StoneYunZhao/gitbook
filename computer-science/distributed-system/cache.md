@@ -56,9 +56,3 @@ Cache Aside Pattern：
 
 ![](../../.gitbook/assets/01redis-bing-fa-jing-zheng-wen-ti-yi-ji-jie-jue-fang-an.png)
 
-
-
-
-
-
-
