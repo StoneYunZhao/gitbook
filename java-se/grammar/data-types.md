@@ -153,7 +153,60 @@ String 是[不可变类](../concurrency/concurrency-design-patterns/immutable.md
 
 Java 1.6 提供了 intern 方法，目的是把 String 缓存起来，起初缓存在方法区（PermGen）里面，由于容易导致 OOM，所以 1.7 移到了堆中，详见[方法区](../jvm/runtime-data-area.md#yong-jiu-dai-yu-yuan-kong-jian)。默认缓存大小也在不断扩大，最初是 1009，7u40被改为60013，可以使用`-XX:+PrintStringTableStatistics`打印，也可以使用`-XX:StringTableSize=N`修改。
 
-intern 是一种显式排重，8u20 后推出了 G1 GC 下的字符串排重，通过将相同数据的字符串指向同一份数据，默认关闭的。需要使用 G1，并开启参数：`-XX:+UseStringDeduplication`。
+intern 是一种显式排重，也是[享元模式](../../computer-science/design-patterns/flyweight.md)的思想，8u20 后推出了 G1 GC 下的字符串排重，通过将相同数据的字符串指向同一份数据，默认关闭的。需要使用 G1，并开启参数：`-XX:+UseStringDeduplication`。
+
+String 也使用了 [Copy-on-Write](../concurrency/concurrency-design-patterns/copy-on-write.md)（写时复制）的思想，比如 replace 方法：
+
+```java
+// Java 1.11 源码
+public String replace(char oldChar, char newChar) {
+    if (oldChar != newChar) {
+        String ret = isLatin1() ? StringLatin1.replace(value, oldChar, newChar)
+                                : StringUTF16.replace(value, oldChar, newChar);
+        if (ret != null) {
+            return ret;
+        }
+    }
+    return this;
+}
+
+public static String replace(byte[] value, char oldChar, char newChar) {
+    if (canEncode(oldChar)) {
+        int len = value.length;
+        int i = -1;
+        while (++i < len) {
+            if (value[i] == (byte)oldChar) {
+                break;
+            }
+        }
+        if (i < len) {
+            if (canEncode(newChar)) {
+                byte buf[] = new byte[len];
+                for (int j = 0; j < i; j++) {    // TBD arraycopy?
+                    buf[j] = value[j];
+                }
+                while (i < len) {
+                    byte c = value[i];
+                    buf[i] = (c == (byte)oldChar) ? (byte)newChar : c;
+                    i++;
+                }
+                return new String(buf, LATIN1);
+            } else {
+                byte[] buf = StringUTF16.newBytesFor(len);
+                // inflate from latin1 to UTF16
+                inflate(value, 0, buf, 0, i);
+                while (i < len) {
+                    char c = (char)(value[i] & 0xff);
+                    StringUTF16.putChar(buf, i, (c == oldChar) ? newChar : c);
+                    i++;
+                }
+                return new String(buf, UTF16);
+            }
+        }
+    }
+    return null; // for string to return this;
+}
+```
 
 ### StringBuffer
 
