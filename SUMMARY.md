@@ -35,12 +35,14 @@
   * [CompletionService](java-se/concurrency/completionservice.md)
   * [AQS](java-se/concurrency/aqs.md)
   * [Fork/Join](java-se/concurrency/fork-join.md)
+  * [Concurrency Design Patterns](java-se/concurrency/concurrency-design-patterns/README.md)
+    * [Immutable](java-se/concurrency/concurrency-design-patterns/immutable.md)
+    * [Copy-on-Write](java-se/concurrency/concurrency-design-patterns/copy-on-write.md)
+    * [ThreadLocal](java-se/concurrency/concurrency-design-patterns/threadlocal.md)
 * [JVM](java-se/jvm/README.md)
   * [Class & Instance Initialization](java-se/jvm/class-and-instance-initialization.md)
   * [Runtime Data Area](java-se/jvm/runtime-data-area.md)
   * [Garbage Collection](java-se/jvm/garbage-collection.md)
-* [Tips](java-se/best-practice/README.md)
-  * [Immutable](java-se/best-practice/immutable.md)
 
 ## Computer Science
 
@@ -49,6 +51,7 @@
   * [Tree](computer-science/algorithm/tree.md)
 * [Design Patterns](computer-science/design-patterns/README.md)
   * [Singleton](computer-science/design-patterns/singleton.md)
+  * [FlyWeight](computer-science/design-patterns/flyweight.md)
 * [Distributed System](computer-science/distributed-system/README.md)
   * [Introduction](computer-science/distributed-system/introduction.md)
   * [Message Queue](computer-science/distributed-system/message-queue.md)
