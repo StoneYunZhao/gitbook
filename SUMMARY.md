@@ -57,6 +57,8 @@
   * [Message Queue](computer-science/distributed-system/message-queue.md)
   * [Cache](computer-science/distributed-system/cache.md)
   * [Consistent Hashing](computer-science/distributed-system/consistent-hashing.md)
+* [Other](computer-science/other/README.md)
+  * [UML](computer-science/other/uml.md)
 
 ## database
 

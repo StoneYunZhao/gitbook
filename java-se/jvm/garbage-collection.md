@@ -62,7 +62,7 @@ GC Roots 包括：
 
 ### 2.3 引用类型
 
-![](../../.gitbook/assets/image%20%2889%29.png)
+![](../../.gitbook/assets/image%20%2890%29.png)
 
 引用计数法与可达性分析都与引用相关。JDK1.2 之后，将引用分为强引用、软引用、弱引用、虚引用。`FinalReference`为包可见，其它为 `public`。
 
@@ -170,7 +170,7 @@ JDK1.7及之后版本的 JVM 已经将运行时常量池从方法区中移了出
 
 将内存分为大小相同的两块，每次使用其中的一块。当这一块的内存使用完后，就将还存活的对象复制到另一块去，然后再把使用的空间一次清理掉。
 
-![](../../.gitbook/assets/image%20%2897%29.png)
+![](../../.gitbook/assets/image%20%2898%29.png)
 
 收集器：Serial、ParNew、Parallel Scavenge、
 
