@@ -7,6 +7,7 @@
 ## 重现
 
 ```java
+// java.lang.reflect.Field
 public class FinalFieldModify {
     public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
         System.out.println("Before modify: contains c = " + DataHolder.contains("c"));
@@ -76,8 +77,6 @@ After modify: contains c = true
 
 通过上面的解决方案可以看出，关键问题在于通过反射获取字段的值这个操作。
 
-{% code-tabs %}
-{% code-tabs-item title="java.lang.reflect.Field" %}
 ```java
 public final class Field extends AccessibleObject implements Member 
 {
@@ -109,8 +108,6 @@ public final class Field extends AccessibleObject implements Member
     }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
 
 上面是`java.lang.reflect.Field`精简后的代码，可见 Field 类会在第一次调用 get 方法时会缓存 FieldAccessor，但是修改 Field 的修饰符不会清除缓存，所以还是用的老的 final 类型的 FieldAccessor。
 
