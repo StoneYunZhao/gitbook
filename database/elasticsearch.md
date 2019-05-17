@@ -168,9 +168,7 @@ GET _cat/allocation?v
 
 ### Shard Allocation
 
-{% embed url="https://www.elastic.co/guide/en/elasticsearch/reference/current/shards-allocation.html" %}
-
-{% embed url="https://www.elastic.co/guide/en/elasticsearch/reference/current/disk-allocator.html" %}
+参考 [Cluster level shard allocation](https://www.elastic.co/guide/en/elasticsearch/reference/current/shards-allocation.html)、[Disk-based shard allocation](https://www.elastic.co/guide/en/elasticsearch/reference/current/disk-allocator.html)。
 
 * **cluster.routing.allocation.enable**
   * `all` - \(default\) Allows shard allocation for all kinds of shards.

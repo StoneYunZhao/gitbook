@@ -11,6 +11,7 @@
 如果是同一个线程调用 get 方法，则会返回相同的实例，若是不同的线程调用 get 方法，则会返回不同的实例。
 
 ```java
+// java.lang.Thread.java
 public class SafeDateFormat {
     private static final ThreadLocal<SimpleDateFormat> th = 
             ThreadLocal.withInitial(() -> new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
@@ -35,8 +36,6 @@ Java 使用的是第二种思路，理由是：
 
 下面是 Java 1.11 精简后的代码：
 
-{% code-tabs %}
-{% code-tabs-item title="java.lang.Thread.java" %}
 ```java
 public class Thread implements Runnable {
     ThreadLocal.ThreadLocalMap threadLocals = null;
@@ -52,12 +51,9 @@ public class Thread implements Runnable {
     }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
 
-{% code-tabs %}
-{% code-tabs-item title="java.lang.ThreadLocal.java" %}
 ```java
+// java.lang.ThreadLocal.java
 public class ThreadLocal<T> {
     static class ThreadLocalMap {
     
@@ -98,8 +94,6 @@ public class ThreadLocal<T> {
     }
 }
 ```
-{% endcode-tabs-item %}
-{% endcode-tabs %}
 
 ## 注意事项
 
