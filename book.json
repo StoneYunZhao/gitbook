@@ -1,0 +1,20 @@
+{
+    "plugins": ["-sharing", "sharing-plus", "chapter-fold", "splitter", "hints", "anchor-navigation-ex", "copy-code-button", "github"],
+    "pluginsConfig": {
+        "theme-default": {
+        	"showLevel": false
+    	},
+    	"fontsettings": {
+    		"theme": "sepia"
+    	},
+    	"anchor-navigation-ex": {
+		    "associatedWithSummary": false
+		},
+		"sharing": {
+	       "all": [ "google", "twitter","weibo", "qq", "douban" ]
+	   },
+	   "github": {
+            "url": "https://github.com/StoneYunZhao"
+        }
+    }
+}
