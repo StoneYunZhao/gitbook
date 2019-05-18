@@ -1,6 +1,6 @@
 # JVM
 
-* [Class & Instance Initialization](java/jvm/class-and-instance-initialization.md)
-* [Runtime Data Area](java/jvm/runtime-data-area.md)
-* [Garbage Collection](java/jvm/garbage-collection.md)
+* [Class & Instance Initialization](class-and-instance-initialization.md)
+* [Runtime Data Area](runtime-data-area.md)
+* [Garbage Collection](garbage-collection.md)
 

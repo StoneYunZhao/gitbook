@@ -1,5 +1,5 @@
 # Algorithm
 
-* [List](computer-science/algorithm/list.md)
-* [Tree](computer-science/algorithm/tree.md)
+* [List](list.md)
+* [Tree](tree.md)
 
