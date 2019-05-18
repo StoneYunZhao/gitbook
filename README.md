@@ -1,8 +1,16 @@
----
-description: 平时写的一些笔记，没有成体系，不做博客用，仅用来自己做技术积累。
----
-
 # Introduce
+
+平时写的一些笔记，没有成体系，不做博客用，仅用来自己做技术积累。若有技术问题欢迎一起探讨，微信 stone\_zy。
+
+* 国内地址（访问快）：[https://zhao-yun.com](https://zhao-yun.com)
+* 国外地址（UI 漂亮）：[https://yunzhao.gitbook.io/notes/](https://yunzhao.gitbook.io/notes/)
+
+由于作为笔记用，一个技术点在工作、学习过程中会不断增补。内容主要有四大块，详细的目录可见下文或者左侧边栏：
+
+* **Java**：包括基本语法、JDK 类库、J.U.C、JVM
+* **计算机科学**：包括算法、设计模式、分布式系统
+* **数据库**：包括 MySQL、Redis、Elasticsearch、HBase、Kafka、ZooKeeper、MongoDB
+* **其它**： 包括Linux、Docker、Kubernetes、Git、Maven、踩的坑
 
 ## JAVA
 
