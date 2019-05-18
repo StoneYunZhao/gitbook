@@ -1,6 +1,6 @@
 # Class Libraries
 
-* [Collection](java-se/class-libraries/collection.md)
-* [IO](java-se/class-libraries/java-io.md)
-* [NIO](java-se/class-libraries/java-nio.md)
+* [Collection](java/class-libraries/collection.md)
+* [IO](java/class-libraries/java-io.md)
+* [NIO](java/class-libraries/java-nio.md)
 
