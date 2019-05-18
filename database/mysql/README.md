@@ -1,9 +1,9 @@
 # MySQL
 
-* [Basic](database/mysql/basic.md)
-* [Architecture](database/mysql/architecture.md)
-* [Log](database/mysql/log.md)
-* [Transaction](database/mysql/transaction.md)
-* [Index](database/mysql/index.md)
-* [Lock](database/mysql/lock.md)
+* [Basic](basic.md)
+* [Architecture](architecture.md)
+* [Log](log.md)
+* [Transaction](transaction.md)
+* [Index](index.md)
+* [Lock](lock.md)
 

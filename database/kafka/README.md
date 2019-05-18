@@ -1,5 +1,5 @@
 # Kafka
 
-* [Preface](database/kafka/preface.md)
-* [Client](database/kafka/client.md)
+* [Preface](preface.md)
+* [Client](client.md)
 

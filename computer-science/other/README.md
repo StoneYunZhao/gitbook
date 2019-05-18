@@ -1,4 +1,4 @@
 # Other
 
-* [UML](computer-science/other/uml.md)
+* [UML](uml.md)
 
