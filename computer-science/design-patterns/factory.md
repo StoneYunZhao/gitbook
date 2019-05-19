@@ -20,7 +20,7 @@
 
 ### 类图
 
-![](../../.gitbook/assets/image%20%2896%29.png)
+![](../../.gitbook/assets/image%20%2828%29.png)
 
 ### 源码示例
 
@@ -79,6 +79,63 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
 ![](../../.gitbook/assets/image%20%2822%29.png)
 
 ## 工厂方法
+
+### 介绍
+
+定义：工厂方法模式定义了一个创建对象的接口，但由子类决定要实例化的类是哪一个。工厂方法把实例化推迟到子类。
+
+### 类图
+
+![](../../.gitbook/assets/image%20%2832%29.png)
+
+### 源码示例 `Collection`
+
+Collection 对应 Creator，ArrayList 对应 ConcreteCreator，Iterator 对应 Product，`Itr` 对应 ConcreteProduct。
+
+```java
+// java.util
+
+public interface Collection<E> extends Iterable<E> {
+    Iterator<E> iterator();
+}
+
+public class ArrayList<E> extends AbstractList<E> {
+    public Iterator<E> iterator() {
+        return new Itr();
+    }
+    
+    private class Itr implements Iterator<E> {}
+}
+```
+
+### 源码示例 ILogFactory
+
+ILoggerFactory 对应 Creator，LoggerContext 对应 ConcreteCreator，Logger 对应 Product。
+
+```java
+// org.slf4j
+
+public interface ILoggerFactory {
+  public Logger getLogger(String name);
+}
+
+public class LoggerContext extends ContextBase implements ILoggerFactory {
+
+  public final Logger getLogger(final String name) {
+    if (Logger.ROOT_LOGGER_NAME.equalsIgnoreCase(name)) {
+      return root;
+    }
+
+    int i = 0;
+    Logger logger = root;
+    Logger childLogger = (Logger) loggerCache.get(name);
+    if (childLogger != null) {
+      return childLogger;
+    }
+    
+    ...
+}
+```
 
 ## 抽象工厂
 
