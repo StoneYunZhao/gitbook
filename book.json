@@ -8,11 +8,12 @@
     		"theme": "night"
     	},
     	"anchor-navigation-ex": {
-		    "associatedWithSummary": false
-		},
-		"sharing": {
-	       "all": [ "google", "twitter","weibo", "qq", "douban" ]
-	   },
+	    "associatedWithSummary": false,
+            "multipleH1": true
+	},
+	"sharing": {
+            "all": [ "google", "twitter","weibo", "qq", "douban" ]
+        },
 	   "github": {
             "url": "https://github.com/StoneYunZhao"
         }
