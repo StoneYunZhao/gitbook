@@ -25,7 +25,7 @@ class Account {
 }
 ```
 
-![](../../.gitbook/assets/image%20%2874%29.png)
+![](../../.gitbook/assets/image%20%2875%29.png)
 
 Coffman 总结出，只有一下四个条件同时满足时，才能发生死锁：
 
