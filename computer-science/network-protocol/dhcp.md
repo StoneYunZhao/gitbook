@@ -9,7 +9,9 @@
 
 DHCP 是 BOOTP 的增强版。
 
-### DHCP Discover
+![](../../.gitbook/assets/image%20%2865%29.png)
+
+### Discover
 
 当一台新机器 A 加入网络的时候，仅知道自己的 MAC 地址，所以需要广播请求 IP。
 
@@ -52,7 +54,7 @@ DHCP 是 BOOTP 的增强版。
         IP</td>
     </tr>
   </tbody>
-</table>### DHCP Offer
+</table>### Offer
 
 DHCP 会收到这个请求，发现这机器 A 的 MAC 没有 IP 地址，所以租给它一个 IP。
 
@@ -95,7 +97,7 @@ DHCP 会收到这个请求，发现这机器 A 的 MAC 没有 IP 地址，所以
         IP&#xFF0C;&#x4F60;&#x770B;&#x5982;&#x4F55;</td>
     </tr>
   </tbody>
-</table>### 客户端接受 IP
+</table>### Request
 
 机器 A 可能收到多个 DHCP Server 的回复，它一般会选择最先到达的那个，并且会向网络发送一个 DHCP Request 广播数据包，包中包含客户端的 MAC 地址、接受的租约中的 IP 地址、提供此租约的 DHCP 服务器地址等，并告诉所有 DHCP Server 它将接受哪一台服务器提供的 IP 地址，告诉其他 DHCP 服务器撤销它们提供的 IP 地址。
 
@@ -140,7 +142,7 @@ DHCP 会收到这个请求，发现这机器 A 的 MAC 没有 IP 地址，所以
         DHCP Server &#x7ED9;&#x6211;&#x5206;&#x914D;&#x7684; IP</td>
     </tr>
   </tbody>
-</table>### DHCP 确认
+</table>### ACK
 
 返回给客户机一个 DHCP ACK 消息包。
 
@@ -196,5 +198,5 @@ DHCP 会收到这个请求，发现这机器 A 的 MAC 没有 IP 地址，所以
 
 DHCP 协议能给客户安装操作系统，这个在云计算领域大有用处。
 
-![](../../.gitbook/assets/image%20%2867%29.png)
+![](../../.gitbook/assets/image%20%2868%29.png)
 
