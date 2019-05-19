@@ -9,7 +9,7 @@
     	},
     	"anchor-navigation-ex": {
 	    "associatedWithSummary": false,
-            "multipleH1": true
+            "multipleH1": false
 	},
 	"sharing": {
             "all": [ "google", "twitter","weibo", "qq", "douban" ]
