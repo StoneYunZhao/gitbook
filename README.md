@@ -17,7 +17,6 @@
   * [算法](computer-science/algorithm/)
   * [设计模式](computer-science/design-patterns/)
   * [分布式系统](computer-science/distributed-system/)
-  * [其它](computer-science/other/)
 * **数据库**：
   * [MySQL](database/mysql/)
   * [Redis](database/basic.md)

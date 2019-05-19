@@ -50,6 +50,9 @@
   * [List](computer-science/algorithm/list.md)
   * [Tree](computer-science/algorithm/tree.md)
 * [Design Patterns](computer-science/design-patterns/README.md)
+  * [UML](computer-science/design-patterns/uml.md)
+  * [Principle](computer-science/design-patterns/principle.md)
+  * [Factory](computer-science/design-patterns/factory.md)
   * [Singleton](computer-science/design-patterns/singleton.md)
   * [FlyWeight](computer-science/design-patterns/flyweight.md)
 * [Distributed System](computer-science/distributed-system/README.md)
@@ -57,8 +60,6 @@
   * [Message Queue](computer-science/distributed-system/message-queue.md)
   * [Cache](computer-science/distributed-system/cache.md)
   * [Consistent Hashing](computer-science/distributed-system/consistent-hashing.md)
-* [Other](computer-science/other/README.md)
-  * [UML](computer-science/other/uml.md)
 
 ## database
 
