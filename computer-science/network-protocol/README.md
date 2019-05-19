@@ -1,6 +1,6 @@
 # Network Protocol
 
-《计算机组成与系统结构》、[《数据结构与算法》](algorithm/)、《操作系统》、《计算机网络》、《编译原理》是大学计算机的核心课程。
+《计算机组成与系统结构》、[《数据结构与算法》](../algorithm/)、《操作系统》、《计算机网络》、《编译原理》是大学计算机的核心课程。
 
 新技术层出不穷，网络协议是你到了 45 岁之后任然有价值的知识。
 
@@ -16,7 +16,7 @@
 | :--- | :--- |
 | 应用层 | DHCP, HTTP, HTTPS, RTMP, P2P, DNS, GTP, RPC |
 | 传输层 | UDP, TCP |
-| 网络层 | ICMP, IP, OSPF, BGP, IPSec, GRE |
+| 网络层 | ICMP, [IP](ip.md), OSPF, BGP, IPSec, GRE |
 | 链路层 | ARP, VLAN, STP |
 | 物理层 | 网络跳线 |
 

@@ -15,7 +15,7 @@
   * [JVM](java/jvm/)
 * **计算机科学**：
   * [算法](computer-science/algorithm/)
-  * [网络协议](computer-science/network-protocol.md)
+  * [网络协议](computer-science/network-protocol/)
   * [设计模式](computer-science/design-patterns/)
   * [分布式系统](computer-science/distributed-system/)
 * **数据库**：
