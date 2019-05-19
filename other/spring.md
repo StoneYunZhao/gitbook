@@ -8,13 +8,13 @@ BeanFactory 是**延迟加载**的，在第一调用 getBean 方法后才会加�
 
 ApplicationContext 继承自 BeanFactory，并提供了额外的功能，比如 MessageSource 提供国际化的消息访问、事件传播等。ApplicationContext 在**初始化**的时候就**加载所有**的 Bean。
 
-![](../.gitbook/assets/image%20%2881%29.png)
+![](../.gitbook/assets/image%20%2882%29.png)
 
-![](../.gitbook/assets/image%20%2891%29.png)
+![](../.gitbook/assets/image%20%2892%29.png)
 
 ## Bean 的生命周期
 
-![](../.gitbook/assets/image%20%2852%29.png)
+![](../.gitbook/assets/image%20%2853%29.png)
 
 1. **实例化 Bean**：容器通过 BeanDefinition 中的信息进行实例化，实例化的对象包装在 BeanWrapper 中。
 2. **依赖注入**：通过 BeanWrapper 的接口根据 BeanDefinition 中的信息进行注入。若注入的是其它 Bean，则会先初始化 依赖的 Bean。

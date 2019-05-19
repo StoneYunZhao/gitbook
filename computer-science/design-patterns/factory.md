@@ -20,7 +20,7 @@
 
 ### 类图
 
-![](../../.gitbook/assets/image%20%2828%29.png)
+![](../../.gitbook/assets/image%20%2829%29.png)
 
 ### 源码示例
 
@@ -86,7 +86,9 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
 
 ### 类图
 
-![](../../.gitbook/assets/image%20%2832%29.png)
+![](../../.gitbook/assets/image%20%2833%29.png)
+
+工厂方法一般是一个框架，即 Creator 类中还有其它方法，这些方法在抽象类中已经实现，而且方法中的逻辑使用了抽象方法 factoryMethod\(String\)。
 
 ### 源码示例 `Collection`
 
@@ -138,4 +140,34 @@ public class LoggerContext extends ContextBase implements ILoggerFactory {
 ```
 
 ## 抽象工厂
+
+### 介绍
+
+定义：抽象工厂模式提供一个接口，用于创建相关或者依赖对象的家族，而不需要明确指定具体类。
+
+{% hint style="info" %}
+**抽象工厂**的方法经常以**工厂方法**的方式**实现**。
+{% endhint %}
+
+### 类图
+
+![](../../.gitbook/assets/image%20%2823%29.png)
+
+### 源码示例
+
+Connection 对应 Factory，Statement 对应 ProductA，PreparedStatement 对应 ProductB。
+
+```java
+// java.sql
+public interface Connection  extends Wrapper, AutoCloseable {
+    Statement createStatement();
+    PreparedStatement prepareStatement(String sql);
+}
+```
+
+## 总结
+
+* 所有的工厂都是用来封装对象的创建。
+* 工厂方法使用继承；抽象工厂使用组合。
+* 所有的工厂模式都是通过减少应用程序和具体类之间的依赖促进松耦合。
 
