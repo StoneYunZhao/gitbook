@@ -1,11 +1,11 @@
-# DHCP
+# Application layer
+
+## DHCP
 
 **动态主机设置协议**（**D**ynamic **H**ost **C**onfiguration **P**rotocol，**DHCP**）是一个局域网的网络协议，使用UDP协议工作，主要有两个用途：
 
 * 用于内部网或网络服务供应商自动分配 IP 地址给用户。
 * 用于内部网管理员作为对所有计算机作中央管理的手段。比如 PXE。
-
-## 工作流程
 
 DHCP 是 BOOTP 的增强版。
 

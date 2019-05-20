@@ -1,4 +1,8 @@
-# IP
+# Network Layer
+
+## ICMP
+
+## IP
 
 在 Windows 中通过 `ipconfig` 查看 IP，在 Linux 中通过 `ifconfig` （net-tools）或`ip iddr`（iproute2）查看。
 
