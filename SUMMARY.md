@@ -71,7 +71,7 @@
   * [Architecture](database/mysql/architecture.md)
   * [Log](database/mysql/log.md)
   * [Transaction](database/mysql/transaction.md)
-  * [Index](database/mysql/index.md)
+  * [Indexing](database/mysql/indexing.md)
   * [Lock](database/mysql/lock.md)
 * [Redis](database/basic.md)
 * [Elasticsearch](database/elasticsearch.md)

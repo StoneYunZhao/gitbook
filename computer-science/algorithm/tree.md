@@ -74,5 +74,5 @@
 
 ## B 树
 
-## [B+ 树](../../database/mysql/index.md#14-b-shu)
+## [B+ 树](../../database/mysql/indexing.md#14-b-shu)
 

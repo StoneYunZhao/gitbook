@@ -4,6 +4,6 @@
 * [Architecture](architecture.md)
 * [Log](log.md)
 * [Transaction](transaction.md)
-* [Index](index.md)
+* [Indexing](indexing.md)
 * [Lock](lock.md)
 
