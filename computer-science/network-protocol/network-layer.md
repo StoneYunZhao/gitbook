@@ -2,6 +2,28 @@
 
 ## ICMP
 
+**互联网控制消息协议**（**I**nternet **C**ontrol **M**essage **P**rotocol，**ICMP**）用于网际协议（IP）中发送控制消息，提供可能发生在通信环境中的各种问题反馈。通过这些信息，使管理者可以对所发生的问题作出诊断，然后采取适当的措施解决。
+
+![](../../.gitbook/assets/image%20%28110%29.png)
+
+ICMP 有很多类型，最常用的类型是**主动请求**为 8，**主动请求的应答**为 0。
+
+### 查询报文类型
+
+主动发起的类型。比如 **ping** 就是查询报文，是一种主动请求，并且获得主动应答的 ICMP 协议。
+
+ping 的主动请求，称为 **ICMP ECHO REQUEST，**主动请求的回复，称为 **ICMP ECHO REPLY**。
+
+![](../../.gitbook/assets/image%20%28104%29.png)
+
+### 差错报文类型
+
+异常情况发起，报告发生了不好的事。比如：**终点不可达为3，源抑制为4，超时为11，重定向为5。**
+
+**Traceroute** 故意设置特殊的TTL，来追踪去往目的地时沿途经过的路由器。
+
+Traceroute 的参数指向某个目的 IP 地址，它会发送一个 UDP 的数据包。将 TTL 设置成 1，然后依次累加，直到到达目的主机，所以就能拿到所有的路由器 IP。
+
 ## IP
 
 在 Windows 中通过 `ipconfig` 查看 IP，在 Linux 中通过 `ifconfig` （net-tools）或`ip iddr`（iproute2）查看。
