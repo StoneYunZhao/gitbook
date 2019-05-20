@@ -113,5 +113,5 @@ class T2Task implements Callable<String> {
 } 
 ```
 
-![](../../.gitbook/assets/image%20%2826%29.png)
+![](../../.gitbook/assets/image%20%2828%29.png)
 
