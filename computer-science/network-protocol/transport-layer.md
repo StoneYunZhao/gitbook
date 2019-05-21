@@ -30,6 +30,8 @@
 
 ## TCP
 
+**传输控制协议**（**T**ransmission **C**ontrol **P**rotocol，**TCP**）是一种面向连接的、可靠的、基于字节流的传输层通信协议。
+
 ### TCP 头
 
 ![](../../.gitbook/assets/image%20%2849%29.png)
