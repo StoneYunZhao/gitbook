@@ -134,7 +134,7 @@ setenforce 0
 vi /etc/selinux/config
 	SELINUX=disabled
 
-yum install -y kubelet-1.11.0 kubectl-1.11.0 kubeadm-1.11.0
+yum install -y kubernetes-cni-0.6.0 kubelet-1.11.0 kubectl-1.11.0 kubeadm-1.11.0
 systemctl enable kubelet && systemctl start kubelet
 yum-config-manager --disable kubernetes
 
