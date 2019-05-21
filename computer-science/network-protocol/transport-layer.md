@@ -6,7 +6,7 @@
 
 **用户数据报协议**（**U**ser **D**atagram **P**rotocol，**UDP**，又称**用户数据包协议**）是一个简单的面向数据报的传输层协议。
 
-![](../../.gitbook/assets/image%20%2850%29.png)
+![](../../.gitbook/assets/image%20%2851%29.png)
 
 特点：
 
@@ -32,15 +32,52 @@
 
 **传输控制协议**（**T**ransmission **C**ontrol **P**rotocol，**TCP**）是一种面向连接的、可靠的、基于字节流的传输层通信协议。
 
+相对于 UDP 需要解决 5 个问题：
+
+* 顺序问题
+* 丢包问题
+* 连接维护
+* 流量控制
+* 拥塞控制
+
 ### TCP 头
 
-![](../../.gitbook/assets/image%20%2849%29.png)
+![](../../.gitbook/assets/image%20%2850%29.png)
+
+* 包的序号：可以解决乱序问题。
+* 确认序号：可以解决包丢失问题。
+* 状态位：SYN 是发起一个连接，ACK 是回复，RST 是重新连接，FIN 是结束连接。带状态位包的发送，会引起双方的状态变更。
+* 窗口大小：可以做流量控制，通信双方各声明一个窗口，标识自己当前能够的处理能力。
 
 ### 三次握手
 
+![](../../.gitbook/assets/image%20%2842%29.png)
+
+{% hint style="warning" %}
+为什么是三次握手？握手次数当然可以很多次，但是不管多少次也不能保证真的可靠。所以为了权衡，三次握手的完成之后，双方都有一次发送和返回就可以了。
+{% endhint %}
+
+{% hint style="danger" %}
+注意序号，不能从 1 开始，因为可能会出现问题。这个序号是随时间变化的，每 4ms 加 1。
+{% endhint %}
+
 ### 四次挥手
 
+![](../../.gitbook/assets/image%20%2871%29.png)
+
+{% hint style="warning" %}
+B 在 ACK 之后进入 CLOSED-WAIT 状态，不能直接关闭。因为 A 已经把数据发送完了，但 B 的数据还不一定发送完成，此时 B 还是可以发送数据的。
+{% endhint %}
+
+{% hint style="warning" %}
+A 发送 ACK 之后不能直接关闭，需要进入 TIME-WAIT 状态。原因是：假设没有 TIME-WAIT 状态，若 B 收不到最后这个 ACK，那么 B 会重复发送 FIN，此时 A 已经 COLED 了，那么 B 就永远收不到 ACK 了。
+{% endhint %}
+
+等待的时间设为 2 MSL（Maximum Segment Lifetime，报文最大生存时间），它是任何报文在网络上存在的最长时间，超过这个时间报文将被丢弃。
+
 ### 状态机
+
+![](../../.gitbook/assets/image%20%28105%29.png)
 
 ## 对比
 
