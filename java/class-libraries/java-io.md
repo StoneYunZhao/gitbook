@@ -6,11 +6,11 @@
 
 `Java.io`包中最重要的就是5个类，指的是`File、OutputStream、InputStream、Writer、Reader`。
 
-![Java IO &#x4F53;&#x7CFB;](../../.gitbook/assets/image%20%28116%29.png)
+![Java IO &#x4F53;&#x7CFB;](../../.gitbook/assets/image%20%28117%29.png)
 
 ## 1. Stream
 
-![&#x6309;&#x64CD;&#x4F5C;&#x65B9;&#x5F0F;&#x5206;&#x7C7B;](../../.gitbook/assets/image%20%28104%29.png)
+![&#x6309;&#x64CD;&#x4F5C;&#x65B9;&#x5F0F;&#x5206;&#x7C7B;](../../.gitbook/assets/image%20%28105%29.png)
 
 ![&#x6309;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#x5206;&#x7C7B;](../../.gitbook/assets/image%20%2868%29.png)
 

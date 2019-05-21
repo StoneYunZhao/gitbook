@@ -10,7 +10,7 @@ ApplicationContext 继承自 BeanFactory，并提供了额外的功能，比如 
 
 ![](../.gitbook/assets/image%20%2889%29.png)
 
-![](../.gitbook/assets/image%20%28100%29.png)
+![](../.gitbook/assets/image%20%28101%29.png)
 
 ## Bean 的生命周期
 
