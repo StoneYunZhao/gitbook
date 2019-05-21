@@ -20,7 +20,7 @@
 
 ### 类图
 
-![](../../.gitbook/assets/image%20%2833%29.png)
+![](../../.gitbook/assets/image%20%2834%29.png)
 
 ### 源码示例
 
@@ -86,7 +86,7 @@ public abstract class Calendar implements Serializable, Cloneable, Comparable<Ca
 
 ### 类图
 
-![](../../.gitbook/assets/image%20%2837%29.png)
+![](../../.gitbook/assets/image%20%2838%29.png)
 
 工厂方法一般是一个框架，即 Creator 类中还有其它方法，这些方法在抽象类中已经实现，而且方法中的逻辑使用了抽象方法 factoryMethod\(String\)。
 
@@ -151,7 +151,7 @@ public class LoggerContext extends ContextBase implements ILoggerFactory {
 
 ### 类图
 
-![](../../.gitbook/assets/image%20%2825%29.png)
+![](../../.gitbook/assets/image%20%2826%29.png)
 
 ### 源码示例
 
