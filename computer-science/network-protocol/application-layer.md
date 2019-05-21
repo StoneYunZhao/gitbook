@@ -9,7 +9,7 @@
 
 DHCP 是 BOOTP 的增强版。
 
-![](../../.gitbook/assets/image%20%2872%29.png)
+![](../../.gitbook/assets/image%20%2873%29.png)
 
 ### Discover
 
@@ -198,5 +198,5 @@ DHCP 会收到这个请求，发现这机器 A 的 MAC 没有 IP 地址，所以
 
 DHCP 协议能给客户安装操作系统，这个在云计算领域大有用处。
 
-![](../../.gitbook/assets/image%20%2875%29.png)
+![](../../.gitbook/assets/image%20%2876%29.png)
 

@@ -6,19 +6,19 @@
 
 `Java.io`包中最重要的就是5个类，指的是`File、OutputStream、InputStream、Writer、Reader`。
 
-![Java IO &#x4F53;&#x7CFB;](../../.gitbook/assets/image%20%28120%29.png)
+![Java IO &#x4F53;&#x7CFB;](../../.gitbook/assets/image%20%28121%29.png)
 
 ## 1. Stream
 
-![&#x6309;&#x64CD;&#x4F5C;&#x65B9;&#x5F0F;&#x5206;&#x7C7B;](../../.gitbook/assets/image%20%28108%29.png)
+![&#x6309;&#x64CD;&#x4F5C;&#x65B9;&#x5F0F;&#x5206;&#x7C7B;](../../.gitbook/assets/image%20%28109%29.png)
 
-![&#x6309;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#x5206;&#x7C7B;](../../.gitbook/assets/image%20%2871%29.png)
+![&#x6309;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#x5206;&#x7C7B;](../../.gitbook/assets/image%20%2872%29.png)
 
 ### 1.1 字节流
 
 数据流中最小的数据单元是**字节**。
 
-![&#x5B57;&#x8282;&#x6D41;&#x8F93;&#x5165;&#x8F93;&#x51FA;&#x5BF9;&#x5E94;&#x5173;&#x7CFB;](../../.gitbook/assets/image%20%2879%29.png)
+![&#x5B57;&#x8282;&#x6D41;&#x8F93;&#x5165;&#x8F93;&#x51FA;&#x5BF9;&#x5E94;&#x5173;&#x7CFB;](../../.gitbook/assets/image%20%2880%29.png)
 
 
 

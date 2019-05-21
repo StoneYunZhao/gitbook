@@ -33,7 +33,7 @@ synchronized (list) {
 
 同步容器性能较差，因此 Java 1.5提供了**并发容器**。
 
-![](../../.gitbook/assets/image%20%2885%29.png)
+![](../../.gitbook/assets/image%20%2886%29.png)
 
 ### List
 
@@ -60,7 +60,7 @@ key 是无序的。
 
 key 是有序的。基于跳表实现，插入、删除、查询的平均时间复杂度为 O\(logn\)。
 
-![](../../.gitbook/assets/image%20%2887%29.png)
+![](../../.gitbook/assets/image%20%2888%29.png)
 
 ### Set
 
