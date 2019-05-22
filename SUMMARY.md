@@ -47,7 +47,7 @@
 ## Computer Science
 
 * [Algorithm](computer-science/algorithm/README.md)
-  * [List](computer-science/algorithm/list.md)
+  * [Linear List](computer-science/algorithm/list.md)
   * [Tree](computer-science/algorithm/tree.md)
 * [Network Protocol](computer-science/network-protocol/README.md)
   * [Pysical Layer](computer-science/network-protocol/pysical-layer.md)
