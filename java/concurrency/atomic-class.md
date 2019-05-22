@@ -2,7 +2,7 @@
 
 原子类是通过[无锁方案（CAS）](cas.md#qian-yan)实现的。
 
-![](../../.gitbook/assets/image%20%2837%29.png)
+![](../../.gitbook/assets/image%20%2838%29.png)
 
 ## 基本数据类型
 
