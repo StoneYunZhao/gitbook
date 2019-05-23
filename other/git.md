@@ -1,5 +1,12 @@
 # Git
 
+## Config
+
+```bash
+# 做此配置，输入一次密码后，再也不用输入密码
+git config credential.helper store
+```
+
 ## Stash
 
 ```bash
@@ -19,6 +26,5 @@ git remote set-url origin [url] # 重新设置 remote 的 url
 
 git remote rm origin
 git remote add origin [url]
-
 ```
 
