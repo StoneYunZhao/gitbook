@@ -43,6 +43,8 @@
   * [Class & Instance Initialization](java/jvm/class-and-instance-initialization.md)
   * [Runtime Data Area](java/jvm/runtime-data-area.md)
   * [Garbage Collection](java/jvm/garbage-collection.md)
+* [Web Container](java/web-container.md)
+* [Spring](java/spring.md)
 * [Tuning](java/tuning.md)
 
 ## Computer Science
@@ -95,7 +97,6 @@
 
 ## Other
 
-* [Spring](other/spring.md)
 * [Linux](other/linux.md)
 * [Kubernetes](other/kubernetes.md)
 * [Git](other/git.md)

@@ -13,6 +13,8 @@
   * [JDK 类库](java/class-libraries/)
   * [J.U.C](java/concurrency/)
   * [JVM](java/jvm/)
+  * [Web 容器](java/web-container.md)
+  * [Spring](java/spring.md)
   * [调优](java/tuning.md)
 * **计算机科学**：
   * [算法](computer-science/algorithm/)
@@ -28,7 +30,6 @@
   * [ZooKeeper](database/zookeeper-1.md)
   * [MongoDB](database/mongodb.md)
 * **其它**： 
-  * [Spring](other/spring.md)
   * [Linux](other/linux.md)
   * [Kubernetes](other/kubernetes.md)
   * [Git](other/git.md)
