@@ -105,7 +105,7 @@ A 发送 ACK 之后不能直接关闭，需要进入 TIME-WAIT 状态。原因�
 
 ### 拥塞窗口
 
-上节的滑动窗口 rwnd 是防止发送端把接收端塞满；而拥塞窗口（congestion window，cwnd）是防止把网络塞满。
+上节的滑动窗口 rwnd 是防止发送端把接收端塞满；而拥塞窗口（congestion window，cwnd）是防止把网络塞满，单位字节，表示在未收到接收端确认的情况下，可以连续发送的字节数。
 
 `LastByteSent - LastByteAcked = min{cwnd, rwnd}`
 
