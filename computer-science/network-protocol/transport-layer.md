@@ -99,11 +99,17 @@ A 发送 ACK 之后不能直接关闭，需要进入 TIME-WAIT 状态。原因�
 
 **快速重传**：若上图中 6、8、9 收到了，7 没收到，接收端会发送三次 6 的 ACK，发送端收到后，不会等到 7 的超时时间就会重新发送 7。
 
+**SACK（Selective Acknowledgment）**：在 TCP 头中把缓存的地图发送给发送端，比如发送 ACK6、SACK8、SACK9，这样发送端就能看出是 7 丢失了。
+
 **流量控制**：若接收方处理不过来，接受已确认的部分会越来越大，等待接受未确认的部分会越来越小，所以 ACK 里面的 AdvertisedWindow 会越来越小，发送端的未发送可发送的部分越来越小，流量得到了控制。
 
 ### 拥塞窗口
 
-拥塞窗口\(congestion window\)，记为 cwnd。
+上节的滑动窗口 rwnd 是防止发送端把接收端塞满；而拥塞窗口（congestion window，cwnd）是防止把网络塞满。
+
+`LastByteSent - LastByteAcked = min{cwnd, rwnd}`
+
+由于 TCP 协议没法知道数据所经过的网络状况，所以只能通过尝试的方式逐步增加发送速度，直到出现包丢失和超时重传。
 
 ![](../../.gitbook/assets/image%20%2874%29.png)
 
