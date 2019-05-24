@@ -13,6 +13,7 @@
   * [JDK 类库](java/class-libraries/)
   * [J.U.C](java/concurrency/)
   * [JVM](java/jvm/)
+  * [调优](java/tuning.md)
 * **计算机科学**：
   * [算法](computer-science/algorithm/)
   * [网络协议](computer-science/network-protocol/)
