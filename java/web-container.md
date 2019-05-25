@@ -2,7 +2,7 @@
 
 Sun 公司推出了 Servlet 技术，Servlet 没有 main 方法，必须把它部署在 Servlet 容器中，Servlet 容器一般也具有 HTTP 服务器的功能，所以 Servlet 容器 + HTTP 服务器 = Web 容器。
 
-![](../.gitbook/assets/image%20%2889%29.png)
+![](../.gitbook/assets/image%20%2890%29.png)
 
 了解 Web 容器当然要先了解 [HTTP 协议](../computer-science/network-protocol/application-layer.md#http)。
 
@@ -12,7 +12,7 @@ HTTP 服务器不直接跟业务类打交道，而是把请求交给 Servlet 容
 
 Servlet 规范是关于 Servlet 接口和 Servlet 容器的规范。Tomcat 和 Jetty 都按照 Servlet 规范要求实现了 Servlet 容器，再加上了 HTTP 服务器的功能。
 
-![](../.gitbook/assets/image%20%2897%29.png)
+![](../.gitbook/assets/image%20%2898%29.png)
 
 ```java
 public interface Servlet {
@@ -34,7 +34,7 @@ public abstract class HttpServlet extends GenericServlet {
 }
 ```
 
-![](../.gitbook/assets/image%20%2829%29.png)
+![](../.gitbook/assets/image%20%2830%29.png)
 
 Web 应用的目录结构：
 
@@ -59,5 +59,11 @@ public interface Filter {
 }
 ```
 
-**Listener**：**是基于状态的**，Web 应用在 Servlet 容器中运行时，Servlet 容器内部会发生各种事件，如 Web 应用的启动、停止、用户的请求到达，Servlet 容器提供了一些默认的监听器来监听这些事件。Spring 实现了自己的监听器，监听 ServletContext 的启动事件，创建并初始化全局的 Spring 容器（**注意区分 DispatchServlet init 方法中初始化的 SpringMVC 容器**）。
+**Listener**：**是基于状态的**，Web 应用在 Servlet 容器中运行时，Servlet 容器内部会发生各种事件，如 Web 应用的启动、停止、用户的请求到达，Servlet 容器提供了一些默认的监听器来监听这些事件。Spring 实现了自己的监听器（ContextLoaderListener），监听 ServletContext 的启动事件，创建并初始化全局的 Spring 容器（**注意区分 DispatchServlet init 方法中初始化的 SpringMVC 容器**）。
+
+{% hint style="info" %}
+ContextLoaderListener 初始化的是全局的 Spring 根容器，即 Spring 的 IoC 容器。DispatchServlet init 方法中初始化的容器是 SpringMVC 容器，它的父容器是 Spring IoC 容器。子容器可访问父容器中的 Bean（如 Service），但是父容器不能访问子容器的 Bean（如 Controller）。
+{% endhint %}
+
+![](../.gitbook/assets/image%20%2816%29.png)
 
