@@ -202,7 +202,9 @@ DHCP 协议能给客户安装操作系统，这个在云计算领域大有用处
 
 ## HTTP
 
-HTTP 协议是基于 TCP 的，1.1 版本的 HTTP 模式开启了 Keep-Alive，可以在多次 HTTP 请求中复用一个 TCP 连接，不用每次都三次握手。
+HTTP 协议是浏览器与服务器之间的数据传送协议。本质是浏览器与服务器之间约定好的通讯格式。
+
+HTTP 协议是基于 TCP 的，1.1 版本的 HTTP 模式开启了 Keep-Alive（Connection: keep-alive），可以在多次 HTTP 请求中复用一个 TCP 连接，不用每次都三次握手。
 
 ![HTTP &#x8BF7;&#x6C42;&#x62A5;&#x6587;&#x683C;&#x5F0F;](../../.gitbook/assets/image%20%2873%29.png)
 
@@ -215,6 +217,16 @@ HTTP 协议是基于 TCP 的，1.1 版本的 HTTP 模式开启了 Keep-Alive，�
   * If-Modified-Since：若资源在某个时间之后没有更新，那么客户端就不用下载最新的资源了。
 
 ![HTTP &#x54CD;&#x5E94;&#x62A5;&#x6587;&#x683C;&#x5F0F;](../../.gitbook/assets/image%20%2890%29.png)
+
+HTTP 协议是无状态的，这样就会造成 Web 应用不知道这个请求来自哪里。
+
+### Cookie
+
+Cookie 是 HTTP 报文的一个请求头，Web 应用可以将一些用户信息放在 cookie 中，用户的每次请求都带上 Cookie 头。**Cookie 的本质是一份存储在用户本地的文件，每次请求都带上这份信息。**
+
+### Session
+
+Cookie 若明文带了用户信息，会有安全问题。所以服务端保存用户的状态，把 Session ID 返回给用户端，用户端每次请求都通过 Cookie 带上这个 Session ID。
 
 ## HTTPS
 
