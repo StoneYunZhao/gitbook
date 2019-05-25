@@ -63,7 +63,7 @@
 
 ### 四次挥手
 
-![](../../.gitbook/assets/image%20%2873%29.png)
+![](../../.gitbook/assets/image%20%2874%29.png)
 
 {% hint style="warning" %}
 B 在 ACK 之后进入 CLOSED-WAIT 状态，不能直接关闭。因为 A 已经把数据发送完了，但 B 的数据还不一定发送完成，此时 B 还是可以发送数据的。
@@ -77,7 +77,7 @@ A 发送 ACK 之后不能直接关闭，需要进入 TIME-WAIT 状态。原因�
 
 ### 状态机
 
-![](../../.gitbook/assets/image%20%28109%29.png)
+![](../../.gitbook/assets/image%20%28111%29.png)
 
 ### 滑动窗口
 
@@ -121,7 +121,7 @@ A 发送 ACK 之后不能直接关闭，需要进入 TIME-WAIT 状态。原因�
 
 **快速恢复**：上节讲到快速重传，若发现包丢失，则连续发送前一个包的三次 ACK，此时发送端会立即重新发送丢失的包，还会做另外一个件事：`cwnd = cwnd/2, ssthresh = cwnd`；然后每返回一个包：`cwnd++`。
 
-![](../../.gitbook/assets/image%20%2874%29.png)
+![](../../.gitbook/assets/image%20%2875%29.png)
 
 ### 结论
 

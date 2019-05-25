@@ -9,7 +9,7 @@
 
 DHCP 是 BOOTP 的增强版。
 
-![](../../.gitbook/assets/image%20%2879%29.png)
+![](../../.gitbook/assets/image%20%2880%29.png)
 
 ### Discover
 
@@ -198,9 +198,23 @@ DHCP 会收到这个请求，发现这机器 A 的 MAC 没有 IP 地址，所以
 
 DHCP 协议能给客户安装操作系统，这个在云计算领域大有用处。
 
-![](../../.gitbook/assets/image%20%2882%29.png)
+![](../../.gitbook/assets/image%20%2883%29.png)
 
 ## HTTP
+
+HTTP 协议是基于 TCP 的，1.1 版本的 HTTP 模式开启了 Keep-Alive，可以在多次 HTTP 请求中复用一个 TCP 连接，不用每次都三次握手。
+
+![HTTP &#x8BF7;&#x6C42;&#x62A5;&#x6587;&#x683C;&#x5F0F;](../../.gitbook/assets/image%20%2873%29.png)
+
+* **方法**：GET、POST、PUT、DELETE、HEAD、PATCH 等
+* **版本**：1.0、1.1、2.0
+* 头部：
+  * Accept-Charset：客户端可以接受的字符集
+  * Content-Type：正文的格式
+  * **Cache-Control**：max-age 为 0，则不用缓存； 否则若资源缓存时间小于 max-age，则可以使用缓存。
+  * If-Modified-Since：若资源在某个时间之后没有更新，那么客户端就不用下载最新的资源了。
+
+![HTTP &#x54CD;&#x5E94;&#x62A5;&#x6587;&#x683C;&#x5F0F;](../../.gitbook/assets/image%20%2890%29.png)
 
 ## HTTPS
 
