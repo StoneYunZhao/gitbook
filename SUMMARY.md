@@ -71,6 +71,7 @@
   * [Factory](computer-science/design-patterns/factory.md)
   * [Singleton](computer-science/design-patterns/singleton.md)
   * [FlyWeight](computer-science/design-patterns/flyweight.md)
+  * [Observer](computer-science/design-patterns/observer.md)
 * [Distributed System](computer-science/distributed-system/README.md)
   * [Introduction](computer-science/distributed-system/introduction.md)
   * [Message Queue](computer-science/distributed-system/message-queue.md)
