@@ -114,6 +114,12 @@ public final class Integer extends Number implements Comparable<Integer> {
 
 ## String
 
+![](../../.gitbook/assets/image%20%2817%29.png)
+
+* JDK 6 及以前：subString 方法会共享 char\[\]，所以会引起内存泄漏和内存溢出问题。
+* JDK 7、JDK8：去掉两个字段，减少内存，subString 也不会共享 char\[\]。
+* JDK9：更加节约内存。
+
 ```java
 // Java 1.8 源码
 public final class String implements java.io.Serializable, Comparable<String>, CharSequence {
@@ -149,9 +155,15 @@ public final class String implements java.io.Serializable, Comparable<String>, C
 }
 ```
 
-String 是[不可变类](../concurrency/concurrency-design-patterns/immutable.md)，所以它原生保证了线程安全。也因为无法修改内部数据，可以看到**拷贝构造函数**不需要额外的复制数据。
+String 是[不可变类](../concurrency/concurrency-design-patterns/immutable.md)，所以它原生保证了线程安全。也因为无法修改内部数据，可以看到**拷贝构造函数**不需要额外的复制数据。String 设计为不可变的好处：
 
-Java 1.6 提供了 intern 方法，目的是把 String 缓存起来，起初缓存在方法区（PermGen）里面，由于容易导致 OOM，所以 1.7 移到了堆中，详见[方法区](../jvm/runtime-data-area.md#yong-jiu-dai-yu-yuan-kong-jian)。默认缓存大小也在不断扩大，最初是 1009，7u40被改为60013，可以使用`-XX:+PrintStringTableStatistics`打印，也可以使用`-XX:StringTableSize=N`修改。
+* 安全性，不能被恶意篡改。
+* hash 值不变，适合作为 HashMap 的 key。
+* 可以实现字符串常量池。String 有两种创建方式：
+  * 字符串常量的方式，String str = "abc"。JVM 会检查该对象是否在字符串常量池中，若存在则直接返回常量池中的引用；若不存在，则先在常量池中创建。
+  * new 的方式，String str = new String\("abs"\)，在常量池中创建一个 String 对象，然后复制到堆内存中，返回堆内 String 对象的引用。
+
+Java 1.6 提供了 intern 方法，会去字符串常量池中查看是否有该 String 对象，若有则返回常量池中的引用；若没有，则在常量池中创建，并返回常量池中的引用。目的是把 String 缓存起来，起初缓存在方法区（PermGen）里面，由于容易导致 OOM，所以 1.7 移到了堆中，详见[方法区](../jvm/runtime-data-area.md#yong-jiu-dai-yu-yuan-kong-jian)。默认缓存大小也在不断扩大，最初是 1009，7u40被改为60013，可以使用`-XX:+PrintStringTableStatistics`打印，也可以使用`-XX:StringTableSize=N`修改。
 
 intern 是一种显式排重，也是[享元模式](../../computer-science/design-patterns/flyweight.md)的思想，8u20 后推出了 G1 GC 下的字符串排重，通过将相同数据的字符串指向同一份数据，默认关闭的。需要使用 G1，并开启参数：`-XX:+UseStringDeduplication`。
 
@@ -207,6 +219,8 @@ public static String replace(byte[] value, char oldChar, char newChar) {
     return null; // for string to return this;
 }
 ```
+
+关于 String 的使用有一些最佳实践，详见 [String 调优](../tuning/programming.md#string)。
 
 ### StringBuffer
 

@@ -15,7 +15,7 @@
   * [JVM](java/jvm/)
   * [Web 容器](java/web-container.md)
   * [Spring](java/spring.md)
-  * [调优](java/tuning.md)
+  * [调优](java/tuning/)
 * **计算机科学**：
   * [算法](computer-science/algorithm/)
   * [网络协议](computer-science/network-protocol/)

@@ -2,7 +2,7 @@
 
 Sun 公司推出了 Servlet 技术，Servlet 没有 main 方法，必须把它部署在 Servlet 容器中，Servlet 容器一般也具有 HTTP 服务器的功能，所以 Servlet 容器 + HTTP 服务器 = Web 容器。
 
-![](../.gitbook/assets/image%20%2891%29.png)
+![](../.gitbook/assets/image%20%2892%29.png)
 
 了解 Web 容器当然要先了解 [HTTP 协议](../computer-science/network-protocol/application-layer.md#http)。
 
@@ -12,7 +12,7 @@ HTTP 服务器不直接跟业务类打交道，而是把请求交给 Servlet 容
 
 Servlet 规范是关于 Servlet 接口和 Servlet 容器的规范。Tomcat 和 Jetty 都按照 Servlet 规范要求实现了 Servlet 容器，再加上了 HTTP 服务器的功能。
 
-![](../.gitbook/assets/image%20%2899%29.png)
+![](../.gitbook/assets/image%20%28100%29.png)
 
 ```java
 public interface Servlet {
@@ -34,7 +34,7 @@ public abstract class HttpServlet extends GenericServlet {
 }
 ```
 
-![](../.gitbook/assets/image%20%2831%29.png)
+![](../.gitbook/assets/image%20%2832%29.png)
 
 Web 应用的目录结构：
 

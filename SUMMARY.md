@@ -45,7 +45,8 @@
   * [Garbage Collection](java/jvm/garbage-collection.md)
 * [Web Container](java/web-container.md)
 * [Spring](java/spring.md)
-* [Tuning](java/tuning.md)
+* [Tuning](java/tuning/README.md)
+  * [Programming](java/tuning/programming.md)
 
 ## Computer Science
 

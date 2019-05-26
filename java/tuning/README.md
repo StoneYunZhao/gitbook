@@ -1,5 +1,9 @@
 # Tuning
 
+Java 性能调优主要从 [Java 编程](programming.md)、多线程、JVM、设计模式、数据库等多个方面来介绍。
+
+不过在调优之前先需要了解[性能指标](./#xing-neng-zhi-biao)、[性能测试](./#xing-neng-ce-shi)、[常用手段](./#xing-neng-you-hua)等，见下文。
+
 ## 性能指标
 
 ### 性能参考因素
