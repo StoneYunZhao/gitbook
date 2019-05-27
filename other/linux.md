@@ -262,11 +262,9 @@ Unix fork 使用了[写时复制](../java/concurrency/concurrency-design-pattern
 
 每个进程都有自己的**进程内存空间**，又分为代码段（Code Segment）、数据段（Data Segment）。数据段又分为局部变量的部分，函数进入与退出的时候创建与销毁；动态分配部分，保存较长、显式才销毁，这部分称为堆（Heap）。
 
-`brk`
+`brk`：适合申请的内存较小，会和原来的堆数据连在一起。
 
-会和原来的堆数据连在一起。
-
-`mmap`
+`mmap`：重新划分一块区域。
 
 ### 文件管理
 
@@ -278,7 +276,7 @@ Linux 一切皆文件，标准输出（stdout）、管道、Socket、设备、�
 
 `create`
 
-`lseek`
+`lseek`：跳到文件的某个位置。
 
 `read`
 
