@@ -99,7 +99,8 @@
 
 ## Other
 
-* [Linux](other/linux.md)
+* [Linux](other/linux/README.md)
+  * [System Initialization](other/linux/system-initialization.md)
 * [Kubernetes](other/kubernetes.md)
 * [Git](other/git.md)
 * [Maven](other/maven.md)

@@ -6,7 +6,7 @@
 
 除了 Java，在其它领域也广泛应用了写时复制。比如：
 
-*  Unix 下创建进程的[ API fork\(\)](../../../other/linux.md#jin-cheng-guan-li)。
+*  Unix 下创建进程的[ API fork\(\)](../../../other/linux/#jin-cheng-guan-li)。
 * 文件系统 Btrfs\(B-Tree File System\)、aufs\(advanced multi-layered unification system\)等。
 * Docker 容器镜像。
 * 分布式源码管理系统 Git。

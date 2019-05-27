@@ -31,7 +31,7 @@
   * [ZooKeeper](database/zookeeper-1.md)
   * [MongoDB](database/mongodb.md)
 * **其它**： 
-  * [Linux](other/linux.md)
+  * [Linux](other/linux/)
   * [Kubernetes](other/kubernetes.md)
   * [Git](other/git.md)
   * [Maven](other/maven.md)

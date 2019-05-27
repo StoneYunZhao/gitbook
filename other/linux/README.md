@@ -14,7 +14,7 @@
 **进程（Process）**：运行起来的程序。  
 **系统调用（System Call）**：很多操作是放在操作系统内核的，进程不能随便调用，比如打印机，进程需要通过系统调用来使用打印机。
 
-![](../.gitbook/assets/image%20%28112%29.png)
+![](../../.gitbook/assets/image%20%28112%29.png)
 
 ## 常用命令
 
@@ -248,7 +248,7 @@ ssh root@${ip} 'chmod 600 .ssh/authorized_keys'
 * 操作系统在启动的时候先创建一个所有用户进程的“祖宗进程”。
 * 调用 fork 后，就有两个一样的进程，根据返回值来判断进程。若是子进程，则返回 0；若是父进程，则返回子进程的进程号。
 
-Unix fork 使用了[写时复制](../java/concurrency/concurrency-design-patterns/copy-on-write.md)的思想，子进程会创建父进程的完整副本，比如父进程有 1G 内存，那么子进程会复制完整的 1G 内存。但是 Linux 优化了，fork 的时候让父子进程共享地址空间，仅在父进程或子进程写入的时候才会复制。
+Unix fork 使用了[写时复制](../../java/concurrency/concurrency-design-patterns/copy-on-write.md)的思想，子进程会创建父进程的完整副本，比如父进程有 1G 内存，那么子进程会复制完整的 1G 内存。但是 Linux 优化了，fork 的时候让父子进程共享地址空间，仅在父进程或子进程写入的时候才会复制。
 
 `execve`
 
