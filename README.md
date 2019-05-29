@@ -14,7 +14,7 @@
   * [JDK 类库](java/class-libraries/)
   * [J.U.C](java/concurrency/)
   * [JVM](java/jvm/)
-  * [Web 容器](java/web-container.md)
+  * [Web 容器](java/web-container/)
   * [Spring](java/spring.md)
   * [调优](java/tuning/)
 * **计算机科学**：
