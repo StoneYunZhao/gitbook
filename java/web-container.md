@@ -46,6 +46,25 @@ Web 应用的目录结构：
       | -  META-INF/              -- 目录存放工程的一些信息
 ```
 
+创建一个 Servlet 类后，有两种方式注册，通过 web.xml 或通过注解：
+
+```markup
+<servlet>
+  <servlet-name>myServlet</servlet-name>
+  <servlet-class>MyServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+  <servlet-name>myServlet</servlet-name>
+  <url-pattern>/myservlet</url-pattern>
+</servlet-mapping>
+```
+
+```java
+@WebServlet("/myAnnotationServlet")
+public class AnnotationServlet extends HttpServlet { }  
+```
+
 Servlet 规范定义了 **ServletContext 接口**对应一个 Web 应用。一个 Web 应用的所有 Servlet 可以通过 ServletContext 来共享数据。
 
 **Filter**：**是干预过程的**，让你对请求和响应做一些统一的定制化处理。Servlet 容器会实例化所有的 Filter，并链接成一个 FilterChain，Filter 的 doFilter 负责调用 FilterChain 的下一个 Filter。
