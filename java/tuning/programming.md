@@ -59,3 +59,126 @@ split 有两种情况不会使用正则：
 * 传入参数长度为 2，第一个字符是 \，且第二个字符不是 ASCII 数字或字母。
 {% endhint %}
 
+## 正则表达式
+
+正则表达式使用单个字符串来描述、匹配一系列符合某个句法规则的字符串，很多语言都实现了它。
+
+正则表达式由四种元素组成，详见 [PCRE 表达式全集](https://zh.wikipedia.org/wiki/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F)：
+
+* 普通字符：字母\[a-zA-Z\]、数字\[0-9\]、下划线\[\_\]、标点等
+* 标准字符：能够与多种普通字符匹配的简单表达式，如 \d（数字）、\w（包括下划线的单词字符）、\s（空白字符）等。
+* 限定字符：用于表示数量，\*、+、?、{n} 等。
+* 定位字符：符合某种条件的位置，$、^ 等。
+
+### 引擎
+
+给定正则表达式后，程序对表达式语法分析，建立语法分析数，再根据这个分析树结合正则表达式引擎生成执行程序（又称状态机、状态自动机），用于匹配字符。
+
+正则表达式引擎有两种：
+
+* DFA 自动机：Deterministic Final Automata，确定有限状态自动机，匹配时间复杂度 O\(n\)
+* NFA 自动机：Non deterministic Final Automaton，非确定有限状态自动机，匹配时间复杂度 O\(ns\)，s 为状态数；优点是支持功能更多，如捕获 group、环视、占有有限量词等，所以**编程语言里面一般用 NFA 实现**。
+
+### 回溯问题
+
+假设字符串为 ”abbc“，正则表达式为 "ab{1,3}c"，则匹配过程如下图：
+
+![](../../.gitbook/assets/image%20%2865%29.png)
+
+NFA 自动机默认情况时贪婪模式，即匹配尽量多的内容，在第 2 步匹配到一个 b 后，会继续尽量匹配到 3 个 b。所以第 4 步，想要匹配第三个 b 时匹配不到，就会发送回溯，已经读取到 c 会被回退，指针重新指向第三个字符 b，然后再匹配 c。
+
+#### 贪婪模式（Greedy）
+
+如果单独使用 +、?、\*、{min,max}，则会尽量匹配多的内容。
+
+#### 懒惰模式（Reluctant）
+
+NFA 会尽量匹配少的内容。通过增加 ? 开启。
+
+#### 独占模式（Possessive）
+
+与贪婪模式一致，会尽量匹配多的内容，但是若匹配失败，不会回溯，直接匹配结束。通过增加 + 开启。
+
+#### 案例
+
+```java
+public static void main(String[] args) {
+    String text = "abbbc";
+    String reg1 = "ab{1,3}bbc";
+    String reg2 = "ab{1,3}?bbc";
+    String reg3 = "ab{1,3}+bbc";
+    System.out.println(String.format("文本: \"%s\"", text));
+    System.out.println(String.format("贪婪模式: \"%s\"", reg1));
+    System.out.println(String.format("懒惰模式: \"%s\"", reg2));
+    System.out.println(String.format("独占模式: \"%s\"\n", reg3));
+    print(text, reg1, reg2);
+    Pattern p = Pattern.compile(reg3);
+    Matcher matcher = p.matcher(text);
+    System.out.println(String.format("\n独占模式匹配结果：%b", matcher.find()));
+}
+
+private static void print(String text, String regex1, String regex2) {
+    System.out.println("regex1     regex2   percentage");
+    Pattern p1 = Pattern.compile(regex1);
+    Pattern p2 = Pattern.compile(regex2);
+    for (int i = 0; i < 10; i++) {
+        long t1 = cost(text, p1);
+        long t2 = cost(text, p2);
+        if (i >= 1) {
+            System.out.println(String.format("%4d%10d%10.2f", t1, t2, t2 * 1.0 / t1));
+        }
+    }
+}
+
+private static long cost(String text, Pattern p) {
+    long start = System.currentTimeMillis();
+    for (int i = 0; i < 10000000; i++) {
+        Matcher matcher = p.matcher(text);
+        boolean b = matcher.find();
+    }
+    return System.currentTimeMillis() - start;
+}
+```
+
+输出结果：
+
+```text
+文本: "abbbc"
+贪婪模式: "ab{1,3}bbc"
+懒惰模式: "ab{1,3}?bbc"
+独占模式: "ab{1,3}+bbc"
+
+regex1     regex2   percentage
+ 873       561      0.64
+ 851       587      0.69
+ 876       624      0.71
+ 850       619      0.73
+ 857       615      0.72
+ 863       623      0.72
+ 865       624      0.72
+ 858       608      0.71
+ 853       611      0.72
+
+独占模式匹配结果：false
+```
+
+### 优化
+
+#### 少用贪婪模式，多用独占模式
+
+#### 减少分支选择
+
+"\(x\|y\|z\)" 会降低性能，可以做如下优化：
+
+* 常用的放在前面，就可以较快被匹配到。
+* "\(abcs\|abef\)" 改成 "ab\(cd\|ef\)"。
+* "\(x\|y\|z\)" 可以改成调用三次 String.indexOf\(\) 方法。
+
+#### 减少捕获组
+
+正则表达式中，子表达式匹配的内容保存到以数组编号或显示命名的数组中，方便后面引用，叫做捕获组，一般 \(\) 表示一个捕获组，捕获组可以嵌套。
+
+可以用 \(?:exp\) 来表示不用捕获组。
+
+减少捕获组可以提高性能。
+

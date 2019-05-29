@@ -38,7 +38,7 @@ index (k))engine=InnoDB;
 (100,1) (200,2) (300,3) (500,5) (600,6)
 ```
 
-![](../../.gitbook/assets/image%20%2877%29.png)
+![](../../.gitbook/assets/image%20%2878%29.png)
 
 * **主键索引**：又叫聚簇索引（clustered index），叶子节点存整行数据。
 * **非主键索引**：又叫耳机索引（secondary index），叶子节点存主键的值。
