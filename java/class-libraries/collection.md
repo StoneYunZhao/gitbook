@@ -35,7 +35,7 @@ private int size;
 
 可以看到数据元素 elementData 被 transient 修饰了，但是 ArrayList 又实现了 Serializable 接口，这样不是矛盾的吗？
 
-原因：ArrayList 可以自动扩容，所以不是数组的每个元素都存储了数据，所以不能序列化整个数组。ArrayList 有两个方法 writeObject、readObject，ObjectInputStream/ObjectOutputStream 在序列化对象时会通过反射调用这两个方法。
+原因：ArrayList 可以自动扩容，所以不是数组的每个元素都存储了数据，所以不能序列化整个数组。ArrayList 有两个方法 writeObject、readObject，ObjectInputStream/ObjectOutputStream 在序列化对象时会通过**反射**调用这两个方法。
 
 ```java
 private void writeObject(java.io.ObjectOutputStream s)
@@ -155,7 +155,7 @@ private void fastRemove(Object[] es, int i) {
 
 同样每次删除元素都会挪动一些元素，删除位置越靠前，挪动的范围越大。
 
-### 遍历元素
+### 获取元素
 
 ```java
 public E get(int index) {
@@ -173,7 +173,146 @@ E elementData(int index) {
 
 ## LinkedList
 
-是基于链表结构实现的，所以查询速度慢，增删速度快，提供了特殊的方法，对头尾的元素操作（进行增删查）。
+是基于双向链表结构实现的，所以查询速度慢，增删速度快，提供了特殊的方法，对头尾的元素操作（进行增删查）。定义了 Node 结构：
+
+```java
+private static class Node<E> {
+    E item;
+    Node<E> next;
+    Node<E> prev;
+    Node(Node<E> prev, E element, Node<E> next) {
+        this.item = element;
+        this.next = next;
+        this.prev = prev;
+    }
+}
+```
+
+在 Java 1.7 之前，LinkedList 只包含了一个Entry 结构的 header 属性；1.7 之后做了优化，Entry 结构换成了 Node，header 属性变成了 first 和 last 两个属性。
+
+LinkedList 实现了这些接口：Deque、Cloneable、Serializable，没有实现 RandomAccess 接口。
+
+### 属性
+
+```java
+transient int size = 0;
+transient Node<E> first;
+transient Node<E> last;
+```
+
+与 ArrayList 一样，属性也被 transient 修饰，也有 readObject、writeObject 方法。
+
+### 新增元素
+
+将元素添加到队尾：
+
+```java
+public boolean add(E e) {
+    linkLast(e);
+    return true;
+}
+
+void linkLast(E e) {
+    final Node<E> l = last;
+    final Node<E> newNode = new Node<>(l, e, null);
+    last = newNode;
+    if (l == null)
+        first = newNode;
+    else
+        l.next = newNode;
+    size++;
+    modCount++;
+}
+```
+
+将元素添加到任意位置，相对于 ArrayList，不需要移动元素：
+
+```java
+public void add(int index, E element) {
+    checkPositionIndex(index);
+    if (index == size)
+        linkLast(element);
+    else
+        linkBefore(element, node(index));
+}
+
+Node<E> node(int index) {
+    // assert isElementIndex(index);
+    if (index < (size >> 1)) {
+        Node<E> x = first;
+        for (int i = 0; i < index; i++)
+            x = x.next;
+        return x;
+    } else {
+        Node<E> x = last;
+        for (int i = size - 1; i > index; i--)
+            x = x.prev;
+        return x;
+    }
+}
+
+void linkBefore(E e, Node<E> succ) {
+    // assert succ != null;
+    final Node<E> pred = succ.prev;
+    final Node<E> newNode = new Node<>(pred, e, succ);
+    succ.prev = newNode;
+    if (pred == null)
+        first = newNode;
+    else
+        pred.next = newNode;
+    size++;
+    modCount++;
+}
+```
+
+### 删除元素
+
+注意 node 方法，作用是找到元素位置，若位置处于前半段，则从前往后找，若处于后半段，则从后往前找。
+
+所以删除靠前或靠后的元素效率很高，删除中间部分的元素效率相对较低。
+
+```java
+public E remove(int index) {
+    checkElementIndex(index);
+    return unlink(node(index));
+}
+
+E unlink(Node<E> x) {
+    // assert x != null;
+    final E element = x.item;
+    final Node<E> next = x.next;
+    final Node<E> prev = x.prev;
+    if (prev == null) {
+        first = next;
+    } else {
+        prev.next = next;
+        x.prev = null;
+    }
+    if (next == null) {
+        last = prev;
+    } else {
+        next.prev = prev;
+        x.next = null;
+    }
+    x.item = null;
+    size--;
+    modCount++;
+    return element;
+}
+```
+
+### 获取元素
+
+同样也是调用 node 方法，区分前半段和后半段。
+
+```java
+public E get(int index) {
+    checkElementIndex(index);
+    return node(index).item;
+}
+```
+
+所以建议遍历 LinkedList 时，使用 Iterator 的方式。
 
 ## Set
 
