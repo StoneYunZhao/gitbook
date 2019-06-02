@@ -14,7 +14,7 @@ Java 集合框架和分为 Collection 和 [Map](collection.md#map) 两大类。�
 
 其中 Vector 已经过时，被ArrayList取代了。线程安全，通过在每个方法上加`synchronized`实现。
 
-## ArrayList
+## ArrayList（源码分析）
 
 底层是使用数组实现，实现了自动扩容数组大小。实现了如下接口：
 
@@ -22,6 +22,154 @@ Java 集合框架和分为 Collection 和 [Map](collection.md#map) 两大类。�
 * Cloneable：可以克隆。
 * Serializable：可以实现序列化。
 * RandomAccess：是一个标志接口，表示可以快速随机访问。
+
+下面是对 ArrayList 的源码分析，Java 1.11。
+
+### 属性
+
+```java
+private static final int DEFAULT_CAPACITY = 10;
+transient Object[] elementData; // non-private to simplify nested class access
+private int size;
+```
+
+可以看到数据元素 elementData 被 transient 修饰了，但是 ArrayList 又实现了 Serializable 接口，这样不是矛盾的吗？
+
+原因：ArrayList 可以自动扩容，所以不是数组的每个元素都存储了数据，所以不能序列化整个数组。ArrayList 有两个方法 writeObject、readObject，ObjectInputStream/ObjectOutputStream 在序列化对象时会通过反射调用这两个方法。
+
+```java
+private void writeObject(java.io.ObjectOutputStream s)
+    throws java.io.IOException { }
+    
+private void readObject(java.io.ObjectInputStream s)
+        throws java.io.IOException, ClassNotFoundException { }
+```
+
+### 构造函数
+
+```java
+public ArrayList(int initialCapacity) {
+    if (initialCapacity > 0) {
+        this.elementData = new Object[initialCapacity];
+    } else if (initialCapacity == 0) {
+        this.elementData = EMPTY_ELEMENTDATA;
+    } else {
+        throw new IllegalArgumentException("Illegal Capacity: "+
+                                           initialCapacity);
+    }
+}
+
+public ArrayList() {
+    this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
+}
+
+public ArrayList(Collection<? extends E> c) { ... }
+```
+
+ArrayList 新增元素时，若超过数组大小，数组会扩容，导致内存复制，所以最好指定合理的初始化容量。
+
+### 新增元素
+
+```java
+public boolean add(E e) {
+    modCount++;
+    add(e, elementData, size);
+    return true;
+}
+
+public void add(int index, E element) {
+    rangeCheckForAdd(index);
+    modCount++;
+    final int s;
+    Object[] elementData;
+    if ((s = size) == (elementData = this.elementData).length)
+        elementData = grow();
+    System.arraycopy(elementData, index,
+                     elementData, index + 1,
+                     s - index);
+    elementData[index] = element;
+    size = s + 1;
+}
+```
+
+有两个新增元素的方法，一个是将元素增加到末尾，一个是增加到任意位置。都会先确定容量大小，若大小不够，则先扩容 1.5 倍。
+
+```java
+private Object[] grow() {
+    return grow(size + 1);
+}
+
+private Object[] grow(int minCapacity) {
+    return elementData = Arrays.copyOf(elementData,
+                                       newCapacity(minCapacity));
+}
+
+private int newCapacity(int minCapacity) {
+    // overflow-conscious code
+    int oldCapacity = elementData.length;
+    int newCapacity = oldCapacity + (oldCapacity >> 1);
+    if (newCapacity - minCapacity <= 0) {
+        if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA)
+            return Math.max(DEFAULT_CAPACITY, minCapacity);
+        if (minCapacity < 0) // overflow
+            throw new OutOfMemoryError();
+        return minCapacity;
+    }
+    return (newCapacity - MAX_ARRAY_SIZE <= 0)
+        ? newCapacity
+        : hugeCapacity(minCapacity);
+}
+
+private static int hugeCapacity(int minCapacity) {
+    if (minCapacity < 0) // overflow
+        throw new OutOfMemoryError();
+    return (minCapacity > MAX_ARRAY_SIZE)
+        ? Integer.MAX_VALUE
+        : MAX_ARRAY_SIZE;
+}
+```
+
+添加元素到指定位置的方法，会使改位置之后的所有元素都移动。
+
+若 ArrayList 在初始化时指定了容量，并且每次添加都在末尾，那么新增元素的速度比 LinkedList 高。
+
+### 删除元素
+
+```java
+public E remove(int index) {
+    Objects.checkIndex(index, size);
+    final Object[] es = elementData;
+    @SuppressWarnings("unchecked") E oldValue = (E) es[index];
+    fastRemove(es, index);
+    return oldValue;
+}
+
+private void fastRemove(Object[] es, int i) {
+    modCount++;
+    final int newSize;
+    if ((newSize = size - 1) > i)
+        System.arraycopy(es, i + 1, es, i, newSize - i);
+    es[size = newSize] = null;
+}
+```
+
+同样每次删除元素都会挪动一些元素，删除位置越靠前，挪动的范围越大。
+
+### 遍历元素
+
+```java
+public E get(int index) {
+    Objects.checkIndex(index, size);
+    return elementData(index);
+}
+
+@SuppressWarnings("unchecked")
+E elementData(int index) {
+    return (E) elementData[index];
+}
+```
+
+由于是基于数组实现，所以获取元素很快。
 
 ## LinkedList
 
