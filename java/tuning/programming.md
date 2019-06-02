@@ -182,3 +182,24 @@ regex1     regex2   percentage
 
 减少捕获组可以提高性能。
 
+## List
+
+List 主要有 [ArrayList](../class-libraries/collection.md#arraylist-yuan-ma-fen-xi) 和 [LinkedList](../class-libraries/collection.md#linkedlist-yuan-ma-fen-xi) 两个实现类。\`
+
+* 初始化，ArrayList 最好指定容量，避免扩容复制。
+* 新增元素，不考虑扩容时：
+  * 头部增加： LinkedList 效率较高，因为 ArrayList 需要移动大部分数据。
+  * 中间增加：差不多，因为 ArrayList 需要移动大约一半数据，LinkedList 找到中间位置需要遍历大约一半的数据。
+  * 尾部增加：ArrayList 效率较高，因为 LinkedList 的指针变换比较耗时。
+* 删除元素：
+  * 头部删除：LinkedList 效率较高。
+  * 中间删除：差不多。
+  * 尾部删除：ArrayList 效率较高。
+* 遍历元素：
+  * for\(;;\) 遍历：ArrayList 效率高，因为 LinkedList 每次都要找到位置。
+  * 迭代器遍历：差不多。
+
+{% hint style="warning" %}
+使用迭代器遍历时，若需要删除元素，应该使用 Iterator.remove\(\)，而不是 List.remove\(\)，原因详见[迭代器（源码分析）](../class-libraries/collection.md#iterator-yuan-ma-fen-xi)。
+{% endhint %}
+
