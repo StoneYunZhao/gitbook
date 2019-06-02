@@ -171,7 +171,7 @@ E elementData(int index) {
 
 由于是基于数组实现，所以获取元素很快。
 
-## LinkedList
+## LinkedList（源码分析）
 
 是基于双向链表结构实现的，所以查询速度慢，增删速度快，提供了特殊的方法，对头尾的元素操作（进行增删查）。定义了 Node 结构：
 
@@ -313,6 +313,48 @@ public E get(int index) {
 ```
 
 所以建议遍历 LinkedList 时，使用 Iterator 的方式。
+
+## Iterator（源码分析）
+
+如下 remove1 方法是正确的，remove2 是不正确的，会抛出 ConcurrentModificationException。
+
+因为虽然 foreach 方法是语法糖，会转换成 Iterator 方法，但是第 15 行还是调用的 List 的 remove 方法，而不是 Iterator 的 remove 方法。
+
+```java
+public static void remove1(ArrayList<String> list) {
+        Iterator<String> it = list.iterator();
+        while (it.hasNext()) {
+            String str = it.next();
+            if (str.equals("b")) {
+                it.remove();
+            }
+        }
+    }
+
+public static void remove2(ArrayList<String> list) {
+        for (String s : list) {
+            if (s.equals("b")) {
+                list.remove(s);
+            }
+        }
+    }
+```
+
+Iterator 有属性 expectedModCount，当不匹配时会抛出异常。List 的 remove 方法不会修改该值，造成不匹配，所以抛出异常。
+
+```java
+public Iterator<E> iterator() {
+    return new Itr();
+}
+
+private class Itr implements Iterator<E> {
+    int cursor;       // index of next element to return
+    int lastRet = -1; // index of last element returned; -1 if no such
+    int expectedModCount = modCount;
+    
+    ...
+}
+```
 
 ## Set
 
