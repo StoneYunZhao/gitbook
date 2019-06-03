@@ -12,6 +12,7 @@
   * [Exceptions](java/grammar/exceptions.md)
 * [Class Libraries](java/class-libraries/README.md)
   * [Collection](java/class-libraries/collection.md)
+  * [Stream](java/class-libraries/stream.md)
   * [IO](java/class-libraries/java-io.md)
   * [NIO](java/class-libraries/java-nio.md)
 * [Concurrency](java/concurrency/README.md)

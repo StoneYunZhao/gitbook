@@ -83,7 +83,7 @@ split 有两种情况不会使用正则：
 
 假设字符串为 ”abbc“，正则表达式为 "ab{1,3}c"，则匹配过程如下图：
 
-![](../../.gitbook/assets/image%20%2867%29.png)
+![](../../.gitbook/assets/image%20%2868%29.png)
 
 NFA 自动机默认情况时贪婪模式，即匹配尽量多的内容，在第 2 步匹配到一个 b 后，会继续尽量匹配到 3 个 b。所以第 4 步，想要匹配第三个 b 时匹配不到，就会发送回溯，已经读取到 c 会被回退，指针重新指向第三个字符 b，然后再匹配 c。
 
@@ -202,4 +202,14 @@ List 主要有 [ArrayList](../class-libraries/collection.md#arraylist-yuan-ma-fe
 {% hint style="warning" %}
 使用迭代器遍历时，若需要删除元素，应该使用 Iterator.remove\(\)，而不是 List.remove\(\)，原因详见[迭代器（源码分析）](../class-libraries/collection.md#iterator-yuan-ma-fen-xi)。
 {% endhint %}
+
+## Stream
+
+[Stream](../class-libraries/stream.md) 是 Java 8 新增的 Api。
+
+* 若循环次数较少，常规的迭代性能较好。
+* 单核 CPU，常规迭代性能较好。
+* 循环次数较多，多核 CPU，Stream 并行性能优势明显。
+
+所以使用 Stream 未必可以使系统性能更佳，需要结合使用场景，合理地使用 Stream。
 
