@@ -20,6 +20,7 @@
 * **计算机科学**：
   * [算法](computer-science/algorithm/)
   * [网络协议](computer-science/network-protocol/)
+  * [操作系统](computer-science/linux/)
   * [设计模式](computer-science/design-patterns/)
   * [分布式系统](computer-science/distributed-system/)
 * **数据库**：
@@ -27,11 +28,10 @@
   * [Redis](database/basic.md)
   * [Elasticsearch](database/elasticsearch.md)
   * [HBase](database/hbase.md)
-  * [Kafka](database/kafka/)
+  * [Kafka](database/kafka.md)
   * [ZooKeeper](database/zookeeper-1.md)
   * [MongoDB](database/mongodb.md)
 * **其它**： 
-  * [Linux](other/linux/)
   * [Kubernetes](other/kubernetes.md)
   * [Git](other/git.md)
   * [Maven](other/maven.md)

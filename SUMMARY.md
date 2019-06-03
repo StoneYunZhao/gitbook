@@ -68,6 +68,8 @@
   * [Network Layer](computer-science/network-protocol/network-layer.md)
   * [Transport Layer](computer-science/network-protocol/transport-layer.md)
   * [Application layer](computer-science/network-protocol/application-layer.md)
+* [Operating System](computer-science/linux/README.md)
+  * [System Initialization](computer-science/linux/system-initialization.md)
 * [Design Patterns](computer-science/design-patterns/README.md)
   * [UML](computer-science/design-patterns/uml.md)
   * [Principle](computer-science/design-patterns/principle.md)
@@ -76,7 +78,6 @@
   * [FlyWeight](computer-science/design-patterns/flyweight.md)
   * [Observer](computer-science/design-patterns/observer.md)
 * [Distributed System](computer-science/distributed-system/README.md)
-  * [Introduction](computer-science/distributed-system/introduction.md)
   * [Message Queue](computer-science/distributed-system/message-queue.md)
   * [Cache](computer-science/distributed-system/cache.md)
   * [Consistent Hashing](computer-science/distributed-system/consistent-hashing.md)
@@ -84,7 +85,6 @@
 ## database
 
 * [MySQL](database/mysql/README.md)
-  * [Basic](database/mysql/basic.md)
   * [Architecture](database/mysql/architecture.md)
   * [Log](database/mysql/log.md)
   * [Transaction](database/mysql/transaction.md)
@@ -93,16 +93,12 @@
 * [Redis](database/basic.md)
 * [Elasticsearch](database/elasticsearch.md)
 * [HBase](database/hbase.md)
-* [Kafka](database/kafka/README.md)
-  * [Preface](database/kafka/preface.md)
-  * [Client](database/kafka/client.md)
+* [Kafka](database/kafka.md)
 * [ZooKeeper](database/zookeeper-1.md)
 * [MongoDB](database/mongodb.md)
 
 ## Other
 
-* [Linux](other/linux/README.md)
-  * [System Initialization](other/linux/system-initialization.md)
 * [Kubernetes](other/kubernetes.md)
 * [Git](other/git.md)
 * [Maven](other/maven.md)
