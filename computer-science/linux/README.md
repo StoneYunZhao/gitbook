@@ -428,10 +428,3 @@ spec:
     - name: single-request-reopen
 ```
 
-### Reference
-
-* [http://man7.org/linux/man-pages/man5/resolv.conf.5.html](http://man7.org/linux/man-pages/man5/resolv.conf.5.html)
-* [https://docs.docker.com/v17.09/engine/userguide/networking/default\_network/configure-dns/](https://docs.docker.com/v17.09/engine/userguide/networking/default_network/configure-dns/)
-* [https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/)
-* [http://coolnull.com/3820.html](http://coolnull.com/3820.html)
-
