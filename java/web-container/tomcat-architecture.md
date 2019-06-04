@@ -29,15 +29,19 @@ Tomcat 设计了 **Endpoint**（网络通信）、**Processor**（应用层协�
 
 ![](../../.gitbook/assets/image%20%2864%29.png)
 
-Tomcat 设计了 ProtocolHandler 来组合 Endpoint 和 Processor。
+### ProtocolHandler
 
 ![](../../.gitbook/assets/image%20%2842%29.png)
 
-### ProtocolHandler
+Tomcat 设计了 ProtocolHandler 来组合 Endpoint 和 Processor。
+
+![](../../.gitbook/assets/image%20%2868%29.png)
+
+ProtocolHandler 都有对每一种应用层协议有一层抽象，每一种 IO 模型都有具体的实现。
 
 ![](../../.gitbook/assets/image%20%2883%29.png)
 
-![](../../.gitbook/assets/image%20%2868%29.png)
+
 
 ### Adapter
 
