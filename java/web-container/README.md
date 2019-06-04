@@ -1,10 +1,16 @@
 # Web Container
 
+* [Tomcat 架构](tomcat-architecture.md)
+
+## 基本介绍
+
+了解 Web 容器需要要先了解 [HTTP 协议](../../computer-science/network-protocol/application-layer.md#http)。
+
+### Servlet
+
 Sun 公司推出了 Servlet 技术，Servlet 没有 main 方法，必须把它部署在 Servlet 容器中，Servlet 容器一般也具有 HTTP 服务器的功能，所以 Servlet 容器 + HTTP 服务器 = Web 容器。
 
 ![](../../.gitbook/assets/image%20%28108%29.png)
-
-了解 Web 容器当然要先了解 [HTTP 协议](../../computer-science/network-protocol/application-layer.md#http)。
 
 Web 容器主要做的工作是：接受连接、解析请求数据、处理请求、发送响应。
 
@@ -67,6 +73,8 @@ public class AnnotationServlet extends HttpServlet { }
 
 Servlet 规范定义了 **ServletContext 接口**对应一个 Web 应用。一个 Web 应用的所有 Servlet 可以通过 ServletContext 来共享数据。
 
+### Filter
+
 **Filter**：**是干预过程的**，让你对请求和响应做一些统一的定制化处理。Servlet 容器会实例化所有的 Filter，并链接成一个 FilterChain，Filter 的 doFilter 负责调用 FilterChain 的下一个 Filter。
 
 ```java
@@ -78,11 +86,15 @@ public interface Filter {
 }
 ```
 
+### **Listener**
+
 **Listener**：**是基于状态的**，Web 应用在 Servlet 容器中运行时，Servlet 容器内部会发生各种事件，如 Web 应用的启动、停止、用户的请求到达，Servlet 容器提供了一些默认的监听器来监听这些事件。Spring 实现了自己的监听器（ContextLoaderListener），监听 ServletContext 的启动事件，创建并初始化全局的 Spring 容器（**注意区分 DispatchServlet init 方法中初始化的 SpringMVC 容器**）。
 
 {% hint style="info" %}
 ContextLoaderListener 初始化的是全局的 Spring 根容器，即 Spring 的 IoC 容器。DispatchServlet init 方法中初始化的容器是 SpringMVC 容器，它的父容器是 Spring IoC 容器。子容器可访问父容器中的 Bean（如 Service），但是父容器不能访问子容器的 Bean（如 Controller）。
 {% endhint %}
+
+### Servlet、Spring、SpringMVC 容器
 
 ![](../../.gitbook/assets/image%20%2819%29.png)
 
