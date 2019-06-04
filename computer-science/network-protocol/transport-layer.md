@@ -6,7 +6,7 @@
 
 **用户数据报协议**（**U**ser **D**atagram **P**rotocol，**UDP**，又称**用户数据包协议**）是一个简单的面向数据报的传输层协议。
 
-![](../../.gitbook/assets/image%20%2874%29.png)
+![](../../.gitbook/assets/image%20%2877%29.png)
 
 特点：
 
@@ -42,7 +42,7 @@
 
 ### TCP 头
 
-![](../../.gitbook/assets/image%20%2860%29.png)
+![](../../.gitbook/assets/image%20%2863%29.png)
 
 * 包的序号：可以解决乱序问题。
 * 确认序号：可以解决包丢失问题。
@@ -51,7 +51,7 @@
 
 ### 三次握手
 
-![](../../.gitbook/assets/image%20%2852%29.png)
+![](../../.gitbook/assets/image%20%2854%29.png)
 
 {% hint style="warning" %}
 为什么是三次握手？握手次数当然可以很多次，但是不管多少次也不能保证真的可靠。所以为了权衡，三次握手的完成之后，双方都有一次发送和返回就可以了。
@@ -63,7 +63,7 @@
 
 ### 四次挥手
 
-![](../../.gitbook/assets/image%20%2889%29.png)
+![](../../.gitbook/assets/image%20%2894%29.png)
 
 {% hint style="warning" %}
 B 在 ACK 之后进入 CLOSED-WAIT 状态，不能直接关闭。因为 A 已经把数据发送完了，但 B 的数据还不一定发送完成，此时 B 还是可以发送数据的。
@@ -77,13 +77,13 @@ A 发送 ACK 之后不能直接关闭，需要进入 TIME-WAIT 状态。原因�
 
 ### 状态机
 
-![](../../.gitbook/assets/image%20%28128%29.png)
+![](../../.gitbook/assets/image%20%28133%29.png)
 
 ### 滑动窗口
 
 滑动窗口是依据接收端的处理能力的。
 
-![](../../.gitbook/assets/image%20%2821%29.png)
+![](../../.gitbook/assets/image%20%2823%29.png)
 
 **AdvertisedWindow**：接收端会给发送端的 ACK 里面带一个 ，表示接收端所能处理的事情。
 
@@ -121,7 +121,7 @@ A 发送 ACK 之后不能直接关闭，需要进入 TIME-WAIT 状态。原因�
 
 **快速恢复**：上节讲到快速重传，若发现包丢失，则连续发送前一个包的三次 ACK，此时发送端会立即重新发送丢失的包，还会做另外一个件事：`cwnd = cwnd/2, ssthresh = cwnd`；然后每返回一个包：`cwnd++`。
 
-![](../../.gitbook/assets/image%20%2890%29.png)
+![](../../.gitbook/assets/image%20%2895%29.png)
 
 ### 结论
 

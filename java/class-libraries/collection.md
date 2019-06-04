@@ -4,7 +4,7 @@ Java 集合框架和分为 Collection 和 [Map](collection.md#map) 两大类。�
 
 本节主要讲线程不安全的容器，线程安全的容器见 [Thread-safe Collection](../concurrency/thread-safe-collection.md)。
 
-![Collection &#x7C7B;&#x7EE7;&#x627F;&#x5173;&#x7CFB;](../../.gitbook/assets/image%20%28101%29.png)
+![Collection &#x7C7B;&#x7EE7;&#x627F;&#x5173;&#x7CFB;](../../.gitbook/assets/image%20%28106%29.png)
 
 ## List 概述
 
@@ -391,7 +391,7 @@ TreeSet 保证元素的唯一性是有两种方式：
 
 Map保存的是键值对，键要求保持唯一性，值可以重复。
 
-![Map &#x7C7B;&#x7EE7;&#x627F;&#x5173;&#x7CFB;](../../.gitbook/assets/image%20%289%29.png)
+![Map &#x7C7B;&#x7EE7;&#x627F;&#x5173;&#x7CFB;](../../.gitbook/assets/image%20%2810%29.png)
 
 ### HashMap
 
