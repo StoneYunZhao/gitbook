@@ -18,14 +18,14 @@ Tomcat 支持多种 I/O 模型和应用层协议。I/O 模型有：[NIO](../clas
 1. 监听网络端口。
 2. 接受网络连接请求。
 3. 读取网络字节流。
-4. 根据应用层协议（HTTP/AJP）解析字节流，生成 TomcatRequest 对象。
-5. TomcatRequest 转换成 ServletRequest。
+4. 根据应用层协议（HTTP/AJP）解析字节流，生成 Tomcat 的 Request 对象。
+5. Tomcat 的 Request 转换成 ServletRequest。
 6. 调用 Servlet 容器得到 ServletResponse。
-7. ServletResponse 转换成 TomcatResponse。
-8. TomcatResponse 转换成字节流。
+7. ServletResponse 转换成 Tomcat 的 Response。
+8. Tomcat 的 Response 转换成字节流。
 9. 把字节流返回给客户端。
 
-Tomcat 设计了 **Endpoint**（网络通信）、**Processor**（应用层协议解析）、**Adapter**（对象转换） 来实现上面流程。Endpoint 提供字节流给 Processor，Processor 提供 TomcatRequest 给 Adapter，Adapter 提供 ServletRequest 给容器。
+Tomcat 设计了 **Endpoint**（网络通信）、**Processor**（应用层协议解析）、**Adapter**（对象转换） 来实现上面流程。Endpoint 提供字节流给 Processor，Processor 提供 Tomcat 的 Request 给 Adapter，Adapter 提供 ServletRequest 给容器。
 
 ### ProtocolHandler
 
@@ -41,7 +41,7 @@ ProtocolHandler 都有对每一种应用层协议有一层抽象，每一种 IO 
 
 #### EndPoint
 
-是 Socket 接受和发送的处理器，传输层（TCP/IP）的实现。
+是 Socket 接受和发送的处理器，负责传输层（TCP/IP）的通信。
 
 ![](../../.gitbook/assets/image%20%2891%29.png)
 
@@ -56,15 +56,15 @@ ProtocolHandler 都有对每一种应用层协议有一层抽象，每一种 IO 
 
 #### Processor
 
-用于实现应用层协议，即 HTTP。
+用于处理应用层协议，即 HTTP。
 
 ![](../../.gitbook/assets/image%20%287%29.png)
 
-EndPoint 接收到 Socket 连接后，生成一个 SocketProcessor 任务到线程池，SocketProcessor 的 run 方法会调用 Processor 组件把字节流转换成 TomcatRequest。
+EndPoint 接收到 Socket 连接后，生成一个 SocketProcessor 任务到线程池，SocketProcessor 的 run 方法会调用 Processor 组件把字节流转换成 Tomcat 的 Request。
 
 ### Adapter
 
-ProtocolHandler 得到 TomcatRequest，Processor 调用 CoyoteAdapter 的 service 方法，把 TomcatRequest 转成 ServletRequest，再调用容器的 service 方法。
+ProtocolHandler 得到 Tomcat 的 Request，Processor 调用 CoyoteAdapter 的 service 方法，把 Tomcat 的 Request 转成 ServletRequest，再调用容器的 service 方法。
 
 ![](../../.gitbook/assets/image%20%2822%29.png)
 
