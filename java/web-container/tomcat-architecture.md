@@ -9,7 +9,7 @@ Tomcat 支持多种 I/O 模型和应用层协议。I/O 模型有：[NIO](../clas
 
 连接器和容器需要组装起来才能工作，通过 Service 在连接器和容器外面包一层组装。一个 Tomcat 可以有多个 Service，可以实现通过不同的端口号来访问同一机器上部署的不同应用。
 
-![](../../.gitbook/assets/image%20%2845%29.png)
+![](../../.gitbook/assets/image%20%2846%29.png)
 
 ## Connector
 
@@ -25,7 +25,23 @@ Tomcat 支持多种 I/O 模型和应用层协议。I/O 模型有：[NIO](../clas
 8. TomcatResponse 转换成字节流。
 9. 把字节流返回给客户端。
 
-Tomcat 设计了 Endpoint、Processor、Adapter 来实现上面流程。
+Tomcat 设计了 **Endpoint**（网络通信）、**Processor**（应用层协议解析）、**Adapter**（对象转换） 来实现上面流程。Endpoint 提供字节流给 Processor，Processor 提供 TomcatRequest 给 Adapter，Adapter 提供 ServletRequest 给容器。
+
+![](../../.gitbook/assets/image%20%2864%29.png)
+
+Tomcat 设计了 ProtocolHandler 来组合 Endpoint 和 Processor。
+
+![](../../.gitbook/assets/image%20%2842%29.png)
+
+### ProtocolHandler
+
+![](../../.gitbook/assets/image%20%2883%29.png)
+
+![](../../.gitbook/assets/image%20%2868%29.png)
+
+### Adapter
+
+
 
 ## Container
 
