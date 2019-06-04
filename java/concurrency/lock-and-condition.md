@@ -103,3 +103,200 @@ public class BlockedQueue<T>{
 * `Condition.signal()` 对应 `Object.notify()`
 * `Condition.signalAll()` 对应 `Object.notifyAll()`
 
+## ReadWriteLock
+
+在生产中经常有读多写少的场景，比如缓存。针对这种情况，Java 提供了一个接口`ReadWriteLock`。
+
+* 允许多个线程同时读共享变量。
+* 只允许一个线程写共享变量。
+* 当一个线程在写共享变量时，不允许其它线程读和写操作。
+
+### 缓存实现
+
+```java
+class Cache<K,V> {
+  final Map<K, V> m = new HashMap<>();
+  final ReadWriteLock rwl = new ReentrantReadWriteLock();
+  // 读锁
+  final Lock r = rwl.readLock();
+  // 写锁
+  final Lock w = rwl.writeLock();
+  // 读缓存
+  V get(K key) {
+    r.lock();
+    try { return m.get(key); }
+    finally { r.unlock(); }
+  }
+  // 写缓存
+  V put(String key, Data v) {
+    w.lock();
+    try { return m.put(key, v); }
+    finally { w.unlock(); }
+  }
+}
+```
+
+### 缓存数据按需加载
+
+缓存中的数据是需要初始化的，若数据量小，可以直接一次性全部加载；若数据量大，则要按需加载（懒加载），即当查询的时候再加载。
+
+```java
+  V get(K key) {
+    V v = null;
+    // 读缓存
+    r.lock();         
+    try {
+      v = m.get(key); 
+    } finally{
+      r.unlock();     
+    }
+    // 缓存中存在，返回
+    if(v != null) {   
+      return v;
+    }  
+    // 缓存中不存在，查询数据库
+    w.lock();         
+    try {
+      // 再次验证
+      // 其他线程可能已经查询过数据库
+      v = m.get(key); 
+      if(v == null){  
+        // 查询数据库
+        v= 省略代码无数
+        m.put(key, v);
+      }
+    } finally{
+      w.unlock();
+    }
+    return v; 
+  }
+```
+
+### 读写锁升级与降级
+
+把上面的代码改成如下是否可行？
+
+```java
+// 读缓存
+r.lock();         
+try {
+  v = m.get(key); 
+  if (v == null) {
+    w.lock();
+    try {
+      // 再次验证并更新缓存
+      // 省略详细代码
+    } finally{
+      w.unlock();
+    }
+  }
+} finally{
+  r.unlock();     
+}
+```
+
+答案是不行，会导致写锁永远等待。
+
+* **锁的升级**：先获取了读锁，再获取写锁。这是**不允许**的。
+* **锁的降级**：先获取了写锁，再获取读锁。这是**允许**的。
+
+### 总结
+
+* 读写锁也支持公平和非公平模式。
+* 只有**写锁支持条件变量**，读锁不支持。
+
+## StampedLock
+
+Java 1.8 提供，性能比 ReadWriteLock 更好。支持三种模式：
+
+* **写锁**：与 ReadWriteLock的写锁类似，只允许一个线程获取。获取时返回一个 stamp，解锁时需要传入此 stamp。
+* **悲观读锁**：与 ReadWriteLock 读锁类似，允许多个线程同时获取，与写锁互斥。获取时返回一个 stamp，解锁时需要传入此 stamp。
+* **乐观读**：注意没加锁字，因为乐观读是**无锁**的。允许一个线程获取写锁。
+
+```java
+class Point {
+  private int x, y;
+  final StampedLock sl = new StampedLock();
+  // 计算到原点的距离  
+  int distanceFromOrigin() {
+    // 乐观读
+    long stamp = sl.tryOptimisticRead();
+    // 读入局部变量，
+    // 读的过程数据可能被修改
+    int curX = x, curY = y;
+    // 判断执行读操作期间，
+    // 是否存在写操作，如果存在，
+    // 则 sl.validate 返回 false
+    if (!sl.validate(stamp)){
+      // 升级为悲观读锁
+      stamp = sl.readLock();
+      try {
+        curX = x;
+        curY = y;
+      } finally {
+        // 释放悲观读锁
+        sl.unlockRead(stamp);
+      }
+    }
+    return Math.sqrt(
+      curX * curX + curY * curY);
+  }
+}
+```
+
+上述代码首先乐观读，但是 x、y 可能被修改，因此需要验证一下，若验证不通过，升级为读锁。若不升级为读锁，需要在循环里面反复乐观读，浪费 CPU，所以**最佳实践是升级为读锁**。
+
+### 数据库的乐观锁
+
+* 先从数据库读一条带 version 字段的记录。
+* 然后在程序中对数据做业务修改。
+* 最后写入数据库时采用 `update set version = version +  where version = XX and id = XX`的语句，若返回1，则说明更新成功，期间没有人修改这条数据；若返回0，则更新失败，说明有人修改过此数据。
+
+可见，数据库乐观锁的 version 字段与 StampedLock 的 stamp 是同样的意义。
+
+### 结论
+
+StampedLock 的功能是 ReadWriteLock 的**子集**。
+
+* StampedLock 不支持可重入；
+* StampedLock 的悲观读锁和写锁都不支持条件变量；
+* 若线程阻塞在 StampedLock 的 readLock\(\) 或者 writeLock\(\) 上时，一定**不要调用中断**操作；如果需要支持中断功能，一定使用可中断的悲观读锁 `readLockInterruptibly()` 和写锁 `writeLockInterruptibly()`。
+* StampedLock **支持锁降级**`tryConvertToReadLock()`与**升级**`tryConvertToWriteLock()`。
+
+StampedLock 读模板：
+
+```java
+final StampedLock sl = new StampedLock();
+ 
+// 乐观读
+long stamp = sl.tryOptimisticRead();
+// 读入方法局部变量
+......
+// 校验 stamp
+if (!sl.validate(stamp)){
+  // 升级为悲观读锁
+  stamp = sl.readLock();
+  try {
+    // 读入方法局部变量
+    .....
+  } finally {
+    // 释放悲观读锁
+    sl.unlockRead(stamp);
+  }
+}
+// 使用方法局部变量执行业务操作
+......
+```
+
+StampedLock 写模板：
+
+```java
+long stamp = sl.writeLock();
+try {
+  // 写共享变量
+  ......
+} finally {
+  sl.unlockWrite(stamp);
+}
+```
+
