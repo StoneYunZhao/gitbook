@@ -415,3 +415,107 @@ HashTable 不允许`Null`作为 Key 和 Value，但是 HashMap 可以。
 
 HashMap 在多线程使用时可能会出现 CPU 100% 的情况，原因是 JDK1.7 出现 Hash 冲突时，采用的是头插法，会改变节点顺序，会造成循环链表，发生死循环。
 
+### 属性
+
+有三个重要的属性：
+
+* table：存储数据，有 next 属性指向 hash 冲突的下一节点。
+* threshold：默认 12，Node 数量超过 threshold 就会调用 resize 方法。
+* loadFactor：加载因子，默认 0.75。
+
+```java
+public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneable, Serializable {
+    int threshold;
+    final float loadFactor;
+    transient Node<K,V>[] table;
+    
+    static class Node<K,V> implements Map.Entry<K,V> {
+        final int hash;
+        final K key;
+        V value;
+        Node<K,V> next;
+
+        Node(int hash, K key, V value, Node<K,V> next) {
+            this.hash = hash;
+            this.key = key;
+            this.value = value;
+            this.next = next;
+        }
+    }
+}
+```
+
+### 新增元素
+
+```java
+public V put(K key, V value) {
+    return putVal(hash(key), key, value, false, true);
+}
+
+static final int hash(Object key) {
+    int h;
+    return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+}
+
+final V putVal(int hash, K key, V value, boolean onlyIfAbsent, boolean evict) {
+    Node<K,V>[] tab; Node<K,V> p; int n, i;
+    if ((tab = table) == null || (n = tab.length) == 0)
+        // 判断当 table 为 null 或者 tab 的长度为 0 时，即 table 尚未初始化，此时通过 resize() 方法得到初始化的 table
+        n = (tab = resize()).length;
+    if ((p = tab[i = (n - 1) & hash]) == null)
+        // 通过（n - 1） & hash 计算出的值作为 tab 的下标 i，并另 p 表示 tab[i]，也就是该链表第一个节点的位置。并判断 p 是否为 null
+        tab[i] = newNode(hash, key, value, null);
+    // 当 p 为 null 时，表明 tab[i] 上没有任何元素，那么接下来就 new 第一个 Node 节点，调用 newNode 方法返回新节点赋值给 tab[i]
+    else {
+        // p 不为 null 的情况，有三种情况：p 为链表节点；p 为红黑树节点；p 是链表节点但长度为临界长度 TREEIFY_THRESHOLD，再插入任何元素就要变成红黑树了。
+        Node<K,V> e; K k;
+        if (p.hash == hash &&
+            ((k = p.key) == key || (key != null && key.equals(k))))
+            // 判断 key 相同的条件是 key 的 hash 相同，并且符合 equals 方法。这里判断了 p.key 是否和插入的 key 相等，如果相等，则将 p 的引用赋给 e
+            e = p;
+        else if (p instanceof TreeNode)
+            // 第一种情况，p 是红黑树节点，那么肯定插入后仍然是红黑树节点，所以我们直接强制转型 p 后调用 TreeNode.putTreeVal 方法，返回的引用赋给 e
+            e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
+        else {
+            // p 为链表节点的情形，也就是上述说的另外两类情况：插入后还是链表 / 插入后转红黑树。另外，上行转型代码也说明了 TreeNode 是 Node 的一个子类
+            for (int binCount = 0; ; ++binCount) {
+                // 我们需要一个计数器来计算当前链表的元素个数，并遍历链表，binCount 就是这个计数器
+                if ((e = p.next) == null) {
+                    p.next = newNode(hash, key, value, null);
+                    if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
+                        // 插入成功后，要判断是否需要转换为红黑树，因为插入后链表长度加 1，而 binCount 并不包含新节点，所以判断时要将临界阈值减 1
+                        treeifyBin(tab, hash);
+                    // 当新长度满足转换条件时，调用 treeifyBin 方法，将该链表转换为红黑树
+                    break;
+                }
+                if (e.hash == hash &&
+                    ((k = e.key) == key || (key != null && key.equals(k))))
+                    break;
+                p = e;
+            }
+        }
+        if (e != null) { // existing mapping for key
+            V oldValue = e.value;
+            if (!onlyIfAbsent || oldValue == null)
+                e.value = value;
+            afterNodeAccess(e);
+            return oldValue;
+    }
+    ++modCount;
+    if (++size > threshold)
+        resize();
+    afterNodeInsertion(evict);
+    return null;
+}
+```
+
+hash 函数：先无符号向右位移 16 位，即取 int 类型的一般，将二进制的 int 类型对半切开；再异或运算。
+
+`(n - 1) & hash`：hash 表习惯将数组长度 n 设为 2 的 x 次方，这样可以保证索引位置处于数组范围内。
+
+JDK 1.8 引入了红黑树来提升链表的查询效率，链表长度超过 8 后，红黑树的效率比链表高。
+
+### 获取元素
+
+### 扩容
+
