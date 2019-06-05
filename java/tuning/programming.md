@@ -213,3 +213,14 @@ List 主要有 [ArrayList](../class-libraries/collection.md#arraylist-yuan-ma-fe
 
 所以使用 Stream 未必可以使系统性能更佳，需要结合使用场景，合理地使用 Stream。
 
+## HashMap
+
+[HashMap ](../class-libraries/collection.md#hashmap-yuan-ma-fen-xi)在 Java 1.8 中做了较大的优化。可根据场景合理设置初始容量和加载因子两个参数：
+
+* 若查询较为频繁，可以减小加载因子。
+* 若内存利用率需要较高，可以增大加载因子。
+
+设计合理的 hashCode 方法，降低 hash 冲突。
+
+若预知存储数据量，提前设置好初始容量（预知数据量 / 加载因子），可以减少 resize 操作。
+

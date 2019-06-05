@@ -513,9 +513,46 @@ hash 函数：先无符号向右位移 16 位，即取 int 类型的一般，将
 
 `(n - 1) & hash`：hash 表习惯将数组长度 n 设为 2 的 x 次方，这样可以保证索引位置处于数组范围内。
 
+{% hint style="info" %}
+为什么要 2 的 x 次方？因为 n - 1 后，每一位都是 1，进行 & 运算可以减少冲突。若有些位数是 0，那么有些位置永远都不能存放数据了。
+{% endhint %}
+
 JDK 1.8 引入了红黑树来提升链表的查询效率，链表长度超过 8 后，红黑树的效率比链表高。
 
 ### 获取元素
 
+没有冲突时效率最高，有冲突是链表的效率 O\(n\)，树化后为 O\(logn\)。
+
+```java
+public V get(Object key) {
+    Node<K,V> e;
+    return (e = getNode(hash(key), key)) == null ? null : e.value;
+}
+
+final Node<K,V> getNode(int hash, Object key) {
+    Node<K,V>[] tab; Node<K,V> first, e; int n; K k;
+    if ((tab = table) != null && (n = tab.length) > 0 &&
+        (first = tab[(n - 1) & hash]) != null) {
+        if (first.hash == hash && // always check first node
+            ((k = first.key) == key || (key != null && key.equals(k))))
+            return first;
+        if ((e = first.next) != null) {
+            if (first instanceof TreeNode)
+                return ((TreeNode<K,V>)first).getTreeNode(hash, key);
+            do {
+                if (e.hash == hash &&
+                    ((k = e.key) == key || (key != null && key.equals(k))))
+                    return e;
+            } while ((e = e.next) != null);
+        }
+    }
+    return null;
+}
+```
+
 ### 扩容
+
+JDK 1.7：依次取出数组的每个元素，元素是链表，链表的头是最后添加的，重新计算 hash，然后依次插入新数组，所以原来 hash 冲突的链表会倒置顺序。
+
+JDK 1.8：由于扩容是 2 倍关系，即 tableSize 就是左移一位，所以原来的 hash 值和新的 tableSize 按位与计算，0 索引不变，1 索引加上原来数组大小。
 
