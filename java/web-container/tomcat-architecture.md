@@ -43,14 +43,14 @@ ProtocolHandler 都有对每一种应用层协议有一层抽象，每一种 IO 
 
 是 Socket 接受和发送的处理器，负责传输层（TCP/IP）的通信。
 
-![](../../.gitbook/assets/image%20%28104%29.png)
+![](../../.gitbook/assets/image%20%28105%29.png)
 
 有两个重要的组件：
 
 * Acceptor：用于监听 Socket 请求。
 * SocketProcessor：用于处理收到的 Socket 请求，会被提交到线程池来执行。
 
-![](../../.gitbook/assets/image%20%28100%29.png)
+![](../../.gitbook/assets/image%20%28101%29.png)
 
 ![](../../.gitbook/assets/image%20%2865%29.png)
 
@@ -70,13 +70,14 @@ ProtocolHandler 得到 Tomcat 的 Request，Processor 调用 CoyoteAdapter 的 s
 
 ## Container
 
-![](../../.gitbook/assets/image%20%28120%29.png)
+### 总体架构
+
+![](../../.gitbook/assets/image%20%28100%29.png)
 
 * Servlet：一个 Servlet 对象。
 * Context：一个 Web 应用程序，包含多个 Servlet。
 * Host：一个虚拟主机，可以部署多个应用。
-* Engine：引擎，用来管理多个虚拟主机。
-* Container：一个容器只能有一个引擎，所以一个 Service 也只能有一个引擎。
+* Engine：引擎，顶层容器，用来管理多个虚拟主机，一个 Service 最多一个引擎。
 
 ```markup
 <!-- server.xml -->
