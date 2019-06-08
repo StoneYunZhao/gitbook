@@ -110,7 +110,7 @@ public interface Container extends Lifecycle {
 }
 ```
 
-## 定位到 Servlet 的过程
+### 如何定位到 Servlet
 
 通过 Mapper 组件来实现，Mapper 保存了配置信息，如 Host 配置的域名、Context 配置的应用路径、Wrapper 配置的 Servlet 映射路径，也就是一个多层次的 map。
 
@@ -166,4 +166,8 @@ Valve 和 Filter 的区别：
 
 * Valve 是 Tomcat 自定义的，与 Tomcat 紧耦合，而 Filter 是 Servlet 规范。
 * Valve 工作在容器级别，拦截所有的请求；Filter 工作在应用级别，拦截某个 Web 应用的所有请求。
+
+## LifeCycle
+
+
 
