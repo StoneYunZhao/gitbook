@@ -38,7 +38,7 @@ index (k))engine=InnoDB;
 (100,1) (200,2) (300,3) (500,5) (600,6)
 ```
 
-![](../../.gitbook/assets/image%20%2899%29.png)
+![](../../.gitbook/assets/image%20%28101%29.png)
 
 * **主键索引**：又叫聚簇索引（clustered index），叶子节点存整行数据。
 * **非主键索引**：又叫耳机索引（secondary index），叶子节点存主键的值。
@@ -108,5 +108,5 @@ mysql> select * from tuser where name like '张 %' and age=10 and ismale=1;
 
 在 5.6 仅需回表两次：
 
-![](../../.gitbook/assets/image%20%2881%29.png)
+![](../../.gitbook/assets/image%20%2882%29.png)
 
