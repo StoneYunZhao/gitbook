@@ -62,7 +62,7 @@ Happens-Before 很多翻译都不对，它真正的意义是：**前一个操作
 现在我们使用前面三条规则来分析上面的代码，x=42 Happens-Before v=true， 线程 A 写 v Happens-Before 线程 B读 v，再根据传递性，所以线程 B 读到的 x 一定是 42
 {% endhint %}
 
-![](../../.gitbook/assets/image%20%2868%29.png)
+![](../../.gitbook/assets/image%20%2870%29.png)
 
 ### 监视器锁规则
 

@@ -83,7 +83,7 @@ split 有两种情况不会使用正则：
 
 假设字符串为 ”abbc“，正则表达式为 "ab{1,3}c"，则匹配过程如下图：
 
-![](../../.gitbook/assets/image%20%2875%29.png)
+![](../../.gitbook/assets/image%20%2877%29.png)
 
 NFA 自动机默认情况时贪婪模式，即匹配尽量多的内容，在第 2 步匹配到一个 b 后，会继续尽量匹配到 3 个 b。所以第 4 步，想要匹配第三个 b 时匹配不到，就会发送回溯，已经读取到 c 会被回退，指针重新指向第三个字符 b，然后再匹配 c。
 
@@ -223,4 +223,12 @@ List 主要有 [ArrayList](../class-libraries/collection.md#arraylist-yuan-ma-fe
 设计合理的 hashCode 方法，降低 hash 冲突。
 
 若预知存储数据量，提前设置好初始容量（预知数据量 / 加载因子），可以减少 resize 操作。
+
+## I/O
+
+Java 有[普通 I/O](../class-libraries/java-io.md) 实现，这种实现需要把内核空间的内存与用户空间的内存相互复制，见 [Unix IO 模型](../class-libraries/java-nio.md#2-unix-io-mo-xing)，而且是阻塞的。JDK 1.4 发布了 [NIO（new I/O](../class-libraries/java-nio.md#3-java-nio)），优化了内存复制与阻塞问题。JDK 1.7 发布了 NIO2，从操作系统层面实现了异步 I/O。
+
+* NIO 有两个重要的组件 [Channel](../class-libraries/java-nio.md#3-2-channel) 和 [Buffer](../class-libraries/java-nio.md#3-1-buffer)，可以使用它们优化读写。
+* NIO 还提供了 [DirectBuffer](../class-libraries/java-nio.md#directbuffer)，可以优化内存复制。
+* 使用[多路复用](../class-libraries/java-nio.md#duo-lu-fu-yong-io)模型，即 [Selector](../class-libraries/java-nio.md#selector)。
 

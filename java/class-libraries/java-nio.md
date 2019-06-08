@@ -1,22 +1,22 @@
 # NIO
 
-## 1. IO 分类
+## IO 分类
 
-### 1.1 同步与异步
+### 同步与异步
 
 同步异步关注的是**消息通信机制** \(synchronous communication/ asynchronous communication\)：
 
 * **同步：**在发出一个功能调用时，在没有得到结果之前，该调用就不返回。但是一旦调用返回，就得到返回值了。就是由调用者主动等待这个调用的结果
 * **异步：**当一个异步功能调用发出后，这个调用直接返回了，所以调用者不能立刻得到结果。当该异步功能完成后，被调用者通过状态、通知或回调来通知调用者。
 
-### 1.2 阻塞与非阻塞
+### 阻塞与非阻塞
 
 而阻塞非阻塞关注的是**程序在等待调用结果（消息，返回值）时的状态：**
 
 * **阻塞：**阻塞调用是指调用结果返回之前，当前线程会被挂起。函数只有在得到结果之后才会将阻塞的线程激活。
 * **非阻塞：**在不能立刻得到结果之前，该调用不会阻塞当前线程。线程不会被挂起，可能做别的事，也可能一直去问被调用者事情完成好了没有。
 
-### 1.3 举例说明
+### 举例说明
 
 老张爱喝茶，废话不说，煮开水。出场人物：老张，水壶两把（普通水壶，简称水壶；会响的水壶，简称响水壶）。
 
@@ -29,9 +29,9 @@
 
 所谓阻塞非阻塞，仅仅对于老张而言。 立等的老张，阻塞；看电视的老张，非阻塞。
 
-## 2. Unix IO 模型
+## Unix IO 模型
 
-![&#x4E00;&#x4E2A; IO &#x7684;&#x57FA;&#x672C;&#x8FC7;&#x7A0B;](../../.gitbook/assets/image%20%2869%29.png)
+![&#x4E00;&#x4E2A; IO &#x7684;&#x57FA;&#x672C;&#x8FC7;&#x7A0B;](../../.gitbook/assets/image%20%2871%29.png)
 
 **用户空间**和**内核空间：**系统为了保护内核数据，会将寻址空间分为用户空间和内核空间，32 位机器为例，高 1G 字节作为内核空间，低 3G 字节作为用户空间。当用户程序读取数据的时候，会经历两个过程：**磁盘到内核空间**（这块消耗性能，下面简称内核数据准备），**内核空间拷贝到用户空间**（下面简称用户空间拷贝）。
 
@@ -43,21 +43,21 @@ Linux 的内核将所有外部设备**都看做一个文件来操作**，对一�
 
 > 所以说：在Linux下对文件的操作是**利用文件描述符\(file descriptor\)来实现的**。
 
-### 2.1 阻塞 IO
+### 阻塞 IO
 
-![](../../.gitbook/assets/image%20%28101%29.png)
+![](../../.gitbook/assets/image%20%28103%29.png)
 
 **同步阻塞：**用户态进程调用`recvfrom`系统调用接收数据，当前内核中并没有准备好数据，该用户态进程将一直在此等待，不会进行其他的操作，待内核态准备好数据，将数据从内核态拷贝到用户空间内存，然后`recvfrom`返回成功的指示，此时用户态进行才解除阻塞的状态，处理收到的数据。
 
-### 2.2 非阻塞 IO
+### 非阻塞 IO
 
-![](../../.gitbook/assets/image%20%28139%29.png)
+![](../../.gitbook/assets/image%20%28141%29.png)
 
 **同步非阻塞：**用户进程调用`recvform`系统调用接收数据之后，进程并没有被阻塞，内核马上返回给进程，如果数据还没准备好，此时会返回一个 error。进程在返回之后，可以干点别的事情，然后再发起`recvform`系统调用。如此循环的进行`recvform`系统调用，检查内核数据，直到数据准备好，再拷贝数据到进程。**拷贝数据整个过程，进程仍然是属于阻塞的状态**。
 
-### 2.3 多路复用 IO
+### 多路复用 IO
 
-![](../../.gitbook/assets/image%20%2862%29.png)
+![](../../.gitbook/assets/image%20%2864%29.png)
 
 用户进程采用`select/poll/epoll/pselect`的其中一个方法，以 `select` 为例，通过`select`可以等待多个不同类型的消息，如果其中有一个类型的消息准备好，则`select`会返回信息，然后用户态进程调用`recvfrom`接收数据。步骤如下：
 
@@ -70,6 +70,8 @@ Linux 的内核将所有外部设备**都看做一个文件来操作**，对一�
 
 I/O 复用和阻塞 I/O 很相似，不同的是，I/O 复用等待多类事件，阻塞式 I/O 只等待一类事件，另外，在 I/O 复用中，会产生两个系统调用（`select`和`recvfrom`），而阻塞式 I/O 只产生一个系统调用。那么这就涉及到具体的性能问题，当只存在一类事件的时候，使用阻塞式 I/O 模型的性能会更好，当存在多种不同类型的事件时，I/O 复用的性能要好的多，因为阻塞式 I/O 模型只能监听一类事件，所以这个时候需要使用多线程进行处理。
 
+目前操作系统的 I/O 多路复用都是用了 epoll，相比传统的 select，epoll 没有最大连接句柄 1024 的限制。
+
 #### 多路复用 IO 为何比非阻塞 IO 模型的效率高?
 
 是因为在非阻塞 IO 中，不断地询问 socket 状态时通过用户线程去进行的，而在多路复用 IO 中，轮询每个 socket 状态是**内核**在进行的，这个效率要比用户线程要高的多。
@@ -78,7 +80,7 @@ I/O 复用和阻塞 I/O 很相似，不同的是，I/O 复用等待多类事件�
 不过要注意的是，多路复用 IO 模型是通过轮询的方式来检测是否有事件到达，并且对到达的事件**逐一进行响应**。因此对于多路复用 IO 模型来说，一旦**事件响应体很大**，那么就会导致后续的事件迟迟得不到处理，并且会**影响新的事件轮询**。
 {% endhint %}
 
-### 2.4 信号驱动 IO
+### 信号驱动 IO
 
 ![](../../.gitbook/assets/image%20%2821%29.png)
 
@@ -86,29 +88,33 @@ I/O 复用和阻塞 I/O 很相似，不同的是，I/O 复用等待多类事件�
 
 **数据准备**阶段是**非阻塞**的，**数据复制**阶段是**阻塞**的。
 
-### 2.5 异步 IO
+### 异步 IO
 
-![](../../.gitbook/assets/image%20%28137%29.png)
+![](../../.gitbook/assets/image%20%28139%29.png)
 
 用户进程进行`aio_read`系统调用之后，无论内核数据是否准备好，都会直接返回给用户进程，然后用户态进程可以去做别的事情。内核等待用户态需要的数据准备好，然后将数据复制到用户空间，然后从内核向用户进程发送通知，告知用户进程数据已经复制完成。
 
 数据准备与数据复制**两个阶段都是非阻塞**的。
 
-### 2.6 比较
+### 比较
 
-![](../../.gitbook/assets/image%20%28115%29.png)
+![](../../.gitbook/assets/image%20%28117%29.png)
 
 * 阻塞 IO、非阻塞 IO、多路复用 IO、信号驱动 IO **都是同步 IO**。因为其中真正的 IO 操作（`recvfrom`）将阻塞进程。
 
-## 3. Java NIO
+## Java NIO
 
 Java NIO\(no-blocking io 或 new io\)是 JDK 1.4 中新引入的 IO 库，目的是提高速度。实际上旧的 IO 已经用 NIO 重新实现过，所以即使我们不使用 NIO 编程，也能从中受益。
 
-![IO &#x548C; NIO &#x7684;&#x533A;&#x522B;](../../.gitbook/assets/image%20%286%29.png)
+| IO | NIO |
+| :--- | :--- |
+| 面向流（Stream Oriented） |  面向缓冲区（Buffer Oriented） |
+| 阻塞 IO（Blocking IO） |  非阻塞 IO（Non Blocking IO） |
+| 无 | 选择器（Selectors） |
 
-![](../../.gitbook/assets/image%20%28140%29.png)
+![](../../.gitbook/assets/image%20%28142%29.png)
 
-### 3.1 Buffer
+### Buffer
 
 ![](../../.gitbook/assets/image%20%2811%29.png)
 
@@ -139,11 +145,21 @@ Buffer 本质是一块内存区域，可以读写数据，有四个重要的属�
 
 ![Buffer &#x7684;&#x5B9E;&#x73B0;&#x7C7B;](../../.gitbook/assets/image%20%2825%29.png)
 
+### DirectBuffer
+
+普通的 Buffer 分配的是 JVM 堆内存，而 DirectBuffer 分配的是物理内存，不需要用户空间和内核空间的复制。
+
+但是创建和销毁的代价很高，不是由 JVM 负责垃圾回收，会通过 Java Reference 机制来释放内存。
+
+![](../../.gitbook/assets/image%20%2850%29.png)
+
+![](../../.gitbook/assets/image%20%2848%29.png)
+
 其中`MappedByteBuffer`实现的就是内存映射文件，可以实现**大文件**的高效读写。不需要从内核空间 copy 到用户空间。
 
 ![](../../.gitbook/assets/image%20%2829%29.png)
 
-### 3.2 Channel
+### Channel
 
 Channel 与 Stream 的区别：
 
@@ -182,13 +198,13 @@ RandomAccessFile aFile = new RandomAccessFile("tmp.txt", "rw");
     aFile.close();
 ```
 
-### 3.3 Selector
+### Selector
 
 Selector 是Java NIO 中的一个组件，用于检查一个或多个NIO Channel 的状态是否处于可读、可写。如此可以**实现单线程管理多个 channels**，也就是可以管理多个网络链接。
 
 通过上面的了解我们知道 Selector 是一种 IO multiplexing 的情况。
 
-![&#x5355;&#x7EBF;&#x7A0B;&#x5904;&#x7406;&#x4E09;&#x4E2A;&#x8FDE;&#x63A5;](../../.gitbook/assets/image%20%28114%29.png)
+![&#x5355;&#x7EBF;&#x7A0B;&#x5904;&#x7406;&#x4E09;&#x4E2A;&#x8FDE;&#x63A5;](../../.gitbook/assets/image%20%28116%29.png)
 
 ```java
 Selector selector = Selector.open();
@@ -242,7 +258,7 @@ Channel 必须是**非阻塞**的。上面对 IO multiplexing 的图解中可以
 
 当操作 Selector 完毕后，需要调用`close()`方法。`close()`的调用会关闭 Selector 并使相关的 SelectionKey 都无效。Channel 本身不管被关闭。
 
-### 3.4 与 Unix IO 的关系
+### 与 Unix IO 的关系
 
 * Java 标准 IO 属于阻塞 IO（Blocking IO）。
 * NIO 中的实现了SelectableChannel类的对象有方法`configureBlocking(boolean block)`：
@@ -251,7 +267,7 @@ Channel 必须是**非阻塞**的。上面对 IO multiplexing 的图解中可以
   * `Selector` 可监听多个 NIO 对象，所以属于**多路复用 IO**（IO multiplexing）
   * Java 7 中增加了**异步 IO**。
 
-![](../../.gitbook/assets/image%20%2880%29.png)
+![](../../.gitbook/assets/image%20%2882%29.png)
 
 ## 参考
 
