@@ -114,7 +114,7 @@ public final class Integer extends Number implements Comparable<Integer> {
 
 ## String
 
-![](../../.gitbook/assets/image%20%2820%29.png)
+![](../../.gitbook/assets/image%20%2821%29.png)
 
 * JDK 6 及以前：subString 方法会共享 char\[\]，所以会引起内存泄漏和内存溢出问题。
 * JDK 7、JDK8：去掉两个字段，减少内存，subString 也不会共享 char\[\]。

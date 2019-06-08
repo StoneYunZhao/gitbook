@@ -23,9 +23,9 @@ Stream 的操作可以按照如下分类：
   * 短路（Short-circuiting）：遇到某些符合条件的元素就可以得到最终结果。
   * 非短路（Unshort-circuiting）：必须处理完所有元素才能得到最终结果。
 
-![](../../.gitbook/assets/image%20%2816%29.png)
+![](../../.gitbook/assets/image%20%2817%29.png)
 
-![](../../.gitbook/assets/image%20%28115%29.png)
+![](../../.gitbook/assets/image%20%28119%29.png)
 
 * BaseStream：定义了流的基本方法，如 isParallel。
 * Stream：定义了流的常用操作，如 map、filter。
