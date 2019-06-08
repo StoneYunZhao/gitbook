@@ -17,6 +17,10 @@ public class Singleton {
 }
 ```
 
+{% hint style="warning" %}
+若该类实现了 Serializable 接口，就可以通过[序列化](../../java/class-libraries/java-io.md#dui-xiang-xu-lie-hua)的方式破坏单例模式。可以添加 readResolve\(\) 方法，自定义返回对象的策略。
+{% endhint %}
+
 ### 枚举
 
 最简洁的方式。

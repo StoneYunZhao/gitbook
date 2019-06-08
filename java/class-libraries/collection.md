@@ -4,7 +4,7 @@ Java 集合框架和分为 Collection 和 [Map](collection.md#map) 两大类。�
 
 本节主要讲线程不安全的容器，线程安全的容器见 [Thread-safe Collection](../concurrency/thread-safe-collection.md)。
 
-![Collection &#x7C7B;&#x7EE7;&#x627F;&#x5173;&#x7CFB;](../../.gitbook/assets/image%20%28108%29.png)
+![Collection &#x7C7B;&#x7EE7;&#x627F;&#x5173;&#x7CFB;](../../.gitbook/assets/image%20%28109%29.png)
 
 ## List 概述
 

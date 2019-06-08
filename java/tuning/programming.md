@@ -232,3 +232,7 @@ Java 有[普通 I/O](../class-libraries/java-io.md) 实现，这种实现需要�
 * NIO 还提供了 [DirectBuffer](../class-libraries/java-nio.md#directbuffer)，可以优化内存复制。
 * 使用[多路复用](../class-libraries/java-nio.md#duo-lu-fu-yong-io)模型，即 [Selector](../class-libraries/java-nio.md#selector)。
 
+## 序列化
+
+Java 提供了内置的序列化方式，即[ ObjectOutputStream 和 ObjectInputStream](../class-libraries/java-io.md#dui-xiang-xu-lie-hua)，但是性能很差，所以可以使用第三方序列化框架，如 Protobuf、Kryo、FastJson 等。
+

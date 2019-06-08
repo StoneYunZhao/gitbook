@@ -6,19 +6,19 @@
 
 `Java.io`包中最重要的就是5个类，指的是`File、OutputStream、InputStream、Writer、Reader`。
 
-![Java IO &#x4F53;&#x7CFB;](../../.gitbook/assets/image%20%28157%29.png)
+![Java IO &#x4F53;&#x7CFB;](../../.gitbook/assets/image%20%28158%29.png)
 
-## 1. Stream
+## Stream
 
-![&#x6309;&#x64CD;&#x4F5C;&#x65B9;&#x5F0F;&#x5206;&#x7C7B;](../../.gitbook/assets/image%20%28144%29.png)
+![&#x6309;&#x64CD;&#x4F5C;&#x65B9;&#x5F0F;&#x5206;&#x7C7B;](../../.gitbook/assets/image%20%28145%29.png)
 
-![&#x6309;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#x5206;&#x7C7B;](../../.gitbook/assets/image%20%28101%29.png)
+![&#x6309;&#x64CD;&#x4F5C;&#x5BF9;&#x8C61;&#x5206;&#x7C7B;](../../.gitbook/assets/image%20%28102%29.png)
 
-### 1.1 字节流
+### 字节流
 
 数据流中最小的数据单元是**字节**。
 
-![&#x5B57;&#x8282;&#x6D41;&#x8F93;&#x5165;&#x8F93;&#x51FA;&#x5BF9;&#x5E94;&#x5173;&#x7CFB;](../../.gitbook/assets/image%20%28111%29.png)
+![&#x5B57;&#x8282;&#x6D41;&#x8F93;&#x5165;&#x8F93;&#x51FA;&#x5BF9;&#x5E94;&#x5173;&#x7CFB;](../../.gitbook/assets/image%20%28112%29.png)
 
 
 
@@ -26,7 +26,22 @@
 
 **`OutputStream`：**字节流，二进制格式操作，抽象类。基于字节的输出操作。是所有输出流的父类。定义了所有输出流都具有的共同特征。
 
-### 1.2 字符流
+### 对象序列化
+
+ObjectOutputStream 和 ObjectInputStream 是实现对象序列化与反序列的类，只针对实现了 Serializable 接口的类。不会对静态变量和 transient 变量序列化。类有一个 serialVersionUID 变量，表示类的版本。
+
+![](../../.gitbook/assets/image%20%28100%29.png)
+
+Java 内置的序列化方式有很多缺点：
+
+* 无法跨语言。
+* 易被攻击。
+* 序列化后的字节很大。
+* 性能差。
+
+所以有很多第三方序列化实现，比如：FastJson、Kryo、Protobuf、Hessian 等。
+
+### 字符流
 
 数据流中最小的数据单元是**字符**， Java 中的字符是 Unicode 编码，一个字符占用两个字节。
 
@@ -36,7 +51,7 @@
 
 **`Writer`：**字符流，文本格式操作，抽象类，基于字符的输出操作。
 
-### 1.3 选择 IO 流
+### 选择 IO 流
 
 **输入还是输出：**
 
@@ -69,7 +84,7 @@
 
 * 是就加上 Buffered：BufferedInputStream, BufferedOuputStream, BufferedReader, BufferedWriter。
 
-## 2. 文件类
+## 文件类
 
 **`File`：**文件特征与管理，用于文件或者目录的描述信息，例如生成新目录，修改文件名，删除文件，判断文件所在路径等。
 

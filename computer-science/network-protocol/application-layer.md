@@ -9,7 +9,7 @@
 
 DHCP 是 BOOTP 的增强版。
 
-![](../../.gitbook/assets/image%20%28102%29.png)
+![](../../.gitbook/assets/image%20%28103%29.png)
 
 ### Discover
 
@@ -198,7 +198,7 @@ DHCP 会收到这个请求，发现这机器 A 的 MAC 没有 IP 地址，所以
 
 DHCP 协议能给客户安装操作系统，这个在云计算领域大有用处。
 
-![](../../.gitbook/assets/image%20%28105%29.png)
+![](../../.gitbook/assets/image%20%28106%29.png)
 
 ## HTTP
 
@@ -216,7 +216,7 @@ HTTP 协议是基于 TCP 的，1.1 版本的 HTTP 模式开启了 Keep-Alive（C
   * **Cache-Control**：max-age 为 0，则不用缓存； 否则若资源缓存时间小于 max-age，则可以使用缓存。
   * If-Modified-Since：若资源在某个时间之后没有更新，那么客户端就不用下载最新的资源了。
 
-![HTTP &#x54CD;&#x5E94;&#x62A5;&#x6587;&#x683C;&#x5F0F;](../../.gitbook/assets/image%20%28113%29.png)
+![HTTP &#x54CD;&#x5E94;&#x62A5;&#x6587;&#x683C;&#x5F0F;](../../.gitbook/assets/image%20%28114%29.png)
 
 HTTP 协议是无状态的，这样就会造成 Web 应用不知道这个请求来自哪里。
 
