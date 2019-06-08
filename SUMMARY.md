@@ -73,6 +73,7 @@
   * [Singleton](computer-science/design-patterns/singleton.md)
   * [Composite](computer-science/design-patterns/composite.md)
   * [FlyWeight](computer-science/design-patterns/flyweight.md)
+  * [Chain of Responsibility](computer-science/design-patterns/chain-of-responsibility.md)
   * [Iterator](computer-science/design-patterns/iterator.md)
   * [Observer](computer-science/design-patterns/observer.md)
 * [Distributed System](computer-science/distributed-system/README.md)

@@ -9,7 +9,7 @@ Tomcat 支持多种 I/O 模型和应用层协议。I/O 模型有：[NIO](../clas
 
 连接器和容器需要组装起来才能工作，通过 Service 在连接器和容器外面包一层组装。一个 Tomcat 可以有多个 Service，可以实现通过不同的端口号来访问同一机器上部署的不同应用。
 
-![](../../.gitbook/assets/image%20%2849%29.png)
+![](../../.gitbook/assets/image%20%2851%29.png)
 
 ## Connector
 
@@ -29,30 +29,30 @@ Tomcat 设计了 **Endpoint**（网络通信）、**Processor**（应用层协�
 
 ### ProtocolHandler
 
-![](../../.gitbook/assets/image%20%2844%29.png)
+![](../../.gitbook/assets/image%20%2845%29.png)
 
 Tomcat 设计了 ProtocolHandler 来组合 Endpoint 和 Processor。
 
-![](../../.gitbook/assets/image%20%2875%29.png)
+![](../../.gitbook/assets/image%20%2878%29.png)
 
 ProtocolHandler 都有对每一种应用层协议有一层抽象，每一种 IO 模型都有具体的实现。
 
-![](../../.gitbook/assets/image%20%2890%29.png)
+![](../../.gitbook/assets/image%20%2893%29.png)
 
 #### EndPoint
 
 是 Socket 接受和发送的处理器，负责传输层（TCP/IP）的通信。
 
-![](../../.gitbook/assets/image%20%2895%29.png)
+![](../../.gitbook/assets/image%20%2898%29.png)
 
 有两个重要的组件：
 
 * Acceptor：用于监听 Socket 请求。
 * SocketProcessor：用于处理收到的 Socket 请求，会被提交到线程池来执行。
 
-![](../../.gitbook/assets/image%20%2891%29.png)
+![](../../.gitbook/assets/image%20%2894%29.png)
 
-![](../../.gitbook/assets/image%20%2859%29.png)
+![](../../.gitbook/assets/image%20%2862%29.png)
 
 #### Processor
 

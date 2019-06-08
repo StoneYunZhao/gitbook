@@ -20,7 +20,7 @@
   * [享元](flyweight.md)
   * 代理
 * 行为型
-  * 责任链
+  * [责任链](chain-of-responsibility.md)
   * 命令
   * 解释器
   * [迭代器](iterator.md)
