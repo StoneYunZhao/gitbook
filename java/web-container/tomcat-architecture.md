@@ -33,24 +33,24 @@ Tomcat 设计了 **Endpoint**（网络通信）、**Processor**（应用层协�
 
 Tomcat 设计了 ProtocolHandler 来组合 Endpoint 和 Processor。
 
-![](../../.gitbook/assets/image%20%2874%29.png)
+![](../../.gitbook/assets/image%20%2875%29.png)
 
 ProtocolHandler 都有对每一种应用层协议有一层抽象，每一种 IO 模型都有具体的实现。
 
-![](../../.gitbook/assets/image%20%2889%29.png)
+![](../../.gitbook/assets/image%20%2890%29.png)
 
 #### EndPoint
 
 是 Socket 接受和发送的处理器，负责传输层（TCP/IP）的通信。
 
-![](../../.gitbook/assets/image%20%2894%29.png)
+![](../../.gitbook/assets/image%20%2895%29.png)
 
 有两个重要的组件：
 
 * Acceptor：用于监听 Socket 请求。
 * SocketProcessor：用于处理收到的 Socket 请求，会被提交到线程池来执行。
 
-![](../../.gitbook/assets/image%20%2890%29.png)
+![](../../.gitbook/assets/image%20%2891%29.png)
 
 ![](../../.gitbook/assets/image%20%2859%29.png)
 
