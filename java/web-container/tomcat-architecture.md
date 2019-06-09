@@ -170,6 +170,8 @@ Valve 和 Filter 的区别：
 
 ## LifeCycle
 
+### 实现原理
+
 综合 Connector 和 Container 两节的内容，绘制 Tomcat 静态的组件关系如下图：
 
 ![](../../.gitbook/assets/image%20%2844%29.png)
@@ -177,28 +179,6 @@ Valve 和 Filter 的区别：
 Tomcat 需要统一地管理这些组件的创建、初始化、启动、停止和销毁，它是通过 LifeCycle 来实现的。父组件的 init 方法会调用子组件的 init 方法，父组件的 destroy 方法会调用子组件的 destroy 方法，因此调用者可以**无差别的调用**个组件的 init 和 start 方法，这就是[组合模式](../../computer-science/design-patterns/composite.md)的使用。所以只要调用了顶层组件的 init 方法，整个 tomcat 也就启动了。
 
 ![](../../.gitbook/assets/image%20%2814%29.png)
-
-但是各个组件的启动方式千差万别，所以 LifeCycle 有事件监听的机制，这是[观察者模式](../../computer-science/design-patterns/observer.md)的实现。如 NEW 表示组件刚刚被实例化，当 init 方法调用时，状态就会变成 INITIALIZING，就会触发 BEFORE\_INIT\_EVENT 事件。
-
-```java
-public enum LifecycleState {
-    NEW(false, null),
-    INITIALIZING(false, Lifecycle.BEFORE_INIT_EVENT),
-    INITIALIZED(false, Lifecycle.AFTER_INIT_EVENT),
-    STARTING_PREP(false, Lifecycle.BEFORE_START_EVENT),
-    STARTING(true, Lifecycle.START_EVENT),
-    STARTED(true, Lifecycle.AFTER_START_EVENT),
-    STOPPING_PREP(true, Lifecycle.BEFORE_STOP_EVENT),
-    STOPPING(false, Lifecycle.STOP_EVENT),
-    STOPPED(false, Lifecycle.AFTER_STOP_EVENT),
-    DESTROYING(false, Lifecycle.BEFORE_DESTROY_EVENT),
-    DESTROYED(false, Lifecycle.AFTER_DESTROY_EVENT),
-    FAILED(false, null);
-
-    private final boolean available;
-    private final String lifecycleEvent;
-}
-```
 
 LifeCycle 有一个抽象基类，实现了一个公有逻辑，并提供相应的 internal 抽象方法供子类实现，这是模板方法的使用。
 
@@ -224,10 +204,36 @@ public abstract class LifecycleBase implements Lifecycle {
 }
 ```
 
+### 监听机制
+
+但是各个组件的启动方式千差万别，所以 LifeCycle 有事件监听的机制，这是[观察者模式](../../computer-science/design-patterns/observer.md)的实现。如 NEW 表示组件刚刚被实例化，当 init 方法调用时，状态就会变成 INITIALIZING，就会触发 BEFORE\_INIT\_EVENT 事件。
+
+```java
+public enum LifecycleState {
+    NEW(false, null),
+    INITIALIZING(false, Lifecycle.BEFORE_INIT_EVENT),
+    INITIALIZED(false, Lifecycle.AFTER_INIT_EVENT),
+    STARTING_PREP(false, Lifecycle.BEFORE_START_EVENT),
+    STARTING(true, Lifecycle.START_EVENT),
+    STARTED(true, Lifecycle.AFTER_START_EVENT),
+    STOPPING_PREP(true, Lifecycle.BEFORE_STOP_EVENT),
+    STOPPING(false, Lifecycle.STOP_EVENT),
+    STOPPED(false, Lifecycle.AFTER_STOP_EVENT),
+    DESTROYING(false, Lifecycle.BEFORE_DESTROY_EVENT),
+    DESTROYED(false, Lifecycle.AFTER_DESTROY_EVENT),
+    FAILED(false, null);
+
+    private final boolean available;
+    private final String lifecycleEvent;
+}
+```
+
 监听器的注册：
 
 * Tomcat 自定义了一些监听器，父组件在创建子组件的时候注册到子组件的。
 * 在 server.xml 中定义自己的监听器。
+
+### 总体类图
 
 ![](../../.gitbook/assets/image%20%2896%29.png)
 
@@ -297,6 +303,10 @@ public class Catalina {
             stop();
         }
     }
+    
+    public void await() {
+        getServer().await();
+    }
 }
 ```
 
@@ -359,7 +369,104 @@ Server 还会启动一个 Socket 来监听停止，Catalina 的最后一行就�
 
 ### Service
 
+实现类是 StandardService，成员变量有 Server、Connector、Engine、Mapper 等。MapperListener 是用于支持热部署的，Web 应用发生变化时，Mapper 的信息也必须变化，通过 MapperListener 监听器把信息更新到 Mapper。
+
+```java
+public class StandardService extends LifecycleMBeanBase implements Service {
+    private String name = null;
+    private Server server = null;
+    protected Connector connectors[] = new Connector[0];
+    private final Object connectorsLock = new Object();
+    private Engine engine = null;
+    protected final Mapper mapper = new Mapper();
+    protected final MapperListener mapperListener = new MapperListener(this);
+}
+```
+
+启动顺序：触发启动监听器、启动 Engine 容器、启动执行器、启动 MapperListener、启动连接器。
+
+采用这个顺序是因为依赖关系，如 Mapper 依赖容器，容器启动好后才能监听它们的变化。停止顺序和启动顺序刚好相反。
+
+```java
+@Override
+protected void startInternal() throws LifecycleException {
+    if(log.isInfoEnabled())
+        log.info(sm.getString("standardService.start.name", this.name));
+        
+    setState(LifecycleState.STARTING);
+    // Start our defined Container first
+    if (engine != null) {
+        synchronized (engine) {
+            engine.start();
+        }
+    }
+    synchronized (executors) {
+        for (Executor executor: executors) {
+            executor.start();
+        }
+    }
+    mapperListener.start();
+    // Start our defined Connectors second
+    synchronized (connectorsLock) {
+        for (Connector connector: connectors) {
+            // If it has already failed, don't try and start it
+            if (connector.getState() != LifecycleState.FAILED) {
+                connector.start();
+            }
+        }
+    }
+}
+```
+
 ### Engine
 
+实现类是 StandardEngine，子容器 Host 的实现在抽象类 ContainerBase 中，用专门的线程池来启动子容器。
 
+```java
+public class StandardEngine extends ContainerBase implements Engine {
+    public StandardEngine() {
+        pipeline.setBasic(new StandardEngineValve());
+    }
+}
+
+public abstract class ContainerBase extends LifecycleMBeanBase implements Container {
+    protected final Pipeline pipeline = new StandardPipeline(this);
+    protected final HashMap<String, Container> children = new HashMap<>();
+    
+    protected synchronized void startInternal() throws LifecycleException {
+        ...
+        for (int i = 0; i < children.length; i++) {
+            results.add(startStopExecutor.submit(new StartChild(children[i])));
+        }
+        ...
+    }
+}
+```
+
+容器组件最重要的功能是处理请求，Engine 的功能是把请求转发给某个 Host，通过 Valve 实现。
+
+每个容器都有一个 Pipeline，Pipeline 都有一个 Basic Valve，Engine 的 Basic Valve 如下：
+
+```java
+final class StandardEngineValve extends ValveBase {
+    @Override
+    public final void invoke(Request request, Response response)
+        throws IOException, ServletException {
+
+        // 请求在到达 Engine 容器之前,
+        // Mapper 已经通过对请求的 URL 定位到了相关的容器,
+        // 并把容器对象保存到了 Request 中。
+        Host host = request.getHost();
+        if (host == null) {
+            return;
+        }
+        if (request.isAsyncSupported()) {
+            request.setAsyncSupported(host.getPipeline().isAsyncSupported());
+        }
+
+        // Ask this Host to process this request
+        host.getPipeline().getFirst().invoke(request, response);
+    }
+}
+```
 
