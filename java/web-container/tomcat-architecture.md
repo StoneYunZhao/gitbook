@@ -233,3 +233,15 @@ public abstract class LifecycleBase implements Lifecycle {
 
 ![](../../.gitbook/assets/image%20%2884%29.png)
 
+## 管理组件
+
+### Catalina
+
+### Server
+
+### Service
+
+### Engine
+
+
+
