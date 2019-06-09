@@ -474,7 +474,7 @@ final class StandardEngineValve extends ValveBase {
 
 可以学习 Tomcat 架构设计，总结一些直接借鉴的地方：
 
-### 组件化及可配置
+**组件化及可配置：**
 
 Tomcat 提供了一些组件，让你在server.xml 中组装配置，如连接器、容器。实现组件化一般要遵循两点：
 
@@ -483,11 +483,9 @@ Tomcat 提供了一些组件，让你在server.xml 中组装配置，如连接�
 
 与 Spring 中 bean 的依赖注入类似。
 
-### 组件的创建
+**组件的创建：**由于组件是不确定的，所以是通过反射来创建的。Tomcat 有自己的类加载器。
 
-由于组件是不确定的，所以是通过反射来创建的。Tomcat 有自己的类加载器。
-
-### 组件的生命周期管理
+**组件的生命周期管理：**
 
 组件有父子层次关系，父组件负责子组件的生命周期，所以只要上层组件启动了，整个 Web 容器也就启动了。
 
@@ -495,9 +493,32 @@ Tomcat 提供了一些组件，让你在server.xml 中组装配置，如连接�
 
 Spring 也有类似的生命周期管理，见 [Spring bean 的生命周期](../spring.md#bean-de-sheng-ming-zhou-qi)。
 
-### 组件的抽象类
+**组件的抽象类：**
 
 组件的接口大多都有对应的抽象类，把通用逻辑放在抽象类里面，即使用模板方法的设计模式。
 
 Java 中的 AbstractMap、AbstractSet 也是用的类似的方法。Java 1.8 接口可以使用 default 方法，也可把通用逻辑放在接口中。
+
+## 启动速度优化
+
+* 清理
+  * 清理不必要的 Web 应用，如 host-manager、·example、doc 等。
+  * 清理 xml，启动时会解析所有的 xml 配置文件，尽量保持 xml 简洁。
+  * 删除不需要的 jar，Web 应用 lib 目录下不应该有 Servlet API 和 Tomcat 自身的 API，这些应该由 Tomcat 提供，若是 Maven，则应该设置有 provided。
+* JSP：
+  * 若项目没有使用 JSP，则可以禁止 TLD 扫描。
+  * 若项目使用了 JSP，则可以配置 Tomcat 哪些 jar 包包含了 TLD。
+  * 若没有使用 JSP，则可以 JSP 功能。
+* 关闭 WebSocket
+  * 若不需要使用 WebSocket，则可以关闭它。
+  * 甚至可以把 Tomcat lib 下的 websocket-api.jar 和 tomcat-websocket.jar 删除。
+* Servlet 3.0
+  * 3.0 引入了注解 Servlet，若没有使用 Servlet 注解功能，则可以关闭扫描。
+  * 3.0 引入了 web-fragment.xml，可以配置哪些 jar 包需要扫描 web fragment。
+* 随机树熵源：Tomcat 7 依赖 Java 的 SecureRandom，JVM 默认使用阻塞式熵源 /dev/random，可以配置使用非阻塞式熵源`-Djava.security.egd=file:/dev/./urandom`。
+* 并行启动：Tomcat 默认是逐个启动 Web 应用的，可以配置 startStopThreads 来并行启动。
+
+{% hint style="info" %}
+若是使用嵌入式 Tomcat，比如 Spring Boot，也可以通过 Spring Boot 的方式修改这些参数。
+{% endhint %}
 
