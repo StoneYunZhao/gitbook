@@ -235,9 +235,127 @@ public abstract class LifecycleBase implements Lifecycle {
 
 ## 管理组件
 
+执行 bin 目录下的 startup.sh 后，Tomcat 的启动流程大致如下：
+
+* startup.sh 启动 JVM，启动类是 Bootstrap。
+* Bootstrap 初始化 Tomcat 的类加载器，创建 Catalina 对象。
+* Catalina 解析 server.xml，创建相应的组件，调用 Server 的 start 方法。
+* Server 管理所有的 Service，调用 Service 的 start 方法。
+* Service 管理 Connector 和 Engine，调用它们的 start 方法。
+
 ### Catalina
 
+主要任务是通过解析 server.xml 创建 Server，调用 Server 的 init 和 start 方法。并且注册一个关闭钩子，可以安全的响应 Ctrl+C。
+
+```java
+public class Catalina {
+    public void start() {
+        // 若 Server 为空，则解析 server.xml 并创建 Server
+        if (getServer() == null) {
+            load();
+        }
+        // 创建失败就报错
+        if (getServer() == null) {
+            log.fatal(sm.getString("catalina.noServer"));
+            return;
+        }
+
+        long t1 = System.nanoTime();
+
+        // Start the new server
+        try {
+            getServer().start();
+        } catch (LifecycleException e) {
+            log.fatal(sm.getString("catalina.serverStartFail"), e);
+            try {
+                getServer().destroy();
+            } catch (LifecycleException e1) {
+                log.debug("destroy() failed for failed Server ", e1);
+            }
+            return;
+        }
+
+        long t2 = System.nanoTime();
+        if(log.isInfoEnabled()) {
+            log.info(sm.getString("catalina.startup", Long.valueOf((t2 - t1) / 1000000)));
+        }
+
+        // Register shutdown hook
+        if (useShutdownHook) {
+            if (shutdownHook == null) {
+                shutdownHook = new CatalinaShutdownHook();
+            }
+            Runtime.getRuntime().addShutdownHook(shutdownHook);
+            LogManager logManager = LogManager.getLogManager();
+            if (logManager instanceof ClassLoaderLogManager) {
+                ((ClassLoaderLogManager) logManager).setUseShutdownHook(false);
+            }
+        }
+        // 监听停止请求
+        if (await) {
+            await();
+            stop();
+        }
+    }
+}
+```
+
+关闭钩子本质是一个线程，JVM 在停止之前会执行这个线程的 run 方法。目的是做一些清理资源的工作。
+
+```java
+protected class CatalinaShutdownHook extends Thread {
+    @Override
+    public void run() {
+        try {
+            if (getServer() != null) {
+                Catalina.this.stop();
+            }
+        } catch (Throwable ex) {
+            ExceptionUtils.handleThrowable(ex);
+            log.error(sm.getString("catalina.shutdownHookFail"), ex);
+        } finally {
+            LogManager logManager = LogManager.getLogManager();
+            if (logManager instanceof ClassLoaderLogManager) {
+                ((ClassLoaderLogManager) logManager).shutdown();
+            }
+        }
+    }
+}
+```
+
 ### Server
+
+实现类是 StandardServer，维护了若干个子组件是 Service，为了节约内存以数组的方式保存。
+
+```java
+public final class StandardServer extends LifecycleMBeanBase implements Server {
+    @Override
+    public void addService(Service service) {
+        service.setServer(this);
+
+        synchronized (servicesLock) {
+            Service results[] = new Service[services.length + 1];
+            System.arraycopy(services, 0, results, 0, services.length);
+            results[services.length] = service;
+            services = results;
+            // 启动 Service
+            if (getState().isAvailable()) {
+                try {
+                    service.start();
+                } catch (LifecycleException e) {
+                    // Ignore
+                }
+            }
+
+            // Report this property change to interested listeners
+            support.firePropertyChange("service", null, service);
+        }
+
+    }
+}
+```
+
+Server 还会启动一个 Socket 来监听停止，Catalina 的最后一行就是调用 server.await\(\) ，监听 8005 端口，接受连接请求，从 Socket 里面读取数据，若读到停止命令“SHUTDOWN”，就会进入 stop 流程。
 
 ### Service
 
