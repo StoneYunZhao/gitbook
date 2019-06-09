@@ -42,6 +42,7 @@
   * [Garbage Collection](java/jvm/garbage-collection.md)
 * [Web Container](java/web-container/README.md)
   * [Tomcat Architecture](java/web-container/tomcat-architecture.md)
+  * [Jetty Architecture](java/web-container/jetty-architecture.md)
 * [Spring](java/spring.md)
 * [Tuning](java/tuning/README.md)
   * [Programming](java/tuning/programming.md)
