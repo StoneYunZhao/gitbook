@@ -15,6 +15,7 @@
   * [Stream](java/class-libraries/stream.md)
   * [IO](java/class-libraries/java-io.md)
   * [NIO](java/class-libraries/java-nio.md)
+  * [RMI](java/class-libraries/rmi.md)
 * [Concurrency](java/concurrency/README.md)
   * [Preface](java/concurrency/preface.md)
   * [JMM](java/concurrency/jmm.md)

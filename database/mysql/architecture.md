@@ -2,7 +2,7 @@
 
 MySQL 由 **Server 层**和**存储引擎**组成。
 
-![](../../.gitbook/assets/image%20%28115%29.png)
+![](../../.gitbook/assets/image%20%28116%29.png)
 
 ## Server层
 

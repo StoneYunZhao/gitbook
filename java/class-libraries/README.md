@@ -4,4 +4,5 @@
 * [Stream](stream.md)
 * [IO](java-io.md)
 * [NIO](java-nio.md)
+* [RMI](rmi.md)
 

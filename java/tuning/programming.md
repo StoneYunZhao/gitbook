@@ -236,3 +236,19 @@ Java 有[普通 I/O](../class-libraries/java-io.md) 实现，这种实现需要�
 
 Java 提供了内置的序列化方式，即[ ObjectOutputStream 和 ObjectInputStream](../class-libraries/java-io.md#dui-xiang-xu-lie-hua)，但是性能很差，所以可以使用第三方序列化框架，如 Protobuf、Kryo、FastJson 等。
 
+## RPC
+
+微服务的核心是远程通信和服务治理，在满足一定服务治理的需求下，远程通信的性能对整个系统的性能至关重要。
+
+RPC（Remote Process Call），即远程服务调用。RPC 的优化方法：
+
+* 选择合适的通信协议：为了保证数据的可靠性，我们一般会采用 TCP；若是局域网，并对可靠性没有要求，可采用 UDP。
+* 使用单一长连接
+* 优化 Socket 通信：
+  * 非阻塞 I/O，如 Selector。
+  * Reactor 线程模型。
+  * 零拷贝，如 DirectByteBuffer。
+* 编码、解码，如采用 Protobuf。
+* Linux 的 TCP 参数优化。
+* 定义合理的报文格式
+
