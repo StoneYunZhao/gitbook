@@ -63,7 +63,7 @@
 
 ### 四次挥手
 
-![](../../.gitbook/assets/image%20%28112%29.png)
+![](../../.gitbook/assets/image%20%28113%29.png)
 
 {% hint style="warning" %}
 B 在 ACK 之后进入 CLOSED-WAIT 状态，不能直接关闭。因为 A 已经把数据发送完了，但 B 的数据还不一定发送完成，此时 B 还是可以发送数据的。
@@ -77,7 +77,7 @@ A 发送 ACK 之后不能直接关闭，需要进入 TIME-WAIT 状态。原因�
 
 ### 状态机
 
-![](../../.gitbook/assets/image%20%28158%29.png)
+![](../../.gitbook/assets/image%20%28159%29.png)
 
 ### 滑动窗口
 
@@ -121,7 +121,7 @@ A 发送 ACK 之后不能直接关闭，需要进入 TIME-WAIT 状态。原因�
 
 **快速恢复**：上节讲到快速重传，若发现包丢失，则连续发送前一个包的三次 ACK，此时发送端会立即重新发送丢失的包，还会做另外一个件事：`cwnd = cwnd/2, ssthresh = cwnd`；然后每返回一个包：`cwnd++`。
 
-![](../../.gitbook/assets/image%20%28113%29.png)
+![](../../.gitbook/assets/image%20%28114%29.png)
 
 ### 结论
 
@@ -149,11 +149,30 @@ Socket 可以理解为插头，双方通信需要一根线连接两个插头。S
 * IP 协议版本：AF\_INENT（IPv4），AF\_INENT6（IPv6）。
 * 传输层协议：SOCK\_STREAM（TCP），SOCK\_DGRAM（UDP）。
 
-### TCP 协议的 Socket 调用过程
+### TCP 协议
 
 ![](../../.gitbook/assets/image%20%2865%29.png)
 
-### UDP 协议的 Socket 调用过程
+1. **服务端**调用 bind\(\) ，指定参数端口和 IP，端口用于让操作系统找到你这个应用程序，IP 用于指定监听的网卡（一台机器可以有多个网卡）。
+2. **服务端**调用 listen\(\)，进入 LISTEN 状态。
+3. **服务端**调用 accept\(\)，拿出一个已经完成的连接进行处理；若没有完成的连接，则阻塞等待。
+4. **客户端**调用 connect\(\)，指定参数要连接的 IP 和端口，发起三次握手。内核给客户端分配一个临时端口。握手成功后，服务端的 accept\(\) 返回另一个 socket。
+5. 建立连接后，双方调用 read\(\)、write\(\) 读写数据。
 
+{% hint style="info" %}
+* 对于第 3 点，内核中为每个 Socket 维护两个队列。一个是已经建立连接的队列，处于 ESTABLISHED 状态；一个是还没有完全建立连接的队列，处于 SYNC\_RCVD 状态。
+* 对于第 4 点，监听 Socket 和真正用来传数据的 Socket 是两个，一个叫做**监听 Socket**，一个叫做**已连接 Socket**。
+{% endhint %}
 
+![](../../.gitbook/assets/image%20%28173%29.png)
+
+Socket 在 linux 中是以文件形式的存在。每个进程都有一个数据结构 task\_struct，指向一个文件描述符数组，列出这个进程打开的所有文件的文件描述符；数组的内容是指针，指向内核中所有打开的文件列表中的某一个；文件列表中的 Socket 类型的文件也会指向一个 inode，这个 inode 不在硬盘而在内存；这个 inode 指向 Socket 在内核中的结构。
+
+在这个结构里，主要有两个队列，一个发送队列，一个接受队列；队列保存的是缓存 sk\_buff 结构；缓存里面能看到完整的包结构。
+
+### UDP 协议
+
+![](../../.gitbook/assets/image%20%28108%29.png)
+
+UDP 没有连接，所以不需要三次握手，不需要 listen\(\)、accept\(\) 和 connect\(\)；仍需要 IP 和端口号，所以也需要 bind\(\)；不需要没对连接建立一组 Socket，而是只要有一个 Socket；因为没有连接，每次通信，sendto 和 recvfrom 都可以传入 IP 和端口。
 

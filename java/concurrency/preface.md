@@ -28,7 +28,7 @@
   * **进入条件变量等待队列**：在 Java 里面采用 wait\(\) 或 Condition.await\(\) 实现。
   * **通知条件变量**：在 Java 里面采用 notify\(\)/notifyAll\(\) 或 Condition.signal\(\) 实现。
 
-![](../../.gitbook/assets/image%20%28150%29.png)
+![](../../.gitbook/assets/image%20%28151%29.png)
 
 ### 三种模型对比
 
@@ -85,7 +85,7 @@ Java 的信号量由`java.util.concurrent.Semaphore`实现，`up()`对应`acquir
 
 **并发编程可以总结为三个核心问题：分工、同步、互斥。**
 
-![](../../.gitbook/assets/image%20%28176%29.png)
+![](../../.gitbook/assets/image%20%28178%29.png)
 
 为了性能，如 IO 等待的时候不能让 CPU 闲着，所以我们把任务拆分交替执行，有了**分时操作系统**，出现了**并发**，后来 CPU 多核了又有了**并行**计算，也就是分工。
 

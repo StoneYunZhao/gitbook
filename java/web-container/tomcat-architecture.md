@@ -43,7 +43,7 @@ ProtocolHandler 都有对每一种应用层协议有一层抽象，每一种 IO 
 
 是 Socket 接受和发送的处理器，负责传输层（TCP/IP）的通信。
 
-![](../../.gitbook/assets/image%20%28108%29.png)
+![](../../.gitbook/assets/image%20%28109%29.png)
 
 有两个重要的组件：
 
