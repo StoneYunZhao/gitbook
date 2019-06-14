@@ -22,3 +22,5 @@
 
 只要是在网络上跑的包，都是完整的。可以有下层没有上层，绝对不可能有上层没有下层。比如对于 TCP 协议，无论是三次握手、重试，只要想发出去包，就一定有 IP 和 MAC 层。
 
+对于 UDP、TCP 在操作系统的实现，采用 [Socket 编程](transport-layer.md#socket-bian-cheng)。
+

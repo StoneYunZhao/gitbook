@@ -6,7 +6,7 @@
 
 **用户数据报协议**（**U**ser **D**atagram **P**rotocol，**UDP**，又称**用户数据包协议**）是一个简单的面向数据报的传输层协议。
 
-![](../../.gitbook/assets/image%20%2889%29.png)
+![](../../.gitbook/assets/image%20%2890%29.png)
 
 特点：
 
@@ -42,7 +42,7 @@
 
 ### TCP 头
 
-![](../../.gitbook/assets/image%20%2874%29.png)
+![](../../.gitbook/assets/image%20%2875%29.png)
 
 * 包的序号：可以解决乱序问题。
 * 确认序号：可以解决包丢失问题。
@@ -63,7 +63,7 @@
 
 ### 四次挥手
 
-![](../../.gitbook/assets/image%20%28111%29.png)
+![](../../.gitbook/assets/image%20%28112%29.png)
 
 {% hint style="warning" %}
 B 在 ACK 之后进入 CLOSED-WAIT 状态，不能直接关闭。因为 A 已经把数据发送完了，但 B 的数据还不一定发送完成，此时 B 还是可以发送数据的。
@@ -77,7 +77,7 @@ A 发送 ACK 之后不能直接关闭，需要进入 TIME-WAIT 状态。原因�
 
 ### 状态机
 
-![](../../.gitbook/assets/image%20%28157%29.png)
+![](../../.gitbook/assets/image%20%28158%29.png)
 
 ### 滑动窗口
 
@@ -121,7 +121,7 @@ A 发送 ACK 之后不能直接关闭，需要进入 TIME-WAIT 状态。原因�
 
 **快速恢复**：上节讲到快速重传，若发现包丢失，则连续发送前一个包的三次 ACK，此时发送端会立即重新发送丢失的包，还会做另外一个件事：`cwnd = cwnd/2, ssthresh = cwnd`；然后每返回一个包：`cwnd++`。
 
-![](../../.gitbook/assets/image%20%28112%29.png)
+![](../../.gitbook/assets/image%20%28113%29.png)
 
 ### 结论
 
@@ -139,4 +139,21 @@ A 发送 ACK 之后不能直接关闭，需要进入 TIME-WAIT 状态。原因�
 {% hint style="info" %}
 面向连接：在互通之前，会先建立连接，比如 TCP 的三次握手。建立连接，是为了在客户端和服务端维护连接，而建立一定的**数据结构**来维护双方交互的**状态**。
 {% endhint %}
+
+## Socket 编程
+
+UDP、TCP 协议分为客户端和服务端，写程序的时候，也有这样的区分。
+
+Socket 可以理解为插头，双方通信需要一根线连接两个插头。Socket 作用在网络层和传输层，所以需要指定参数：
+
+* IP 协议版本：AF\_INENT（IPv4），AF\_INENT6（IPv6）。
+* 传输层协议：SOCK\_STREAM（TCP），SOCK\_DGRAM（UDP）。
+
+### TCP 协议的 Socket 调用过程
+
+![](../../.gitbook/assets/image%20%2865%29.png)
+
+### UDP 协议的 Socket 调用过程
+
+
 

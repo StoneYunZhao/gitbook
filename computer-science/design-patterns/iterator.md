@@ -21,5 +21,5 @@
 
 JDK 的 ArrayList 实现了 Iterator 接口。
 
-![](../../.gitbook/assets/image%20%28139%29.png)
+![](../../.gitbook/assets/image%20%28140%29.png)
 
