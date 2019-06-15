@@ -6,7 +6,7 @@
 
 **用户数据报协议**（**U**ser **D**atagram **P**rotocol，**UDP**，又称**用户数据包协议**）是一个简单的面向数据报的传输层协议。
 
-![](../../.gitbook/assets/image%20%2890%29.png)
+![](../../.gitbook/assets/image%20%2892%29.png)
 
 特点：
 
@@ -42,7 +42,7 @@
 
 ### TCP 头
 
-![](../../.gitbook/assets/image%20%2875%29.png)
+![](../../.gitbook/assets/image%20%2877%29.png)
 
 * 包的序号：可以解决乱序问题。
 * 确认序号：可以解决包丢失问题。
@@ -51,7 +51,7 @@
 
 ### 三次握手
 
-![](../../.gitbook/assets/image%20%2864%29.png)
+![](../../.gitbook/assets/image%20%2866%29.png)
 
 {% hint style="warning" %}
 为什么是三次握手？握手次数当然可以很多次，但是不管多少次也不能保证真的可靠。所以为了权衡，三次握手的完成之后，双方都有一次发送和返回就可以了。
@@ -63,7 +63,7 @@
 
 ### 四次挥手
 
-![](../../.gitbook/assets/image%20%28113%29.png)
+![](../../.gitbook/assets/image%20%28116%29.png)
 
 {% hint style="warning" %}
 B 在 ACK 之后进入 CLOSED-WAIT 状态，不能直接关闭。因为 A 已经把数据发送完了，但 B 的数据还不一定发送完成，此时 B 还是可以发送数据的。
@@ -77,13 +77,13 @@ A 发送 ACK 之后不能直接关闭，需要进入 TIME-WAIT 状态。原因�
 
 ### 状态机
 
-![](../../.gitbook/assets/image%20%28159%29.png)
+![](../../.gitbook/assets/image%20%28162%29.png)
 
 ### 滑动窗口
 
 滑动窗口是依据接收端的处理能力的。
 
-![](../../.gitbook/assets/image%20%2825%29.png)
+![](../../.gitbook/assets/image%20%2826%29.png)
 
 **AdvertisedWindow**：接收端会给发送端的 ACK 里面带一个 ，表示接收端所能处理的事情。
 
@@ -121,7 +121,7 @@ A 发送 ACK 之后不能直接关闭，需要进入 TIME-WAIT 状态。原因�
 
 **快速恢复**：上节讲到快速重传，若发现包丢失，则连续发送前一个包的三次 ACK，此时发送端会立即重新发送丢失的包，还会做另外一个件事：`cwnd = cwnd/2, ssthresh = cwnd`；然后每返回一个包：`cwnd++`。
 
-![](../../.gitbook/assets/image%20%28114%29.png)
+![](../../.gitbook/assets/image%20%28117%29.png)
 
 ### 结论
 
@@ -151,7 +151,7 @@ Socket 可以理解为插头，双方通信需要一根线连接两个插头。S
 
 ### TCP 协议
 
-![](../../.gitbook/assets/image%20%2865%29.png)
+![](../../.gitbook/assets/image%20%2867%29.png)
 
 1. **服务端**调用 bind\(\) ，指定参数端口和 IP，端口用于让操作系统找到你这个应用程序，IP 用于指定监听的网卡（一台机器可以有多个网卡）。
 2. **服务端**调用 listen\(\)，进入 LISTEN 状态。
@@ -164,7 +164,7 @@ Socket 可以理解为插头，双方通信需要一根线连接两个插头。S
 * 对于第 4 点，监听 Socket 和真正用来传数据的 Socket 是两个，一个叫做**监听 Socket**，一个叫做**已连接 Socket**。
 {% endhint %}
 
-![](../../.gitbook/assets/image%20%28173%29.png)
+![](../../.gitbook/assets/image%20%28176%29.png)
 
 Socket 在 linux 中是以文件形式的存在。每个进程都有一个数据结构 task\_struct，指向一个文件描述符数组，列出这个进程打开的所有文件的文件描述符；数组的内容是指针，指向内核中所有打开的文件列表中的某一个；文件列表中的 Socket 类型的文件也会指向一个 inode，这个 inode 不在硬盘而在内存；这个 inode 指向 Socket 在内核中的结构。
 
@@ -172,17 +172,49 @@ Socket 在 linux 中是以文件形式的存在。每个进程都有一个数据
 
 ### UDP 协议
 
-![](../../.gitbook/assets/image%20%28108%29.png)
+![](../../.gitbook/assets/image%20%28111%29.png)
 
 UDP 没有连接，所以不需要三次握手，不需要 listen\(\)、accept\(\) 和 connect\(\)；仍需要 IP 和端口号，所以也需要 bind\(\)；不需要没对连接建立一组 Socket，而是只要有一个 Socket；因为没有连接，每次通信，sendto 和 recvfrom 都可以传入 IP 和端口。
 
 ## 多客户端连接
 
+服务端需要与多个客户端连接，怎么连接多个客户端关键在于怎么处理 accept\(\) 函数返回一个已经建立连接的新 Socket。
+
 ### 多进程
+
+accept\(\) 返回后，代表建立了一个连接，返回一个已连接的 Socket，此时通过 fork 创建一个子进程，子进程负责处理已连接的 Socket。
+
+fork 的原理完全 copy 一个子进程，会复制文件描述符列表，也会复制内存空间，还会复制当前执行到了哪一行。复制完成后，父子进程几乎完全一样。fork 返回 0 代表子进程；fork 返回其他值，代表父进程，返回的是子进程的 PID。
+
+![](../../.gitbook/assets/image%20%2893%29.png)
+
+由于复制了文件描述符列表，所以父进程 accept 返回的 Socket 的文件描述符子进程也能获取到。接下来子进程就可以通过这个已连接的 Socket 与客户端交互。父进程通过子进程的 ID 查看子进程是否完成，通信完毕之后就关闭子进程。
 
 ### 多线程
 
+多进程资源消耗太高，可以使用比进程轻量很多的线程。通过 pthread\_create 创建一个线程，在 task 列表会创建一项，文件描述符、进程空间都是共享的，只不过多了一个引用而已。
+
+![](../../.gitbook/assets/image%20%2862%29.png)
+
+{% hint style="info" %}
+进程和线程模型都是在一个连接到来的时候创建一个进程或线程，C10K 问题表示一台机器维护一万个连接，1 亿用户需要一万台服务器，成本太高。
+{% endhint %}
+
 ### IO 多路复用-select
 
+Socket 是文件描述符，所有的 Socket 都放在一个集合 fd\_set 中。select 函数监听文件描述符集合是否有变化，一旦有变化，则轮询查询每个文件描述符，发生变化的文件描述符在 fd\_set 中设为 1，表示 Socket可读或可写，从而进行读写操作，然后再调用 select 监测下一轮变化。
+
 ### IO 多路复用-epoll
+
+select 函数效率较低，因为每次 fd\_set 发生变化时，需要通过轮询查看集合中的每个 Socket，所以 fd\_set 的大小由 FD\_SETSIZE 控制。
+
+epoll 函数是通过事件通知的方式，在内核中通过注册 callback 函数，当某个文件描述符发生变化的时候，就会主动通知。
+
+通过 epoll\_create 创建一个 epoll 对象，也是一个文件，对应的文件描述符是 epoll fd，也对应着打开的文件列表中的一项，这个项目里有一颗红黑树，保存着 epoll 需要监听的所有 Socket。
+
+epoll\_ctl 添加一个 Socket 的时候，就是往红黑树加入一项，红黑树的节点指向一个结构 epoll\_entry，这个结构挂在被监听的 Socket 的事件列表中。当 Socket 来了一个事件的时候，可以通过事件列表的 epoll 对象，调用 callback 通知 epoll。
+
+这种方式能够同时监听的 Socket 特别多，epoll 解决 C10K 问题的利器。
+
+![](../../.gitbook/assets/image%20%2813%29.png)
 
