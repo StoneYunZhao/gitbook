@@ -61,7 +61,7 @@ public class MockFilterChain implements FilterChain {
 }
 ```
 
-![](../../.gitbook/assets/image%20%2864%29.png)
+![](../../.gitbook/assets/image%20%2865%29.png)
 
 ```java
 // ch.qos.logback.classic.selector.servlet
