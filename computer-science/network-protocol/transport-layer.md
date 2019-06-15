@@ -176,3 +176,13 @@ Socket 在 linux 中是以文件形式的存在。每个进程都有一个数据
 
 UDP 没有连接，所以不需要三次握手，不需要 listen\(\)、accept\(\) 和 connect\(\)；仍需要 IP 和端口号，所以也需要 bind\(\)；不需要没对连接建立一组 Socket，而是只要有一个 Socket；因为没有连接，每次通信，sendto 和 recvfrom 都可以传入 IP 和端口。
 
+## 多客户端连接
+
+### 多进程
+
+### 多线程
+
+### IO 多路复用-select
+
+### IO 多路复用-epoll
+
