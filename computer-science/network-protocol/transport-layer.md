@@ -6,7 +6,7 @@
 
 **用户数据报协议**（**U**ser **D**atagram **P**rotocol，**UDP**，又称**用户数据包协议**）是一个简单的面向数据报的传输层协议。
 
-![](../../.gitbook/assets/image%20%2894%29.png)
+![](../../.gitbook/assets/image%20%2895%29.png)
 
 特点：
 
@@ -63,7 +63,7 @@
 
 ### 四次挥手
 
-![](../../.gitbook/assets/image%20%28118%29.png)
+![](../../.gitbook/assets/image%20%28119%29.png)
 
 {% hint style="warning" %}
 B 在 ACK 之后进入 CLOSED-WAIT 状态，不能直接关闭。因为 A 已经把数据发送完了，但 B 的数据还不一定发送完成，此时 B 还是可以发送数据的。
@@ -77,7 +77,7 @@ A 发送 ACK 之后不能直接关闭，需要进入 TIME-WAIT 状态。原因�
 
 ### 状态机
 
-![](../../.gitbook/assets/image%20%28165%29.png)
+![](../../.gitbook/assets/image%20%28166%29.png)
 
 ### 滑动窗口
 
@@ -121,7 +121,7 @@ A 发送 ACK 之后不能直接关闭，需要进入 TIME-WAIT 状态。原因�
 
 **快速恢复**：上节讲到快速重传，若发现包丢失，则连续发送前一个包的三次 ACK，此时发送端会立即重新发送丢失的包，还会做另外一个件事：`cwnd = cwnd/2, ssthresh = cwnd`；然后每返回一个包：`cwnd++`。
 
-![](../../.gitbook/assets/image%20%28119%29.png)
+![](../../.gitbook/assets/image%20%28120%29.png)
 
 ### 结论
 
@@ -165,7 +165,7 @@ Socket 可以理解为插头，双方通信需要一根线连接两个插头。S
 * 对于第 4 点，监听 Socket 和真正用来传数据的 Socket 是两个，一个叫做**监听 Socket**，一个叫做**已连接 Socket**。
 {% endhint %}
 
-![](../../.gitbook/assets/image%20%28179%29.png)
+![](../../.gitbook/assets/image%20%28180%29.png)
 
 Socket 在 linux 中是以文件形式的存在。每个进程都有一个数据结构 task\_struct，指向一个文件描述符数组，列出这个进程打开的所有文件的文件描述符；数组的内容是指针，指向内核中所有打开的文件列表中的某一个；文件列表中的 Socket 类型的文件也会指向一个 inode，这个 inode 不在硬盘而在内存；这个 inode 指向 Socket 在内核中的结构。
 
@@ -179,13 +179,13 @@ Socket 在 linux 中是以文件形式的存在。每个进程都有一个数据
 
 **accept 阻塞**：服务端调用 accept 函数，若没有新的连接进来，进程将被挂起，进入阻塞状态。
 
-![](../../.gitbook/assets/image%20%28152%29.png)
+![](../../.gitbook/assets/image%20%28153%29.png)
 
 **read、write 阻塞**：详见[ Unix IO 模型之阻塞 IO](../../java/class-libraries/java-nio.md#zu-sai-io)。
 
 ### UDP 协议
 
-![](../../.gitbook/assets/image%20%28113%29.png)
+![](../../.gitbook/assets/image%20%28114%29.png)
 
 UDP 没有连接，所以不需要三次握手，不需要 listen\(\)、accept\(\) 和 connect\(\)；仍需要 IP 和端口号，所以也需要 bind\(\)；不需要没对连接建立一组 Socket，而是只要有一个 Socket；因为没有连接，每次通信，sendto 和 recvfrom 都可以传入 IP 和端口。
 
@@ -199,7 +199,7 @@ accept\(\) 返回后，代表建立了一个连接，返回一个已连接的 So
 
 fork 的原理完全 copy 一个子进程，会复制文件描述符列表，也会复制内存空间，还会复制当前执行到了哪一行。复制完成后，父子进程几乎完全一样。fork 返回 0 代表子进程；fork 返回其他值，代表父进程，返回的是子进程的 PID。
 
-![](../../.gitbook/assets/image%20%2895%29.png)
+![](../../.gitbook/assets/image%20%2896%29.png)
 
 由于复制了文件描述符列表，所以父进程 accept 返回的 Socket 的文件描述符子进程也能获取到。接下来子进程就可以通过这个已连接的 Socket 与客户端交互。父进程通过子进程的 ID 查看子进程是否完成，通信完毕之后就关闭子进程。
 
@@ -215,7 +215,26 @@ fork 的原理完全 copy 一个子进程，会复制文件描述符列表，也
 
 ### IO 多路复用-select
 
-Socket 是文件描述符，所有的 Socket 都放在一个集合 fd\_set 中。select 函数监听文件描述符集合是否有变化，一旦有变化，则轮询查询每个文件描述符，发生变化的文件描述符在 fd\_set 中设为 1，表示 Socket可读或可写，从而进行读写操作，然后再调用 select 监测下一轮变化。
+Socket 是文件描述符，所有的 Socket 都放在一个集合 fd\_set 中。select 函数在超时时间内，监听用户感兴趣的文件描述符上可读可写或异常事件发生，一旦有发生，则轮询查询每个文件描述符，发生变化的文件描述符在 fd\_set 中设为 1，表示 Socket可读或可写，从而进行读写操作，然后再调用 select 监测下一轮变化。
+
+```c
+int select(int maxfdp1,fd_set *readset,fd_set *writeset,fd_set *exceptset,const struct timeval *timeout)
+```
+
+可以看出 select 监视的文件有三类：writefds, readfds, expectfds。调用 select 会阻塞，当select 返回后，可通过 FD\_ISSET 遍历 fd\_set，fd\_set 可以通过以下四个宏设置：
+
+```c
+void FD_ZERO(fd_set *fdset);           // 清空集合
+void FD_SET(int fd, fd_set *fdset);   // 将一个给定的文件描述符加入集合之中
+void FD_CLR(int fd, fd_set *fdset);   // 将一个给定的文件描述符从集合中删除
+int FD_ISSET(int fd, fd_set *fdset);   // 检查集合中指定的文件描述符是否可以读写 
+```
+
+### IO 多路复用-poll
+
+每次调用 select，系统需要把 fd 从用户态复制到内核态。单个进程监视的 fd 数量默认是 1024。fd\_set 是通过数组实现，熟练过大导致降低效率。
+
+poll 的机制与 select 类似，也需要把 fd 从用户态复制到内核态。但是 poll 没有最大文件描述符的限制。
 
 ### IO 多路复用-epoll
 
@@ -225,7 +244,14 @@ epoll 函数是通过事件通知的方式，在内核中通过注册 callback �
 
 通过 epoll\_create 创建一个 epoll 对象，也是一个文件，对应的文件描述符是 epoll fd，也对应着打开的文件列表中的一项，这个项目里有一颗红黑树，保存着 epoll 需要监听的所有 Socket。
 
-epoll\_ctl 添加一个 Socket 的时候，就是往红黑树加入一项，红黑树的节点指向一个结构 epoll\_entry，这个结构挂在被监听的 Socket 的事件列表中。当 Socket 来了一个事件的时候，可以通过事件列表的 epoll 对象，调用 callback 通知 epoll。
+epoll\_ctl 添加一个 Socket 的时候，就是往红黑树加入一项，红黑树的节点指向一个结构 epoll\_entry，这个结构挂在被监听的 Socket 的事件列表中。当 Socket 来了一个事件的时候，可以通过事件列表的 epoll 对象，调用 callback 通知 epoll。进程调用 epoll\_wait\(\) 便得到通知。
+
+```c
+int epoll_ctl(int epfd, int op, int fd, struct epoll_event event)
+int epoll_wait(int epfd, struct epoll_event events,int maxevents,int timeout)
+```
+
+![](../../.gitbook/assets/image%20%2885%29.png)
 
 这种方式能够同时监听的 Socket 特别多，epoll 解决 C10K 问题的利器。
 
