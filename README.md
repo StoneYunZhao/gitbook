@@ -2,7 +2,7 @@
 
 平时写的一些笔记，没有成体系，不做博客用，仅用来自己做技术积累。若有技术问题欢迎一起探讨，微信 stone\_zy。
 
-* 国内地址（访问快）：[https://zhao-yun.com](https://zhao-yun.com)
+* 国内地址（访问快）：[https://zhaoyun.studio](https://zhaoyun.studio), [https://zhao-yun.com](https://zhao-yun.com)\(备案中\)
 * 国外地址（UI 漂亮）：[https://yunzhao.gitbook.io/notes/](https://yunzhao.gitbook.io/notes/)
 * GitHub 地址：[https://github.com/StoneYunZhao](https://github.com/StoneYunZhao)
 
