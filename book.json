@@ -5,13 +5,13 @@
         	"showLevel": false
     	},
     	"fontsettings": {
-    		"theme": "night"
+    		"theme": "white"
     	},
     	"anchor-navigation-ex": {
-	    "associatedWithSummary": false,
+	    	"associatedWithSummary": false,
             "multipleH1": false
-	},
-	"sharing": {
+		},
+		"sharing": {
             "all": [ "google", "twitter","weibo", "qq", "douban" ]
         },
 	   "github": {
