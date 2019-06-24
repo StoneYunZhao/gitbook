@@ -1,6 +1,6 @@
 # Atomic Class
 
-原子类是通过[无锁方案（CAS）]()实现的。
+原子类是通过[无锁方案（CAS）](synchronized.md#cas)实现的。
 
 ![](../../.gitbook/assets/image%20%2862%29.png)
 

@@ -2,9 +2,9 @@
 
 ## 分治任务
 
-* [线程池]() + [Future]()：可以解决简单的并行任务。
-* [CompletableFuture]()：可以解决有聚合关系的任务，AND 聚合或 OR 聚合。
-* [CompletionService]()：可以解决批量的并行任务。
+* [线程池](utility-class.md#threadpoolexecutor) + [Future](utility-class.md#future)：可以解决简单的并行任务。
+* [CompletableFuture](utility-class.md#completablefuture)：可以解决有聚合关系的任务，AND 聚合或 OR 聚合。
+* [CompletionService](utility-class.md#completionservice)：可以解决批量的并行任务。
 
 ![&#x4ECE;&#x4E0A;&#x5230;&#x4E0B;&#x4F9D;&#x6B21;&#x4E3A;&#x7B80;&#x5355;&#x5E76;&#x884C;&#x4EFB;&#x52A1;&#x3001;&#x805A;&#x5408;&#x4EFB;&#x52A1;&#x3001;&#x6279;&#x91CF;&#x5E76;&#x884C;&#x4EFB;&#x52A1;](../../.gitbook/assets/image%20%289%29.png)
 
