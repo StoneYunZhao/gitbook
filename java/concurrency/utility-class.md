@@ -250,7 +250,7 @@ class T2Task implements Callable<String> {
 
 Java 8 提供了 `CompletableFuture`来支持异步编程，Java 9 提供了更加完备的 Flow API，ReactiveX 的 Java 实现是 RxJava，使得在 Java 6就能使用异步编程。
 
-以上节[烧水泡茶]()为例：
+重新实现一遍上一节的烧水泡茶：
 
 ![](../../.gitbook/assets/image%20%28156%29.png)
 

@@ -1,9 +1,8 @@
 # Concurrency
 
-* [Preface](preface.md)
+* [理论基础](preface.md)
 * [Java内存模型](jmm.md)
-* [Synchronized](synchronized.md)
-* [CAS](cas.md)
+* [Synchronized](synchronized.md#ji-chu)、[CAS](synchronized.md#cas)
 * [死锁](deadlock.md)
 * [Thread](thread-state.md)
 * [AQS](aqs.md)
