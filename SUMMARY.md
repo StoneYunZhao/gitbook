@@ -22,7 +22,6 @@
   * [Synchronized & CAS](java/concurrency/synchronized.md)
   * [Deadlock](java/concurrency/deadlock.md)
   * [Thread](java/concurrency/thread-state.md)
-  * [AQS](java/concurrency/aqs.md)
   * [Lock & Condition](java/concurrency/lock-and-condition.md)
   * [Utility Class](java/concurrency/utility-class.md)
   * [Thread-safe Collection](java/concurrency/thread-safe-collection.md)

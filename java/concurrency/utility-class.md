@@ -6,7 +6,7 @@
 
 用于控制同时访问的线程个数。
 
-底层基于 [AQS](aqs.md)，state 变量存储的是可用的剩余资源。
+底层基于 [AQS]()，state 变量存储的是可用的剩余资源。
 
 ```java
 /**
@@ -50,7 +50,7 @@ public class Test {
 
 计数器不能循环利用。当计数器减到0时，再调用 await 会直接通过。
 
-底层用 [AQS](aqs.md) 实现，state 变量即为设置的 N。
+底层用 [AQS]() 实现，state 变量即为设置的 N。
 
 ## CyclicBarrier
 
