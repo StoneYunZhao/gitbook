@@ -1,10 +1,10 @@
 # Concurrency
 
 * [Preface](preface.md)
-* [JMM](jmm.md)
+* [Java内存模型](jmm.md)
 * [Synchronized](synchronized.md)
 * [CAS](cas.md)
-* [Deadlock](deadlock.md)
+* [死锁](deadlock.md)
 * [Thread](thread-state.md)
 * [AQS](aqs.md)
 * [Lock & Condition](lock-and-condition.md)：[ReentrantLock](lock-and-condition.md#reentrantlock)、[ReadWriteLock](lock-and-condition.md#readwritelock)、[StampedLock](lock-and-condition.md#stampedlock)
