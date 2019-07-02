@@ -2,3 +2,4 @@ nginx
 _book
 node_modules
 package-lock.json
+*.iml
