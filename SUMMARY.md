@@ -31,6 +31,7 @@
     * [Immutable](java/concurrency/concurrency-design-patterns/immutable.md)
     * [Copy-on-Write](java/concurrency/concurrency-design-patterns/copy-on-write.md)
     * [ThreadLocal](java/concurrency/concurrency-design-patterns/threadlocal.md)
+    * [Guarded Suspension](java/concurrency/concurrency-design-patterns/guarded-suspension.md)
 * [JVM](java/jvm/README.md)
   * [Class & Instance Initialization](java/jvm/class-and-instance-initialization.md)
   * [Runtime Data Area](java/jvm/runtime-data-area.md)
