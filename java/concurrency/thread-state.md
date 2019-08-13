@@ -79,7 +79,7 @@ public class Thread implements Runnable {
 2. **`Thread.yield()`**：一定是**当前线程**调用此方法，当前线程放弃获取的 CPU 时间片，但**不释放**锁资源，由运行状态变为就绪状态，让 OS 再次选择线程。作用：让相同优先级的线程轮流执行，但并不保证一定会轮流执行。实际中无法保证 yield\(\) 达到让步目的，因为让步的线程还有可能被线程调度程序再次选中。`Thread.yield()`不会导致阻塞。该方法与 `sleep()`类似，只是不能由用户指定暂停多长时间。 
 3. **`thread.join()`**：当前线程里调用**其它线程** t 的`join()`方法，当前线程进入 WAITING/TIMED\_WAITING 状态，当前线程**不释放**已经持有的对象锁。线程 t 执行完毕或者 millis 时间到，当前线程一般情况下进入 RUNNABLE 状态，也有可能进入 BLOCKED 状态（**因为`join()`是基于`wait()`实现的**）。 
 4. **`thread.interrupt()`**：
-   * 若线程 A 处于 WAITING 或 TIMED\_WAITING 状态时，线程 B 调用线程 A 的 interrupt 方法，则会使线程 A 进入 RUNNABLE 状态；
+   * 若线程 A 处于 WAITING 或 TIMED\_WAITING 状态时，线程 B 调用线程 A 的 interrupt 方法，则会使线程 A 进入 RUNNABLE 状态，触发 InterruptedException；
    * 若线程 A 处于 RUNNABLE 状态，并阻塞在`java.nio.channels.InterruptibleChannel`上时，调用线程 A 的 interrupt 方法，会触发`java.nio.channels.ClosedByInterruptException`；
    * 若线程 A 处于 RUNNABLE 状态，阻塞在`java.nio.channels.Selector`上时，调用线程 A 的 interrupt 方法，线程 A 会立即返回；
    * 若线程 A 处于 RUNNABLE 状态，并没有阻塞在任何 I/O 操作上，调用线程 A 的 interrupt 方法，线程 A 可以通过主动监测的方式（isInterrupted）判断自己是否已经被中断；也可忽略中断。
