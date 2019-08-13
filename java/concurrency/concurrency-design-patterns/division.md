@@ -76,7 +76,86 @@ Java 还有一个开源的协程库叫 [Quasar](https://github.com/puniverse/qua
 
 ## Work Thread
 
+上一节的 Thread-Per-Message 模式不适合高并发的场景，原因在于频繁的创建、销毁现场非常消耗性能。可以使用 **Work-Thread** 模式来避免上述问题，原理就是用阻塞队列做任务池，创建固定数量的线程来消费任务。可以看出，这就是常见的**线程池**的模式。
 
+```java
+ExecutorService es = Executors.newFixedThreadPool(500);
+try (ServerSocketChannel ssc = ServerSocketChannel.open().bind(new InetSocketAddress(8080))) {
+    try {
+        while (true) {
+            SocketChannel sc = ssc.accept();
+            es.execute(() -> {
+                try {
+                    ByteBuffer rb = ByteBuffer.allocate(2048);
+                    sc.read(rb);
+                    rb.flip();
+                    sc.write(rb);
+                    sc.close();
+                } catch (IOException e) {
+                    throw new UncheckedIOException(e);
+                }
+            });
+        }
+    } finally {
+        ssc.close();
+        es.shutdown();
+    }
+}
+```
+
+### 创建线程池的建议
+
+* 使用**有界队列**来接受任务。
+* 清晰地指明拒绝策略。
+* 给线程赋予一个业务相关的名字。
+
+### 避免线程死锁
+
+线程池有一种线程死锁的场景：如果提交到线程池的任务有依赖关系，那么有可能导致线程死锁。如下例子：
+
+```java
+ExecutorService es = Executors.newSingleThreadExecutor();
+es.execute(() -> {
+    try {
+        String qq = es.submit(() -> "QQ").get();
+        System.out.println(qq);
+    } catch (InterruptedException | ExecutionException e) {
+        e.printStackTrace();
+    }
+});
+```
+
+下面例子，线程全部阻塞在 l2.await\(\)：
+
+```java
+ExecutorService es = Executors.newFixedThreadPool(2);
+CountDownLatch l1 = new CountDownLatch(2);
+for (int i = 0; i < 2; i++) {
+    es.execute(() -> {
+        CountDownLatch l2 = new CountDownLatch(2);
+        for (int j = 0; j < 2; j++) {
+            es.execute(l2::countDown);
+        }
+        try {
+            l2.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        l1.countDown();
+    });
+}
+l1.await();
+es.shutdown();
+```
+
+解决办法：
+
+1. 增大线程池数量，但是无法确定任务数量或任务数量很多，此方法不可用。
+2. 为不同的任务创建各自的线程池。
+
+{% hint style="warning" %}
+提交到线程池的任务一定要相互独立！
+{% endhint %}
 
 ## 生产者-消费者
 
