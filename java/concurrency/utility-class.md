@@ -6,7 +6,7 @@
 
 用于控制同时访问的线程个数。
 
-底层基于 [AQS]()，state 变量存储的是可用的剩余资源。
+底层基于 AQS，state 变量存储的是可用的剩余资源。
 
 ```java
 /**
@@ -132,6 +132,14 @@ Future<?> submit(Runnable task)
 
 <T> Future<T> submit(Callable<T> task)
 ```
+
+{% hint style="warning" %}
+当使用 submit 方法时，若提交的任务抛出了异常，只能通过返回的 Future 获取异常。所以如果即使用 submit 方法，又没有保留返回的 Future，则必须保证提交的任务没有抛出异常，不然异常会被吃掉，不会打印出异常栈。
+
+原因：使用 submit 后，会把任务包装成 FutureTask，在执行时会捕获异常，保存在 Future 里面，自然就不会再抛出异常了；而使用 execute 时，任务抛出的异常会直接再次抛出。
+
+所以：**若不需要返回结果，建议使用 execute 方法**。
+{% endhint %}
 
 ## Executors
 
