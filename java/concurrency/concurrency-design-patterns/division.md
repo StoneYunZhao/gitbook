@@ -159,5 +159,42 @@ es.shutdown();
 
 ## 生产者-消费者
 
+**原理**：一组**生产者线程**负责生产任务，把任务放入**任务队列**，一组**消费者线程**从任务队列中获取任务执行。
 
+Java 的线程池即是生产者-消费者模式。
+
+优点：
+
+* **解耦**：生产者和消费者没有依赖关系。
+* **异步**：生产者无需等待任务执行完成。
+* **平衡生产者和消费者的速度**：如果生产者和消费者的速度是 1:3，则消费者只需要 1/3 的线程数量，减少开销。
+* **支持批量执行**：比如生产者生产的每个任务都是往数据库中插入一条数据，那么消费者可以一次性从任务队列中取出多个任务，然后组合成一个批量插入的 SQL 语句，这样就大量减少了对数据库的写入操作。
+
+```java
+private BlockingQueue<Task> bq = new LinkedBlockingQueue<>(2000);
+
+public void start() {
+    ExecutorService es = Executors.newFixedThreadPool(5);
+    for (int i = 0; i < 5; i++) {
+        es.execute(() -> {
+            while (true) {
+                try {
+                    List<Task> tasks = pollTasks();
+                    // 执行任务
+                } catch (InterruptedException e) { }
+            }
+        });
+    }
+}
+
+private List<Task> pollTasks() throws InterruptedException {
+    List<Task> ts = new LinkedList<>();
+    Task t = bq.take();
+    while (t != null) {
+        ts.add(t);
+        t = bq.poll();
+    }
+    return ts;
+}
+```
 
