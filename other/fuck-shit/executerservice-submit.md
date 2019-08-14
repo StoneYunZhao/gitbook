@@ -6,7 +6,7 @@
 
 ## **重现**
 
-写如下测试代码，发现 test1、test2 会直接抛出异常，test3 没有抛出异常，test4 在 16 行才抛出异常。
+写如下测试代码，发现 test1、test2 会直接抛出异常，**test3 没有抛出异常**，test4 在 16 行才抛出异常。
 
 ```java
 private static ExecutorService es = Executors.newSingleThreadExecutor();
@@ -128,7 +128,7 @@ public class FutureTask<V> implements RunnableFuture<V> {
                 } catch (Throwable ex) {
                     result = null;
                     ran = false;
-                    setException(ex);
+                    setException(ex); // 捕获异常，不会直接抛出
                 }
                 ...
             }
@@ -136,6 +136,21 @@ public class FutureTask<V> implements RunnableFuture<V> {
             ...
         }
     }
+    
+    // 在 get 时才抛出异常
+    public V get() throws InterruptedException, ExecutionException {
+        ...
+        return report(s);
+    }
+    
+    private V report(int s) throws ExecutionException {
+        Object x = outcome;
+        if (s == NORMAL)
+            return (V)x;
+        if (s >= CANCELLED)
+            throw new CancellationException();
+        throw new ExecutionException((Throwable)x); // 抛出
+    } 
 }
 ```
 
