@@ -103,4 +103,5 @@
 * [Fuck! Shit!](other/fuck-shit/README.md)
   * [Remove Final by Reflection](other/fuck-shit/remove-final-by-reflection.md)
   * [Ingress Host](other/fuck-shit/ingress-host.md)
+  * [ExecuterService submit](other/fuck-shit/executerservice-submit.md)
 
