@@ -14,6 +14,15 @@
 * 表名、表别名、字段名、字段别名等小写；
 * SQL 保留字、函数名、绑定变量等大写；
 
+主流的 DBMS（数据库管理系统）有 Oracle、MySQL、SQL Server、PostgreSQL、DB2、MongoDB 等。
+
+* DBMS（Database Management System）：可以对多个数据库进行管理，DBMS = 多个 DB + 管理程序。
+* DB（Database）：数据库，可理解为多张数据表。
+* DBS（Database System）：数据库系统，包括数据库、数据库管理系统、数据管理人员（DBA）等。
+* RDBMS，关系型数据库。
+
+我们采用 E-R 图（Entity Relationship Diagram）来设计数据关系， 这个图有 3 个要素：实体、属性、关系。
+
 ## DDL
 
 ```sql
