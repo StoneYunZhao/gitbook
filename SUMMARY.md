@@ -82,6 +82,7 @@
 ## database
 
 * [MySQL](database/mysql/README.md)
+  * [SQL](database/mysql/sql.md)
   * [Architecture](database/mysql/architecture.md)
   * [Log](database/mysql/log.md)
   * [Transaction](database/mysql/transaction.md)

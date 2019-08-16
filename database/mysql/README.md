@@ -1,5 +1,6 @@
 # MySQL
 
+* [SQL 语法](sql.md)
 * [架构](architecture.md)
 * [日志](log.md)
 * [事务](transaction.md)
@@ -39,29 +40,5 @@ mysql -u {username} -p {password} \
     -D {DB name}
     
 mysql -u pcopadm -h 127.0.0.1 -P 3306 -p
-
-drop schema XXX;
-```
-
-数据定义语句（DDL）
-
-```sql
-# 获取表信息
-decribe {tb_name};
-decribe app;
-
-# 增加列
-ALTER TABLE {tb_name}
-ADD [COLUMN] {col_name1} {col_definition1} [FIRST|AFTER existing_column1],
-ADD [COLUMN] {col_name2} {col_definition2} [FIRST|AFTER existing_column2],...;
-
-ALTER TABLE app ADD created_by varchar(32) NULL COMMENT '创建人';
-
-# 删除列
-ALTER TABLE {tb_name}
-DROP COLUMN {col_name1},
-DROP COLUMN {col_name2},...;
-
-ALTER TABLE app DROP COLUMN created_by;
 ```
 
