@@ -72,7 +72,19 @@ select SQL_CACHE * from T where ID=10；
 ## 存储引擎
 
 * 负责数据的存储和提取。
-* **插件式**架构，支持InnoDB、MyISAM、Memory等，从5.5.5版本开始默认为InnoDB。
-* 可以通过create table 的时候指定 engine 来选择存储引擎。
+* **插件式**架构，支持 InnoDB、MyISAM、Memory 等，从 5.5.8 版本开始默认为 InnoDB。
+* 可以通过 create table 的时候指定 engine 来选择存储引擎。
 * 不同的存储引擎公用一个 Server 层。
+
+常见的存储引擎特性：
+
+* InnoDB：5.5.8 之后的默认引擎，特点是支持事务、行级锁、外键等；
+* MyISAM：5.5.8 之前的默认引擎，不支持事务，不支持外键，特点是速度快、占用资源少；
+* Memory：会丢失数据，速度更快；
+* NDB：也叫 NDB Cluster，用于 MySQL Cluster 的分布式集群；
+* Archive：很好的压缩机制，用于文件归档。
+
+{% hint style="info" %}
+MySQL 的每个表可以采用不同的存储引擎。
+{% endhint %}
 
