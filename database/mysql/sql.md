@@ -25,7 +25,22 @@
 
 ## DDL
 
+常用的有增、删、改，分别对应 CREATE、DROP、ALTER。在执行 DDL 时，不需要 COMMIT 就能完成执行。
+
 ```sql
+# 数据库
+CREATE DATABASE XXX;
+DROP DATABASE XXX;
+
+# 数据表
+# int(11)，其中 11 代表显示长度，与数值范围无关
+# varchar(255)，其中 255 代表最大长度
+CREATE TABLE XXX (
+    player_id int(11) NOT NULL AUTO_INCREMENT,
+    player_name varchar(255) NOT NULL
+);
+
+
 # 获取表信息
 decribe {tb_name};
 decribe app;
