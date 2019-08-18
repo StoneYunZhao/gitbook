@@ -31,19 +31,26 @@
 # 数据库
 CREATE DATABASE XXX;
 DROP DATABASE XXX;
-
-# 数据表
-# int(11)，其中 11 代表显示长度，与数值范围无关
-# varchar(255)，其中 255 代表最大长度
-CREATE TABLE XXX (
-    player_id int(11) NOT NULL AUTO_INCREMENT,
-    player_name varchar(255) NOT NULL
-);
-
+DROP SCHEMA XXX;
 
 # 获取表信息
-decribe {tb_name};
-decribe app;
+DESCRIBE {tb_name};
+DESCRIBE app;
+
+# 创建数据表
+# 数据和字段都是用了反引号，以防和保留字相同
+# int(11)，其中 11 代表显示长度，与数值范围无关
+# varchar(255)，其中 255 代表最大长度
+# player_name 的字符集是 uft8，排序规则是 utf8_general_ci，表示大小写不敏感
+DROP TABLE IF EXISTS `player`; 
+CREATE TABLE `player` ( 
+`player_id` int(11) NOT NULL AUTO_INCREMENT, 
+`team_id` int(11) NOT NULL, 
+`player_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL, 
+`height` float(3, 2) NULL DEFAULT 0.00, 
+PRIMARY KEY (`player_id`) USING BTREE, 
+UNIQUE INDEX `player_name`(`player_name`) USING BTREE 
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 # 增加列
 ALTER TABLE {tb_name}
@@ -57,8 +64,25 @@ ALTER TABLE {tb_name}
 DROP COLUMN {col_name1},
 DROP COLUMN {col_name2},...;
 
-ALTER TABLE app DROP COLUMN created_by;
+# 重命名列
+ALTER TABLE XXX RENAME COLUMN age to player_age;
 
-DROP schema XXX;
+# 修改列数据类型
+ALTER TABLE XXX MODIFY (player_age float(3,1));
 ```
+
+### 数据表约束
+
+* 主键约束：不能重复，不能为空，即 UNIQUE + NOT NULL；
+* 外键约束：一个表的外键对应另一个表的主键；
+* 唯一性约束：表明字段在表中的数值是唯一的；
+* NOT NULL 约束：不能为空；
+* DEFAULT：
+* CHECK：用来检查特定字段取值范围的有效性；
+
+数据表的设计原则：
+
+* 数据表越少越好；
+* 数据表中的字段个数越少越好；
+* 联合主键的字段数越少越好；
 
