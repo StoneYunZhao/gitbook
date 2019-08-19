@@ -25,6 +25,8 @@
 
 ## DDL
 
+官方文档，[Data Definition Statements](https://dev.mysql.com/doc/refman/8.0/en/sql-syntax-data-definition.html)。
+
 常用的有增、删、改，分别对应 CREATE、DROP、ALTER。在执行 DDL 时，不需要 COMMIT 就能完成执行。
 
 ```sql
@@ -32,10 +34,6 @@
 CREATE DATABASE XXX;
 DROP DATABASE XXX;
 DROP SCHEMA XXX;
-
-# 获取表信息
-DESCRIBE {tb_name};
-DESCRIBE app;
 
 # 创建数据表
 # 数据和字段都是用了反引号，以防和保留字相同
@@ -80,9 +78,18 @@ ALTER TABLE XXX MODIFY (player_age float(3,1));
 * DEFAULT：
 * CHECK：用来检查特定字段取值范围的有效性；
 
-数据表的设计原则：
+### 数据表的设计原则：
 
 * 数据表越少越好；
 * 数据表中的字段个数越少越好；
 * 联合主键的字段数越少越好；
+* 主键的利用率越高越好；
+
+## Utility Statements
+
+```sql
+# 获取表信息
+DESCRIBE {tb_name};
+DESCRIBE app;
+```
 
