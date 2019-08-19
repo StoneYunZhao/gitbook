@@ -85,6 +85,39 @@ ALTER TABLE XXX MODIFY (player_age float(3,1));
 * 联合主键的字段数越少越好；
 * 主键的利用率越高越好；
 
+## DQL
+
+官方文档，[SELECT Syntax](https://dev.mysql.com/doc/refman/8.0/en/select.html)。
+
+```sql
+# 查询某些列
+SELECT name, create_time FROM tag;
+
+# 查询所有列
+SELECT * from tag;
+
+# 取别名
+SELECT name AS n, create_time AS ct FROM tag;
+
+# 查询常数列，这一列的取值是我们指定的，不是从数据库中动态获取，适合整合不同的数据源
+SELECT '标签' AS `type`, name FROM tag;
+
+# 去除重复行
+# DISTINCT 需要放到所有列名前
+# DISTINCT 是对后面所有列的组合进行去重
+SELECT DISTINCT name FROM tag;
+
+# 排序
+# ORDER BY 后面可以有多个列
+# ORDER BY 后面可以著名排序规则，ASC(default)、DESC，
+# ORDER BY 后面的列可以不在选择列里面
+# ORDER BY 通常位于 SELECT 语句的最后
+SELECT name FROM tag ORDER BY create_time;
+
+# 返回结果数量
+SELECT name FROM tag LIMIT 5;
+```
+
 ## Utility Statements
 
 ```sql
