@@ -118,6 +118,22 @@ SELECT name FROM tag ORDER BY create_time;
 SELECT name FROM tag LIMIT 5;
 ```
 
+### WHERE 子句
+
+官方文档，[Expressions](https://dev.mysql.com/doc/refman/8.0/en/expressions.html)、[Functions and Operators](https://dev.mysql.com/doc/refman/8.0/en/functions.html)。
+
+比较运算符有：`= | >= | > | <= | < | <> | !=`。
+
+```sql
+SELECT * FROM tag WHERE id > 10;
+SELECT * FROM tag WHERE id BETWEEN 10 AND 20;
+SELECT * FROM tag WHERE name IS NULL;
+```
+
+逻辑运算符有：`AND OR IN NOT`。
+
+通配符：`LIKE`。
+
 ## Utility Statements
 
 ```sql
