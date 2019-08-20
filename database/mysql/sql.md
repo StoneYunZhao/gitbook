@@ -134,17 +134,46 @@ SELECT * FROM tag WHERE name IS NULL;
 
 通配符：`LIKE`。
 
+### GROUP BY
+
+我们可以对数据进行分组，并使用聚集函数统计每组数据的值。
+
+```sql
+SELECT COUNT(*) AS num, role_main, role_assist FROM heros GROUP BY role_main, role_assist ORDER BY num DESC;
+```
+
+### HAVING
+
+当我们使用 GROUP BY 创建分组之后，可能需要对分组数据进行过滤，此时就需要使用 HAVING。WHERE 是作用于数据行，而 HAVING 是作用于分组。
+
+```sql
+SELECT COUNT(*) as num, role_main, role_assist
+FROM heros
+WHERE hp_max > 6000
+GROUP BY role_main, role_assist
+HAVING num > 5
+ORDER BY num;
+```
+
+> The SQL standard requires that `HAVING` must reference only columns in the `GROUP BY` clause or columns used in aggregate functions. However, MySQL supports an extension to this behavior, and permits `HAVING` to refer to columns in the `SELECT` list and columns in outer subqueries as well.
+
+SQL 中关键字是有顺序的：
+
+```sql
+SELECT ... FROM ... WHERE ... GROUP BY ... HAVING ... ORDER BY ...
+```
+
 ## Functions
 
 官方文档：[Functions and Operators](https://dev.mysql.com/doc/refman/8.0/en/functions.html)。
 
 SQL 中的函数有很多类别，常用的有：
 
-* [数值函数](https://dev.mysql.com/doc/refman/8.0/en/numeric-functions.html)；
+* [数值函数](https://dev.mysql.com/doc/refman/8.0/en/numeric-functions.html)：
   * ABS
   * MOD
   * ROUND
-* [字符串函数](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html)；
+* [字符串函数](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html)：
   * CONCAT
   * LENGTH
   * CHAR\_LENGTH
@@ -152,7 +181,7 @@ SQL 中的函数有很多类别，常用的有：
   * UPPER
   * REPLACE
   * SUBSTRING
-* [日期和时间函数](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html)；
+* [日期和时间函数](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html)：
   * CURRENT\_DATE
   * CURRENT\_TIME
   * CURRENT\_TIMESTAMP
@@ -164,9 +193,15 @@ SQL 中的函数有很多类别，常用的有：
   * HOUR
   * MINUTE
   * SECOND
-* [转换函数](https://dev.mysql.com/doc/refman/8.0/en/cast-functions.html)；
+* [转换函数](https://dev.mysql.com/doc/refman/8.0/en/cast-functions.html)：
   * CAST
   * COALESCE
+* [聚集函数](https://dev.mysql.com/doc/refman/8.0/en/group-by-functions-and-modifiers.html)：`FUN(*)`会统计所有数据行数，`FUN(col)`会忽略 col 为 NULL 值的行。
+  * COUNT：COUNT\(DISTINCT col\) 会统计不同值得个数，同样也会忽略 NULL 值。
+  * MAX
+  * MIN
+  * SUM
+  * AVG
 
 使用函数可能带来的问题：
 
