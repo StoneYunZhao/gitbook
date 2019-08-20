@@ -134,6 +134,45 @@ SELECT * FROM tag WHERE name IS NULL;
 
 通配符：`LIKE`。
 
+## Functions
+
+官方文档：[Functions and Operators](https://dev.mysql.com/doc/refman/8.0/en/functions.html)。
+
+SQL 中的函数有很多类别，常用的有：
+
+* [数值函数](https://dev.mysql.com/doc/refman/8.0/en/numeric-functions.html)；
+  * ABS
+  * MOD
+  * ROUND
+* [字符串函数](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html)；
+  * CONCAT
+  * LENGTH
+  * CHAR\_LENGTH
+  * LOWER
+  * UPPER
+  * REPLACE
+  * SUBSTRING
+* [日期和时间函数](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html)；
+  * CURRENT\_DATE
+  * CURRENT\_TIME
+  * CURRENT\_TIMESTAMP
+  * EXTRACT
+  * DATE
+  * YEAR
+  * MONTH
+  * DAY
+  * HOUR
+  * MINUTE
+  * SECOND
+* [转换函数](https://dev.mysql.com/doc/refman/8.0/en/cast-functions.html)；
+  * CAST
+  * COALESCE
+
+使用函数可能带来的问题：
+
+* 不同 DBMS 支持的函数不一样，移植容易产生兼容性问题；
+* 容易使用不当，导致查询不使用索引；
+
 ## Utility Statements
 
 ```sql
