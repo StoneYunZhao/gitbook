@@ -185,6 +185,19 @@ FROM player AS a
 WHERE height > (SELECT avg(height) FROM player AS b WHERE a.team_id = b.team_id);
 ```
 
+### EXISTS、NOT EXISTS
+
+官方文档：[Subqueries with EXISTS or NOT EXISTS](https://dev.mysql.com/doc/refman/8.0/en/exists-and-not-exists-subqueries.html)。
+
+如果子查询返回任何行，则 EXISTS 为 true。
+
+```sql
+# 查询有出场纪录的球员
+SELECT player_id, team_id, player_name
+FROM player
+WHERE EXISTS(SELECT player_id FROM player_score WHERE player.playe_id = player_score.player_id);
+```
+
 ## Functions
 
 官方文档：[Functions and Operators](https://dev.mysql.com/doc/refman/8.0/en/functions.html)。
