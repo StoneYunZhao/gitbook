@@ -62,6 +62,7 @@
   * [Network Layer](computer-science/network-protocol/network-layer.md)
   * [Transport Layer](computer-science/network-protocol/transport-layer.md)
   * [Application layer](computer-science/network-protocol/application-layer.md)
+  * [HTTP](computer-science/network-protocol/http.md)
 * [Operating System](computer-science/linux/README.md)
   * [System Initialization](computer-science/linux/system-initialization.md)
 * [Design Patterns](computer-science/design-patterns/README.md)
