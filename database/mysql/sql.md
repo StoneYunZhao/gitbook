@@ -185,6 +185,16 @@ FROM player AS a
 WHERE height > (SELECT avg(height) FROM player AS b WHERE a.team_id = b.team_id);
 ```
 
+子查询还能作为主查询的计算字段：
+
+```sql
+# 查询每个球队的球员数量
+SELECT team_name, 
+(SELECT count(*) FROM player WHERE player.team_id = team.team_id) 
+AS player_num
+FROM team;
+```
+
 ### EXISTS、NOT EXISTS
 
 官方文档：[Subqueries with EXISTS or NOT EXISTS](https://dev.mysql.com/doc/refman/8.0/en/exists-and-not-exists-subqueries.html)。
@@ -196,6 +206,56 @@ WHERE height > (SELECT avg(height) FROM player AS b WHERE a.team_id = b.team_id)
 SELECT player_id, team_id, player_name
 FROM player
 WHERE EXISTS(SELECT player_id FROM player_score WHERE player.playe_id = player_score.player_id);
+```
+
+### ANY、IN、SOME、ALL
+
+官方文档：[Subqueries with ANY, IN, or SOME](https://dev.mysql.com/doc/refman/8.0/en/any-in-some-subqueries.html)，[Subqueries with ALL](https://dev.mysql.com/doc/refman/8.0/en/all-subqueries.html)。语法：
+
+```sql
+operand comparison_operator ANY (subquery)
+operand IN (subquery)
+operand comparison_operator SOME (subquery)
+operand comparison_operator ALL (subquery)
+
+comparison_operator:
+=  >  <  >=  <=  <>  !=
+```
+
+* IN: 是否在集合中。
+* ANY: 与子查询返回的任意一个值比较为真，则整体为真。
+* ALL: 与子查询返回的所有值比较。
+* SOME: 是 ANY 的别名，一般用 ANY。
+
+如上文 EXISTS 查询有出场纪录的球员也可写成：
+
+```sql
+SELECT player_id, team_id, player_name
+FROM player
+WHERE player_id IN (SELECT player_id FROM player_score);
+```
+
+即 EXISTS 和 IN 的查询结果可等价：
+
+```sql
+SELECT * FROM A WHERE cc IN (SELECT cc FROM B);
+SELECT * FROM A WHERE EXISTS (SELECT cc FROM B WHERE B.cc=A.cc)
+```
+
+{% hint style="info" %}
+查询结果等价，但是**查询效率不等价**。在上面的例子中，假设 cc 列建立的索引。若 A 表较大，那么 IN 的效率较高；反之，EXISTS 效率较高。
+{% endhint %}
+
+```sql
+# 查询比(球队 1002 中任意一个球员身高)高的球员
+SELECT player_id, player_name, height
+FROM player
+WHERE height > ANY (SELECT height FROM player WHERE team_id = 1002);
+
+# 查询比(球队 1002 中所有球员身高)都高的球员
+SELECT player_id, player_name, height
+FROM player
+WHERE height > ALL (SELECT height FROM player WHERE team_id = 1002);
 ```
 
 ## Functions
