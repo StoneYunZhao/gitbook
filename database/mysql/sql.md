@@ -163,6 +163,28 @@ SQL 中关键字是有顺序的：
 SELECT ... FROM ... WHERE ... GROUP BY ... HAVING ... ORDER BY ...
 ```
 
+### Subquery
+
+官方文档，[Subquery Syntax](https://dev.mysql.com/doc/refman/8.0/en/subqueries.html)。
+
+**非关联子查询**：子查询只执行一次，查询的数据结果作为主查询的条件。如：
+
+```sql
+# 查询最高身高的球员，查询最高身高只执行一次。
+SELECT player_name, height
+FROM player
+WHERE height = (SELECT max(height) FROM player);
+```
+
+**关联子查询**：子查询需要执行多次，即采用循环的方式，先从外面开始，每次都传入子查询，最后将结果反馈给外部。如：
+
+```sql
+# 查询每个球队中大于平均身高的球员，查询球队的平均身高需要执行多次。
+SELECT player_name, height, team_id
+FROM player AS a
+WHERE height > (SELECT avg(height) FROM player AS b WHERE a.team_id = b.team_id);
+```
+
 ## Functions
 
 官方文档：[Functions and Operators](https://dev.mysql.com/doc/refman/8.0/en/functions.html)。
