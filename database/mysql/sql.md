@@ -258,6 +258,65 @@ FROM player
 WHERE height > ALL (SELECT height FROM player WHERE team_id = 1002);
 ```
 
+### JOIN
+
+上文提到 SQL 常用的两个标准是 SQL92 和 SQL99，两个标准的连接查询语法也不一样。
+
+#### CROSS JOIN
+
+实际上就是求两个表的笛卡尔积，即行数 = A 行数 \* B 行数。
+
+```sql
+# SQL99
+SELECT * FROM player CROSS JOIN team;
+SELECT * FROM t1 CROSS JOIN t2 CROSS JOIN t3;
+
+# SQL92
+SELECT * FROM player, team;
+```
+
+#### NATURAL JOIN
+
+帮你自动查询两张表中所有相同的字段，然后进行等值连接。
+
+```sql
+# SQL99
+SELECT player_id, team_id, player_name, height, team_name
+FROM player
+       NATURAL JOIN team;
+
+# SQL92
+SELECT player_id, a.team_id, player_name, height, team_name
+FROM player AS a,
+     team AS b
+WHERE a.team_id = b.team_id;
+```
+
+{% hint style="info" %}
+若表使用了别名，那么查询字段中只能使用别名，不能使用原有的表名。
+{% endhint %}
+
+#### ON
+
+用来指定连接条件。
+
+```sql
+# SQL99
+SELECT player_id, player.team_id, player_name, height, team_name
+FROM player
+       JOIN team ON player.team_id = team.team_id;
+       
+SELECT p.player_name, p.height, h.height_level
+FROM player as p
+       JOIN height_grades as h ON height BETWEEN h.height_lowest AND h.height_highest;
+    
+# SQL92   
+SELECT p.player_name, p.height, h.height_level
+FROM player AS p,
+     height_grades AS h
+WHERE p.height BETWEEN h.height_lowest AND h.height_highest;
+```
+
 ## Functions
 
 官方文档：[Functions and Operators](https://dev.mysql.com/doc/refman/8.0/en/functions.html)。
