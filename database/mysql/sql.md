@@ -317,6 +317,69 @@ FROM player AS p,
 WHERE p.height BETWEEN h.height_lowest AND h.height_highest;
 ```
 
+#### USING
+
+用于指定数据表中的同名字段进行等值连接。可以简化 JOIN ON 的等值连接。
+
+```sql
+# SQL99
+SELECT player_id, team_id, player_name, height, team_name
+FROM player
+       JOIN team USING (team_id);
+```
+
+#### LEFT \[OUTER\] JOIN
+
+左边是主表，需要显示左边表的全部行。
+
+```sql
+# SQL99
+SELECT *
+from player
+       LEFT JOIN team USING (team_id);
+
+# SQL 92, MySQL 不支持
+SELECT *
+FROM player,
+     team
+where player.team_id = team.team_id(+);
+```
+
+#### RIGHT \[OUTER\] JOIN
+
+右边是主表，需要显示右边表的全部行。
+
+```sql
+# SQL99
+SELECT *
+FROM player
+       RIGHT JOIN team USING (team_id);
+
+# SQL 92, MySQL 不支持
+SELECT *
+FROM player,
+     team
+where player.team_id(+) = team.team_id;
+```
+
+#### FULL \[OUTER\] JOIN
+
+MySQL不支持。全外连接的结果 = 左右表匹配的数据 + 左表没有匹配到的数据 + 右表没有匹配到的数据。
+
+```sql
+SELECT * FROM player FULL JOIN team ON player.team_id = team.team_id;
+```
+
+#### 自连接
+
+自连接的速度比子查询快很多，所以建议尽量使用自连接。
+
+```sql
+SELECT b.player_name, b.height
+FROM player as a
+       JOIN player as b ON a.player_name = '布雷克-格⾥芬' and a.height < b.height;
+```
+
 ## Functions
 
 官方文档：[Functions and Operators](https://dev.mysql.com/doc/refman/8.0/en/functions.html)。
