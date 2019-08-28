@@ -85,6 +85,41 @@ ALTER TABLE XXX MODIFY (player_age float(3,1));
 * 联合主键的字段数越少越好；
 * 主键的利用率越高越好；
 
+### VIEW
+
+```sql
+# 创建视图
+CREATE VIEW view_name AS select_statement;
+
+CREATE VIEW player_above_avg_height AS
+  SELECT player_id, height
+  FROM player
+  WHERE height > (SELECT AVG(height) from player);
+  
+# 视图可以嵌套
+CREATE VIEW player_above_above_avg_height AS
+  SELECT player_id, height
+  FROM player
+  WHERE height > (SELECT AVG(height) from player_above_avg_height);
+  
+# 修改视图
+ALTER VIEW view_name AS select_statement;
+
+ALTER VIEW player_above_avg_height AS
+  SELECT player_id, player_name, height
+  FROM player
+  WHERE height > (SELECT AVG(height) from player);
+  
+# 删除视图
+DROP VIEW view_name;
+```
+
+视图的特点：
+
+* 可用于安全性，比如我们需要对表的字段级别做权限设置，那么可以用视图来实现。
+* 简化 SQL，编写好复杂查询的视图后，我们仅需要简单的查询就行。
+* 是虚拟表，本身不存储数据，所以对数据的修改限制很多，所以视图一般用作查询。
+
 ## DQL
 
 官方文档，[SELECT Syntax](https://dev.mysql.com/doc/refman/8.0/en/select.html)。
