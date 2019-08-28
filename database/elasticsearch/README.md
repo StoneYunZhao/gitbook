@@ -1,5 +1,7 @@
 # Elasticsearch
 
+* [本地调试 Elasticsearch](local-debug.md)
+
 ## 1. API
 
 Elasticsearch 的 API 在[官方文档](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)上有很详细的介绍，我这里仅列举出平时用到的较多的 API，方便查询。

@@ -26,7 +26,7 @@
 * **数据库**：
   * [MySQL](database/mysql/)
   * [Redis](database/basic.md)
-  * [Elasticsearch](database/elasticsearch.md)
+  * [Elasticsearch](database/elasticsearch/)
   * [HBase](database/hbase.md)
   * [Kafka](database/kafka.md)
   * [ZooKeeper](database/zookeeper-1.md)
