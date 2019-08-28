@@ -1,6 +1,7 @@
 # Elasticsearch
 
 * [本地调试 Elasticsearch](local-debug.md)
+* [选主流程分析](discovery.md)
 
 ## 1. API
 
