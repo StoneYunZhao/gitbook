@@ -6,7 +6,7 @@
 
 通用的线程生命周期有五种状态：**初始状态、可运行状态、运行状态、休眠状态**和**终止状态**。
 
-![](../../.gitbook/assets/image%20%28110%29.png)
+![](../../.gitbook/assets/image%20%28112%29.png)
 
 * **初始状态：**指的是线程已经被创建，但是还不允许分配 CPU 执行。这个状态属于编程语言特有的，这里的创建仅仅在编程语言中创建，但是没有在操作系统层面创建。
 * **可运行状态：**线程可以分配 CPU 执行，真正的操作系统线程已经被创建了。
@@ -63,7 +63,7 @@ public class Thread implements Runnable {
 
 ### Java 线程状态转换
 
-![&#x7EBF;&#x7A0B;&#x72B6;&#x6001;&#x7684;&#x53D8;&#x5316;](../../.gitbook/assets/image%20%2893%29.png)
+![&#x7EBF;&#x7A0B;&#x72B6;&#x6001;&#x7684;&#x53D8;&#x5316;](../../.gitbook/assets/image%20%2895%29.png)
 
 {% hint style="warning" %}
 线程调用阻塞式 API 时，不会进入 BLOCKED 状态，在操作系统层面是休眠状态，但是在 JVM 层面还是 RUNNABLE 状态。因为在 JVM 看来，等待 CPU 使用权（操作系统层面此时处于可执行状态）与等待 I/O（操作系统层面此时处于休眠状态）没有区别，都是在等待某个资源，所以都归入了 RUNNABLE 状态。
@@ -71,7 +71,7 @@ public class Thread implements Runnable {
 
 每个对象锁都对应一个等待队列和一个同步队列，详情见下一节。下图是一个线程状态转换的例子。
 
-![&#x7B49;&#x5F85;&#x961F;&#x5217;&#x4E0E;&#x540C;&#x6B65;&#x961F;&#x5217;](../../.gitbook/assets/image%20%2891%29.png)
+![&#x7B49;&#x5F85;&#x961F;&#x5217;&#x4E0E;&#x540C;&#x6B65;&#x961F;&#x5217;](../../.gitbook/assets/image%20%2893%29.png)
 
 ### 线程状态转换相关方法
 

@@ -1,5 +1,11 @@
 # Git
 
+```bash
+git tag # 显示所有 tag
+git checkout <tag> # 切换到 tag 所处的 commitId
+git checkout -b <branch> <tag> # 切换到 tag，并创建分支
+```
+
 ## Config
 
 ```bash
