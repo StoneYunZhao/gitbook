@@ -8,3 +8,8 @@ HTTP（HyperText Transfer Protocol），超文本传输协议。是一个在计�
 
 HTTP/2 基于 Google 的 SPDY，HTTP/3 基于 Google 的 QUIC。
 
+* Web：World Wide Web
+* CDN：Content Delivery Network
+* 爬虫：Crawler
+* 君子协定：robots.txt
+
