@@ -120,6 +120,94 @@ DROP VIEW view_name;
 * 简化 SQL，编写好复杂查询的视图后，我们仅需要简单的查询就行。
 * 是虚拟表，本身不存储数据，所以对数据的修改限制很多，所以视图一般用作查询。
 
+### PROCEDURE
+
+存储过程和视图一样，也是对 SQL 代码的封装，可以反复利用。不同的是，视图是虚拟表，通常不用来操作数据，而存储过程是程序化的 SQL，可以操作底层数据。存储过程由 SQL 语句和流程控制语句构成。
+
+```sql
+CREATE PROCEDURE sp_name ([proc_parameter[,...]])
+BEGIN
+    需要执行的语句
+END
+
+DROP {PROCEDURE | FUNCTION} [IF EXISTS] sp_name
+```
+
+比如计算 1 到 n 的和：
+
+```sql
+DELIMITER //
+
+CREATE PROCEDURE `add_num`(IN n INT)
+  BEGIN
+    DECLARE i INT;
+    DECLARE sum INT;
+    SET i = 1;
+    SET sum = 0;
+    WHILE i <= n DO
+      SET sum = sum + i;
+      SET i = i + 1;
+    END WHILE;
+    SELECT sum;
+  END //
+
+DELIMITER ;
+
+CALL add_num(50);
+```
+
+{% hint style="info" %}
+默认 SQL 采用 ; 作为结束符，这样存储过程中的每一句 SQL 都需要执行。所以通过 DELIMITER 临时修改结束符，存储过程创建好后再变回来。若是 Navicat 等工具就不需要，它会自动帮你设置 DELIMITER，用 MySQL client 就需要。
+{% endhint %}
+
+#### 参数类型
+
+* IN：向存储过程传入参数，不返回。
+* OUT：把存储过程计算结果放入该参数，调用者可以得到返回值。
+* INOUT：IN 和 OUT 的结合。
+
+```sql
+CREATE PROCEDURE `get_hero_scores`(
+  OUT max_max_hp FLOAT, 
+  OUT min_max_mp FLOAT, 
+  OUT avg_max_attack FLOAT, 
+  s VARCHAR(255))
+  BEGIN
+    SELECT MAX(hp_max), MIN(mp_max), AVG(attack_max)
+    FROM heros
+    WHERE role_main = s INTO max_max_hp, min_max_mp, avg_max_attack;
+  END
+  
+CALL get_hero_scores(@max_max_hp, @min_max_mp, @avg_max_attack, '战⼠');
+SELECT @max_max_hp, @min_max_mp, @avg_max_attack;
+```
+
+#### 流程控制语句
+
+* **BEGIN ... END**：中间包含多个语句，每个语句以 ; 结束。
+* **DECLARE**：申明变量。
+* **SET**：赋值。
+* **SELECT ... INTO**：赋值。
+* **IF ... THEN ... \[ELSE\|ELSEIF\] ... ENDIF**：条件判断。
+* **CASE**：多条件分支判断。
+* **LOOP、LEAVE、ITERATE**：LEAVE 可理解为 break，ITERATE 可理解为 continue。
+* **REPEAT ... UNTIL ... END REPEAT**：可理解为 do while。
+* **WHILE ... DO ... END WHILE**：可理解为 while。
+
+#### 优缺点
+
+* 优点：
+  * 一次编译多次使用
+  * 代码封装成模块，复杂问题可以拆解成简单问题
+  * 模块之间可重复使用
+  * 安全性强，可以为存储过程设定权限
+  * 可减少网络传输，包括代码数据量、连接次数等
+* 缺点：
+  * 移植性差，很难跨数据库移植
+  * 调试困难
+  * 数据表索引发生变化，可能导致存储过程失效
+  * 不适合高并发，因为高并发数据库会分库分表
+
 ## DQL
 
 官方文档，[SELECT Syntax](https://dev.mysql.com/doc/refman/8.0/en/select.html)。
