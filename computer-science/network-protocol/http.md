@@ -12,4 +12,10 @@ HTTP/2 基于 Google 的 SPDY，HTTP/3 基于 Google 的 QUIC。
 * CDN：Content Delivery Network
 * 爬虫：Crawler
 * 君子协定：robots.txt
+* IP：Internet Protocol
+* TCP：Transmission Control Protocol
+* DNS：Domain Name System
+* URI：Uniform Resource Identifier
+* URL：Uniform Resource Locator，是 URI 的子集
+* SSL：Secure Socket Layer，3.0 时改名 TLS，Transport Layer Security。
 
