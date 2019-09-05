@@ -11,7 +11,7 @@
 
 Sun 公司推出了 Servlet 技术，Servlet 没有 main 方法，必须把它部署在 Servlet 容器中，Servlet 容器一般也具有 HTTP 服务器的功能，所以 Servlet 容器 + HTTP 服务器 = Web 容器。
 
-![](../../.gitbook/assets/image%20%28145%29.png)
+![](../../.gitbook/assets/image%20%28149%29.png)
 
 Web 容器主要做的工作是：接受连接、解析请求数据、处理请求、发送响应。
 
@@ -19,7 +19,7 @@ HTTP 服务器不直接跟业务类打交道，而是把请求交给 Servlet 容
 
 Servlet 规范是关于 Servlet 接口和 Servlet 容器的规范。Tomcat 和 Jetty 都按照 Servlet 规范要求实现了 Servlet 容器，再加上了 HTTP 服务器的功能。
 
-![](../../.gitbook/assets/image%20%28154%29.png)
+![](../../.gitbook/assets/image%20%28158%29.png)
 
 ```java
 public interface Servlet {
@@ -41,7 +41,7 @@ public abstract class HttpServlet extends GenericServlet {
 }
 ```
 
-![](../../.gitbook/assets/image%20%2843%29.png)
+![](../../.gitbook/assets/image%20%2844%29.png)
 
 Web 应用的目录结构：
 
@@ -97,5 +97,5 @@ ContextLoaderListener 初始化的是全局的 Spring 根容器，即 Spring 的
 
 ### Servlet、Spring、SpringMVC 容器
 
-![](../../.gitbook/assets/image%20%2824%29.png)
+![](../../.gitbook/assets/image%20%2825%29.png)
 
