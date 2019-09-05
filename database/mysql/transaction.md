@@ -6,10 +6,10 @@
 
 ### ACID
 
-* Atomicity：原子性。
-* Consistency：一致性。
-* Isolation：隔离性。
-* Durability：持久性。
+* Atomicity：原子性，进行数据处理操作的基本单位，不可分割。
+* Consistency：一致性，数据库在进行事务操作后，会由原来的一致状态，变成另外一种一致状态。一致性一般由**业务定义**的。
+* Isolation：隔离性，事务不受其它事务影响。
+* Durability：持久性，事务提交之后对数据的修改是持久性的。
 
 ### 事务带来的问题
 
@@ -60,6 +60,30 @@ insert into T(c) values(1);
 可重复读和串行化所看到的结果虽然一样，但是执行方式不一样。串行化的情况下，当事务 B 在修改数据时，会被阻塞，直到事务 A 提交，事务 B 才能继续执行。
 {% endhint %}
 
+## 语法
+
+官方文档，[Transactional and Locking Statements](https://dev.mysql.com/doc/refman/8.0/en/sql-syntax-transactions.html)。
+
+* START TRANSACTION / BEGIN：显示开启一个事务。
+* COMMIT：提交事务。
+* ROLLBACK / ROLLBACK TO \[SAVEPOINT\]：回滚，或回滚到某个保存点。
+* SAVEPOINT：创建保存点。
+* RELEASE SAVEPOINT：删除保存点。
+* SET TRANSACTION：设置隔离级别。
+
+### 显式启动
+
+`set  autocommit=0`：关闭自动提交，比如执行一个 select 语句，事务就启动了，并且不会自动提交，事务持续直到执行 commit 或 rollback 或断开连接。
+
+* begin 或 start transaction
+* commit 或 rollback
+
+### 隐式启动
+
+`set autocommit=1`
+
+
+
 ## MySQL 事务
 
 MyISAM 不支持事务，InnoDB 支持事务。
@@ -72,18 +96,6 @@ select *
 from information_schema.innodb_trx
 where TIME_TO_SEC(timediff(now(), trx_started)) > 60;
 ```
-
-### 启动方式
-
-#### 显式启动
-
-* begin 或 start transaction
-* commit 或 rollback
-
-#### autocommit 参数
-
-* set  autocommit=0：关闭自动提交，比如执行一个 select 语句，事务就启动了，并且不会自动提交，事务持续直到执行 commit 或 rollback 或断开连接。
-* set autocommit=1：若显式启动事务，则需要使用 commit 或 rollback；若没有显式启动事务，则每个 sql 语句都会自动启动事务并自动提交。
 
 ### 实现原理
 

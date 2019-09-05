@@ -43,6 +43,9 @@ mysql -u {username} -p {password} \
 mysql -u pcopadm -h 127.0.0.1 -P 3306 -p
 
 select version();
+
+# 显示所有引擎
+show engines;
 ```
 
 分析 SQL 执行时间
