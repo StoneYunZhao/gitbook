@@ -548,6 +548,18 @@ SQL 中的函数有很多类别，常用的有：
 * 不同 DBMS 支持的函数不一样，移植容易产生兼容性问题；
 * 容易使用不当，导致查询不使用索引；
 
+## Cursor
+
+官方文档，[cursors](https://dev.mysql.com/doc/refman/8.0/en/cursors.html)。
+
+```sql
+DECLARE cursor_name CURSOR FOR select_statement;
+OPEN cursor_name;
+FETCH cursor_name INTO var_name ...;
+CLOSE cursor_name;
+DEALLOCATE PREPARE;
+```
+
 ## Utility Statements
 
 ```sql
