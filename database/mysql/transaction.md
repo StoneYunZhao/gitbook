@@ -70,19 +70,59 @@ insert into T(c) values(1);
 * SAVEPOINT：创建保存点。
 * RELEASE SAVEPOINT：删除保存点。
 * SET TRANSACTION：设置隔离级别。
+* SET @@completion\_type
+  * 0：默认，执行 COMMIT 会提交事务，执行下一个事务时，需要用 START TRANSACTION / BEGIN 来开启。
+  * 1：提交事务后，会自动开启一个相同隔离级别的事务。
+  * 2：提交事务后，会自动与服务器断开连接。
+* SET autocommit
+  * 0：显示启动事务，关闭自动提交，比如执行一个 select 语句，事务就启动了，并且不会自动提交，事务持续直到执行 commit 或 rollback 或断开连接。
+  * 1：隐式启动事务。
 
-### 显式启动
+autocommit 与 START TRANSACTION：
 
-`set  autocommit=0`：关闭自动提交，比如执行一个 select 语句，事务就启动了，并且不会自动提交，事务持续直到执行 commit 或 rollback 或断开连接。
+* 当 autocommit=0，不管有没有 START TRANSACTION，COMMIT 才会生效，ROLLBACK 会回滚。
+* 当 autocommit=1，没有 START TRANSACTION 或 BEGIN，COMMIT 和 ROLLBACK 是无用的。
+* 不管 autocommit 是什么值，只要有 START TRANSACTION 或 BEGIN，意味着开启一个显示事务，必须要 COMMIT 才会生效，ROLLBACK 才会回滚。
 
-* begin 或 start transaction
-* commit 或 rollback
+### 案例
 
-### 隐式启动
+```sql
+CREATE TABLE test(name varchar(255), PRIMARY KEY (name)) ENGINE=InnoDB; 
+BEGIN; 
+INSERT INTO test SELECT '关⽻'; 
+COMMIT; 
+BEGIN; 
+INSERT INTO test SELECT '张⻜'; 
+INSERT INTO test SELECT '张⻜'; 
+COMMIT;
+```
 
-`set autocommit=1`
+上面 sql 执行完后，数据表中就一行\`关羽\`，因为第二个事务由于主键冲突会执行失败，自动回滚。
 
+```sql
+CREATE TABLE test(name varchar(255), PRIMARY KEY (name)) ENGINE=InnoDB; 
+BEGIN; 
+INSERT INTO test SELECT '关⽻'; 
+COMMIT; 
+INSERT INTO test SELECT '张⻜'; 
+INSERT INTO test SELECT '张⻜'; 
+ROLLBACK;
+```
 
+上面 sql 执行完后，表中有两行数据。插入\`张飞\`时没有显式开启事务，那么每一行 sql 都自动称为一个事务。
+
+```sql
+CREATE TABLE test(name varchar(255), PRIMARY KEY (name)) ENGINE=InnoDB; 
+SET @@completion_type = 1; 
+BEGIN; 
+INSERT INTO test SELECT '关⽻'; 
+COMMIT; 
+INSERT INTO test SELECT '张⻜'; 
+INSERT INTO test SELECT '张⻜'; 
+ROLLBACK;
+```
+
+上面 sql 执行完后，表中只有一行数据\`关羽\`。
 
 ## MySQL 事务
 
