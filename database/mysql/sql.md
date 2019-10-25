@@ -274,6 +274,22 @@ LIMIT 最后执行。
 * 若对某个字段建立了唯一索引，那么对这个字段查询，不需要加 LIMIT 1.
 * 若是全表扫描的 SQL 语句，若加了 LIMIT 1，当找到一条结果后就不会继续扫描了，能加快查询速度。
 
+### ORDER BY
+
+尽量在 ORDER BY 字段上加索引，为什么？
+
+MySQL 有两种排序方式，FileSort 和 IndexSort：
+
+* FileSort：一般在内存中排序，CPU 占用较多，如果待排序结果较大，还会产生临时文件到磁盘，效率较低。
+* IndexSort：索引可以保证数据的有序性，不需要进行排序。
+
+所以当使用 ORDER BY 时，应尽量使用 IndexSort，可以使用 explain 查看是否使用索引排序。
+
+所以有如下优化建议：
+
+* WHERE 和 ORDER BY 都使用索引，WHERE 使用时为了避免全表扫描，ORDER BY 使用时为了避免 FileSort。
+* 若 WHERE 和 ORDER BY 是相同的列，就使用单索引列；若不同，就使用联合索引。
+
 ### GROUP BY
 
 我们可以对数据进行分组，并使用聚集函数统计每组数据的值。
@@ -281,6 +297,8 @@ LIMIT 最后执行。
 ```sql
 SELECT COUNT(*) AS num, role_main, role_assist FROM heros GROUP BY role_main, role_assist ORDER BY num DESC;
 ```
+
+若 GROUP BY 后面还有 ORDER BY，那么排序实际上是对分组后的数据排序，因为分组已经把多条数据聚合成了一条记录。
 
 ### HAVING
 
