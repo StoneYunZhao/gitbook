@@ -2,7 +2,7 @@
 
 Java 语言提供了完善的异常处理机制。
 
-![](../../.gitbook/assets/image%20%28198%29.png)
+![](../../.gitbook/assets/image%20%28201%29.png)
 
 Java 只有 Throwable 才能被抛出（throw）和和捕获（catch）。
 
