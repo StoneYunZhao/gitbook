@@ -397,7 +397,16 @@ WHERE player_id IN (SELECT player_id FROM player_score);
 
 ```sql
 SELECT * FROM A WHERE cc IN (SELECT cc FROM B);
+# 先执行子句，在执行外层 SQL
+for i in B
+    for j in A
+        if j.cc == i.cc then ...
+
 SELECT * FROM A WHERE EXISTS (SELECT cc FROM B WHERE B.cc=A.cc)
+# 对 A 表遍历，每条记录执行子句进行判断
+for i in A
+    for j in B
+        if j.cc == i.cc then ...
 ```
 
 {% hint style="info" %}
