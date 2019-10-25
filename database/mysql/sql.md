@@ -255,7 +255,24 @@ SELECT * FROM tag WHERE name IS NULL;
 
 逻辑运算符有：`AND OR IN NOT`。
 
-通配符：`LIKE`。
+通配符：`LIKE`，查询英雄名字除了第一个字以外，包含"太"字的英雄：
+
+```text
+SELECT name FROM heros WHERE name LIKE '_%太%';
+```
+
+\_ 匹配任意一个字符，% 匹配大于等于 0 个字符。所以“太乙真人”匹配不上，“东皇太乙”可以匹配，“太乙真人太太”可以匹配。
+
+另外 `LIKE '%'` 无法查出 NULL 值。
+
+### LIMIT
+
+LIMIT 最后执行。
+
+如果确定查询结果只有一条，那么需不需要加 LIMIT 1？有两种情况
+
+* 若对某个字段建立了唯一索引，那么对这个字段查询，不需要加 LIMIT 1.
+* 若是全表扫描的 SQL 语句，若加了 LIMIT 1，当找到一条结果后就不会继续扫描了，能加快查询速度。
 
 ### GROUP BY
 
