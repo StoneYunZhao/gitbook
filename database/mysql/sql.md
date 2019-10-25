@@ -619,5 +619,66 @@ DEALLOCATE PREPARE;
 # 获取表信息
 DESCRIBE {tb_name};
 DESCRIBE app;
+
+# 获取版本
+SELECT version();
+
+# 显示所有引擎
+SHOW engines;
 ```
+
+分析 SQL 执行时间：
+
+```sql
+# 查看是否开启，关闭(0)，开启(1)
+SELECT @@profiling;
+
+# 开启
+SET profiling = 1;
+
+# 执行任意语句
+SELECT * FROM test;
+
+# 查看当前会话所产生的 profiles
+SHOW profiles;
+
++----------+------------+--------------------+
+| Query_ID | Duration   | Query              |
++----------+------------+--------------------+
+|        1 | 0.00185800 | select @@profiling |
+|        2 | 0.00108000 | select * from test |
++----------+------------+--------------------+
+2 rows in set, 1 warning (0.00 sec)
+
+# 获取上一次查询的详细执行时间
+SHOW profile;
+
+# 查询指定 queryId 的详细执行时间
+SHOW profile FOR query 2;
+
++--------------------------------+----------+
+| Status                         | Duration |
++--------------------------------+----------+
+| starting                       | 0.000112 |
+| Executing hook on transaction  | 0.000022 |
+| starting                       | 0.000023 |
+| checking permissions           | 0.000021 |
+| Opening tables                 | 0.000065 |
+| init                           | 0.000022 |
+| System lock                    | 0.000046 |
+| optimizing                     | 0.000018 |
+| statistics                     | 0.000032 |
+| preparing                      | 0.000033 |
+| executing                      | 0.000056 |
+| end                            | 0.000018 |
+| query end                      | 0.000016 |
+| waiting for handler commit     | 0.000036 |
+| closing tables                 | 0.000022 |
+| freeing items                  | 0.000293 |
+| cleaning up                    | 0.000249 |
++--------------------------------+----------+
+17 rows in set, 1 warning (0.01 sec)
+```
+
+
 
