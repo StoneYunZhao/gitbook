@@ -542,6 +542,7 @@ SELECT * FROM player FULL JOIN team ON player.team_id = team.team_id;
 自连接的速度比子查询快很多，所以建议尽量使用自连接。
 
 ```sql
+# 查看比布雷克·格里芬身高高的球员都
 SELECT b.player_name, b.height
 FROM player as a
        JOIN player as b ON a.player_name = '布雷克-格⾥芬' and a.height < b.height;
