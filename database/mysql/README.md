@@ -118,7 +118,53 @@
 库存表：仓库名，物品名，数量
 ```
 
-### 反范式
+### 反范式设计
+
+越高阶的范式得到的数据表越多，数据冗余度越低。但是有时为了性能和读取效率，我们需要违反一些范式，因为联表查询效率较低。比如我们有如下两张表：
+
+```text
+商品评论表：商品评论 ID，商品 ID，评论内容，评论时间，用户 ID
+product_comment: comment_id, product_id, comment_text, comment_time, user_id
+
+用户表：用户 ID，用户昵称，注册时间
+user: user_id, user_name, create_time
+```
+
+如果我们需要查询某商品的前 1000条评论：
+
+```sql
+SELECT p.comment_text, p.comment_time, u.user_name FROM product_comment AS p
+LEFT JOIN user AS u
+ON p.user_id = u.user_id
+WHERE p.product_id = 1001
+ORDER BY p.comment_id DESC LIMIT 1000;
+```
+
+此 SQL 查询效率不高，因为关联两张表，进行聚集索引扫描，然后 再嵌套循环，非常耗时。如果我们想提升查询效率，允许适当的数据冗余，那么可以设计如下表：
+
+```text
+商品评论表：商品评论 ID，商品 ID，评论内容，评论时间，用户 ID，用户昵称
+product_comment: comment_id, product_id, comment_text, comment_time, user_id, user_name
+```
+
+同样的查询条件只需要单表查询：
+
+```sql
+SELECT comment_text, comment_time, user_name FROM product_comment
+WHERE product_id = 1001
+ORDER BY comment_id DESC LIMIT 1000;
+```
+
+由此可见反范式是通过空间换时间，提升查询效率。但是反范式也存在一些问题：
+
+* 数据量小时，不能体现性能优势。
+* 数据更新需要保持一致性，如修改用户昵称，需要在两张表修改。
+
+反范式的适用场景是什么呢？在实际业务场景中，我们可能需要冗余信息，比如订单中的收货人姓名、电话、地址，每次发生订单这些信息都属于历史快照，需要保存。就算用户修改了自己的电话，订单的电话也不变。
+
+所以如果冗余信息有价值，或者能大幅提升查询效率时，我们可以采取反范式设计。
+
+另外数据仓库设计也常采取反范式，因为数据仓库通常存储历史数据，不常增删改，但分析数据需求强烈，所以可以适当数据冗余，方便数据分析。
 
 ### 总结
 
