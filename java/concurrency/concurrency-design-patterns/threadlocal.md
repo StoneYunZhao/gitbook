@@ -36,6 +36,8 @@ Java 使用的是第二种思路，理由是：
 
 下面是 Java 1.11 精简后的代码：
 
+{% tabs %}
+{% tab title="" %}
 ```java
 public class Thread implements Runnable {
     ThreadLocal.ThreadLocalMap threadLocals = null;
@@ -51,7 +53,11 @@ public class Thread implements Runnable {
     }
 }
 ```
+{% endtab %}
+{% endtabs %}
 
+{% tabs %}
+{% tab title="" %}
 ```java
 // java.lang.ThreadLocal.java
 public class ThreadLocal<T> {
@@ -94,6 +100,8 @@ public class ThreadLocal<T> {
     }
 }
 ```
+{% endtab %}
+{% endtabs %}
 
 ## 注意事项
 
