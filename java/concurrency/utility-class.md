@@ -248,7 +248,7 @@ class T2Task implements Callable<String> {
 } 
 ```
 
-![](../../.gitbook/assets/image%20%2813%29.png)
+![](../../.gitbook/assets/image%20%2814%29.png)
 
 ## CompletableFuture
 
@@ -260,7 +260,7 @@ Java 8 提供了 `CompletableFuture`来支持异步编程，Java 9 提供了更�
 
 重新实现一遍上一节的烧水泡茶：
 
-![](../../.gitbook/assets/image%20%28171%29.png)
+![](../../.gitbook/assets/image%20%28173%29.png)
 
 ```java
 //任务1：洗⽔壶->烧开⽔ 
