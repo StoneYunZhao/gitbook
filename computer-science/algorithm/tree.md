@@ -74,5 +74,36 @@
 
 ## B 树
 
-## [B+ 树](../../database/mysql/indexing.md#14-b-shu)
+如果使用
+
+## B+ 树
+
+二叉树的搜索效率最高，但是很多数据库不使用二叉树，比如 [MySQL](../../database/mysql/indexing.md#2-mysql-suo-yin)，原因是索引不止在内存中，还要写到磁盘上。为了减少磁盘的读取次数，所以应该使用 N 叉树，以 InnoDB 为例，N 大约为 1200。
+
+假设有如下表和数据，则 InnoDB 的索引结构为下图：
+
+```sql
+mysql> create table T(
+id int primary key, 
+k int not null, 
+name varchar(16),
+index (k))engine=InnoDB;
+
+(100,1) (200,2) (300,3) (500,5) (600,6)
+```
+
+![](../../.gitbook/assets/image%20%28131%29.png)
+
+* **主键索引**：又叫聚簇索引（clustered index），叶子节点存整行数据。
+* **非主键索引**：又叫耳机索引（secondary index），叶子节点存主键的值。
+
+若使用`select * from T where k=5`，则先搜索 k 索引树，得到 ID 再去主键索引树搜索，这称为**回表**。
+
+#### 页分裂
+
+当插入数据时，比如插入 700，则只需在后面追加一条记录。若插入 400，需要逻辑上移动后面的数据。若插入的页已经满了，B+ 树会申请一个新的页，然后挪动部分数据过去。
+
+#### 页合并
+
+若相邻两个页由于删除数据，空间利用率很低，则会把数据页合并。
 

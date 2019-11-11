@@ -25,58 +25,17 @@
 
 ## 常见索引数据结构
 
-### Hash 表
-
-本质是**数组+链表**的数据结构。
-
-**缺点**：做区间查询速度很慢。
-
-**适用场景**：只有等值查询的情况。比如 Memcached 、Lucene 等。
-
-### 有序数组
-
-等值查询和范围查询都很快。等值查询用用二分查找，时间复杂度`O(log(N))`。范围查询先用等值查询找到第一个，然后往后遍历。
-
-**缺点**：插入数据效率很低。
-
-**适用场景**：静态数据，比如 2015年上海市的人口信息。
-
-### [平衡二叉查找树](../../computer-science/algorithm/tree.md#ping-heng-er-cha-cha-zhao-shu)
-
-### B+ 树
-
-二叉树的搜索效率最高，但是很多数据库不使用二叉树，比如 [MySQL](indexing.md#2-mysql-suo-yin)，原因是索引不止在内存中，还要写到磁盘上。为了减少磁盘的读取次数，所以应该使用 N 叉树，以 InnoDB 为例，N 大约为 1200。
-
-假设有如下表和数据，则 InnoDB 的索引结构为下图：
-
-```sql
-mysql> create table T(
-id int primary key, 
-k int not null, 
-name varchar(16),
-index (k))engine=InnoDB;
-
-(100,1) (200,2) (300,3) (500,5) (600,6)
-```
-
-![](../../.gitbook/assets/image%20%28131%29.png)
-
-* **主键索引**：又叫聚簇索引（clustered index），叶子节点存整行数据。
-* **非主键索引**：又叫耳机索引（secondary index），叶子节点存主键的值。
-
-若使用`select * from T where k=5`，则先搜索 k 索引树，得到 ID 再去主键索引树搜索，这称为**回表**。
-
-#### 页分裂
-
-当插入数据时，比如插入 700，则只需在后面追加一条记录。若插入 400，需要逻辑上移动后面的数据。若插入的页已经满了，B+ 树会申请一个新的页，然后挪动部分数据过去。
-
-#### 页合并
-
-若相邻两个页由于删除数据，空间利用率很低，则会把数据页合并。
-
-### 跳表
-
-### LSM 树
+* Hash 表：本质是**数组+链表**的数据结构。
+  * **缺点**：做区间查询速度很慢。
+  * **适用场景**：只有等值查询的情况。比如 Memcached 、Lucene 等。
+* 有序数组：等值查询和范围查询都很快。等值查询用用二分查找，时间复杂度`O(log(N))`。范围查询先用等值查询找到第一个，然后往后遍历。
+  * **缺点**：插入数据效率很低。
+  * **适用场景**：静态数据，比如 2015年上海市的人口信息。
+* [平衡二叉查找树](../../computer-science/algorithm/tree.md#ping-heng-er-cha-cha-zhao-shu)
+* [B 数](../../computer-science/algorithm/tree.md#b-shu)
+* [B+ 树](../../computer-science/algorithm/tree.md#b-shu-1)
+* [跳表](../../computer-science/algorithm/skip-list.md)
+* LSM 树
 
 ## MySQL 索引
 
