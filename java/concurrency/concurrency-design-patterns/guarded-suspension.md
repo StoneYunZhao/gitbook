@@ -11,11 +11,11 @@
 
 对于问题 1，假设服务 A 异步调用服务 B，服务 A 发送请求的线程是 T1，但是接受服务 B 返回结果的线程是 T2，那么 T1 怎么等待返回结果呢？
 
-![](../../../.gitbook/assets/image%20%28151%29.png)
+![](../../../.gitbook/assets/image%20%28152%29.png)
 
 使用 Guarded Suspension 模式可以解决上述问题，使用一个 GuardedObject 对象，内部有一个成员变量，成员方法 get\(Predicate&lt;T&gt; p\) 中的 p 就是 T1 用来检验结果是否已经返回，成员方法  onChanged\(\) 就是 T2 获取到返回结果后调用。
 
-![](../../../.gitbook/assets/image%20%2873%29.png)
+![](../../../.gitbook/assets/image%20%2874%29.png)
 
 ```java
 public final class GuardedObject<T> {
