@@ -25,7 +25,7 @@
 
 ## 常见索引数据结构
 
-* Hash 表：本质是**数组+链表**的数据结构。
+* [Hash 表](../../computer-science/algorithm/hash-table.md)：本质是**数组+链表**的数据结构。
   * **缺点**：做区间查询速度很慢。
   * **适用场景**：只有等值查询的情况。比如 Memcached 、Lucene 等。
 * 有序数组：等值查询和范围查询都很快。等值查询用用二分查找，时间复杂度`O(log(N))`。范围查询先用等值查询找到第一个，然后往后遍历。
@@ -36,6 +36,13 @@
 * [B+ 树](../../computer-science/algorithm/tree.md#b-shu-1)
 * [跳表](../../computer-science/algorithm/skip-list.md)
 * LSM 树
+
+MySQL 中的 Memory 存储引擎支持 Hash 存储；另外 MySQL 的 InnoDB 有一个自适应 Hash 索引，当某个索引使用非常频繁时，会在 B+ 树的基础上再创建一个 Hash 索引。不过 Hash 索引相对于 B+ 树有一些缺点：
+
+* 不支持范围查询。
+* 不支持联合索引的最左匹配原则，因为 hash 函数对于输入的一点微小变化都很敏感。
+* 不支持 ORDER BY 排序。
+* 不支持 LIKE 'XX%'。
 
 ## MySQL 索引
 
