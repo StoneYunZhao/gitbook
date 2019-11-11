@@ -4,7 +4,7 @@
 
 **互联网控制消息协议**（**I**nternet **C**ontrol **M**essage **P**rotocol，**ICMP**）用于网际协议（IP）中发送控制消息，提供可能发生在通信环境中的各种问题反馈。通过这些信息，使管理者可以对所发生的问题作出诊断，然后采取适当的措施解决。
 
-![](../../.gitbook/assets/image%20%28206%29.png)
+![](../../.gitbook/assets/image%20%28207%29.png)
 
 ICMP 有很多类型，最常用的类型是**主动请求**为 8，**主动请求的应答**为 0。
 
@@ -14,7 +14,7 @@ ICMP 有很多类型，最常用的类型是**主动请求**为 8，**主动请�
 
 ping 的主动请求，称为 **ICMP ECHO REQUEST，**主动请求的回复，称为 **ICMP ECHO REPLY**。
 
-![](../../.gitbook/assets/image%20%28199%29.png)
+![](../../.gitbook/assets/image%20%28200%29.png)
 
 ### 差错报文类型
 

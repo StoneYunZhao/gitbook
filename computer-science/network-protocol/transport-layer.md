@@ -165,7 +165,7 @@ Socket 可以理解为插头，双方通信需要一根线连接两个插头。S
 * 对于第 4 点，监听 Socket 和真正用来传数据的 Socket 是两个，一个叫做**监听 Socket**，一个叫做**已连接 Socket**。
 {% endhint %}
 
-![](../../.gitbook/assets/image%20%28203%29.png)
+![](../../.gitbook/assets/image%20%28204%29.png)
 
 Socket 在 linux 中是以文件形式的存在。每个进程都有一个数据结构 task\_struct，指向一个文件描述符数组，列出这个进程打开的所有文件的文件描述符；数组的内容是指针，指向内核中所有打开的文件列表中的某一个；文件列表中的 Socket 类型的文件也会指向一个 inode，这个 inode 不在硬盘而在内存；这个 inode 指向 Socket 在内核中的结构。
 
