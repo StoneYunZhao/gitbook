@@ -44,6 +44,25 @@ MySQL 中的 Memory 存储引擎支持 Hash 存储；另外 MySQL 的 InnoDB 有
 * 不支持 ORDER BY 排序。
 * 不支持 LIKE 'XX%'。
 
+## 最佳实践
+
+### 什么时候创建索引
+
+* 字段数值有唯一限制，唯一索引和主键索引都能起到唯一性的约束。
+* 作为 WHERE 查询条件的字段，尤其表较大时，包括 SELECT、UPDATE、DELETE、JOIN。
+* 频繁作为 GROUP BY 和 ORDER BY 的字段。
+* DISTINCT 字段。
+* 多表 JOIN 时，用于连接的字段。不过，连接表尽量不要超过 3 张。
+
+对于同时存在 GOURP BY 和 ORDER BY 的语句，如：`GROUP BY a ORDER BY b`
+
+* 若对 a，b 分别创建单列索引，则只有一个会生效。
+* 创建（b, a）联合索引没有（a, b）联合索引效率高，因为先进行 GROUP BY。
+
+### 什么时候不创建索引
+
+### 什么时候索引失效
+
 ## MySQL 索引
 
 ### 自增主键
