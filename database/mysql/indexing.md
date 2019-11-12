@@ -68,6 +68,12 @@ MySQL 中的 Memory 存储引擎支持 Hash 存储；另外 MySQL 的 InnoDB 有
 
 ### 什么时候索引失效
 
+* 索引进行了表达式计算：`WHERE id + 1 = 9001` =&gt; `WHERE id = 9000`
+* 索引进行了函数计算：`WHERE SUBSTRING(a, 1, 3) = 'abc'` =&gt; `WHERE a LIKE 'abc%'`
+* OR 条件中有一个列没有索引，那么其他索引列也会失效。如 WHERE a = 1 OR b = 2，a 有索引，b 没有，那么 a 的索引会失效。
+* LIKE 不能以 \`%\` 开头。
+* 索引列与 NULL 或 NOT NULL 判断时。
+
 ## MySQL 索引
 
 ### 自增主键
