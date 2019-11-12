@@ -61,6 +61,11 @@ MySQL 中的 Memory 存储引擎支持 Hash 存储；另外 MySQL 的 InnoDB 有
 
 ### 什么时候不创建索引
 
+* 非查询条件的字段，查询条件指的是 WHERE、GROUP BY、ORDER BY、DISTINCT。
+* 数据量较小。
+* 字段中有大量重复数据，且分布较均匀。
+* 频繁更新的字段，因为更新时也会更新索引。
+
 ### 什么时候索引失效
 
 ## MySQL 索引
