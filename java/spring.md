@@ -8,9 +8,9 @@ BeanFactory 是**延迟加载**的，在第一调用 getBean 方法后才会加�
 
 ApplicationContext 继承自 BeanFactory，并提供了额外的功能，比如 MessageSource 提供国际化的消息访问、事件传播等。ApplicationContext 在**初始化**的时候就**加载所有**的 Bean。
 
-![](../.gitbook/assets/image%20%28180%29.png)
+![](../.gitbook/assets/image%20%28181%29.png)
 
-![](../.gitbook/assets/image%20%28194%29.png)
+![](../.gitbook/assets/image%20%28195%29.png)
 
 ## Bean 的生命周期
 

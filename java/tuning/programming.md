@@ -253,7 +253,7 @@ Reactor 模型有多种实现。
 
 Tomcat 和 Netty 都使用了一个 Acceptor 线程来监听连接请求事件，当连接成功后，会将建立的连接注册到多路复用器中。
 
-![](../../.gitbook/assets/image%20%28178%29.png)
+![](../../.gitbook/assets/image%20%28179%29.png)
 
 ### 主从 Reactor 模型
 

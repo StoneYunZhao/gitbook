@@ -77,8 +77,7 @@ After modify: contains c = true
 
 通过上面的解决方案可以看出，关键问题在于通过反射获取字段的值这个操作。
 
-{% tabs %}
-{% tab title="" %}
+{% code title="" %}
 ```java
 public final class Field extends AccessibleObject implements Member 
 {
@@ -110,8 +109,7 @@ public final class Field extends AccessibleObject implements Member
     }
 }
 ```
-{% endtab %}
-{% endtabs %}
+{% endcode %}
 
 上面是`java.lang.reflect.Field`精简后的代码，可见 Field 类会在第一次调用 get 方法时会缓存 FieldAccessor，但是修改 Field 的修饰符不会清除缓存，所以还是用的老的 final 类型的 FieldAccessor。
 

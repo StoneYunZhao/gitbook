@@ -67,6 +67,7 @@
   * [System Initialization](computer-science/linux/system-initialization.md)
 * [Design Patterns](computer-science/design-patterns/README.md)
   * [UML](computer-science/design-patterns/uml.md)
+  * [OOP](computer-science/design-patterns/oop.md)
   * [Principle](computer-science/design-patterns/principle.md)
   * [Factory](computer-science/design-patterns/factory.md)
   * [Singleton](computer-science/design-patterns/singleton.md)

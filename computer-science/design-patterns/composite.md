@@ -52,5 +52,5 @@ public class WhereSqlNode extends TrimSqlNode {
 * WhereSqlNode：对应 Leaf。
 * MixedSqlNode：对应 Composite。
 
-![](../../.gitbook/assets/image%20%28179%29.png)
+![](../../.gitbook/assets/image%20%28180%29.png)
 
