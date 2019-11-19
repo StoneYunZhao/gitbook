@@ -90,6 +90,7 @@
   * [Transaction](database/mysql/transaction.md)
   * [Indexing](database/mysql/indexing.md)
   * [Lock](database/mysql/lock.md)
+  * [Storage](database/mysql/storage.md)
 * [Redis](database/basic.md)
 * [Elasticsearch](database/elasticsearch/README.md)
   * [Local Debug](database/elasticsearch/local-debug.md)
