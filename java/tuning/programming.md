@@ -253,7 +253,7 @@ Reactor 模型有多种实现。
 
 Tomcat 和 Netty 都使用了一个 Acceptor 线程来监听连接请求事件，当连接成功后，会将建立的连接注册到多路复用器中。
 
-![](../../.gitbook/assets/image%20%28184%29.png)
+![](../../.gitbook/assets/image%20%28185%29.png)
 
 ### 主从 Reactor 模型
 
@@ -265,7 +265,7 @@ Tomcat 和 Netty 都使用了一个 Acceptor 线程来监听连接请求事件�
 
 Tomcat NIO 有 Poller 线程池，Acceptor 接收到连接后，先将请求发送给 Poller 缓冲队列，在 Poller 中维护了一个 Selector 对象，Poller 从队列中取出连接后，注册到 Selector。
 
-![](../../.gitbook/assets/image%20%28143%29.png)
+![](../../.gitbook/assets/image%20%28144%29.png)
 
 * acceptorThreadCount：默认 1。
 * maxThreads：Worker 线程池数量，默认 200。
