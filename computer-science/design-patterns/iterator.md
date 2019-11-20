@@ -15,11 +15,11 @@
 
 ## 类图
 
-![](../../.gitbook/assets/image%20%2876%29.png)
+![](../../.gitbook/assets/image%20%2879%29.png)
 
 ## 源码
 
 JDK 的 ArrayList 实现了 Iterator 接口。
 
-![](../../.gitbook/assets/image%20%28172%29.png)
+![](../../.gitbook/assets/image%20%28175%29.png)
 

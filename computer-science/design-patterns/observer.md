@@ -13,13 +13,13 @@
 
 ## 类图
 
-![](../../.gitbook/assets/image%20%28214%29.png)
+![](../../.gitbook/assets/image%20%28217%29.png)
 
 ## 源码
 
 ### Java 内置的观察者模式
 
-![](../../.gitbook/assets/image%20%2841%29.png)
+![](../../.gitbook/assets/image%20%2842%29.png)
 
 注意要先调用 setChanged 方法。
 
