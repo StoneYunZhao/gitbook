@@ -69,3 +69,42 @@ OOP 一般使用 OOPL 来进行，但是，不用 OOPL，我们照样可以进�
 * OOP 更易复用、易扩展、易维护。由上文的四大特性可见。
 * OOP 语言更加人性化，更接近于人的思维，而机器语言、汇编、面向过程是按照计算机的思维方式。
 
+### 本质是面向过程的代码
+
+在实际开发中，不是把代码塞到类里，就表示在面向对象编程了。很多情况下，有很多表面上像面向对象的代码，本质上时面向过程的风格。
+
+#### 滥用 getter、setter 方法
+
+我们经常会遇到定义完类后，随手就把所有 属性的 getter、setter 加上去，或者用 lombok 等。这样违反了面向对象封装的特性。如下面的例子：
+
+```java
+@Data
+public class ShoppingCart {
+  private int itemsCount;
+  private double totalPrice;
+  private List<ShoppingCartItem> items = new ArrayList<>();
+  
+  public void addItem(ShoppingCartItem item) {
+    items.add(item);
+    itemsCount++;
+    totalPrice += item.getPrice();
+  }
+  // ...省略其他方法...
+}
+```
+
+上面的代码有很多问题：
+
+* items、totalPrice 定义为私有属性，但是又提供 getter、setter 方法，本质上就是 public 属性了。任何地方都可以修改这两个值，会造成和 items 的数据不一致问题。
+* items 提供了 getter 方法，返回的是 List，外部拿到这个容器后，可以修改容器内数据。**解决方案**：可以使用`Collections.unmodifiableList()`。
+* 就算用不可变容器，还是有问题，因为用户拿到容器后，再拿容器内的某个元素，还是可以修改元素的某个字段值。
+
+总结一下：
+
+* 能不暴露 setter 方法就尽量不要暴露。
+* getter 方法如果返回的是容器或者类，也要注意内部的数据被修改。
+
+#### 全局变量和全局方法
+
+
+
