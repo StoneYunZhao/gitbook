@@ -53,7 +53,7 @@ Linux 的内核将所有外部设备**都看做一个文件来操作**，对一�
 
 ### 非阻塞 IO
 
-![](../../.gitbook/assets/image%20%28203%29.png)
+![](../../.gitbook/assets/image%20%28204%29.png)
 
 使用 fnctl 可以设置为非阻塞，如果没有数据返回，则直接返回 EWOULDBLOCK 或 EAGAIN。用户进程调用`recvform`系统调用接收数据之后，进程并没有被阻塞，内核马上返回给进程，如果数据还没准备好，此时会返回一个 error。进程在返回之后，可以干点别的事情，然后再发起`recvform`系统调用。如此循环的进行`recvform`系统调用，检查内核数据，直到数据准备好，再拷贝数据到进程。**拷贝数据整个过程，进程仍然是属于阻塞的状态**。
 
@@ -94,7 +94,7 @@ I/O 复用和阻塞 I/O 很相似，不同的是，I/O 复用等待多类事件�
 
 ### 异步 IO
 
-![](../../.gitbook/assets/image%20%28201%29.png)
+![](../../.gitbook/assets/image%20%28202%29.png)
 
 用户进程进行`aio_read`系统调用之后，无论内核数据是否准备好，都会直接返回给用户进程，然后用户态进程可以去做别的事情。内核等待用户态需要的数据准备好，然后将数据复制到用户空间，然后从内核向用户进程发送通知，告知用户进程数据已经复制完成。
 
@@ -118,7 +118,7 @@ Java NIO\(no-blocking io 或 new io\)是 JDK 1.4 中新引入的 IO 库，目的
 | 阻塞 IO（Blocking IO） |  非阻塞 IO（Non Blocking IO） |
 | 无 | 选择器（Selectors） |
 
-![](../../.gitbook/assets/image%20%28204%29.png)
+![](../../.gitbook/assets/image%20%28205%29.png)
 
 ### Buffer
 
