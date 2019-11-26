@@ -23,9 +23,36 @@
 
 ## Bubble Sort
 
-n 次冒泡，每次让一个元素移动到它应该在的位置。仅会操作相邻的两个元素，比较，若不满足大小关系，则交换。
+**描述**：冒泡排序仅会操作相邻的两个元素，比较两个相邻元素，若不满足大小关系，则交换。每次冒泡会让一个元素移动到它应该在的位置，重复 n 次，就完成了 n 个数据的排序。
 
-优化，当某次冒泡没有数据交换时，则完成排序。
+**优化**：当某次冒泡没有数据交换时，则完成排序。
+
+```java
+public void sort(Integer[] nums) {
+    int n = nums.length;
+    for (int i = 0; i < n; i++) {
+        boolean exchanged = false;
+        for (int j = 1; j < n - i; j++) {
+            if (nums[j - 1] > nums[j]) {
+                exchanged = true;
+                exchange(nums, j - 1, j);
+            }
+        }
+        if (!exchanged) {
+            break;
+        }
+    }
+}
+private void exchange(Integer[] nums, int i, int j) {
+    int tmp = nums[i];
+    nums[i] = nums[j];
+    nums[j] = tmp;
+}
+```
+
+**原地排序**：只需要常量级的额外空间。
+
+**稳定排序**：当相邻两个元素相等时，不交换就行。
 
 平均时间复杂度分析方法：
 
