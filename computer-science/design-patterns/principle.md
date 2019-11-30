@@ -23,6 +23,61 @@
 凡事就讲一个“度”，如果在业务场景下，某个功能只有一种实现，未来不可能被替换，那么就没必要设计接口。
 {% endhint %}
 
+## 多用组合少用继承
+
+[继承](../../java/grammar/basic.md#ji-cheng)是面向对象的四大特性之一，表示类之间 is-a 的关系，可以解决代码复用性的问题。
+
+### 继承的问题
+
+**继承层次过深、过复杂会影响代码的可读性和可维护性**。下面有个例子说明这个问题：
+
+设计一个关于鸟的类，有个抽象类 AbstractBird，麻雀、乌鸦、格子都继承这个类。
+
+大部分鸟会飞，那我们应该在 AbstractBird 类中增加 fly 方法吗？有两种选择：
+
+* 增加：有特例，比如鸵鸟，如果鸵鸟继承 AbstractBird，那么不符合认知；就算鸵鸟重写 fly 方法，抛出异常，这种方式虽然可以解决问题，但是不好用，因为一是违背了最小知识原则或迪米特原则，二是每种不能飞的鸟都需要重写。
+* 不增加：可以把 AbstractBird 派生出两个类 AbstractFlyableBird 和 AbstractUnFlyableBird，但是鸟不但有会飞属性，还有会叫属性，如果也这么做，那么就有三层抽象，四个抽象类。依次类推，是否会下蛋属性，那么类的个数就爆炸了。
+
+![](../../.gitbook/assets/image%20%28104%29.png)
+
+### 组合的优势
+
+我们可以利用组合（Composition）、接口、委托解决上述问题。我们可以定义 Flyable、Tweetable、EggLayable 接口，然后为每个接口提供实现类 FlyAbility、TweetAbility、EggLayAbility，最后具体的鸟类就实现相应的接口，并在类里面包含相应的接口实现类。如下示例代码：
+
+```java
+public interface Flyable {
+  void fly()；
+}
+public class FlyAbility implements Flyable {
+  @Override
+  public void fly() { //... }
+}
+
+public class Ostrich implements Tweetable, EggLayable {//鸵鸟
+  private Flyable flyable = new TweetAbility(); //组合
+  private EggLayable eggLayable = new EggLayAbility(); //组合
+  //... 省略其他属性和方法...
+  @Override
+  public void tweet() {
+    tweetable.tweet(); // 委托
+  }
+  @Override
+  public void layEgg() {
+    eggLayable.layEgg(); // 委托
+  }
+}
+```
+
+### 组合和继承应该怎么选择
+
+组合并不是完美的，继承并不是一无是处的。由上面可以看出，继承改写为组合需要做细粒度拆分，定义更多的类和接口。
+
+如果类之间继承结构稳定，继承层次比较浅，继承关系不复杂，那么就可以使用继承。反之，系统越不稳定，继承很深，继承关系复杂，那么就尽量使用组合。
+
+另外一些设计模式，装饰者模式（decorator pattern）、策略模式（strategy pattern）、组合模式（composite pattern）等都使用了组合关系，而模板模式（template pattern）使用了继承关系。
+
+有些场景必须使用继承，比如有些函数的参数类型我们不能改变，但是想改变参数类的行为，那么就可以继承该参数类，重写相关方法。
+
 ## 开闭原则
 
 定义：一个软件实体，如类、模块、函数，应该对扩展开放，对修改关闭。
