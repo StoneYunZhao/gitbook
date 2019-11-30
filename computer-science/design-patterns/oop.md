@@ -143,3 +143,21 @@ public class ShoppingCart {
 
 所以，我们最终的目的是写出易维护、易读、易复用、易扩展的高质量代码。
 
+## 贫血模型
+
+MVC 架构指的是 Model、View、Controller，表示展示层、逻辑层、数据层，现在多是前后端分离，后端分为 Repository、Service、Controller 三层。
+
+一般在写代码的时候，Entity 和 Repository 类组成数据层，Bo 和 Service 类组成业务逻辑层，Vo 和 Controller 类组成接口层。可以发现，Entity、Bo、Vo 是一个纯粹的数据结构，不包含任何业务逻辑，业务逻辑放在另一个类中，这是一种典型的面向过程的编程风格。像 Bo 这种只包含数据，不包含业务逻辑的类叫做**贫血模型**（Anemic Domain Model）。
+
+**充血模型**（Rich Domain Model）刚好相反，数据和业务被封装在同一个类中。基于充血模型的 DDD 开发与贫血模型的主要差别在于 Service 层，DDD 的 Service 层包含Service 类和 Domain 类，Domain 类包含数据和业务逻辑，而 Service 类很单薄。
+
+**为什么贫血模型这么受欢迎**？
+
+* 系统业务简单，贫血模型足以应付，不需要费心思设计充血模型。
+* 充血模型更有难度。
+* 思维已固化，转型有成本。
+
+**那什么项目应该考虑用充血模型呢**？
+
+业务复杂的系统，比如包含各种利息计算模型、还款模型等复杂业务的金融系统。
+
