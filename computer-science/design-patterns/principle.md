@@ -54,7 +54,7 @@ public class FlyAbility implements Flyable {
 }
 
 public class Ostrich implements Tweetable, EggLayable {//鸵鸟
-  private Flyable flyable = new TweetAbility(); //组合
+  private Tweetable tweetable = new TweetAbility(); //组合
   private EggLayable eggLayable = new EggLayAbility(); //组合
   //... 省略其他属性和方法...
   @Override
