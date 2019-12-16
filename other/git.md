@@ -4,6 +4,9 @@
 git tag # 显示所有 tag
 git checkout <tag> # 切换到 tag 所处的 commitId
 git checkout -b <branch> <tag> # 切换到 tag，并创建分支
+
+# 仅克隆某个 commitId 的内容
+git clone --single-branch --depth 1 --branch v5.6.3 {url}
 ```
 
 ## Config
