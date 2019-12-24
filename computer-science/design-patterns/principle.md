@@ -272,6 +272,24 @@ Notification notification = new Notification(messageSender);
 
 这些框架有，Google Guice、Java Spring 等。Spring 声称自己是控制反转容器，控制反转容器是一种非常宽泛的描述，DI 更具体、更有针对性。
 
+## KISS 原则
+
+Keep It Simple and Stupid, Keep It Short and Simple, Keep It Simple and Straightforward. 
+
+总的来说，意思就是尽量保持简单。
+
+不是代码行数越少就越简单。也不是代码逻辑复杂就违背了 KISS 原则，因为有些业务逻辑、算法逻辑本来就复杂。
+
+那么怎么写出满足 KISS 原则的代码呢？
+
+* 不要使用同事可能不懂的技术。
+* 不要重复造轮子。
+* 不要过度优化。
+
+## YAGNI 原则
+
+You Ain't Gonna Need It。意思就是不要过度设计。
+
 ## 迪米特原则
 
 定义：一个对象应该对其它对象保持最少的了解。又叫最少知道原则。
