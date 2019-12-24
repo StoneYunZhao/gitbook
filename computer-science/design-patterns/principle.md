@@ -148,11 +148,129 @@ Interface Segregation Principle。
 * 单一职责原则针对的是模块、类、接口的设计。接口隔离原则更侧重于接口的设计，它的思考角度也是不同的。
 * 接口隔离原则提供了一种判断接口的职责是否单一的标准：通过调用者如何使用接口来间接地判定。如果调用者只使用部分接口或接口的部分功能，那接口的设计就不够职责单一。
 
-## 依赖倒置原则
+## 依赖反转原则
 
-定义：高层模块不应该依赖低层模块，二者都应该依赖其抽象。
+Dependency Inversion Principle。
+
+**定义**：High-level modules shouldn’t depend on low-level modules. Both modules should depend on abstractions. In addition, abstractions shouldn’t depend on details. Details depend on abstractions。高层模块不应该依赖低层模块，二者都应该通过抽象来相互依赖。另外，抽象不要依赖具体实现细节，具体实现细节依赖抽象。
 
 核心思想：面向接口编程，而不应该面向实现编程。
+
+在调用链上，调用者属于高层，被调用者属于低层。平时做业务开发时，高层模块依赖低层模块是没问题的。实际上，这条原则指导的是框架层面的设计。比如 Servlet 容器，Tomcat 是高层模块，我们编写的 Web 程序是低层模块，Tomcat 和应用程序没有依赖关系，两者都依赖于 Servlet 规范，这个规范就是抽象。
+
+### 控制反转（IOC）
+
+Inversion of Control。注意：**这里的 IOC 与 Spring 的 IOC 不同**。
+
+非控制反转的例子如下，所有的流程由程序员来控制：
+
+```java
+public class UserServiceTest {
+  public static boolean doTest() {
+    // ... 
+  }
+  
+  public static void main(String[] args) {//这部分逻辑可以放到框架中
+    if (doTest()) {
+      System.out.println("Test succeed.");
+    } else {
+      System.out.println("Test failed.");
+    }
+  }
+}
+```
+
+如果我们抽象出如下框架：
+
+```java
+public abstract class TestCase {
+  public void run() {
+    if (doTest()) {
+      System.out.println("Test succeed.");
+    } else {
+      System.out.println("Test failed.");
+    }
+  }
+  
+  public abstract void doTest();
+}
+
+public class JunitApplication {
+  private static final List<TestCase> testCases = new ArrayList<>();
+  
+  public static void register(TestCase testCase) {
+    testCases.add(testCase);
+  }
+  
+  public static final void main(String[] args) {
+    for (TestCase case: testCases) {
+      case.run();
+    }
+  }
+}
+```
+
+我们只需要在框架预留的扩展点上加上测试逻辑就行：
+
+```java
+public class UserServiceTest extends TestCase {
+  @Override
+  public boolean doTest() {
+    // ... 
+  }
+}
+
+// 注册操作还可以通过配置的方式来实现，不需要程序员显示调用register()
+JunitApplication.register(new UserServiceTest();
+```
+
+上面的例子就是通过框架来实现“控制反转”。框架提供一个代码骨架，用于组装对象、管理执行流程，程序员使用框架时，只需要在扩展点上添加自己的业务逻辑，然后框架来驱动整个程序流程。
+
+所以，控制反转的理解是，“控制”指对程序流程的控制，“反转”是指在使用框架之前，程序员自己控制程序执行，使用框架后，流程由框架来控制。
+
+控制反转并不是一种具体的实现技巧，而是比较笼统的设计思想。实现控制反转有模板设计模式、依赖注入等具体编码方法。
+
+### 依赖注入（DI）
+
+Dependency Injection。
+
+不通过 new 的方式在类内部创建依赖类的对象，而是将依赖的类对象在外部创建好，通过构造函数、函数参数等方式传递（或注入）给类使用。
+
+```java
+// 非依赖注入方式
+public class Notification {
+  private MessageSender messageSender;
+  
+  public Notification() {
+    this.messageSender = new MessageSender(); //此处有点像hardcode
+  }
+}
+
+// 使用Notification
+Notification notification = new Notification();
+
+
+// 依赖注入的实现方式
+public class Notification {
+  private MessageSender messageSender;
+  
+  public Notification(MessageSender messageSender) {
+    this.messageSender = messageSender;
+  }
+}
+
+//使用Notification
+MessageSender messageSender = new MessageSender();
+Notification notification = new Notification(messageSender);
+```
+
+### 依赖注入框架（DI Framework）
+
+上面的依赖注入的例子如果涉及几百个类，那么程序员自己创建、组装容易出错。而这些工作与业务无关，完全可以抽象出框架来完成。
+
+这个框架就是依赖注入框架，只需要通过框架的扩展点，简单配置一下需要创建的对象、它们之间的依赖关系，框架就自动帮我们创建对象、管理对象的生命周期等。
+
+这些框架有，Google Guice、Java Spring 等。Spring 声称自己是控制反转容器，控制反转容器是一种非常宽泛的描述，DI 更具体、更有针对性。
 
 ## 迪米特原则
 
