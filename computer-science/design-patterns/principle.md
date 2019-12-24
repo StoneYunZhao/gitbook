@@ -290,6 +290,149 @@ Keep It Simple and Stupid, Keep It Short and Simple, Keep It Simple and Straight
 
 You Ain't Gonna Need It。意思就是不要过度设计。
 
+## DRY 原则
+
+Don't Repeat Yourself。不要写重复的代码。
+
+**存在重复的代码不一定违反 DRY 原则**，如下：
+
+```java
+public class UserAuthenticator {
+  public void authenticate(String username, String password) {
+    if (!isValidUsername(username)) {
+      // ...throw InvalidUsernameException...
+    }
+    if (!isValidPassword(password)) {
+      // ...throw InvalidPasswordException...
+    }
+    //...省略其他代码...
+  }
+
+  private boolean isValidUsername(String username) {
+    // check not null, not empty
+    if (StringUtils.isBlank(username)) {
+      return false;
+    }
+    // check length: 4~64
+    int length = username.length();
+    if (length < 4 || length > 64) {
+      return false;
+    }
+    // contains only lowcase characters
+    if (!StringUtils.isAllLowerCase(username)) {
+      return false;
+    }
+    // contains only a~z,0~9,dot
+    for (int i = 0; i < length; ++i) {
+      char c = username.charAt(i);
+      if (!(c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '.') {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private boolean isValidPassword(String password) {
+    // check not null, not empty
+    if (StringUtils.isBlank(password)) {
+      return false;
+    }
+    // check length: 4~64
+    int length = password.length();
+    if (length < 4 || length > 64) {
+      return false;
+    }
+    // contains only lowcase characters
+    if (!StringUtils.isAllLowerCase(password)) {
+      return false;
+    }
+    // contains only a~z,0~9,dot
+    for (int i = 0; i < length; ++i) {
+      char c = password.charAt(i);
+      if (!(c >= 'a' && c <= 'z') || (c >= '0' && c <= '9') || c == '.') {
+        return false;
+      }
+    }
+    return true;
+  }
+}
+```
+
+如果把上面代码改成：
+
+```java
+public class UserAuthenticatorV2 {
+
+  public void authenticate(String userName, String password) {
+    if (!isValidUsernameOrPassword(userName)) {
+      // ...throw InvalidUsernameException...
+    }
+
+    if (!isValidUsernameOrPassword(password)) {
+      // ...throw InvalidPasswordException...
+    }
+  }
+
+  private boolean isValidUsernameOrPassword(String usernameOrPassword) {
+    //省略实现逻辑
+    //跟原来的isValidUsername()或isValidPassword()的实现逻辑一样...
+    return true;
+  }
+}
+```
+
+那么这样做是不对的，因为验证用户名和验证密码是两个事情，虽然验证逻辑目前一样，但是以后密码验证可能允许大写字母。违反了“单一职责原则”。
+
+验证用户名和验证密码虽然逻辑重复，但是语义不重复。对于代码重复问题，可以抽象更细粒度的函数来解决。
+
+**不存在重复代码不一定意味着遵守 DRY 原则**，如下：
+
+```java
+public boolean isValidIp(String ipAddress) {
+  if (StringUtils.isBlank(ipAddress)) return false;
+  String regex = "^(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|[1-9])\\."
+          + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."
+          + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."
+          + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)$";
+  return ipAddress.matches(regex);
+}
+
+public boolean checkIfIpValid(String ipAddress) {
+  if (StringUtils.isBlank(ipAddress)) return false;
+  String[] ipUnits = StringUtils.split(ipAddress, '.');
+  if (ipUnits.length != 4) {
+    return false;
+  }
+  for (int i = 0; i < 4; ++i) {
+    int ipUnitIntValue;
+    try {
+      ipUnitIntValue = Integer.parseInt(ipUnits[i]);
+    } catch (NumberFormatException e) {
+      return false;
+    }
+    if (ipUnitIntValue < 0 || ipUnitIntValue > 255) {
+      return false;
+    }
+    if (i == 0 && ipUnitIntValue == 0) {
+      return false;
+    }
+  }
+  return true;
+}
+```
+
+上面两个函数代码虽然不重复，但是语义重复，即功能重复。可能是两个同事写的。
+
+**怎么提高代码复用性？**
+
+* 减少代码耦合。
+* 满足单一职责原则。
+* 模块化。
+* 业务与非业务逻辑分离。
+* 通用代码下沉。
+* 继承、多态、抽象、封装。
+* 使用模板等设计模式。
+
 ## 迪米特原则
 
 定义：一个对象应该对其它对象保持最少的了解。又叫最少知道原则。
