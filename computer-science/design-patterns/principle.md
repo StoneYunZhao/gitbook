@@ -119,6 +119,14 @@ Open Closed Principle。
 1. 时刻具备扩展意识、抽象意识、封装意识。写代码时，花时间思考未来的需求变更，事先留好扩展点。
 2. 23 种设计模式，大部分是为了解决扩展性而总结出来的，都是以开闭原则为指导原则的。提高代码扩展性的方法：多态、依赖注入、基于接口而非实现编程。
 
+## 里式替换原则
+
+Liskov Substitution Principle。
+
+**定义1**：If S is a subtype of T, then objects of type T may be replaced with objects of type S, without breaking the program. 
+
+**定义 2**：Functions that use pointers of references to base classes must be able to use objects of derived classes without knowing it。子类对象能够替换程序中父类对象出现的任何地方，并保证原来程序的逻辑行为不变及正确性不被破坏。
+
 ## 依赖倒置原则
 
 定义：高层模块不应该依赖低层模块，二者都应该依赖其抽象。
