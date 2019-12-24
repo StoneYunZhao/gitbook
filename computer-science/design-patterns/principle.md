@@ -127,6 +127,14 @@ Liskov Substitution Principle。
 
 **定义 2**：Functions that use pointers of references to base classes must be able to use objects of derived classes without knowing it。子类对象能够替换程序中父类对象出现的任何地方，并保证原来程序的逻辑行为不变及正确性不被破坏。
 
+核心思想：design by contract，按照协议来设计。父类定义了函数约定，子类可以改变实现逻辑，但不能改变约定。约定包括：函数声明要实现的功能；对输入、输出、异常的约定；注释中的特殊说明。
+
+**违反 LSP 的例子？**
+
+1. 违反了父类声明要实现的功能。比如父类订单排序按照金额排序，子类重新实现为按照日期排序。
+2. 违反对输入、输出、异常的约定。比如父类约定运行出错是返回 null，子类运行出错后抛出异常。
+3. 违反了父类在注释中的特殊说明。比如父类注释说明提取现金不能超过余额，但是子类重写后 VIP 可以透支。
+
 ## 依赖倒置原则
 
 定义：高层模块不应该依赖低层模块，二者都应该依赖其抽象。
