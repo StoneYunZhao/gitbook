@@ -25,7 +25,7 @@ HBase 有这么一个介绍：_HBase is a **column-oriented** database managemen
 
 HBase 底层存储的数据结构为 LSM（Log-Structured Merge-Tree），即不是列式存储，也不是行式存储，而是面向列族的。如下图：
 
-![](../.gitbook/assets/image%20%28171%29.png)
+![](../.gitbook/assets/image%20%28174%29.png)
 
 那么，HBase 底层存储大致如下：
 

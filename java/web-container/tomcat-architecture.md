@@ -37,20 +37,20 @@ Tomcat 设计了 ProtocolHandler 来组合 Endpoint 和 Processor。
 
 ProtocolHandler 都有对每一种应用层协议有一层抽象，每一种 IO 模型都有具体的实现。
 
-![](../../.gitbook/assets/image%20%28127%29.png)
+![](../../.gitbook/assets/image%20%28130%29.png)
 
 #### EndPoint
 
 是 Socket 接受和发送的处理器，负责传输层（TCP/IP）的通信。
 
-![](../../.gitbook/assets/image%20%28134%29.png)
+![](../../.gitbook/assets/image%20%28137%29.png)
 
 有两个重要的组件：
 
 * Acceptor：用于监听 Socket 请求。
 * SocketProcessor：用于处理收到的 Socket 请求，会被提交到线程池来执行。
 
-![](../../.gitbook/assets/image%20%28129%29.png)
+![](../../.gitbook/assets/image%20%28132%29.png)
 
 ![](../../.gitbook/assets/image%20%2883%29.png)
 
@@ -72,7 +72,7 @@ ProtocolHandler 得到 Tomcat 的 Request，Processor 调用 CoyoteAdapter 的 s
 
 ### 总体架构
 
-![](../../.gitbook/assets/image%20%28128%29.png)
+![](../../.gitbook/assets/image%20%28131%29.png)
 
 * Servlet：一个 Servlet 对象。
 * Context：一个 Web 应用程序，包含多个 Servlet。
@@ -235,7 +235,7 @@ public enum LifecycleState {
 
 ### 总体类图
 
-![](../../.gitbook/assets/image%20%28124%29.png)
+![](../../.gitbook/assets/image%20%28125%29.png)
 
 ![](../../.gitbook/assets/image%20%28110%29.png)
 

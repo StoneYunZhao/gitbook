@@ -91,7 +91,7 @@ grant {
 
 然后在 idea 做如下配置后，运行 Elasticsearch 的 main 方法即可：
 
-![](../../.gitbook/assets/image%20%28135%29.png)
+![](../../.gitbook/assets/image%20%28138%29.png)
 
 ```text
 -Des.path.data=~/es_idea/data
