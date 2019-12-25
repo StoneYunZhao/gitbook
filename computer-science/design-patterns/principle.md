@@ -435,7 +435,11 @@ public boolean checkIfIpValid(String ipAddress) {
 
 ## 迪米特原则
 
-定义：一个对象应该对其它对象保持最少的了解。又叫最少知道原则。
+Law of Demeter。The Least Knowledge Principle。
+
+**定义**：Each unit should have only limited knowledge about other units: only units “closely” related to the current unit. Or: Each unit should only talk to its friends; Don’t talk to strangers。不该有直接依赖关系的类之间，不要有依赖；有依赖关系的类之间，尽量只依赖必要的接口。一个对象应该对其它对象保持最少的了解。又叫最少知道原则。
 
 核心思想：尽量降低类于类之间的耦合。尽量只使用成员变量、方法的输入输出参数的类型，方法体内的新类型尽量不用。
+
+**高内聚**，就是指相近的功能应该放到同一个类中，不相近的功能不要放到同一类中。“高内聚”用来指导类本身的设计，“松耦合”用来指导类与类之间依赖关系的设计。高内聚有助于松耦合，松耦合又需要高内聚的支持。
 
