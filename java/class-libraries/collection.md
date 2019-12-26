@@ -4,11 +4,11 @@ Java 集合框架和分为 Collection 和 [Map](collection.md#map) 两大类。�
 
 本节主要讲线程不安全的容器，线程安全的容器见 [Thread-safe Collection](../concurrency/thread-safe-collection.md)。
 
-![Collection &#x7C7B;&#x7EE7;&#x627F;&#x5173;&#x7CFB;](../../.gitbook/assets/image%20%28163%29.png)
+![Collection &#x7C7B;&#x7EE7;&#x627F;&#x5173;&#x7CFB;](../../.gitbook/assets/image%20%28164%29.png)
 
 ## List 概述
 
-![](../../.gitbook/assets/image%20%287%29.png)
+![](../../.gitbook/assets/image%20%288%29.png)
 
 存取有序，有索引，可以根据索引来进行取值，元素可以重复。主要实现有 [ArrayList](collection.md#arraylist)、[LinkedList](collection.md#linkedlist)、Vector。
 
@@ -391,7 +391,7 @@ TreeSet 保证元素的唯一性是有两种方式：
 
 Map保存的是键值对，键要求保持唯一性，值可以重复。
 
-![Map &#x7C7B;&#x7EE7;&#x627F;&#x5173;&#x7CFB;](../../.gitbook/assets/image%20%2813%29.png)
+![Map &#x7C7B;&#x7EE7;&#x627F;&#x5173;&#x7CFB;](../../.gitbook/assets/image%20%2814%29.png)
 
 ### LinkedHashMap
 

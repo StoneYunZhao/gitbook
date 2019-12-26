@@ -15,7 +15,7 @@ write pos 和 check point 之间是空的部分，可以用来记录新的操作
 
 `innodb_flush_log_at_trx_commit`设置为1时，表示每次事务的 redo log都直接持久化到磁盘。
 
-![](../../.gitbook/assets/image%20%285%29.png)
+![](../../.gitbook/assets/image%20%286%29.png)
 
 ### binlog
 
@@ -45,7 +45,7 @@ update T set c=c+1 where ID=2;
 4. 执行器生产update 操作的 binlog，并把 binlog 写入磁盘。
 5. 执行器调用存储引擎提交事务接口，把 redo log 的状态改为 commit。
 
-![](../../.gitbook/assets/image%20%28147%29.png)
+![](../../.gitbook/assets/image%20%28148%29.png)
 
 上面最后三步就是**两阶段提交**。
 
