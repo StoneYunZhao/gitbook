@@ -4,7 +4,7 @@
 
 **互联网控制消息协议**（**I**nternet **C**ontrol **M**essage **P**rotocol，**ICMP**）用于网际协议（IP）中发送控制消息，提供可能发生在通信环境中的各种问题反馈。通过这些信息，使管理者可以对所发生的问题作出诊断，然后采取适当的措施解决。
 
-![](../../.gitbook/assets/image%20%28222%29.png)
+![](../../.gitbook/assets/image%20%28223%29.png)
 
 ICMP 有很多类型，最常用的类型是**主动请求**为 8，**主动请求的应答**为 0。
 
@@ -14,7 +14,7 @@ ICMP 有很多类型，最常用的类型是**主动请求**为 8，**主动请�
 
 ping 的主动请求，称为 **ICMP ECHO REQUEST，**主动请求的回复，称为 **ICMP ECHO REPLY**。
 
-![](../../.gitbook/assets/image%20%28214%29.png)
+![](../../.gitbook/assets/image%20%28215%29.png)
 
 ### 差错报文类型
 
@@ -38,7 +38,7 @@ IP 地址被点分割为四个部分，每部分 8bit，所以 IP一共是 32 �
 | D 类 | 1 | 1 | 1 | 0 |  | 多播组号\(28位\) |
 | E 类 | 1 | 1 | 1 | 1 | 0 | 留待后用\(27位\) |
 
-![A&#x3001;B&#x3001;C &#x7C7B;&#x6240;&#x80FD;&#x5305;&#x542B;&#x7684;&#x4E3B;&#x673A;&#x6570;](../../.gitbook/assets/image%20%28196%29.png)
+![A&#x3001;B&#x3001;C &#x7C7B;&#x6240;&#x80FD;&#x5305;&#x542B;&#x7684;&#x4E3B;&#x673A;&#x6570;](../../.gitbook/assets/image%20%28197%29.png)
 
 ### **CIDR**
 
@@ -118,7 +118,7 @@ qdisc pfifo\_fast 表示排队规则为 pfifo\_fast。qdisc 全称是 **queueing
 
 **NAT** （**N**etwork **A**ddress **T**ranslation）**网关**：改变 IP 地址的网关。MAC 地址的行为和转发网关是一致的；源 IP 和目标 IP 通过配置的 NAT 修改。
 
-![](../../.gitbook/assets/image%20%28136%29.png)
+![](../../.gitbook/assets/image%20%28137%29.png)
 
 如图，A 访问 192.168.56.2。A 配置了网关 192.168.1.1，通过 ARP 获取其 MAC 地址：
 

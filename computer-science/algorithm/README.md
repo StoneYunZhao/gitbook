@@ -26,5 +26,5 @@
 * [哈希算法](hash-algorithm.md)
 * [Tree](tree.md)
 
-![](../../.gitbook/assets/image%20%28192%29.png)
+![](../../.gitbook/assets/image%20%28193%29.png)
 
