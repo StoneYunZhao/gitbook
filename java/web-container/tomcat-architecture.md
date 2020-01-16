@@ -9,7 +9,7 @@ Tomcat 支持多种 I/O 模型和应用层协议。I/O 模型有：[NIO](../clas
 
 连接器和容器需要组装起来才能工作，通过 Service 在连接器和容器外面包一层组装。一个 Tomcat 可以有多个 Service，可以实现通过不同的端口号来访问同一机器上部署的不同应用。
 
-![](../../.gitbook/assets/image%20%2869%29.png)
+![](../../.gitbook/assets/image%20%2870%29.png)
 
 ## Connector
 
@@ -29,30 +29,30 @@ Tomcat 设计了 **Endpoint**（网络通信）、**Processor**（应用层协�
 
 ### ProtocolHandler
 
-![](../../.gitbook/assets/image%20%2862%29.png)
+![](../../.gitbook/assets/image%20%2863%29.png)
 
 Tomcat 设计了 ProtocolHandler 来组合 Endpoint 和 Processor。
 
-![](../../.gitbook/assets/image%20%28110%29.png)
+![](../../.gitbook/assets/image%20%28111%29.png)
 
 ProtocolHandler 都有对每一种应用层协议有一层抽象，每一种 IO 模型都有具体的实现。
 
-![](../../.gitbook/assets/image%20%28133%29.png)
+![](../../.gitbook/assets/image%20%28134%29.png)
 
 #### EndPoint
 
 是 Socket 接受和发送的处理器，负责传输层（TCP/IP）的通信。
 
-![](../../.gitbook/assets/image%20%28140%29.png)
+![](../../.gitbook/assets/image%20%28141%29.png)
 
 有两个重要的组件：
 
 * Acceptor：用于监听 Socket 请求。
 * SocketProcessor：用于处理收到的 Socket 请求，会被提交到线程池来执行。
 
-![](../../.gitbook/assets/image%20%28135%29.png)
+![](../../.gitbook/assets/image%20%28136%29.png)
 
-![](../../.gitbook/assets/image%20%2886%29.png)
+![](../../.gitbook/assets/image%20%2887%29.png)
 
 #### Processor
 
@@ -72,7 +72,7 @@ ProtocolHandler 得到 Tomcat 的 Request，Processor 调用 CoyoteAdapter 的 s
 
 ### 总体架构
 
-![](../../.gitbook/assets/image%20%28134%29.png)
+![](../../.gitbook/assets/image%20%28135%29.png)
 
 * Servlet：一个 Servlet 对象。
 * Context：一个 Web 应用程序，包含多个 Servlet。
@@ -122,7 +122,7 @@ public interface Container extends Lifecycle {
 3. 根据 URL 匹配 Context。
 4. 根据 URL 匹配 Wrapper。
 
-![](../../.gitbook/assets/image%20%2871%29.png)
+![](../../.gitbook/assets/image%20%2872%29.png)
 
 对于一个请求，Adapter 会调用容器的 service 方法，每一层容器都会处理一些事情，所以Tomcat 使用了[责任链模式](../../computer-science/design-patterns/chain-of-responsibility.md)来实现。关键类有 Valve 和 Pipeline。
 
@@ -145,7 +145,7 @@ public interface Pipeline extends Contained {
 
 不同层的容器通过调用 getBasic 方法，BasicValve 表示 Pipeline 的末端，负责调用下层容器 Pipeline 的第一个 Valve。
 
-![](../../.gitbook/assets/image%20%28125%29.png)
+![](../../.gitbook/assets/image%20%28126%29.png)
 
 整个过程开端于：
 
@@ -174,7 +174,7 @@ Valve 和 Filter 的区别：
 
 综合 Connector 和 Container 两节的内容，绘制 Tomcat 静态的组件关系如下图：
 
-![](../../.gitbook/assets/image%20%2859%29.png)
+![](../../.gitbook/assets/image%20%2860%29.png)
 
 Tomcat 需要统一地管理这些组件的创建、初始化、启动、停止和销毁，它是通过 LifeCycle 来实现的。父组件的 init 方法会调用子组件的 init 方法，父组件的 destroy 方法会调用子组件的 destroy 方法，因此调用者可以**无差别的调用**个组件的 init 和 start 方法，这就是[组合模式](../../computer-science/design-patterns/composite.md)的使用。所以只要调用了顶层组件的 init 方法，整个 tomcat 也就启动了。
 
@@ -235,9 +235,9 @@ public enum LifecycleState {
 
 ### 总体类图
 
-![](../../.gitbook/assets/image%20%28128%29.png)
+![](../../.gitbook/assets/image%20%28129%29.png)
 
-![](../../.gitbook/assets/image%20%28113%29.png)
+![](../../.gitbook/assets/image%20%28114%29.png)
 
 ## 管理组件
 

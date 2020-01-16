@@ -7,7 +7,7 @@ Java 是一门面向对象的语言，有两个显著的特征：
 * 书写一次，到处运行（Write once，run anywhere）
 * 垃圾收集（GC，Garbage Collection）
 
-![Java &#x5E73;&#x53F0;&#x6982;&#x89C8;](../.gitbook/assets/image%20%28101%29.png)
+![Java &#x5E73;&#x53F0;&#x6982;&#x89C8;](../.gitbook/assets/image%20%28102%29.png)
 
 Java 分为**编译期**和**运行期**，这里的编译与 C/C++ 编译不同，Java 编译成字节码，而 C/C++ 编译成机器码。
 

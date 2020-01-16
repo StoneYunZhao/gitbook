@@ -25,7 +25,7 @@ Stream 的操作可以按照如下分类：
 
 ![](../../.gitbook/assets/image%20%2824%29.png)
 
-![](../../.gitbook/assets/image%20%28162%29.png)
+![](../../.gitbook/assets/image%20%28163%29.png)
 
 * BaseStream：定义了流的基本方法，如 isParallel。
 * Stream：定义了流的常用操作，如 map、filter。
