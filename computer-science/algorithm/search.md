@@ -25,10 +25,38 @@
 
 二分查找**最简单**情况是有序数组中**不存在重复元素**，当有序数组中存在重复数据时，稍微复杂。二分查找变体：
 
-1. 查找第一个值等于给定值的元素。
-2. 查找最后一个值等于给定值得元素。
-3. 查找第一个大于等于给定值的元素。
-4. 查找最后一个小于等于给定值的元素。
+**查找第一个值等于给定值的元素：**
+
+```java
+public static int search(int[] nums, int target) {
+    if (nums == null) {
+        return -1;
+    }
+    
+    int low = 0, high = nums.length - 1;
+    while (low <= high) {
+        int mid = low + ((high - low) >> 1);
+        if (nums[mid] > target) {
+            high = mid - 1;
+        } else if (nums[mid] < target) {
+            low = mid + 1;
+        } else {
+            if (mid == 0 || nums[mid - 1] < target) {
+                return mid;
+            } else {
+                high = mid - 1;
+            }
+        }
+    }
+    return -1;
+}
+```
+
+**查找最后一个值等于给定值得元素：**
+
+**查找第一个大于等于给定值的元素：**
+
+**查找最后一个小于等于给定值的元素：**
 
 {% hint style="info" %}
 对于等值查询，散列表和二叉树都能解决二分查找的问题，但是对于“近似”查询（如上面的四种变体），二分查找的优势就明显了。
