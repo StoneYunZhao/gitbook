@@ -2,7 +2,7 @@
 
 ## 类加载过程
 
-![](../../.gitbook/assets/image%20%28172%29.png)
+![](../../.gitbook/assets/image%20%28173%29.png)
 
 ### 加载（Loading）
 
