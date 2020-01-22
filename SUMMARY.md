@@ -69,6 +69,7 @@
   * [UML](computer-science/design-patterns/uml.md)
   * [OOP](computer-science/design-patterns/oop.md)
   * [Principle](computer-science/design-patterns/principle.md)
+  * [Refactoring & Specification](computer-science/design-patterns/refactoring-and-specification.md)
   * [Factory](computer-science/design-patterns/factory.md)
   * [Singleton](computer-science/design-patterns/singleton.md)
   * [Composite](computer-science/design-patterns/composite.md)
