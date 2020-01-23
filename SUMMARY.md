@@ -54,7 +54,6 @@
   * [Binary Search](computer-science/algorithm/search.md)
   * [Skip List](computer-science/algorithm/skip-list.md)
   * [Hash Table](computer-science/algorithm/hash-table.md)
-  * [Hash Algorithm](computer-science/algorithm/hash-algorithm.md)
   * [Tree](computer-science/algorithm/tree.md)
 * [Network Protocol](computer-science/network-protocol/README.md)
   * [Pysical Layer](computer-science/network-protocol/pysical-layer.md)

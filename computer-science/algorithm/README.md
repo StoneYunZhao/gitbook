@@ -23,7 +23,6 @@
 * [查找](search.md)
 * [跳表](skip-list.md)
 * [哈希表](hash-table.md)
-* [哈希算法](hash-algorithm.md)
 * [Tree](tree.md)
 
 ![](../../.gitbook/assets/image%20%28196%29.png)
