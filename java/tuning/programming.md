@@ -83,7 +83,7 @@ split 有两种情况不会使用正则：
 
 假设字符串为 ”abbc“，正则表达式为 "ab{1,3}c"，则匹配过程如下图：
 
-![](../../.gitbook/assets/image%20%28117%29.png)
+![](../../.gitbook/assets/image%20%28118%29.png)
 
 NFA 自动机默认情况时贪婪模式，即匹配尽量多的内容，在第 2 步匹配到一个 b 后，会继续尽量匹配到 3 个 b。所以第 4 步，想要匹配第三个 b 时匹配不到，就会发送回溯，已经读取到 c 会被回退，指针重新指向第三个字符 b，然后再匹配 c。
 
@@ -247,25 +247,25 @@ Reactor 模型有多种实现。
 
 最开始 NIO 基于单线程实现，读写还是处于阻塞状态。
 
-![](../../.gitbook/assets/image%20%2825%29.png)
+![](../../.gitbook/assets/image%20%2826%29.png)
 
 ### 多线程 Reactor 模型
 
 Tomcat 和 Netty 都使用了一个 Acceptor 线程来监听连接请求事件，当连接成功后，会将建立的连接注册到多路复用器中。
 
-![](../../.gitbook/assets/image%20%28194%29.png)
+![](../../.gitbook/assets/image%20%28196%29.png)
 
 ### 主从 Reactor 模型
 
 这种情况下，Acceptor 不再是一个单独的线程，而是一个线程池。
 
-![](../../.gitbook/assets/image%20%2878%29.png)
+![](../../.gitbook/assets/image%20%2879%29.png)
 
 ### Tomcat 调优
 
 Tomcat NIO 有 Poller 线程池，Acceptor 接收到连接后，先将请求发送给 Poller 缓冲队列，在 Poller 中维护了一个 Selector 对象，Poller 从队列中取出连接后，注册到 Selector。
 
-![](../../.gitbook/assets/image%20%28153%29.png)
+![](../../.gitbook/assets/image%20%28155%29.png)
 
 * acceptorThreadCount：默认 1。
 * maxThreads：Worker 线程池数量，默认 200。
