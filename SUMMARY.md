@@ -102,6 +102,7 @@
 
 ## Other
 
+* [v2ray](other/v2ray.md)
 * [Kubernetes](other/kubernetes.md)
 * [Git](other/git.md)
 * [Maven](other/maven.md)
