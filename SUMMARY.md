@@ -55,7 +55,6 @@
   * [Skip List](computer-science/algorithm/skip-list.md)
   * [Hash Table](computer-science/algorithm/hash-table.md)
   * [Tree](computer-science/algorithm/tree.md)
-  * [Heap](computer-science/algorithm/heap.md)
   * [Graph](computer-science/algorithm/graph.md)
 * [Network Protocol](computer-science/network-protocol/README.md)
   * [Pysical Layer](computer-science/network-protocol/pysical-layer.md)

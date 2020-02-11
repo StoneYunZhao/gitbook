@@ -24,6 +24,14 @@
 * [跳表](skip-list.md)
 * [哈希表](hash-table.md)
 * [Tree](tree.md)
+  * [二叉查找树](tree.md#er-cha-cha-zhao-shu)
+  * [平衡二叉查找树](tree.md#ping-heng-er-cha-cha-zhao-shu)
+  * [红黑树](tree.md#hong-hei-shu)
+  * [递归树](tree.md#di-gui-shu)
+  * [堆](tree.md#dui)
+  * [B 树](tree.md#b-shu)
+  * [B+ 树](tree.md#b-shu-1)
+* [图](graph.md)
 
 ![](../../.gitbook/assets/image%20%28198%29.png)
 
