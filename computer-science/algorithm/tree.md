@@ -136,13 +136,13 @@ int f(int n) {
 
 ### 归并排序的时间复杂度
 
-![](../../.gitbook/assets/image%20%28215%29.png)
+![](../../.gitbook/assets/image%20%28216%29.png)
 
 归并排序主要有分解操作和合并操作。分解操作代价很低，合并操作耗时与数据规模有关，但是递归树中每一层的数据规模总和是一样的。设每一层耗时为 n，时间复杂度为 O\(h \* n\)，h 为树的高度。归并排序的递归树为满二叉树，高度为 log2n，所以归并排序的时间复杂度为 O\(nlogn\)。
 
 ### 快排的时间复杂度
 
-![](../../.gitbook/assets/image%20%28149%29.png)
+![](../../.gitbook/assets/image%20%28150%29.png)
 
 快速排序并不能保证每次分割都能等分，假设每次分割都是 1:9。每一层的分区操作所遍历的数据个数之和就是 n，所以只需要求出这颗递归树的高度，但是这棵树不是满二叉树。
 
@@ -188,7 +188,7 @@ public void printPermutations(int[] data, int n, int k) {
 n + n*(n-1) + n*(n-1)*(n-2) +... + n*(n-1)*(n-2)*...*2*1 ≈ n!
 ```
 
-![](../../.gitbook/assets/image%20%28120%29.png)
+![](../../.gitbook/assets/image%20%28121%29.png)
 
 ## 堆
 
@@ -203,7 +203,64 @@ n + n*(n-1) + n*(n-1)*(n-2) +... + n*(n-1)*(n-2)*...*2*1 ≈ n!
 
 ### 插入
 
+先把插入的元素放到堆的最后，此时就不满足堆的定义了。我们就要进行调整，这个过程叫做**堆化**（heapify）。
+
+插入后，我们需要做**从下往上**堆化。就是让插入节点与父节点对比，若不满足大小关系，则交换，一直重复这个过程。
+
+![](../../.gitbook/assets/image%20%2866%29.png)
+
+```java
+public class Heap {
+  private int[] a; // 数组，从下标1开始存储数据
+  private int n;  // 堆可以存储的最大数据个数
+  private int count; // 堆中已经存储的数据个数
+
+  public Heap(int capacity) {
+    a = new int[capacity + 1];
+    n = capacity;
+    count = 0;
+  }
+
+  public void insert(int data) {
+    if (count >= n) return; // 堆满了
+    a[++count] = data;
+    int i = count;
+    while (i/2 > 0 && a[i] > a[i/2]) { // 自下往上堆化
+      swap(a, i, i/2); // swap()函数作用：交换下标为i和i/2的两个元素
+      i = i/2;
+    }
+  }
+ }
+```
+
 ### 删除堆顶元素
+
+删除堆顶元素后，把最后一个元素挪到堆顶，然后再进行从上往下堆化。
+
+![](../../.gitbook/assets/image%20%28229%29.png)
+
+```java
+public void removeMax() {
+  if (count == 0) return -1; // 堆中没有数据
+  a[1] = a[count--];
+  heapify(a, count, 1);
+}
+
+private void heapify(int[] a, int n, int i) { // 自上往下堆化
+  while (true) {
+    int maxPos = i;
+    if (i*2 <= n && a[i] < a[i*2]) maxPos = i*2;
+    if (i*2+1 <= n && a[maxPos] < a[i*2+1]) maxPos = i*2+1;
+    if (maxPos == i) break;
+    swap(a, i, maxPos);
+    i = maxPos;
+  }
+}
+```
+
+{% hint style="info" %}
+完全二叉树的高度不会超过 log2n，所以插入数据和删除堆顶元素的时间复杂度为 O\(logn\)。
+{% endhint %}
 
 ### 堆排序
 
@@ -232,7 +289,7 @@ B+\(B more\) 树是基于 B 树做的改进，主流的 DBMS 都支持 B+ 树，
 * 非叶子节点仅保存关键字，不保存数据，数据存放在叶子节点中。
 * 叶子节点有所有关键字，并且叶子节点之间构成一个有序链表，叶子节点内部也有序。
 
-![](../../.gitbook/assets/image%20%28222%29.png)
+![](../../.gitbook/assets/image%20%28223%29.png)
 
 有了上述改进点，B+ 树有如下好处：
 
@@ -252,7 +309,7 @@ index (k))engine=InnoDB;
 (100,1) (200,2) (300,3) (500,5) (600,6)
 ```
 
-![](../../.gitbook/assets/image%20%28151%29.png)
+![](../../.gitbook/assets/image%20%28152%29.png)
 
 * **主键索引**：又叫聚簇索引（clustered index），叶子节点存整行数据。
 * **非主键索引**：又叫耳机索引（secondary index），叶子节点存主键的值。

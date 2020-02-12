@@ -33,5 +33,5 @@
   * [B+ 树](tree.md#b-shu-1)
 * [图](graph.md)
 
-![](../../.gitbook/assets/image%20%28201%29.png)
+![](../../.gitbook/assets/image%20%28202%29.png)
 
