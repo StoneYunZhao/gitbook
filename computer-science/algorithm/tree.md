@@ -74,7 +74,7 @@ Read-Black Tree，简称 R-B Tree。**定义**：·
 
 如下图两个红黑树的例子（图中省略了黑色的空叶子节点）：
 
-![](../../.gitbook/assets/image%20%2820%29.png)
+![](../../.gitbook/assets/image%20%2821%29.png)
 
 红黑树的**时间性能分析**：
 
@@ -136,13 +136,13 @@ int f(int n) {
 
 ### 归并排序的时间复杂度
 
-![](../../.gitbook/assets/image%20%28216%29.png)
+![](../../.gitbook/assets/image%20%28219%29.png)
 
 归并排序主要有分解操作和合并操作。分解操作代价很低，合并操作耗时与数据规模有关，但是递归树中每一层的数据规模总和是一样的。设每一层耗时为 n，时间复杂度为 O\(h \* n\)，h 为树的高度。归并排序的递归树为满二叉树，高度为 log2n，所以归并排序的时间复杂度为 O\(nlogn\)。
 
 ### 快排的时间复杂度
 
-![](../../.gitbook/assets/image%20%28150%29.png)
+![](../../.gitbook/assets/image%20%28152%29.png)
 
 快速排序并不能保证每次分割都能等分，假设每次分割都是 1:9。每一层的分区操作所遍历的数据个数之和就是 n，所以只需要求出这颗递归树的高度，但是这棵树不是满二叉树。
 
@@ -150,7 +150,7 @@ int f(int n) {
 
 ### 斐波拉契数列的时间复杂度
 
-![](../../.gitbook/assets/image%20%2818%29.png)
+![](../../.gitbook/assets/image%20%2819%29.png)
 
 同理，根节点 n 到叶子节点的最长路径为 n，最短路径为 n/2。每一层的耗时为这一层节点的加法操作，所以第一层为 1，第二层为 2，第 n 层为 2^\(n-1\)。然后乘以路径，所以耗时为 O\(2^n\)。
 
@@ -188,7 +188,7 @@ public void printPermutations(int[] data, int n, int k) {
 n + n*(n-1) + n*(n-1)*(n-2) +... + n*(n-1)*(n-2)*...*2*1 ≈ n!
 ```
 
-![](../../.gitbook/assets/image%20%28121%29.png)
+![](../../.gitbook/assets/image%20%28123%29.png)
 
 ## 堆
 
@@ -207,7 +207,7 @@ n + n*(n-1) + n*(n-1)*(n-2) +... + n*(n-1)*(n-2)*...*2*1 ≈ n!
 
 插入后，我们需要做**从下往上**堆化。就是让插入节点与父节点对比，若不满足大小关系，则交换，一直重复这个过程。
 
-![](../../.gitbook/assets/image%20%2866%29.png)
+![](../../.gitbook/assets/image%20%2868%29.png)
 
 ```java
 public class Heap {
@@ -237,7 +237,7 @@ public class Heap {
 
 删除堆顶元素后，把最后一个元素挪到堆顶，然后再进行从上往下堆化。
 
-![](../../.gitbook/assets/image%20%28229%29.png)
+![](../../.gitbook/assets/image%20%28232%29.png)
 
 ```java
 public void removeMax() {
@@ -264,13 +264,76 @@ private void heapify(int[] a, int n, int i) { // 自上往下堆化
 
 ### 堆排序
 
+堆排序时间复杂度为 O\(nlogn\)，原地排序。有建堆和排序两个步骤。
+
+#### 建堆
+
+建堆就是将数组原地建成一个堆。有两种思路。
+
+**思路一**：类似插入排序，将数组分成两个部分，前半部分已经组成堆，然后依次把后半部分的数据插入堆中。是从前往后处理数据，从下往上堆化的过程。
+
+**思路二**：是从后往前处理数据，从上往下的堆化的过程。叶子节点往下没有数据，所以直接从非叶子节点开始处理。
+
+![](../../.gitbook/assets/image.png)
+
+```java
+private static void buildHeap(int[] a, int n) {
+  for (int i = n/2; i >= 1; --i) {
+    heapify(a, n, i);
+  }
+}
+
+private static void heapify(int[] a, int n, int i) {
+  while (true) {
+    int maxPos = i;
+    if (i*2 <= n && a[i] < a[i*2]) maxPos = i*2;
+    if (i*2+1 <= n && a[maxPos] < a[i*2+1]) maxPos = i*2+1;
+    if (maxPos == i) break;
+    swap(a, i, maxPos);
+    i = maxPos;
+  }
+}
+```
+
+思路二建堆的时间复杂度为 O\(n\)。如下图，右边的每一项求和即可。
+
+![](../../.gitbook/assets/image%20%2837%29.png)
+
+#### 排序
+
+以大顶堆为例，依次做上节的删除堆顶元素操作，得到的结果就是从小到大的排序数组。
+
+![](../../.gitbook/assets/image%20%28182%29.png)
+
+```java
+// n表示数据的个数，数组a中的数据从下标1到n的位置。
+public static void sort(int[] a, int n) {
+  buildHeap(a, n);
+  int k = n;
+  while (k > 1) {
+    swap(a, 1, k);
+    --k;
+    heapify(a, k, 1);
+  }
+}
+```
+
+建堆为 O\(n\)，排序为 O\(nlogn\)，所以堆排序时间复杂度为 O\(nlogn\)。是原地排序，不是稳定排序，因为将最后一个元素与堆顶元素互换。
+
+{% hint style="warning" %}
+为什么快排比堆排序性能好？
+
+* 快排访问数组是连续的，堆排序是跳着访问的，所以快排堆 CPU 缓存更加友好。
+* 堆排序的交换次数大于快排。快排交换次数不会大于逆序度，但是堆排序建堆过程会打乱原有顺序，增加逆序度。
+{% endhint %}
+
 ## B 树
 
 二叉树的搜索效率最高，但是高度较高，并且索引不止在内存中，还要写到磁盘上，每次读取节点都是一次磁盘操作，因此很多数据库不使用二叉树。为了减少磁盘的读取次数，所以应该使用 N 叉树，以 InnoDB 为例，N 大约为 1200。
 
 B 树英文叫做 Balance Tree，也叫平衡多路搜索树，它的高度远小于平衡二叉树的高度。在文件系统和数据库系统中常采用 B 树实现索引结构。
 
-![](../../.gitbook/assets/image.png)
+![](../../.gitbook/assets/image%20%281%29.png)
 
 一个 M\(M &gt; 2\) 阶的 B 树每个节点最多可以包含 M 个子节点，有如下特性：
 
@@ -289,7 +352,7 @@ B+\(B more\) 树是基于 B 树做的改进，主流的 DBMS 都支持 B+ 树，
 * 非叶子节点仅保存关键字，不保存数据，数据存放在叶子节点中。
 * 叶子节点有所有关键字，并且叶子节点之间构成一个有序链表，叶子节点内部也有序。
 
-![](../../.gitbook/assets/image%20%28223%29.png)
+![](../../.gitbook/assets/image%20%28226%29.png)
 
 有了上述改进点，B+ 树有如下好处：
 
@@ -309,7 +372,7 @@ index (k))engine=InnoDB;
 (100,1) (200,2) (300,3) (500,5) (600,6)
 ```
 
-![](../../.gitbook/assets/image%20%28152%29.png)
+![](../../.gitbook/assets/image%20%28154%29.png)
 
 * **主键索引**：又叫聚簇索引（clustered index），叶子节点存整行数据。
 * **非主键索引**：又叫耳机索引（secondary index），叶子节点存主键的值。

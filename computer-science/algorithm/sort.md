@@ -9,6 +9,7 @@
 | 选择 | 是 | 否 | O\(n^2\) | O\(n^2\) | O\(n^2\) | 是 |
 | 归并 | 否: O\(n\) | 是 | O\(nlogn\) | O\(nlogn\) | O\(nlogn\) | 是 |
 | 快速 | 是 | 否 | O\(nlogn\) | O\(nlogn\) | O\(n^2\) | 是 |
+| 堆 | 是 | 否 |  O\(nlogn\) | O\(nlogn\) | O\(nlogn\) | 是 |
 | 计数 | 否 | 是 |  | O\(n+k\), k数据范围 |  | 否 |
 | 桶 | 否 | 是 |  | O\(n\) |  | 否 |
 | 基数 | 否 | 是 |  | O\(dn\), d位数 |  | 否 |
@@ -25,7 +26,7 @@
 
 **描述**：冒泡排序仅会操作相邻的两个元素，比较两个相邻元素，若不满足大小关系，则交换。每次冒泡会让一个元素移动到它应该在的位置，重复 n 次，就完成了 n 个数据的排序。
 
-![](../../.gitbook/assets/image%20%28139%29.png)
+![](../../.gitbook/assets/image%20%28141%29.png)
 
 **优化**：当某次冒泡没有数据交换时，则完成排序。
 
@@ -72,7 +73,7 @@ private void exchange(Integer[] nums, int i, int j) {
 
 **描述**：将数组分为两个区域，已排序和未排序，初始已排序为第一个元素。每次取未排序的第一个元素，在已排序中找到合适位置插入。
 
-![](../../.gitbook/assets/image%20%28134%29.png)
+![](../../.gitbook/assets/image%20%28136%29.png)
 
 ```java
 public void sort(Integer[] nums) {
@@ -112,7 +113,7 @@ public void sort(Integer[] nums) {
 
 **描述**：将数组分为两个区域，已排序和未排序，初始已排序为空，每次找到未排序的最小元素，放入已排序的末尾，即与未排序的第一个元素交换。
 
-![](../../.gitbook/assets/image%20%28227%29.png)
+![](../../.gitbook/assets/image%20%28230%29.png)
 
 ```java
 public void sort(Integer[] nums) {
@@ -151,7 +152,7 @@ public void sort(Integer[] nums) {
 
 **描述**：采用分治的思想。先把数组从中间分成前后两部分，然后对前后两部分分别排序，再将排好序的两部分合并。
 
-![](../../.gitbook/assets/image%20%2847%29.png)
+![](../../.gitbook/assets/image%20%2849%29.png)
 
 ```java
 public void sort(Integer[] nums) {
@@ -305,7 +306,7 @@ T(n) = 2 * T(n / 2) + n
 
 **流程**：假设数据 A\[n\] 有 k 个可能值。1. 先准备一个大小为 k 的数组 C，C 的下标为数据值，C 的值为数据值的个数；2. 扫描一遍数据，得到 C；3. 对 C 顺序求和，此时 C\[i\] 中存放的是小于等于 i 的个数；4. 准备数组 R\[n\]，从后往前扫描 A\[n\]，若值为 i，则`R[C[i]]=i, C[i]=C[i]-1`。
 
-![](../../.gitbook/assets/image%20%2861%29.png)
+![](../../.gitbook/assets/image%20%2863%29.png)
 
 **适用场景**：数据值范围不大；只能给非负整数排序，若是其它类型，在不改变相对大小的情况下，转化为非负整数。
 
@@ -315,7 +316,7 @@ T(n) = 2 * T(n / 2) + n
 
 **描述**：比如，对手机号排序，从低位开始，每一位分别用线性排序。要求稳定的排序。
 
-![](../../.gitbook/assets/image%20%281%29.png)
+![](../../.gitbook/assets/image%20%282%29.png)
 
 {% hint style="info" %}
 若数据不是等长，可以补齐。
