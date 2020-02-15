@@ -2,7 +2,10 @@
 
 **定义：**单例模式确保一个类只有一个实例，并提供一个全局访问点。
 
-**使用场景：**线程池、缓存、注册表。
+**使用场景：**
+
+* 解决资源访问冲突。比如日志都往一个文件写，写如文件的类就应该是单例。
+* 表示全局唯一数据，比如配置、线程池、缓存、注册表。
 
 ## 饿汉式
 
@@ -18,7 +21,7 @@ public class Singleton {
 ```
 
 {% hint style="warning" %}
-若该类实现了 Serializable 接口，就可以通过[序列化](../../java/class-libraries/java-io.md#dui-xiang-xu-lie-hua)的方式破坏单例模式。可以添加 readResolve\(\) 方法，自定义返回对象的策略。
+若该类实现了 Serializable 接口，就可以通过[序列化](../../../java/class-libraries/java-io.md#dui-xiang-xu-lie-hua)的方式破坏单例模式。可以添加 readResolve\(\) 方法，自定义返回对象的策略。
 {% endhint %}
 
 ### 枚举
@@ -81,7 +84,7 @@ public class Singleton {
 }
 ```
 
-### 线程安全
+### 线程安全 - 双重检测
 
 适用于多线程。
 
@@ -104,7 +107,11 @@ public class Singleton {
 }
 ```
 
-### 静态内部类
+{% hint style="info" %}
+网上有人说 instance 应该加上 volatile 修饰，因为由于指令重排序，导致对象被 new 出来，赋值给 instance 后，但是还没有初始化就被使用了。实际上，这个**只有在很低版本的 JVM 才有这个问题**，高版本已经解决这个问题了，把 new 操作和初始化做成原子操作。
+{% endhint %}
+
+### 线程安全 - 静态内部类
 
 适用于多线程。
 
