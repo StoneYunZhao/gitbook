@@ -200,5 +200,5 @@ public final class AutoSave {
 }
 ```
 
-[单例模式的双重检测方式](../../../computer-science/design-patterns/creational/singleton.md#xian-cheng-an-quan)本质也是采用了 Balking 模式。
+[单例模式的双重检测方式](../../../computer-science/design-patterns/singleton.md#xian-cheng-an-quan)本质也是采用了 Balking 模式。
 

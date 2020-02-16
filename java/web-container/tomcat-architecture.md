@@ -95,7 +95,7 @@ ProtocolHandler 得到 Tomcat 的 Request，Processor 调用 CoyoteAdapter 的 s
 </Server>
 ```
 
-可以看到容器之间是树形结构，所以 Tomcat 采用[组合模式](../../computer-science/design-patterns/structural/composite.md)来管理这些容器。
+可以看到容器之间是树形结构，所以 Tomcat 采用[组合模式](../../computer-science/design-patterns/composite.md)来管理这些容器。
 
 * Container：对应 Component。
 * Wrapper：对应 Leaf。
@@ -124,7 +124,7 @@ public interface Container extends Lifecycle {
 
 ![](../../.gitbook/assets/image%20%2879%29.png)
 
-对于一个请求，Adapter 会调用容器的 service 方法，每一层容器都会处理一些事情，所以Tomcat 使用了[责任链模式](../../computer-science/design-patterns/behavioral/chain-of-responsibility.md)来实现。关键类有 Valve 和 Pipeline。
+对于一个请求，Adapter 会调用容器的 service 方法，每一层容器都会处理一些事情，所以Tomcat 使用了[责任链模式](../../computer-science/design-patterns/chain-of-responsibility.md)来实现。关键类有 Valve 和 Pipeline。
 
 ```java
 public interface Valve {
@@ -176,7 +176,7 @@ Valve 和 Filter 的区别：
 
 ![](../../.gitbook/assets/image%20%2866%29.png)
 
-Tomcat 需要统一地管理这些组件的创建、初始化、启动、停止和销毁，它是通过 LifeCycle 来实现的。父组件的 init 方法会调用子组件的 init 方法，父组件的 destroy 方法会调用子组件的 destroy 方法，因此调用者可以**无差别的调用**个组件的 init 和 start 方法，这就是[组合模式](../../computer-science/design-patterns/structural/composite.md)的使用。所以只要调用了顶层组件的 init 方法，整个 tomcat 也就启动了。
+Tomcat 需要统一地管理这些组件的创建、初始化、启动、停止和销毁，它是通过 LifeCycle 来实现的。父组件的 init 方法会调用子组件的 init 方法，父组件的 destroy 方法会调用子组件的 destroy 方法，因此调用者可以**无差别的调用**个组件的 init 和 start 方法，这就是[组合模式](../../computer-science/design-patterns/composite.md)的使用。所以只要调用了顶层组件的 init 方法，整个 tomcat 也就启动了。
 
 ![](../../.gitbook/assets/image%20%2826%29.png)
 
@@ -206,7 +206,7 @@ public abstract class LifecycleBase implements Lifecycle {
 
 ### 监听机制
 
-但是各个组件的启动方式千差万别，所以 LifeCycle 有事件监听的机制，这是[观察者模式](../../computer-science/design-patterns/behavioral/observer.md)的实现。如 NEW 表示组件刚刚被实例化，当 init 方法调用时，状态就会变成 INITIALIZING，就会触发 BEFORE\_INIT\_EVENT 事件。
+但是各个组件的启动方式千差万别，所以 LifeCycle 有事件监听的机制，这是[观察者模式](../../computer-science/design-patterns/observer.md)的实现。如 NEW 表示组件刚刚被实例化，当 init 方法调用时，状态就会变成 INITIALIZING，就会触发 BEFORE\_INIT\_EVENT 事件。
 
 ```java
 public enum LifecycleState {
