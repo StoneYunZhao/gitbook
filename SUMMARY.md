@@ -56,6 +56,7 @@
   * [Hash Table](computer-science/algorithm/hash-table.md)
   * [Tree](computer-science/algorithm/tree.md)
   * [Graph](computer-science/algorithm/graph.md)
+  * [String Matching](computer-science/algorithm/string-matching.md)
 * [Network Protocol](computer-science/network-protocol/README.md)
   * [Pysical Layer](computer-science/network-protocol/pysical-layer.md)
   * [Data Link Layer](computer-science/network-protocol/data-link-layer.md)
