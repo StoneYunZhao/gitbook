@@ -9,7 +9,7 @@
   * [工厂方法](creational/factory.md#gong-chang-fang-fa)
   * [抽象工厂](creational/factory.md#chou-xiang-gong-chang)
   * [生成器](creational/builder.md)
-  * 原型
+  * [原型](creational/prototype.md)
   * [单例](creational/singleton.md)
 * 结构型
   * 适配器

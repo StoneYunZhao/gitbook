@@ -75,6 +75,7 @@
     * [Singleton](computer-science/design-patterns/creational/singleton.md)
     * [Factory](computer-science/design-patterns/creational/factory.md)
     * [Builder](computer-science/design-patterns/creational/builder.md)
+    * [Prototype](computer-science/design-patterns/creational/prototype.md)
     * [FlyWeight](computer-science/design-patterns/creational/flyweight.md)
   * [Structural](computer-science/design-patterns/structural/README.md)
     * [Composite](computer-science/design-patterns/structural/composite.md)
