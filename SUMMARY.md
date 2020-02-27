@@ -58,6 +58,7 @@
   * [Graph](computer-science/algorithm/graph.md)
   * [String Matching](computer-science/algorithm/string-matching.md)
   * [Greedy Algorithm](computer-science/algorithm/greedy-algorithm.md)
+  * [Divide and Conquer](computer-science/algorithm/divide-and-conquer.md)
 * [Network Protocol](computer-science/network-protocol/README.md)
   * [Pysical Layer](computer-science/network-protocol/pysical-layer.md)
   * [Data Link Layer](computer-science/network-protocol/data-link-layer.md)

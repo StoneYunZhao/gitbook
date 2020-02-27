@@ -34,8 +34,8 @@
 * [图](graph.md)
 * [字符串匹配算法](string-matching.md)
 * 算法思想：
-  * 贪心算法
-  * 分治算法
+  * [贪心算法](greedy-algorithm.md)
+  * [分治算法](divide-and-conquer.md)
   * 回溯算法
   * 动态规划
 
