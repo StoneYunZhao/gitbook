@@ -32,6 +32,14 @@
   * [B 树](tree.md#b-shu)
   * [B+ 树](tree.md#b-shu-1)
 * [图](graph.md)
+* [字符串匹配算法](string-matching.md)
+* 算法思想：
+  * 贪心算法
+  * 分治算法
+  * 回溯算法
+  * 动态规划
 
-![](../../.gitbook/assets/image%20%28210%29.png)
+
+
+![](../../.gitbook/assets/image%20%28211%29.png)
 
