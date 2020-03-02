@@ -13,12 +13,12 @@
   * [单例](creational/singleton.md)
 * 结构型
   * 适配器
-  * 桥接
+  * [桥接](structural/bridge.md)
   * [组合](structural/composite.md)
   * 装饰
   * 外观
-  * [享元](creational/flyweight.md)
-  * 代理
+  * [享元](structural/flyweight.md)
+  * [代理](structural/proxy.md)
 * 行为型
   * [责任链](behavioral/chain-of-responsibility.md)
   * 命令
