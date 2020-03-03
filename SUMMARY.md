@@ -81,6 +81,7 @@
   * [Structural](computer-science/design-patterns/structural/README.md)
     * [Proxy](computer-science/design-patterns/structural/proxy.md)
     * [Bridge](computer-science/design-patterns/structural/bridge.md)
+    * [Decorator](computer-science/design-patterns/structural/decorator.md)
     * [Composite](computer-science/design-patterns/structural/composite.md)
     * [FlyWeight](computer-science/design-patterns/structural/flyweight.md)
   * [Behavioral](computer-science/design-patterns/behavioral/README.md)

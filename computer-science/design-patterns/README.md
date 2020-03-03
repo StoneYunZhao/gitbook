@@ -15,7 +15,7 @@
   * 适配器
   * [桥接](structural/bridge.md)
   * [组合](structural/composite.md)
-  * 装饰
+  * [装饰](structural/decorator.md)
   * 外观
   * [享元](structural/flyweight.md)
   * [代理](structural/proxy.md)
