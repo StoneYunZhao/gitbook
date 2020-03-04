@@ -12,7 +12,7 @@
   * [原型](creational/prototype.md)
   * [单例](creational/singleton.md)
 * 结构型
-  * 适配器
+  * [适配器](structural/adapter.md)
   * [桥接](structural/bridge.md)
   * [组合](structural/composite.md)
   * [装饰](structural/decorator.md)
