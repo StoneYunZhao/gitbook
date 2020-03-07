@@ -16,7 +16,7 @@
   * [桥接](structural/bridge.md)
   * [组合](structural/composite.md)
   * [装饰](structural/decorator.md)
-  * 外观
+  * [外观](structural/facade.md)
   * [享元](structural/flyweight.md)
   * [代理](structural/proxy.md)
 * 行为型
