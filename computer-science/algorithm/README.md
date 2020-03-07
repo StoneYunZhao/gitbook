@@ -36,8 +36,8 @@
 * 算法思想：
   * [贪心算法](greedy-algorithm.md)
   * [分治算法](divide-and-conquer.md)
-  * 回溯算法
-  * 动态规划
+  * [回溯算法](back-tracking.md)
+  * [动态规划](dynamic-programming.md)
 
 
 

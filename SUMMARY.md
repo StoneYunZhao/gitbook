@@ -60,6 +60,7 @@
   * [Greedy Algorithm](computer-science/algorithm/greedy-algorithm.md)
   * [Divide and Conquer](computer-science/algorithm/divide-and-conquer.md)
   * [Back Tracking](computer-science/algorithm/back-tracking.md)
+  * [Dynamic Programming](computer-science/algorithm/dynamic-programming.md)
 * [Network Protocol](computer-science/network-protocol/README.md)
   * [Pysical Layer](computer-science/network-protocol/pysical-layer.md)
   * [Data Link Layer](computer-science/network-protocol/data-link-layer.md)
