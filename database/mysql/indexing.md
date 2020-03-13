@@ -131,5 +131,5 @@ mysql> select * from tuser where name like '张 %' and age=10 and ismale=1;
 
 在 5.6 仅需回表两次：
 
-![](../../.gitbook/assets/image%20%28125%29.png)
+![](../../.gitbook/assets/image%20%28126%29.png)
 
