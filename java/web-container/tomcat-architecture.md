@@ -33,24 +33,24 @@ Tomcat 设计了 **Endpoint**（网络通信）、**Processor**（应用层协�
 
 Tomcat 设计了 ProtocolHandler 来组合 Endpoint 和 Processor。
 
-![](../../.gitbook/assets/image%20%28120%29.png)
+![](../../.gitbook/assets/image%20%28121%29.png)
 
 ProtocolHandler 都有对每一种应用层协议有一层抽象，每一种 IO 模型都有具体的实现。
 
-![](../../.gitbook/assets/image%20%28145%29.png)
+![](../../.gitbook/assets/image%20%28147%29.png)
 
 #### EndPoint
 
 是 Socket 接受和发送的处理器，负责传输层（TCP/IP）的通信。
 
-![](../../.gitbook/assets/image%20%28153%29.png)
+![](../../.gitbook/assets/image%20%28155%29.png)
 
 有两个重要的组件：
 
 * Acceptor：用于监听 Socket 请求。
 * SocketProcessor：用于处理收到的 Socket 请求，会被提交到线程池来执行。
 
-![](../../.gitbook/assets/image%20%28148%29.png)
+![](../../.gitbook/assets/image%20%28150%29.png)
 
 ![](../../.gitbook/assets/image%20%2895%29.png)
 
@@ -72,7 +72,7 @@ ProtocolHandler 得到 Tomcat 的 Request，Processor 调用 CoyoteAdapter 的 s
 
 ### 总体架构
 
-![](../../.gitbook/assets/image%20%28146%29.png)
+![](../../.gitbook/assets/image%20%28148%29.png)
 
 * Servlet：一个 Servlet 对象。
 * Context：一个 Web 应用程序，包含多个 Servlet。
@@ -95,7 +95,7 @@ ProtocolHandler 得到 Tomcat 的 Request，Processor 调用 CoyoteAdapter 的 s
 </Server>
 ```
 
-可以看到容器之间是树形结构，所以 Tomcat 采用[组合模式](../../computer-science/design-patterns/composite.md)来管理这些容器。
+可以看到容器之间是树形结构，所以 Tomcat 采用[组合模式](../../computer-science/design-patterns/structural/composite.md)来管理这些容器。
 
 * Container：对应 Component。
 * Wrapper：对应 Leaf。
@@ -124,7 +124,7 @@ public interface Container extends Lifecycle {
 
 ![](../../.gitbook/assets/image%20%2879%29.png)
 
-对于一个请求，Adapter 会调用容器的 service 方法，每一层容器都会处理一些事情，所以Tomcat 使用了[责任链模式](../../computer-science/design-patterns/chain-of-responsibility.md)来实现。关键类有 Valve 和 Pipeline。
+对于一个请求，Adapter 会调用容器的 service 方法，每一层容器都会处理一些事情，所以Tomcat 使用了[责任链模式](../../computer-science/design-patterns/behavioral/chain-of-responsibility.md)来实现。关键类有 Valve 和 Pipeline。
 
 ```java
 public interface Valve {
@@ -145,7 +145,7 @@ public interface Pipeline extends Contained {
 
 不同层的容器通过调用 getBasic 方法，BasicValve 表示 Pipeline 的末端，负责调用下层容器 Pipeline 的第一个 Valve。
 
-![](../../.gitbook/assets/image%20%28137%29.png)
+![](../../.gitbook/assets/image%20%28139%29.png)
 
 整个过程开端于：
 
@@ -176,7 +176,7 @@ Valve 和 Filter 的区别：
 
 ![](../../.gitbook/assets/image%20%2866%29.png)
 
-Tomcat 需要统一地管理这些组件的创建、初始化、启动、停止和销毁，它是通过 LifeCycle 来实现的。父组件的 init 方法会调用子组件的 init 方法，父组件的 destroy 方法会调用子组件的 destroy 方法，因此调用者可以**无差别的调用**个组件的 init 和 start 方法，这就是[组合模式](../../computer-science/design-patterns/composite.md)的使用。所以只要调用了顶层组件的 init 方法，整个 tomcat 也就启动了。
+Tomcat 需要统一地管理这些组件的创建、初始化、启动、停止和销毁，它是通过 LifeCycle 来实现的。父组件的 init 方法会调用子组件的 init 方法，父组件的 destroy 方法会调用子组件的 destroy 方法，因此调用者可以**无差别的调用**个组件的 init 和 start 方法，这就是[组合模式](../../computer-science/design-patterns/structural/composite.md)的使用。所以只要调用了顶层组件的 init 方法，整个 tomcat 也就启动了。
 
 ![](../../.gitbook/assets/image%20%2826%29.png)
 
@@ -206,7 +206,7 @@ public abstract class LifecycleBase implements Lifecycle {
 
 ### 监听机制
 
-但是各个组件的启动方式千差万别，所以 LifeCycle 有事件监听的机制，这是[观察者模式](../../computer-science/design-patterns/observer.md)的实现。如 NEW 表示组件刚刚被实例化，当 init 方法调用时，状态就会变成 INITIALIZING，就会触发 BEFORE\_INIT\_EVENT 事件。
+但是各个组件的启动方式千差万别，所以 LifeCycle 有事件监听的机制，这是[观察者模式](../../computer-science/design-patterns/behavioral/observer.md)的实现。如 NEW 表示组件刚刚被实例化，当 init 方法调用时，状态就会变成 INITIALIZING，就会触发 BEFORE\_INIT\_EVENT 事件。
 
 ```java
 public enum LifecycleState {
@@ -235,9 +235,9 @@ public enum LifecycleState {
 
 ### 总体类图
 
-![](../../.gitbook/assets/image%20%28140%29.png)
+![](../../.gitbook/assets/image%20%28142%29.png)
 
-![](../../.gitbook/assets/image%20%28123%29.png)
+![](../../.gitbook/assets/image%20%28124%29.png)
 
 ## 管理组件
 
