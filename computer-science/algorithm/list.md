@@ -96,83 +96,9 @@ a[k]_adress = base_adress + (k -1) * type_size
 * 重点留意边界条件，若链表为空，若链表只有一个结点，若只有两个结点，在处理头结点和尾结点时，能否正常工作。
 * 画图辅助思考。
 
-### 链表结点
+### 例题
 
-```java
-/**
- * 有头结点的列表
- */
-public class LNode {
-    Integer data;
-    LNode next;
-
-    public LNode() {
-    }
-
-    public LNode(int data) {
-        this.data = data;
-    }
-
-    public static void printList(LNode head) {
-        if (head == null) {
-            System.out.println("null");
-        }
-
-        StringBuilder result = new StringBuilder();
-        for (LNode current = head; current != null; current = current.next) {
-            result.append(current.data).append(" ");
-        }
-        System.out.println(result);
-    }
-}
-```
-
-### 链表反转
-
-```java
-// 都是针对带头链表
-public class ReverseList {
-
-    /**
-     * 就地逆序，遍历，让列表的结点指向其前驱结点，
-     */
-    private static void reverseInPlace(LNode head) {
-        System.out.println("reverse in place");
-        if (head == null || head.next == null || head.next.next == null) {
-            return;
-        }
-        LNode first, second;
-
-        for (first = head.next, second = first.next; second != null; ) {
-            LNode tmp = second.next;
-            second.next = first;
-            first = second;
-            second = tmp;
-        }
-        head.next.next = null;
-        head.next = first;
-    }
-
-    /**
-     * 插入法，遍历列表，每次将遍历到的结点插入 head 结点之后
-     */
-    private static void reverseInsert(LNode head) {
-        System.out.println("reverse by insert");
-        if (head == null || head.next == null) {
-            return;
-        }
-        LNode end = head.next;
-
-        for (LNode current = head.next; current != null; ) {
-            LNode tmp = current.next;
-            current.next = head.next;
-            head.next = current;
-            current = tmp;
-        }
-        end.next = null;
-    }
-}
-```
+* [LeetCode 206，反转列表](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/list/LT206.java)。
 
 ### 无序链表移除重复项
 
