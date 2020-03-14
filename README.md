@@ -18,6 +18,7 @@
   * [Spring](java/spring.md)
   * [调优](java/tuning/)
 * **计算机科学**：
+  * [计算机组成原理](computer-science/computer-organization.md)
   * [算法](computer-science/algorithm/)
   * [网络协议](computer-science/network-protocol/)
   * [操作系统](computer-science/linux/)

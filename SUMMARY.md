@@ -46,6 +46,7 @@
 
 ## Computer Science
 
+* [Computer Organization](computer-science/computer-organization.md)
 * [Algorithm](computer-science/algorithm/README.md)
   * [Complexity](computer-science/algorithm/complexity.md)
   * [Linear List](computer-science/algorithm/list.md)
