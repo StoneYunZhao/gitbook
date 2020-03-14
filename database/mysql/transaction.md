@@ -148,7 +148,7 @@ where TIME_TO_SEC(timediff(now(), trx_started)) > 60;
 
 MySQL 的每个更新操作都会记录一条回滚操作。如下图，一个值按照顺序由 1 被改成了 2、3、4。不同时刻启动的事务有不同的 read-view，即同一条记录可以存在多个版本，即**多版本并发控制（MVCC）**。
 
-![](../../.gitbook/assets/image%20%28157%29.png)
+![](../../.gitbook/assets/image%20%28159%29.png)
 
 **回滚日志的删除**：系统会判断，当没有事务在需要用到这些回滚日志，即没有比这个回滚日志更早的 read-view 时，回滚日志会被删除。
 

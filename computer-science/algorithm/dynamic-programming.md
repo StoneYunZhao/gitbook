@@ -14,7 +14,7 @@
 
 举例分析，一个 n\*n 的矩阵，存储正整数，从左上角到右下角移动，只能向右或向下移动，路径上经过的数字之和为路径的长度，求最短路径长度。
 
-![](../../.gitbook/assets/image%20%28146%29.png)
+![](../../.gitbook/assets/image%20%28148%29.png)
 
 * 总共要走 2\*\(n-1\) 步，每一步都需要做向右或向下的决策，符合多阶段决策最优解模型。
 * 状态定义为 min\_dist\(i, j\)，表示 \(0, 0\) 到 \(1, 1\) 的最短路径长度，符合最优子结构：`min_dist(i, j) = w[i][j] + min(min_dist(i, j - 1), min_dist(i - 1, j))`
@@ -65,13 +65,13 @@ public void minDistBT(int i, int j, int dist) {
 
 定义状态为 \(i, j, dist\)，表示到达 \(i, j\) 的路径长度为 dist，画递归树：
 
-![](../../.gitbook/assets/image%20%28241%29.png)
+![](../../.gitbook/assets/image%20%28243%29.png)
 
 从状态树中可以看出，尽管 \(i, j, dist\) 不存在重复，但是 \(i, j\) 有很多重复，我们只需要选出 \(i, j\) 中 dist 最小的节点，所以存在重复子问题。画状态转移表，并一步一步填充：
 
 ![](../../.gitbook/assets/image%20%2819%29.png)
 
-![](../../.gitbook/assets/image%20%28236%29.png)
+![](../../.gitbook/assets/image%20%28238%29.png)
 
 翻译成动态规划的代码：
 
@@ -145,9 +145,9 @@ public int minDist(int i, int j) { // 调用minDist(n-1, n-1);
 
 定义状态 \(i, cw\)，表示在决策第 i 个物品是否放入背包时，当前背包重量为 cw。有很多重复子问题，画状态转移表，states\[n\]\[w + 1\] 每一行表示第 i 个物品决策完后，当前背包中的重量有哪些值：
 
-![](../../.gitbook/assets/image%20%28260%29.png)
+![](../../.gitbook/assets/image%20%28262%29.png)
 
-![](../../.gitbook/assets/image%20%2850%29.png)
+![](../../.gitbook/assets/image%20%2851%29.png)
 
 翻译成代码：
 
@@ -222,7 +222,7 @@ public void f(int i, int cw, int cv) { // 调用f(0, 0, 0)
 
 递归树如下：
 
-![](../../.gitbook/assets/image%20%28176%29.png)
+![](../../.gitbook/assets/image%20%28178%29.png)
 
 可以看出，\(2, 2, 4\) 和\(2, 2, 3\)，我们只需要选择前者，即对于相同的 \(i, cw\)，只需要保留 cv 最大的那个。states\[n\]\[w + 1\] 中保存的是当前状态的最大值：​
 
@@ -259,4 +259,94 @@ public static int knapsack3(int[] weight, int[] value, int n, int w) {
   return maxvalue;
 }
 ```
+
+### 莱文斯距离
+
+**编辑距离**：将一个字符串转换为另一个字符串，需要的最少编辑操作（增加、删除、替换）次数。编辑距离越小，说明两个字符串越相似。
+
+莱文斯距离允许增加、删除、替换三种操作，最长公共子串只允许增加、删除两种操作。
+
+![](../../.gitbook/assets/image%20%28132%29.png)
+
+用回溯处理莱文斯距离，两个字符串 a、b，编辑 a 以得到 b。当 a\[i\] 和 b\[j\] 匹配时，递归匹配 a\[i + 1\] 和 b\[j + 1\]；若不匹配，则：
+
+* 删除 a\[i\]，递归匹配 a\[i + 1\] 和 b\[j\]
+* 在 a\[i\] 前增加一个字符 b\[j\]，递归匹配 a\[i\] 和 b\[j + 1\]
+* 把 a\[i\] 替换成 b\[j\]，递归匹配 a\[i + 1\] 和 b\[j + 1\]
+
+```java
+// 回溯实现
+private char[] a = "mitcmu".toCharArray();
+private char[] b = "mtacnu".toCharArray();
+private int n = 6;
+private int m = 6;
+private int minDist = Integer.MAX_VALUE; // 存储结果
+// 调用方式 lwstBT(0, 0, 0);
+public lwstBT(int i, int j, int edist) {
+  if (i == n || j == m) {
+    if (i < n) edist += (n-i);
+    if (j < m) edist += (m - j);
+    if (edist < minDist) minDist = edist;
+    return;
+  }
+  if (a[i] == b[j]) { // 两个字符匹配
+    lwstBT(i+1, j+1, edist);
+  } else { // 两个字符不匹配
+    lwstBT(i + 1, j, edist + 1); // 删除a[i]
+    lwstBT(i, j + 1, edist + 1); // a[i]前添加一个字符
+    lwstBT(i + 1, j + 1, edist + 1); // 将 a[i] 替换成 b[j]
+  }
+}
+```
+
+定义状态 \(i, j, min\_edist\)，表示处理到 a\[i\], b\[j\] 时，已经编辑的最小次数，状态转移方程：
+
+```text
+如果：a[i]!=b[j]，那么：min_edist(i, j)就等于：
+min(min_edist(i-1,j)+1, min_edist(i,j-1)+1, min_edist(i-1,j-1)+1)
+
+如果：a[i]==b[j]，那么：min_edist(i, j)就等于：
+min(min_edist(i-1,j)+1, min_edist(i,j-1)+1，min_edist(i-1,j-1))     
+```
+
+状态表的填充过程：
+
+![](../../.gitbook/assets/image%20%2837%29.png)
+
+转换为代码：
+
+```java
+public int lwstDP(char[] a, int n, char[] b, int m) {
+  int[][] minDist = new int[n][m];
+  for (int j = 0; j < m; ++j) { // 初始化第0行:a[0..0]与b[0..j]的编辑距离
+    if (a[0] == b[j]) minDist[0][j] = j;
+    else if (j != 0) minDist[0][j] = minDist[0][j-1]+1;
+    else minDist[0][j] = 1;
+  }
+  for (int i = 0; i < n; ++i) { // 初始化第0列:a[0..i]与b[0..0]的编辑距离
+    if (a[i] == b[0]) minDist[i][0] = i;
+    else if (i != 0) minDist[i][0] = minDist[i-1][0]+1;
+    else minDist[i][0] = 1;
+  }
+  for (int i = 1; i < n; ++i) { // 按行填表
+    for (int j = 1; j < m; ++j) {
+      if (a[i] == b[j]) minDist[i][j] = min(
+          minDist[i-1][j]+1, minDist[i][j-1]+1, minDist[i-1][j-1]);
+      else minDist[i][j] = min(
+          minDist[i-1][j]+1, minDist[i][j-1]+1, minDist[i-1][j-1]+1);
+    }
+  }
+  return minDist[n-1][m-1];
+}
+
+private int min(int x, int y, int z) {
+  int minv = Integer.MAX_VALUE;
+  if (x < minv) minv = x;
+  if (y < minv) minv = y;
+  if (z < minv) minv = z;
+  return minv;
+}
+```
+
+### 最长公共子串
 

@@ -14,7 +14,7 @@
 
 起初，TCP/IP 的设计者提出分层，它分为四层。TCP/IP 发明于 1970年代，当时还有很多网络协议，整个网络世界比较混乱。这时候国际标准组织（ISO）想来个大统一，于是设计了 OSI，开放式系统互联通信参考模型（Open System Interconnection Reference Model）。OSI 分为 7 层，设计参考了 TCP/IP 的分层，所以四层和七层有不是很精确的对应关系：
 
-![](../../.gitbook/assets/image%20%28206%29.png)
+![](../../.gitbook/assets/image%20%28208%29.png)
 
 OSI 在四层以上分的太细，TCP/IP 在实际应用时会话管理、编码转换、压缩等和具体应用紧密联系，很难分开，所以 5、6层就不见了。
 
