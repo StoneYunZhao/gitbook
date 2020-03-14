@@ -12,7 +12,7 @@
 * Leaf：叶节点。
 * Composite：组合，持有一群孩子，孩子可以是组合也可以是叶节点。
 
-![](../../../.gitbook/assets/image%20%28106%29.png)
+![](../../../.gitbook/assets/image%20%28107%29.png)
 
 ## 源码
 
@@ -52,5 +52,5 @@ public class WhereSqlNode extends TrimSqlNode {
 * WhereSqlNode：对应 Leaf。
 * MixedSqlNode：对应 Composite。
 
-![](../../../.gitbook/assets/image%20%28216%29.png)
+![](../../../.gitbook/assets/image%20%28217%29.png)
 

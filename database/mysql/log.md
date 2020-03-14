@@ -45,7 +45,7 @@ update T set c=c+1 where ID=2;
 4. 执行器生产update 操作的 binlog，并把 binlog 写入磁盘。
 5. 执行器调用存储引擎提交事务接口，把 redo log 的状态改为 commit。
 
-![](../../.gitbook/assets/image%20%28166%29.png)
+![](../../.gitbook/assets/image%20%28167%29.png)
 
 上面最后三步就是**两阶段提交**。
 

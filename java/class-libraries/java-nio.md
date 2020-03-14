@@ -33,7 +33,7 @@
 
 I/O 的**本质**就是计算机内存与外部设备之间拷贝数据的过程。
 
-![&#x4E00;&#x4E2A; IO &#x7684;&#x57FA;&#x672C;&#x8FC7;&#x7A0B;](../../.gitbook/assets/image%20%28116%29.png)
+![&#x4E00;&#x4E2A; IO &#x7684;&#x57FA;&#x672C;&#x8FC7;&#x7A0B;](../../.gitbook/assets/image%20%28117%29.png)
 
 **用户空间**和**内核空间：**系统为了保护内核数据，会将寻址空间分为用户空间和内核空间，32 位机器为例，高 1G 字节作为内核空间，低 3G 字节作为用户空间。当用户程序读取数据的时候，会经历两个过程：**磁盘到内核空间**（这块消耗性能，下面简称内核数据准备），**内核空间拷贝到用户空间**（下面简称用户空间拷贝）。
 
@@ -47,19 +47,19 @@ Linux 的内核将所有外部设备**都看做一个文件来操作**，对一�
 
 ### 阻塞 IO
 
-![](../../.gitbook/assets/image%20%28174%29.png)
+![](../../.gitbook/assets/image%20%28175%29.png)
 
 用户态进程调用`recvfrom`系统调用接收数据，当前内核中并没有准备好数据，该用户态进程将一直在此等待，不会进行其他的操作，待内核态准备好数据，将数据从内核态拷贝到用户空间内存，然后`recvfrom`返回成功的指示，此时用户态进行才解除阻塞的状态，处理收到的数据。
 
 ### 非阻塞 IO
 
-![](../../.gitbook/assets/image%20%28237%29.png)
+![](../../.gitbook/assets/image%20%28240%29.png)
 
 使用 fnctl 可以设置为非阻塞，如果没有数据返回，则直接返回 EWOULDBLOCK 或 EAGAIN。用户进程调用`recvform`系统调用接收数据之后，进程并没有被阻塞，内核马上返回给进程，如果数据还没准备好，此时会返回一个 error。进程在返回之后，可以干点别的事情，然后再发起`recvform`系统调用。如此循环的进行`recvform`系统调用，检查内核数据，直到数据准备好，再拷贝数据到进程。**拷贝数据整个过程，进程仍然是属于阻塞的状态**。
 
 ### 多路复用 IO
 
-![](../../.gitbook/assets/image%20%28105%29.png)
+![](../../.gitbook/assets/image%20%28106%29.png)
 
 用户进程采用`select/poll/epoll/pselect`的其中一个方法，以 `select` 为例，通过`select`可以等待多个不同类型的消息，如果其中有一个类型的消息准备好，则`select`会返回信息，然后用户态进程调用`recvfrom`接收数据。步骤如下：
 
@@ -84,7 +84,7 @@ I/O 复用和阻塞 I/O 很相似，不同的是，I/O 复用等待多类事件�
 
 ### 信号驱动 IO
 
-![](../../.gitbook/assets/image%20%2838%29.png)
+![](../../.gitbook/assets/image%20%2839%29.png)
 
 用户进程会向内核发送一个信号，告诉内核我要什么数据，然后用户态就不管了，做别的事情去了，而当内核态中的数据准备好之后，内核立马发给用户态一个信号，告知用户进程数据准备好了，用户态进程收到之后，立马调用`recvfrom` ，等待数据从内核空间复制到用户空间，待完成之后`recvfrom`返回成功指示，用户态进程才处理别的事情。
 
@@ -94,7 +94,7 @@ I/O 复用和阻塞 I/O 很相似，不同的是，I/O 复用等待多类事件�
 
 ### 异步 IO
 
-![](../../.gitbook/assets/image%20%28235%29.png)
+![](../../.gitbook/assets/image%20%28237%29.png)
 
 用户进程进行`aio_read`系统调用之后，无论内核数据是否准备好，都会直接返回给用户进程，然后用户态进程可以去做别的事情。内核等待用户态需要的数据准备好，然后将数据复制到用户空间，然后从内核向用户进程发送通知，告知用户进程数据已经复制完成。
 
@@ -104,7 +104,7 @@ I/O 复用和阻塞 I/O 很相似，不同的是，I/O 复用等待多类事件�
 
 ### 比较
 
-![](../../.gitbook/assets/image%20%28196%29.png)
+![](../../.gitbook/assets/image%20%28197%29.png)
 
 * 阻塞 IO、非阻塞 IO、多路复用 IO、信号驱动 IO **都是同步 IO**。因为其中真正的 IO 操作（`recvfrom`）将阻塞进程。
 
@@ -118,7 +118,7 @@ Java NIO\(no-blocking io 或 new io\)是 JDK 1.4 中新引入的 IO 库，目的
 | 阻塞 IO（Blocking IO） |  非阻塞 IO（Non Blocking IO） |
 | 无 | 选择器（Selectors） |
 
-![](../../.gitbook/assets/image%20%28238%29.png)
+![](../../.gitbook/assets/image%20%28241%29.png)
 
 ### Buffer
 
@@ -149,7 +149,7 @@ Buffer 本质是一块内存区域，可以读写数据，有四个重要的属�
 
 `rewind()`方法可以将 position 设置为0，limit 不变，所以可以重新读取所有的数据。
 
-![Buffer &#x7684;&#x5B9E;&#x73B0;&#x7C7B;](../../.gitbook/assets/image%20%2843%29.png)
+![Buffer &#x7684;&#x5B9E;&#x73B0;&#x7C7B;](../../.gitbook/assets/image%20%2844%29.png)
 
 ### DirectBuffer
 
@@ -157,13 +157,13 @@ Buffer 本质是一块内存区域，可以读写数据，有四个重要的属�
 
 但是创建和销毁的代价很高，不是由 JVM 负责垃圾回收，会通过 Java Reference 机制来释放内存。
 
-![](../../.gitbook/assets/image%20%2878%29.png)
+![](../../.gitbook/assets/image%20%2879%29.png)
 
-![](../../.gitbook/assets/image%20%2876%29.png)
+![](../../.gitbook/assets/image%20%2877%29.png)
 
 其中`MappedByteBuffer`实现的就是内存映射文件，可以实现**大文件**的高效读写。不需要从内核空间 copy 到用户空间。
 
-![](../../.gitbook/assets/image%20%2848%29.png)
+![](../../.gitbook/assets/image%20%2849%29.png)
 
 ### Channel
 
@@ -210,7 +210,7 @@ Selector 是Java NIO 中的一个组件，本质是 [select](../../computer-scie
 
 通过上面的了解我们知道 Selector 是一种 IO multiplexing 的情况。
 
-![&#x5355;&#x7EBF;&#x7A0B;&#x5904;&#x7406;&#x4E09;&#x4E2A;&#x8FDE;&#x63A5;](../../.gitbook/assets/image%20%28195%29.png)
+![&#x5355;&#x7EBF;&#x7A0B;&#x5904;&#x7406;&#x4E09;&#x4E2A;&#x8FDE;&#x63A5;](../../.gitbook/assets/image%20%28196%29.png)
 
 ```java
 Selector selector = Selector.open();

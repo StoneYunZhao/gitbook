@@ -60,7 +60,7 @@ false
 true
 ```
 
-Integer部分源码，借鉴了[享元模式](../../computer-science/design-patterns/flyweight.md)，但是没有照搬，内部维护了一个静态的对象池，仅缓存 \[-128, 127\] 之间的数字，在 JVM 启动时就创建好了：
+Integer部分源码，借鉴了[享元模式](../../computer-science/design-patterns/structural/flyweight.md)，但是没有照搬，内部维护了一个静态的对象池，仅缓存 \[-128, 127\] 之间的数字，在 JVM 启动时就创建好了：
 
 这也是为什么 String 和 Integer 等不适合做锁，因为很容易使用公有的锁，导致锁竞争激烈
 
@@ -114,7 +114,7 @@ public final class Integer extends Number implements Comparable<Integer> {
 
 ## String
 
-![](../../.gitbook/assets/image%20%2836%29.png)
+![](../../.gitbook/assets/image%20%2837%29.png)
 
 * JDK 6 及以前：subString 方法会共享 char\[\]，所以会引起内存泄漏和内存溢出问题。
 * JDK 7、JDK8：去掉两个字段，减少内存，subString 也不会共享 char\[\]。
@@ -165,7 +165,7 @@ String 是[不可变类](../concurrency/concurrency-design-patterns/immutable.md
 
 Java 1.6 提供了 intern 方法，会去字符串常量池中查看是否有该 String 对象，若有则返回常量池中的引用；若没有，则在常量池中创建，并返回常量池中的引用。目的是把 String 缓存起来，起初缓存在方法区（PermGen）里面，由于容易导致 OOM，所以 1.7 移到了堆中，详见[方法区](../jvm/runtime-data-area.md#yong-jiu-dai-yu-yuan-kong-jian)。默认缓存大小也在不断扩大，最初是 1009，7u40被改为60013，可以使用`-XX:+PrintStringTableStatistics`打印，也可以使用`-XX:StringTableSize=N`修改。
 
-intern 是一种显式排重，也是[享元模式](../../computer-science/design-patterns/flyweight.md)的思想，8u20 后推出了 G1 GC 下的字符串排重，通过将相同数据的字符串指向同一份数据，默认关闭的。需要使用 G1，并开启参数：`-XX:+UseStringDeduplication`。
+intern 是一种显式排重，也是[享元模式](../../computer-science/design-patterns/structural/flyweight.md)的思想，8u20 后推出了 G1 GC 下的字符串排重，通过将相同数据的字符串指向同一份数据，默认关闭的。需要使用 G1，并开启参数：`-XX:+UseStringDeduplication`。
 
 String 也使用了 [Copy-on-Write](../concurrency/concurrency-design-patterns/copy-on-write.md)（写时复制）的思想，比如 replace 方法：
 
