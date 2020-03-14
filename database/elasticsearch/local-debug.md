@@ -23,7 +23,7 @@ git checkout -b test v7.3.1
 
 Import Project =&gt; 选择 elasticsearch 目录 =&gt; Import project from external model \(Gradle\) =&gt; Use auto-import
 
-![](../../.gitbook/assets/image%20%2820%29.png)
+![](../../.gitbook/assets/image%20%2821%29.png)
 
 ### 启动方式一
 
@@ -36,7 +36,7 @@ Import Project =&gt; 选择 elasticsearch 目录 =&gt; Import project from exter
 
 等运行到如下界面，就可以用 idea 执行 Run =&gt; Attach to process：
 
-![](../../.gitbook/assets/image%20%28119%29.png)
+![](../../.gitbook/assets/image%20%28121%29.png)
 
 缺点：
 
@@ -91,7 +91,7 @@ grant {
 
 然后在 idea 做如下配置后，运行 Elasticsearch 的 main 方法即可：
 
-![](../../.gitbook/assets/image%20%28159%29.png)
+![](../../.gitbook/assets/image%20%28161%29.png)
 
 ```text
 -Des.path.data=~/es_idea/data

@@ -23,19 +23,20 @@
 思路：用回溯思想的话，若有 n 个物体，把问题分为 n 个阶段，每个阶段对应是否选择物品。可以用一点剪枝技巧，当已经选择的物品超过 W 后，就停止后面的阶段。
 
 ```java
-public int maxW = Integer.MIN_VALUE; //存储背包中物品总重量的最大值
+private int maxW = Integer.MIN_VALUE; //存储背包中物品总重量的最大值
+private int[] weight = {2，2，4，6，3}; // 每个物品的重量
+private int n = 5; // 物品个数
+private int w = 9; // 背包重量
 // cw表示当前已经装进去的物品的重量和；i表示考察到哪个物品了；
-// w背包重量；items表示每个物品的重量；n表示物品个数
-// 假设背包可承受重量100，物品个数10，物品重量存储在数组a中，那可以这样调用函数：
-// f(0, 0, a, 10, 100)
-public void f(int i, int cw, int[] items, int n, int w) {
+// 调用方式：f(0, 0)
+public void f(int i, int cw) {
   if (cw == w || i == n) { // cw==w表示装满了;i==n表示已经考察完所有的物品
     if (cw > maxW) maxW = cw;
     return;
   }
-  f(i+1, cw, items, n, w); // 表示不选择此阶段的物品
-  if (cw + items[i] <= w) {// 已经超过可以背包承受的重量的时候，就不要再装了
-    f(i+1,cw + items[i], items, n, w); // 表示选择此阶段的物品
+  f(i+1, cw); // 不选择此阶段的物品
+  if (cw + weight[i] <= w) {// 已经超过可以背包承受的重量的时候，就不要再装了
+    f(i+1,cw + weight[i]); // 选择此阶段的物品
   }
 }
 ```

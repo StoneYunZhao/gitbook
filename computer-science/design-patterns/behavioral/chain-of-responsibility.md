@@ -15,7 +15,7 @@
 
 ## 类图
 
-![](../../../.gitbook/assets/image%20%2874%29.png)
+![](../../../.gitbook/assets/image%20%2876%29.png)
 
 ## 源码
 
@@ -61,7 +61,7 @@ public class MockFilterChain implements FilterChain {
 }
 ```
 
-![](../../../.gitbook/assets/image%20%2890%29.png)
+![](../../../.gitbook/assets/image%20%2892%29.png)
 
 ```java
 // ch.qos.logback.classic.selector.servlet
