@@ -177,6 +177,10 @@ private static void byTwoLoop(LNode head) {
 * **括号匹配**，一个栈实现。
 * **浏览器前进后退功能**，两个栈实现。
 
+### 例题
+
+* [LeetCode 20，判断字符串括号是否匹配。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/stack/LT20.java)
+
 ## Queue
 
 **定义**：操作受限的线性表，先进先出。
