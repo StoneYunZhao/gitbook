@@ -180,6 +180,9 @@ private static void byTwoLoop(LNode head) {
 ### 例题
 
 * [LeetCode 20，判断字符串括号是否匹配。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/stack/LT20.java)
+* [LeetCode 232，用栈实现队列。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/stack/LT232.java)
+* [LeetCode 225，用队列实现栈。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/stack/LT225.java)
+* [LeetCode 844，判断两个编辑序列得到的字符串是否相等。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/stack/LT844.java)
 
 ## Queue
 
