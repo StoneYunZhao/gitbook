@@ -100,7 +100,9 @@ a[k]_adress = base_adress + (k -1) * type_size
 
 * [LeetCode 206，反转列表](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/list/LT206.java)。
 * [LeetCode 24，列表元素两两反转。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/list/LT24.java)
+* [LeetCode 25，列表每 k 个元素反转。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/list/LT25.java)
 * [LeetCode 141，判断列表是否有环。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/list/LT141.java)
+* [LeetCode 142，判断列表是否有环，并返回环的起点位置。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/list/LT142.java)
 
 ### 无序链表移除重复项
 
