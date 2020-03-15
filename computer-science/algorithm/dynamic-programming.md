@@ -65,13 +65,13 @@ public void minDistBT(int i, int j, int dist) {
 
 定义状态为 \(i, j, dist\)，表示到达 \(i, j\) 的路径长度为 dist，画递归树：
 
-![](../../.gitbook/assets/image%20%28243%29.png)
+![](../../.gitbook/assets/image%20%28244%29.png)
 
 从状态树中可以看出，尽管 \(i, j, dist\) 不存在重复，但是 \(i, j\) 有很多重复，我们只需要选出 \(i, j\) 中 dist 最小的节点，所以存在重复子问题。画状态转移表，并一步一步填充：
 
 ![](../../.gitbook/assets/image%20%2819%29.png)
 
-![](../../.gitbook/assets/image%20%28238%29.png)
+![](../../.gitbook/assets/image%20%28239%29.png)
 
 翻译成动态规划的代码：
 
@@ -145,7 +145,7 @@ public int minDist(int i, int j) { // 调用minDist(n-1, n-1);
 
 定义状态 \(i, cw\)，表示在决策第 i 个物品是否放入背包时，当前背包重量为 cw。有很多重复子问题，画状态转移表，states\[n\]\[w + 1\] 每一行表示第 i 个物品决策完后，当前背包中的重量有哪些值：
 
-![](../../.gitbook/assets/image%20%28262%29.png)
+![](../../.gitbook/assets/image%20%28264%29.png)
 
 ![](../../.gitbook/assets/image%20%2851%29.png)
 
@@ -222,7 +222,7 @@ public void f(int i, int cw, int cv) { // 调用f(0, 0, 0)
 
 递归树如下：
 
-![](../../.gitbook/assets/image%20%28178%29.png)
+![](../../.gitbook/assets/image%20%28179%29.png)
 
 可以看出，\(2, 2, 4\) 和\(2, 2, 3\)，我们只需要选择前者，即对于相同的 \(i, cw\)，只需要保留 cv 最大的那个。states\[n\]\[w + 1\] 中保存的是当前状态的最大值：​
 

@@ -113,7 +113,7 @@ public void sort(Integer[] nums) {
 
 **描述**：将数组分为两个区域，已排序和未排序，初始已排序为空，每次找到未排序的最小元素，放入已排序的末尾，即与未排序的第一个元素交换。
 
-![](../../.gitbook/assets/image%20%28252%29.png)
+![](../../.gitbook/assets/image%20%28254%29.png)
 
 ```java
 public void sort(Integer[] nums) {
