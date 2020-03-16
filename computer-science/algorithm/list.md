@@ -203,3 +203,12 @@ private static void byTwoLoop(LNode head) {
 
 **并发队列：**线程安全的队列。无锁方式用 CAS 实现，入队前获取 tail 的位置，入队时判断 tail 是否变化，若变化了则本次入队失败；出队时则获取 head 的位置，进行 CAS 判断。
 
+## Priority Queue
+
+正常入，按照优先级出。实现方式：
+
+* [堆](tree.md#dui)
+* 二叉搜索树
+
+
+
