@@ -26,27 +26,17 @@ Redis 还可以**同时使用** AOF 持久化和 RDB 持久化。 在这种情�
 
 你甚至可以**关闭持久化**功能，让数据只在服务器运行时存在。
 
-动态关闭AOF：
-
-```text
+```bash
+# 动态关闭AOF
 redis-cli config set appendonly no
-```
 
-动态打开AOF：
-
-```text
+# 动态打开AOF
 redis-cli config set appendonly yes
-```
 
-永久关闭AOF：
-
-```text
+# 永久关闭AOF
 sed -e '/appendonly/ s/^#*/#/' -i /etc/redis/redis.conf  
-```
 
-永久打开AOF：
-
-```text
+# 永久打开AOF
 将appendonly yes设置在redis.conf中
 ```
 
@@ -64,7 +54,7 @@ Redis 基于 **Reactor 模式**开发了网络事件处理器，叫做**文件�
 * 文件事件处理器采用 **IO 多路复用**模型，同时监听多个 Socket。
 * 若被监听的 Socket 准备好执行accept、read、write、close等操作的时，就会产生对应的文件事件，文件事件处理器就会调用套接字之前关联好的事件处理器来处理这些事件。
 
-![](../.gitbook/assets/image%20%28185%29.png)
+![](../.gitbook/assets/image%20%28186%29.png)
 
 文件事件处理器的结构包含4个部分：
 
@@ -80,13 +70,13 @@ Redis 基于 **Reactor 模式**开发了网络事件处理器，叫做**文件�
 
 多个文件事件可能会并发地出现， 但 I/O 多路复用程序总是会将所有产生事件的套接字都入队到一个**队列**里面， 然后以**有序**、**同步**、**每次一个**套接字的方式向文件事件分派器传送套接字，即当上一个套接字产生的事件被处理完毕之后（该套接字为事件所关联的事件处理器执行完毕）， I/O 多路复用程序才会继续向文件事件分派器传送下一个套接字。
 
-![](../.gitbook/assets/image%20%28102%29.png)
+![](../.gitbook/assets/image%20%28103%29.png)
 
 ### IO 多路复用程序
 
 通过包装常见的 `select` 、 `epoll` 、 `evport` 和 `kqueue` 这些 I/O 多路复用函数库来实现的，Redis 会选择效率最高的实现方式。
 
-![](../.gitbook/assets/image%20%28216%29.png)
+![](../.gitbook/assets/image%20%28217%29.png)
 
 ### 文件事件
 
@@ -110,11 +100,82 @@ Redis 基于 **Reactor 模式**开发了网络事件处理器，叫做**文件�
 
 ## 数据类型
 
-* **String**：一个 Key 对应一个 Value。
-* **Hash**：一个 Key 对应一个 Map，适合于存储对象。这样就不需要全部取出整个 JSON 对象、反序列化、修改、再序列化存储，可以直接修改某个字段。
-* **List**：一个 Key 对应一个 List，可以 push、pop、LRange 等操作。
-* **Set**：一个 Key 对应一个 Set，可以进行交集、并集、差集等操作。
-* **Sorted Set**：zset，将 Set 中的元素带一个权重，比如存储全班同学成绩，可以快速拿出前几名。
+### String
+
+一个 Key 对应一个 Value。
+
+Value 的底层存储就是字符串。
+
+### List
+
+一个 Key 对应一个 List，可以 push、pop、LRange 等操作。
+
+Value 的底层存储有两种方式，一种是**压缩列表**（ziplist），另一种是**双向循环列表**。使用压缩列表的条件是：
+
+* 列表中保存的单个数据小于 64 byte。
+* 列表中数据个数小于 512 个。
+
+**压缩列表**是 Redis 自己设计的一种数据结构，通过一片**连续**的内存空间存储数据，如下图：
+
+![](../.gitbook/assets/image%20%2854%29.png)
+
+Redis 双向列表实现：
+
+```cpp
+typedef struct listnode {
+  struct listNode *prev;
+  struct listNode *next;
+  void *value;
+} listNode;
+
+
+typedef struct list {
+  listNode *head;
+  listNode *tail;
+  unsigned long len;
+} list;
+```
+
+### Hash
+
+一个 Key 对应一个 Map，适合于存储对象。这样就不需要全部取出整个 JSON 对象、反序列化、修改、再序列化存储，可以直接修改某个字段。
+
+Value 的底层存储也有两种实现，**压缩列表**和**散列表**，使用压缩列表的条件是：
+
+* 字典中保存的健和值都要小于 64 byte。
+* 字典中的键值对小于 512 个。
+
+Redis 散列表的实现要点：
+
+* hash 函数使用 [Murmur](https://zh.wikipedia.org/wiki/Murmur%E5%93%88%E5%B8%8C)，速度快，随机性好。
+* 使用列表法解决冲突。
+* 支持动态扩容、缩容，扩缩容的方式见[源码](https://github.com/antirez/redis/blob/unstable/src/dict.c)。
+* 扩缩容会涉及数据搬迁，redis 采用渐进式扩缩容的策略，即分批搬迁数据。
+
+### Set
+
+一个 Key 对应一个 Set，可以进行交集、并集、差集等操作。
+
+Value 的底层存储有两种，**有序数组**和**散列表**，使用有序数组的条件是：
+
+* 数据都是整数。
+* 元素个数不超过 512 个。
+
+### Sorted Set
+
+zset，将 Set 中的元素带一个权重，比如存储全班同学成绩，可以快速拿出前几名。
+
+Value 的底层存储有**压缩列表**和**跳表**两种，使用压缩列表的条件是：
+
+* 所有数据都小于 64 byte。
+* 元素个数小于 128 个。
+
+{% hint style="info" %}
+上文提到 redis 的持久化，对于内存中的数据结构在磁盘中怎么存储一般有两种方式：
+
+* 清除内存中的结构，将数据存储到磁盘。从磁盘恢复时，需要重新组织成内存中的数据结构。缺点是恢复时耗时。**Redis 就是采用这种持久化方案**。
+* 保留内存中的存储格式。以散列表为例，在磁盘中存储散列表的大小、每个数据在哪个槽等信息，这样从磁盘恢复时，可以避免重新计算 hash 值。
+{% endhint %}
 
 ## 过期删除策略
 
