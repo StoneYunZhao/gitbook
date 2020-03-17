@@ -187,3 +187,7 @@ for (Map.Entry e : m.entrySet()) {
 
 LinkedHashMap **按照访问时间排序**，Linked 表示的是双向链表。本质上，与 LRU 实现原理一样。
 
+## 例题
+
+* [LeetCode 242：判断两个字符串是否由相同的字母构成。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/map/LT242.java)
+
