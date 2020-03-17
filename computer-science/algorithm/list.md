@@ -210,5 +210,8 @@ private static void byTwoLoop(LNode head) {
 * [堆](tree.md#dui)
 * 二叉搜索树
 
+### 例题
 
+* [LeetCode 703，返回数据流中第 k 大元素。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/queue/LT703.java)
+* [LeetCode 239，数组滑动窗口中的最大值。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/queue/LT239.java)
 
