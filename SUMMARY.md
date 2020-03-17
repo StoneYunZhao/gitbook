@@ -50,7 +50,6 @@
 * [Algorithm](computer-science/algorithm/README.md)
   * [Complexity](computer-science/algorithm/complexity.md)
   * [Linear List](computer-science/algorithm/list.md)
-  * [Recursion](computer-science/algorithm/recursion.md)
   * [Sort](computer-science/algorithm/sort.md)
   * [Binary Search](computer-science/algorithm/search.md)
   * [Skip List](computer-science/algorithm/skip-list.md)

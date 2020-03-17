@@ -18,7 +18,6 @@
   * [List](list.md#list)
   * [Stack](list.md#stack)
   * [Queue](list.md#queue)
-* [递归](recursion.md)
 * [排序](sort.md)
 * [查找](search.md)
 * [跳表](skip-list.md)
