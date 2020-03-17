@@ -58,6 +58,8 @@
 ### 例题
 
 * [LeetCode 98：判断一颗树是否为二叉查找树。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/tree/LT98.java)
+* [LeetCode 235：二叉查找树的公共祖先。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/tree/LT235.java)
+* [LeetCode 236：二叉树的公共祖先。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/tree/LT236.java)
 
 ## 平衡二叉查找树
 
