@@ -27,5 +27,5 @@ String 有字符串替换操作，看上去与不可变性矛盾，实际上它�
 
 由此可见，不可变类需要提供类似修改的功能，方式是创建一个新的不可变对象。
 
-但是这样可能会造成对象创建太多了，可以利用[享元模式](../../../computer-science/design-patterns/flyweight.md)来减少对象的创建。
+但是这样可能会造成对象创建太多了，可以利用[享元模式](../../../computer-science/design-patterns/structural/flyweight.md)来减少对象的创建。
 

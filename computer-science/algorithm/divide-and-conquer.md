@@ -13,5 +13,5 @@
 
 ## 例题
 
-* [LeetCode：求 x 的 n 次方。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/divide/LT50.java)
+* [LeetCode 50：求 x 的 n 次方。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/divide/LT50.java)
 

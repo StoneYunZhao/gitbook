@@ -16,6 +16,8 @@
 
 ## 案例
 
+* [LeetCode 122：股票买卖最大利益。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/greedy/LT122.java)
+
 ### 背包问题
 
 问题：一个背包可以容纳 100kg，有五种豆子，背包中应该装哪些豆子，每种豆子装多少，可以使背包中总价值最大。
@@ -27,6 +29,4 @@
 | 红豆 | 60 | 120 |
 | 黑豆 | 20 | 80 |
 | 青豆 | 50 | 75 |
-
-* [LeetCode：股票买卖最大利益。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/greedy/LT122.java)
 

@@ -99,6 +99,10 @@ public void bfs(int s, int t) {
 
 时间复杂度 O\(E\)，空间复杂度 O\(V\)，E 表示边数，V 表示顶点数。
 
+### 例题
+
+* [LeetCode 102：二叉树按层输出。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/tree/LT102.java)
+
 ## DFS
 
 深度优先搜索（Depth-First-Search）采用的是回溯思想，非常适合递归实现。

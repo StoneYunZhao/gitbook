@@ -6,6 +6,12 @@
 
 **定义：**单例模式确保一个类只有一个实例，并提供一个全局访问点。
 
+唯一的作用范围：
+
+* 单例模式：进程间不唯一，进程内唯一，线程间唯一。
+* 线程单例：线程内唯一，线程间不唯一。
+* 集群单例：进程间唯一。
+
 **使用场景：**
 
 * 解决资源访问冲突。比如日志都往一个文件写，写如文件的类就应该是单例。
@@ -149,6 +155,89 @@ public class Singleton {
 	}
 }
 ```
+
+## 线程单例
+
+通过一个线程安全的 Map，key 是线程 ID，value 是对象。其实 Java 提供的 ThreadLocal 可以轻松实现线程单例，不过 ThreadLocal 底层也是用 Map 实现的。
+
+```java
+public class Singleton {
+  private static final ConcurrentHashMap instances = 
+    new ConcurrentHashMap<>();
+
+	private Singleton(){}
+	
+	public static Singleton getInstance(){
+		Long currentThreadId = Thread.currentThread().getId(); 
+		instances.putIfAbsent(currentThreadId, new IdGenerator()); 
+		return instances.get(currentThreadId);
+	}
+}
+```
+
+## 集群单例
+
+需要把单例序列化到外部存储，进程在使用这个单例时需要先从外部存储读取到内存，并反序列化为对象，使用完成后再序列化回外部存储。是从外部存储读取、写入时需要加锁。
+
+```java
+public class Singleton {
+  private static SharedObjectStorage storage = new FileSharedObjectStorage();
+  private static DistributedLock lock = new DistributedLock();
+  private static Singleton instance;
+
+	private Singleton(){}
+	
+	public synchronized static Singleton getInstance() {
+	  if (instance == null) { 
+	    lock.lock(); 
+	    instance = storage.load(Singleton.class); 
+	  } 
+	  return instance; 
+	}
+	
+	public synchroinzed void freeInstance() { 
+	  storage.save(this, Singleton.class); 
+	  instance = null; //释放对象 lock.unlock(); 
+	}
+}
+```
+
+## 多例模式
+
+多例指的是一个类可以创建多个对象，但是个数有限，比如 3 个。
+
+```java
+public class Singleton {
+  private static final int SERVER_COUNT = 3;
+  private static final Map<Long, Singleton> instances = new HashMap<>();
+
+  static {
+    instances.put(1L, new instances("a"));
+    instances.put(2L, new instances("b"));
+    instances.put(3L, new instances("c"));
+  }
+  
+  private String name;
+
+  private instances(String name) {
+    this.name = name;
+  }
+
+  public Singleton getInstance(long serverNo) {
+    return instances.get(serverNo);
+  }
+
+  public Singleton getRandomInstance() {
+    Random r = new Random();
+    int no = r.nextInt(SERVER_COUNT)+1;
+    return instances.get(no);
+  }
+}
+```
+
+这个与工厂模式有点类似，多例模式创建的都是同一个类的对象，工厂模式创建的是不同的子类对象。也类似于享元模式。
+
+枚举也相当于多例模式。
 
 ## 小结
 
