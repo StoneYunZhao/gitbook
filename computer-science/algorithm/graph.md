@@ -146,3 +146,8 @@ private void recurDfs(AtomicReference<Boolean> found, boolean[] visited, int[] p
 DFS 和 BFS 是最简单的两种搜索方法，简单粗暴，没有什么优化，也叫做暴力搜索算法。**适合于状态空间不大的图的搜索。**
 {% endhint %}
 
+### 例题
+
+* [LeetCode 104：二叉树叶子节点的最小深度。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/tree/LT104.java)
+* [LeetCode 111：二叉树叶子节点的最大深度。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/tree/LT111.java)
+
