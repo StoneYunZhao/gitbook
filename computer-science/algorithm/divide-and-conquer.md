@@ -11,3 +11,7 @@
 * 分解有终止条件。
 * 合并操作的复杂度不能太高。
 
+## 例题
+
+* [LeetCode：求 x 的 n 次方。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/divide/LT50.java)
+
