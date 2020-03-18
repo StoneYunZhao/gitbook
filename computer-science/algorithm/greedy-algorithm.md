@@ -28,11 +28,5 @@
 | 黑豆 | 20 | 80 |
 | 青豆 | 50 | 75 |
 
-### 糖果问题
-
-### 钱币找零
-
-### 区间覆盖
-
-### 霍夫曼编码
+* [LeetCode：股票买卖最大利益。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/greedy/LT122.java)
 
