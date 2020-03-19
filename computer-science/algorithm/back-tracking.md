@@ -8,11 +8,9 @@
 
 ## 案例
 
-### 八皇后
-
-问题：有一个 8\*8 的棋盘，往里面放 8 颗棋子，每个棋子所在和行、列、对角线都不能有另一个棋子。
-
-思路：将问题分为 8 个步骤，依次将棋子放在 1 到 8 行。放置过程中，检查是否满足要求，若满足，则进行下一步，即到下一行继续放棋子；若不满足，则换一种放法。
+* [LeetCode 20：生成有效括号组合。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/backtracking/LT22.java)
+* [LeetCode 51：N 皇后问题，输出所有解。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/backtracking/LT51.java)
+* [LeetCode 52：N 皇后问题，输出解的个数。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/backtracking/LT52.java)
 
 ### 0-1 背包
 
