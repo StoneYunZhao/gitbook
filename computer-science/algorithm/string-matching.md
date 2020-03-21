@@ -126,6 +126,10 @@ class TrieNode {
 
 **与散列表、红黑树比较**：精确匹配适合散列表、红黑树等数据结构；前缀匹配适合 Trie 树。
 
+### 例题
+
+* [LeetCode 208：实现字典树。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/tree/LT208.java)
+
 ## AC 自动机
 
 Aho–Corasick 算法是基于 Trie 树的一种改进算法。

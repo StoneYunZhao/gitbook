@@ -62,3 +62,7 @@ public static int search(int[] nums, int target) {
 对于等值查询，散列表和二叉树都能解决二分查找的问题，但是对于“近似”查询（如上面的四种变体），二分查找的优势就明显了。
 {% endhint %}
 
+## 例题
+
+* [LeetCode 69：求平方根。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/search/LT69.java)
+

@@ -11,6 +11,7 @@
 * [LeetCode 20：生成有效括号组合。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/backtracking/LT22.java)
 * [LeetCode 51：N 皇后问题，输出所有解。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/backtracking/LT51.java)
 * [LeetCode 52：N 皇后问题，输出解的个数。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/backtracking/LT52.java)
+* [LeetCode 37：数独的解。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/backtracking/LT37.java)
 
 ### 0-1 背包
 
