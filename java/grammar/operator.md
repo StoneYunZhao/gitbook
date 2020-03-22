@@ -140,4 +140,6 @@ x & (~(1 << (n + 1)) - 1) // 最低位到第 n 位清 0
 ### 例题
 
 * [LeetCode 191：计算二进制数有几个 1。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/bit/LT191.java)
+* [LeetCode 231：判断整数是否为 2 的 n 次方。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/bit/LT231.java)
+* [LeetCode 338：计算 0 到 n 的每个数的二进制表示中 1 的个数。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/bit/LT338.java)
 
