@@ -138,6 +138,7 @@ public int minDist(int i, int j) { // 调用minDist(n-1, n-1);
 ## 案例
 
 * [LeetCode 70：楼梯的走法数。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/dp/LT70.java)
+* [LeetCode 120：三角形的数组，从顶到底的最短路径。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/dp/LT120.java)
 
 ### 0-1 背包
 
