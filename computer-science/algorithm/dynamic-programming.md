@@ -137,6 +137,8 @@ public int minDist(int i, int j) { // 调用minDist(n-1, n-1);
 
 ## 案例
 
+* [LeetCode 70：楼梯的走法数。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/dp/LT70.java)
+
 ### 0-1 背包
 
 见[回溯算法一节](back-tracking.md#01-bei-bao)的 0-1 背包问题，画递归树：
