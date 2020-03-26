@@ -59,6 +59,10 @@ a[k]_adress = base_adress + (k -1) * type_size
 
 2、历史原因，C 语言设计从 0 开始，之后的语言都效仿 C 语言，减少学习成本。Matlab 从 1 开始，Python 支持负数下标。
 
+### 例题
+
+* [LeetCode 169：找出数组中出现次数超过一半的元素。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/array/LT169.java)
+
 ## List
 
 **数组与链表比较**，从存储结构来说，数组需要连续的内存空间，容易产生内存不足的错误，不能动态扩容，单连续内存的特性可借助 CPU 的缓存机制，访问效率更高；而链表不需要，天然支持动态扩容，但是频繁的插入删除会产生较多的内存碎片。

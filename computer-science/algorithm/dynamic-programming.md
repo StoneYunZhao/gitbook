@@ -139,6 +139,13 @@ public int minDist(int i, int j) { // 调用minDist(n-1, n-1);
 
 * [LeetCode 70：楼梯的走法数。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/dp/LT70.java)
 * [LeetCode 120：三角形的数组，从顶到底的最短路径。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/dp/LT120.java)
+* [LeetCode 121：买卖股票最大利润，只能买卖一次。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/dp/LT121.java)
+* [LeetCode 122：买卖股票最大利润，可以买卖无数次。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/greedy/LT122.java)
+* LeetCode 123：买卖股票最大利润，可以买卖两次。
+* [LeetCode 188：买卖股票最大利润，可以买卖 k 次。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/dp/LT188.java)
+* LeetCode 309：买卖股票最大利润，可以买卖无数次，卖了之后隔一天才能买。
+* LeetCode 714：买卖股票最大利润，可以买卖无数次，有交易费。
+* [LeetCode 300：最长上升子序列。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/dp/LT300.java)
 
 ### 0-1 背包
 
