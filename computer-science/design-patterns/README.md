@@ -29,7 +29,7 @@
   * [观察者](behavioral/observer.md)
   * 状态
   * 策略
-  * 模板方法
+  * [模板方法](behavioral/template-method.md)
   * 访问者
 
 {% hint style="info" %}
