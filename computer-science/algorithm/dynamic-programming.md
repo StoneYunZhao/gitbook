@@ -273,6 +273,8 @@ public static int knapsack3(int[] weight, int[] value, int n, int w) {
 
 ### 莱文斯距离
 
+[LeetCode 72。](https://leetcode-cn.com/problems/edit-distance/)
+
 **编辑距离**：将一个字符串转换为另一个字符串，需要的最少编辑操作（增加、删除、替换）次数。编辑距离越小，说明两个字符串越相似。
 
 莱文斯距离允许增加、删除、替换三种操作，最长公共子串只允许增加、删除两种操作。
