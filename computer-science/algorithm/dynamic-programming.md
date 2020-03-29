@@ -146,6 +146,7 @@ public int minDist(int i, int j) { // 调用minDist(n-1, n-1);
 * LeetCode 309：买卖股票最大利润，可以买卖无数次，卖了之后隔一天才能买。
 * LeetCode 714：买卖股票最大利润，可以买卖无数次，有交易费。
 * [LeetCode 300：最长上升子序列。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/dp/LT300.java)
+* [LeetCode 322：最少的硬币凑成总金额。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/dp/LT322.java)
 
 ### 0-1 背包
 
