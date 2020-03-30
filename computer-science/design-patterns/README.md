@@ -29,7 +29,7 @@
   * [观察者](behavioral/observer.md)
   * 状态
   * 策略
-  * [模板方法](behavioral/template-method.md)
+  * [模板方法](behavioral/template-method.md)，并与 [Callback](behavioral/template-method.md#callback) 做了比较。
   * 访问者
 
 {% hint style="info" %}
