@@ -32,6 +32,7 @@
   * [B+ 树](tree.md#b-shu-1)
 * [图](graph.md)
 * [字符串匹配算法](string-matching.md)
+* [布隆过滤器](bloom-filter.md)
 * 算法思想：
   * [贪心算法](greedy-algorithm.md)
   * [分治算法](divide-and-conquer.md)

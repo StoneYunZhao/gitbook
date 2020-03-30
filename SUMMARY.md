@@ -57,6 +57,7 @@
   * [Tree](computer-science/algorithm/tree.md)
   * [Graph](computer-science/algorithm/graph.md)
   * [String Matching](computer-science/algorithm/string-matching.md)
+  * [Bloom Filter](computer-science/algorithm/bloom-filter.md)
   * [Greedy Algorithm](computer-science/algorithm/greedy-algorithm.md)
   * [Divide and Conquer](computer-science/algorithm/divide-and-conquer.md)
   * [Back Tracking](computer-science/algorithm/back-tracking.md)
