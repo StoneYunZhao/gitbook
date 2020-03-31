@@ -62,6 +62,7 @@ a[k]_adress = base_adress + (k -1) * type_size
 ### 例题
 
 * [LeetCode 169：找出数组中出现次数超过一半的元素。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/array/LT169.java)
+* [LeetCode 42：数组中找到没有出现的最小正整数。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/array/LT42.java)
 
 ## List
 
