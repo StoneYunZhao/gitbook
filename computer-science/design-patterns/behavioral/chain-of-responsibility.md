@@ -2,7 +2,7 @@
 
 ## 介绍
 
-定义：为请求创建一个接受此次请求对象链。 
+定义：Avoid coupling the sender of a request to its receiver by giving more than one object a chance to handle the request. Chain the receiving objects and pass the request along the chain until an object handles it. 将请求的发送和接收解耦，让多个接收对象都有机会处理这个请求。将这些接收对象串成一条链，并沿着这条链传递这个请求，直到链上的某个接收对象能够处理它为止。
 
 适用场景：一个请求的处理需要多个对象中的一个或几个协作处理。
 
@@ -13,9 +13,140 @@
 
 缺点：若责任链太长，则影响性能。
 
-## 类图
+## 示例
+
+### 方式 1
+
+Handler 负责下一 Handler 的调用。
+
+```java
+public abstract class Handler {
+  protected Handler successor = null;
+
+  public void setSuccessor(Handler successor) {
+    this.successor = successor;
+  }
+
+  public final void handle() {
+    boolean handled = doHandle();
+    if (successor != null && !handled) {
+      successor.handle();
+    }
+  }
+
+  protected abstract boolean doHandle();
+}
+
+public class HandlerA extends Handler {
+  @Override
+  protected boolean doHandle() {
+    boolean handled = false;
+    //...
+    return handled;
+  }
+}
+
+public class HandlerB extends Handler {
+  @Override
+  protected boolean doHandle() {
+    boolean handled = false;
+    //...
+    return handled;
+  }
+}
+
+public class HandlerChain {
+  private Handler head = null;
+  private Handler tail = null;
+
+  public void addHandler(Handler handler) {
+    handler.setSuccessor(null);
+
+    if (head == null) {
+      head = handler;
+      tail = handler;
+      return;
+    }
+
+    tail.setSuccessor(handler);
+    tail = handler;
+  }
+
+  public void handle() {
+    if (head != null) {
+      head.handle();
+    }
+  }
+}
+
+// 使用举例
+public class Application {
+  public static void main(String[] args) {
+    HandlerChain chain = new HandlerChain();
+    chain.addHandler(new HandlerA());
+    chain.addHandler(new HandlerB());
+    chain.handle();
+  }
+}
+```
 
 ![](../../../.gitbook/assets/image%20%2878%29.png)
+
+### 方式 2
+
+HandlerChain 负责下一 Handler 的调用。
+
+```java
+
+public interface IHandler {
+  boolean handle();
+}
+
+public class HandlerA implements IHandler {
+  @Override
+  public boolean handle() {
+    boolean handled = false;
+    //...
+    return handled;
+  }
+}
+
+public class HandlerB implements IHandler {
+  @Override
+  public boolean handle() {
+    boolean handled = false;
+    //...
+    return handled;
+  }
+}
+
+public class HandlerChain {
+  private List<IHandler> handlers = new ArrayList<>();
+
+  public void addHandler(IHandler handler) {
+    this.handlers.add(handler);
+  }
+
+  public void handle() {
+    for (IHandler handler : handlers) {
+      boolean handled = handler.handle();
+      if (handled) {
+        break;
+      }
+    }
+  }
+}
+
+// 使用举例
+public class Application {
+  public static void main(String[] args) {
+    HandlerChain chain = new HandlerChain();
+    chain.addHandler(new HandlerA());
+    chain.addHandler(new HandlerB());
+    chain.handle();
+  }
+}
+```
 
 ## 源码
 
