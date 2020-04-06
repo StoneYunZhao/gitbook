@@ -93,6 +93,7 @@
     * [Observer](computer-science/design-patterns/behavioral/observer.md)
     * [Template Method](computer-science/design-patterns/behavioral/template-method.md)
     * [Strategy](computer-science/design-patterns/behavioral/strategy.md)
+    * [State](computer-science/design-patterns/behavioral/state.md)
     * [Iterator](computer-science/design-patterns/behavioral/iterator.md)
     * [Chain of Responsibility](computer-science/design-patterns/behavioral/chain-of-responsibility.md)
 * [Distributed System](computer-science/distributed-system/README.md)

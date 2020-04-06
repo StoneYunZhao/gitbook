@@ -27,7 +27,7 @@
   * 中介者
   * 备忘录
   * [观察者](behavioral/observer.md)
-  * 状态
+  * [状态](behavioral/state.md)
   * [策略](behavioral/strategy.md)
   * [模板方法](behavioral/template-method.md)，并与 [Callback](behavioral/template-method.md#callback) 做了比较。
   * 访问者
