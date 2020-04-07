@@ -28,3 +28,61 @@ JDK 的 ArrayList 实现了 Iterator 接口。
 
 ![](../../../.gitbook/assets/image%20%28214%29.png)
 
+下面代码说明：
+
+* 迭代过程中不能直接通过 List 的方法增加或删除元素。
+* 可以通过迭代器的 remove 方法删除元素。
+* 迭代器每次访问 next 方法，只能调用一次 remove 方法，连续调用两次会报错。
+* 若两个迭代器同时在用，其中一个调用 remove 方法后，另一个再调用 next 或 remove 方法都会报错。
+
+```java
+public class ArrayList<E> {
+  transient Object[] elementData;
+  private int size;
+
+  public Iterator<E> iterator() {
+    return new Itr();
+  }
+
+  private class Itr implements Iterator<E> {
+    int cursor;       // index of next element to return
+    int lastRet = -1; // index of last element returned; -1 if no such
+    int expectedModCount = modCount;
+
+    Itr() {}
+
+    public boolean hasNext() {
+      return cursor != size;
+    }
+
+    @SuppressWarnings("unchecked")
+    public E next() {
+      checkForComodification();
+      int i = cursor;
+      if (i >= size)
+        throw new NoSuchElementException();
+      Object[] elementData = ArrayList.this.elementData;
+      if (i >= elementData.length)
+        throw new ConcurrentModificationException();
+      cursor = i + 1;
+      return (E) elementData[lastRet = i];
+    }
+    
+    public void remove() {
+      if (lastRet < 0)
+        throw new IllegalStateException();
+      checkForComodification();
+
+      try {
+        ArrayList.this.remove(lastRet);
+        cursor = lastRet;
+        lastRet = -1;
+        expectedModCount = modCount;
+      } catch (IndexOutOfBoundsException ex) {
+        throw new ConcurrentModificationException();
+      }
+    }
+  }
+}
+```
+
