@@ -106,7 +106,7 @@ x ^ 1s = ~x // 1s = ~0
 x ^ (~x) = 1s
 x ^ x = 0
 a ^ b = c => a ^ c = b, b ^ c = a
-a ^ b ^ c = a ^ (b ^ c) = (a ^ b) ^ c
+a ^ b ^ c = a ^ (b ^ c)
 ```
 
 ### 套路
