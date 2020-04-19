@@ -28,6 +28,7 @@
   * [红黑树](tree.md#hong-hei-shu)
   * [递归树](tree.md#di-gui-shu)
   * [堆](tree.md#dui)
+  * 并查集
   * [B 树](tree.md#b-shu)
   * [B+ 树](tree.md#b-shu-1)
 * [图](graph.md)
