@@ -17,7 +17,7 @@
 * **任务分解**：任何和分解后的子任务具有相似性，体现在解决算法是相同的，只是数据规模不同。一般采用递归算法。
 * **结果合并**。
 
-![](../../.gitbook/assets/image%20%2853%29.png)
+![](../../.gitbook/assets/image%20%2854%29.png)
 
 Java 并发包提供了 Fork/Join 的并行框架来解决分治的任务模型。
 
@@ -75,7 +75,7 @@ ForkJoinPool 与 ThreadPoolExecutor 一样，本质上是一个生产者-消费�
 
 **任务窃取**：如果工作线程空闲了，那么它会窃取其它工作任务队列里面的任务。任务队列采用**双端队列**，工作线程正常获取任务和窃取任务是从不同的端拿的，以减少数据竞争。
 
-![ForkJoinPool &#x5DE5;&#x4F5C;&#x539F;&#x7406;](../../.gitbook/assets/image%20%28201%29.png)
+![ForkJoinPool &#x5DE5;&#x4F5C;&#x539F;&#x7406;](../../.gitbook/assets/image%20%28202%29.png)
 
 {% hint style="info" %}
 Java 1.8 中的 parallelStream 也是以 ForkJoinPool 为基础的，默认情况下所有的并行流都共享一个 ForkJoinPool，这个共享的 ForkJoinPool 线程数是 CPU 的核数。如果并行流是计算密集型的话没什么问题；若是 IO 密集型的话，很容易拖慢整个系统的性能。建议用不同的 ForkJoinPool 执行不同的计算任务。

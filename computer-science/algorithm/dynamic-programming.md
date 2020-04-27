@@ -14,7 +14,7 @@
 
 举例分析，一个 n\*n 的矩阵，存储正整数，从左上角到右下角移动，只能向右或向下移动，路径上经过的数字之和为路径的长度，求最短路径长度。
 
-![](../../.gitbook/assets/image%20%28149%29.png)
+![](../../.gitbook/assets/image%20%28150%29.png)
 
 * 总共要走 2\*\(n-1\) 步，每一步都需要做向右或向下的决策，符合多阶段决策最优解模型。
 * 状态定义为 min\_dist\(i, j\)，表示 \(0, 0\) 到 \(1, 1\) 的最短路径长度，符合最优子结构：`min_dist(i, j) = w[i][j] + min(min_dist(i, j - 1), min_dist(i - 1, j))`
@@ -65,13 +65,13 @@ public void minDistBT(int i, int j, int dist) {
 
 定义状态为 \(i, j, dist\)，表示到达 \(i, j\) 的路径长度为 dist，画递归树：
 
-![](../../.gitbook/assets/image%20%28245%29.png)
+![](../../.gitbook/assets/image%20%28246%29.png)
 
 从状态树中可以看出，尽管 \(i, j, dist\) 不存在重复，但是 \(i, j\) 有很多重复，我们只需要选出 \(i, j\) 中 dist 最小的节点，所以存在重复子问题。画状态转移表，并一步一步填充：
 
 ![](../../.gitbook/assets/image%20%2819%29.png)
 
-![](../../.gitbook/assets/image%20%28240%29.png)
+![](../../.gitbook/assets/image%20%28241%29.png)
 
 翻译成动态规划的代码：
 
@@ -156,9 +156,9 @@ public int minDist(int i, int j) { // 调用minDist(n-1, n-1);
 
 定义状态 \(i, cw\)，表示在决策第 i 个物品是否放入背包时，当前背包重量为 cw。有很多重复子问题，画状态转移表，states\[n\]\[w + 1\] 每一行表示第 i 个物品决策完后，当前背包中的重量有哪些值：
 
-![](../../.gitbook/assets/image%20%28265%29.png)
+![](../../.gitbook/assets/image%20%28266%29.png)
 
-![](../../.gitbook/assets/image%20%2851%29.png)
+![](../../.gitbook/assets/image%20%2852%29.png)
 
 翻译成代码：
 
@@ -233,7 +233,7 @@ public void f(int i, int cw, int cv) { // 调用f(0, 0, 0)
 
 递归树如下：
 
-![](../../.gitbook/assets/image%20%28180%29.png)
+![](../../.gitbook/assets/image%20%28181%29.png)
 
 可以看出，\(2, 2, 4\) 和\(2, 2, 3\)，我们只需要选择前者，即对于相同的 \(i, cw\)，只需要保留 cv 最大的那个。states\[n\]\[w + 1\] 中保存的是当前状态的最大值：​
 
@@ -279,7 +279,7 @@ public static int knapsack3(int[] weight, int[] value, int n, int w) {
 
 莱文斯距离允许增加、删除、替换三种操作，最长公共子串只允许增加、删除两种操作。
 
-![](../../.gitbook/assets/image%20%28133%29.png)
+![](../../.gitbook/assets/image%20%28134%29.png)
 
 用回溯处理莱文斯距离，两个字符串 a、b，编辑 a 以得到 b。当 a\[i\] 和 b\[j\] 匹配时，递归匹配 a\[i + 1\] 和 b\[j + 1\]；若不匹配，则：
 
@@ -324,7 +324,7 @@ min(min_edist(i-1,j)+1, min_edist(i,j-1)+1，min_edist(i-1,j-1))
 
 状态表的填充过程：
 
-![](../../.gitbook/assets/image%20%2837%29.png)
+![](../../.gitbook/assets/image%20%2838%29.png)
 
 转换为代码：
 

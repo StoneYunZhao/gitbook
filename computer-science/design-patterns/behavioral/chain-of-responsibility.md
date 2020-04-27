@@ -90,7 +90,7 @@ public class Application {
 }
 ```
 
-![](../../../.gitbook/assets/image%20%2878%29.png)
+![](../../../.gitbook/assets/image%20%2879%29.png)
 
 ### 方式 2
 
@@ -229,7 +229,7 @@ public class MockFilterChain implements FilterChain {
 }
 ```
 
-![](../../../.gitbook/assets/image%20%2894%29.png)
+![](../../../.gitbook/assets/image%20%2895%29.png)
 
 ```java
 // ch.qos.logback.classic.selector.servlet
