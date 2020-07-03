@@ -2,6 +2,11 @@
 
 * [Introduce](README.md)
 
+## Go
+
+* [Grammar](go/grammar/README.md)
+  * [Basic Data Types](go/grammar/basic-data-types.md)
+
 ## JAVA
 
 * [Preface](java/preface.md)

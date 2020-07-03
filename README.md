@@ -5,8 +5,10 @@
 * 国外地址：[https://yunzhao.gitbook.io/notes/](https://yunzhao.gitbook.io/notes/)
 * GitHub 地址：[https://github.com/StoneYunZhao](https://github.com/StoneYunZhao)
 
-由于作为笔记用，一个技术点在工作、学习过程中会不断增补。内容主要有四大块，详细目录见左侧边栏：
+由于作为笔记用，一个技术点在工作、学习过程中会不断增补。内容主要有五大块，详细目录见左侧边栏：
 
+* **Go：**
+  * [基本语法](go/grammar/)
 * **Java**：
   * [序言](java/preface.md)
   * [基本语法](java/grammar/)
