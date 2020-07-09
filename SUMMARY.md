@@ -8,6 +8,7 @@
   * [Basic Data Types](go/grammar/basic-data-types.md)
 * [System Library](go/system-library/README.md)
   * [sync](go/system-library/sync.md)
+  * [context](go/system-library/context.md)
 
 ## JAVA
 
