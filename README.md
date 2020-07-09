@@ -9,6 +9,7 @@
 
 * **Go：**
   * [基本语法](go/grammar/)
+  * [系统库](go/system-library/)
 * **Java**：
   * [序言](java/preface.md)
   * [基本语法](java/grammar/)
