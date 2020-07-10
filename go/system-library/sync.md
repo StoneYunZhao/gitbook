@@ -67,7 +67,7 @@ func runtime_registerPoolCleanup(cleanup func())
 
 #### 数据结构
 
-Pool 是一个多层的数据结构。一个 Pool 中包含一个长度为 P 的数量的 \[\]poolLocal，一个 poolLocal 中有一个私有的对象 interface{}，一个共享的临时对象列表 poolChain。
+Pool 是一个多层的数据结构。一个 Pool 中包含一个长度为 P 的数量的 \[\]poolLocal，一个 poolLocal 中有一个私有的对象 interface{}，一个共享的临时对象列表 poolChain。这样设计的目的是**可以分散存储压力和性能压力。**
 
 ```go
 type Pool struct {
