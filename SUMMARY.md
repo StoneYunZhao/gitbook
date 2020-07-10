@@ -111,6 +111,7 @@
 
 ## database
 
+* [InfluxDB](database/influxdb.md)
 * [MySQL](database/mysql/README.md)
   * [SQL](database/mysql/sql.md)
   * [Architecture](database/mysql/architecture.md)

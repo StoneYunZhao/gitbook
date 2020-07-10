@@ -27,6 +27,7 @@
   * [设计模式](computer-science/design-patterns/)
   * [分布式系统](computer-science/distributed-system/)
 * **数据库**：
+  * [InfluxDB](database/influxdb.md)
   * [MySQL](database/mysql/)
   * [Redis](database/basic.md)
   * [Elasticsearch](database/elasticsearch/)
