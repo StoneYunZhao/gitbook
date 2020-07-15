@@ -294,6 +294,10 @@ Linux 一切皆文件，标准输出（stdout）、管道、Socket、设备、�
 
 ### 进程间通信
 
+{% hint style="info" %}
+进程间通信有很多方式，主要包括：系统信号（signal）、管道（pipe）、套接字（socket）、文件锁（file lock）、消息队列（message queue）、信号量（semaphore）。
+{% endhint %}
+
 `msgget`
 
 创建消息队列。
