@@ -9,6 +9,7 @@
 * [System Library](go/system-library/README.md)
   * [sync](go/system-library/sync.md)
   * [context](go/system-library/context.md)
+  * [net](go/system-library/net.md)
 
 ## JAVA
 
