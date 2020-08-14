@@ -9,6 +9,7 @@
   * [Composite Types](go/grammar/composite-types.md)
   * [Method](go/grammar/method.md)
 * [System Library](go/system-library/README.md)
+  * [Module](go/system-library/module.md)
   * [sync](go/system-library/sync.md)
   * [context](go/system-library/context.md)
   * [net](go/system-library/net.md)
