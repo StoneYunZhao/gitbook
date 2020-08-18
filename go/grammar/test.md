@@ -37,7 +37,6 @@ go test
 -coverprofile=c.out // 输出测试覆盖率文件
 -covermode=count // 覆盖率插入的代码是计数器而不是 bool，可以衡量热点代码
 
-
 go tool cover -html=c.out // 生成覆盖率报告
 ```
 
@@ -61,5 +60,20 @@ go test 默认不执行基准测试，-bench=${regex} 指定执行的基准测�
 go test
 -bench=. 
 -benchmem // 统计内存相关数据
+
+// profile
+-cpuprofile=cpu.out
+-blockprofile=block.out // goroutine 的阻塞行为
+-memprofile=mem.out
+
+go tool pprof
+-text // 输出格式
+-nodecount // 输出前 10 行
 ```
+
+## 示例函数
+
+主要用作文档。godoc 根据示例函数名关联到某个具体的 API 函数。
+
+go test 也会运行示例函数，若有 // Output: 的注释，还会校验标准输出与注释是否一致。
 
