@@ -50,6 +50,14 @@ go tool cover -html=c.out // 生成覆盖率报告
 
 外部测试包可以避免循环依赖，对于集成测试应用比较广泛。若外部测试包需要做白盒测试，可以通过内部测试包导出相关变量，如 fmt 包中的 export\_test.go 文件。原始包名加上 \_test 后缀表示 go test 需要建立一个额外的包来进行测试。
 
+可以通过 go list 来区分哪些是源文件、内部测试代码、外部测试代码
+
+```bash
+go list -f={{.GoFiles}} ${package}
+go list -f={{.TestGoFiles}} ${package}
+go list -f={{.XTestGoFiles}} ${package}
+```
+
 ## 基准测试
 
 go test 默认不执行基准测试，-bench=${regex} 指定执行的基准测试的函数名。
