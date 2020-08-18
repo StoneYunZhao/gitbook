@@ -110,6 +110,7 @@
     * [Iterator](computer-science/design-patterns/behavioral/iterator.md)
     * [Chain of Responsibility](computer-science/design-patterns/behavioral/chain-of-responsibility.md)
 * [Distributed System](computer-science/distributed-system/README.md)
+  * [Theory](computer-science/distributed-system/theory.md)
   * [Message Queue](computer-science/distributed-system/message-queue.md)
   * [Cache](computer-science/distributed-system/cache.md)
   * [Consistent Hashing](computer-science/distributed-system/consistent-hashing.md)
