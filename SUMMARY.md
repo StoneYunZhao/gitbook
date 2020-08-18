@@ -8,6 +8,7 @@
   * [Basic Data Types](go/grammar/basic-data-types.md)
   * [Composite Types](go/grammar/composite-types.md)
   * [Method](go/grammar/method.md)
+  * [Test](go/grammar/test.md)
 * [System Library](go/system-library/README.md)
   * [Module](go/system-library/module.md)
   * [sync](go/system-library/sync.md)
