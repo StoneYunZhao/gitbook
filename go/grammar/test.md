@@ -53,5 +53,13 @@ go tool cover -html=c.out // 生成覆盖率报告
 
 ## 基准测试
 
+go test 默认不执行基准测试，-bench=${regex} 指定执行的基准测试的函数名。
 
+循环在基准测试内实现，而不是测试框架，这样就可以做一些初始化操作。
+
+```bash
+go test
+-bench=. 
+-benchmem // 统计内存相关数据
+```
 
