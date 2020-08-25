@@ -18,6 +18,37 @@
 
 ## 常用命令
 
+### 磁盘管理
+
+```bash
+# list block device
+lsblk
+
+lsblk -ip $device
+lsblk -ip /dev/sde
+
+# 显示设备的 UUID
+blkid
+
+# 显示分区信息
+parted $device print
+parted /dev/sde print
+
+# 显示分区信息
+cat /proc/partitions
+
+# for MBR
+fdisk $divice
+
+# for GPT
+gdisk $device
+gdisk /dev/sdc
+
+
+# gdisk 操作完后，使之生效，不然要重启才会生效
+partprobe -s
+```
+
 ### 用户管理
 
 ```bash
