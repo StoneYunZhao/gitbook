@@ -44,7 +44,6 @@ fdisk $divice
 gdisk $device
 gdisk /dev/sdc
 
-
 # gdisk 操作完后，使之生效，不然要重启才会生效
 partprobe -s
 ```
