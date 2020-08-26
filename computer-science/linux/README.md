@@ -43,9 +43,49 @@ fdisk $divice
 # for GPT
 gdisk $device
 gdisk /dev/sdc
+gdisk -l /dev/sdb
 
 # gdisk 操作完后，使之生效，不然要重启才会生效
 partprobe -s
+
+# 格式化
+mkfs.ext4 $device
+mkfs.xfs $device
+
+# 挂载
+mount
+mount -l
+
+# 卸载
+umount $device
+umount /dev/sdb1
+
+# pv阶段
+pvscan
+pvdisplay
+
+pvcreate /dev/sdb{1,2}
+
+pvremove /dev/sdb{1,2} /dev/sdc{1,2}
+
+# vg 阶段
+vgscan
+vgdisplay
+
+vgcreate -s 16M influxdbvg /dev/sdb{1,2} /dev/sdc{1,2}
+
+vgextend influxdbvg /dev/sdc3
+
+vgremove influxdbvg
+
+# lv 阶段
+lvscan
+lvdisplay
+
+lvcreate -L 2048G -n influxdblv influxdbvg
+lvresize -L +512G /dev/influxdbvg/influxdblv
+
+lvremove /dev/influxdbvg/influxdblv
 ```
 
 ### 用户管理
