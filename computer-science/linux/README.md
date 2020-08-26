@@ -59,7 +59,11 @@ mount -l
 # 卸载
 umount $device
 umount /dev/sdb1
+```
 
+#### LVM
+
+```bash
 # pv阶段
 pvscan
 pvdisplay
