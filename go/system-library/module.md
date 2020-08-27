@@ -24,5 +24,7 @@ go list -m all
 
 
 
-[https://blog.golang.org/using-go-modules](https://blog.golang.org/using-go-modules)
+{% embed url="https://blog.golang.org/using-go-modules" %}
+
+[https://stackoverflow.com/questions/57355929/what-does-incompatible-in-go-mod-mean-will-it-cause-harm](https://stackoverflow.com/questions/57355929/what-does-incompatible-in-go-mod-mean-will-it-cause-harm)
 
