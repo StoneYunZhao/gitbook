@@ -158,6 +158,10 @@ more
 
 # 分页查看文件，可以前后翻页
 less
+
+# 同步文件
+rsync
+rsync -av $SRC $DEST
 ```
 
 ### 软件管理
