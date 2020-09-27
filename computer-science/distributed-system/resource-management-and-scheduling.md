@@ -20,3 +20,11 @@
 
 ![](../../.gitbook/assets/image%20%28272%29.png)
 
+## 非集中式结构
+
+集中式结构存在单点性能瓶颈和单点故障等问题。非集中式可以做到超大规模。
+
+以 Akka、Redis、Cassandra 为例。
+
+![](../../.gitbook/assets/image%20%28276%29.png)
+

@@ -8,6 +8,7 @@
   * [分布式锁](theory.md#lock)
 * [分布式资源管理与调度](resource-management-and-scheduling.md)
   * [集中式](resource-management-and-scheduling.md#ji-zhong-shi-jie-gou)
+  * [非集中式](resource-management-and-scheduling.md#fei-ji-zhong-shi-jie-gou)
 * 分布式系统
   * 为什么要进行系统拆分？
   * 分布式服务框架
