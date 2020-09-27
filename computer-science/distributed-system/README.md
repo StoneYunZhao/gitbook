@@ -6,6 +6,8 @@
   * [分布式共识](theory.md#consensus)
   * [分布式事务](theory.md#transaction)
   * [分布式锁](theory.md#lock)
+* [分布式资源管理与调度](resource-management-and-scheduling.md)
+  * [集中式](resource-management-and-scheduling.md#ji-zhong-shi-jie-gou)
 * 分布式系统
   * 为什么要进行系统拆分？
   * 分布式服务框架
