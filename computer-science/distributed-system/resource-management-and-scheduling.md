@@ -1,4 +1,4 @@
-# Resource Management & Scheduling
+# Architecture
 
 ## 集中式结构
 
