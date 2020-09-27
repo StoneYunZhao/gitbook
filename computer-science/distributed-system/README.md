@@ -3,6 +3,9 @@
 * [理论](theory.md)
   * [分布式互斥](theory.md#mutual-exclusion)
   * [分布式选举](theory.md#election)
+  * [分布式共识](theory.md#consensus)
+  * [分布式事务](theory.md#transaction)
+  * [分布式锁](theory.md#lock)
 * 分布式系统
   * 为什么要进行系统拆分？
   * 分布式服务框架
