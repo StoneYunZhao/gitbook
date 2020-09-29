@@ -114,6 +114,7 @@
   * [Theory](computer-science/distributed-system/theory.md)
   * [Resource Management](computer-science/distributed-system/resource-management-and-scheduling.md)
   * [Scheduling](computer-science/distributed-system/scheduling.md)
+  * [Computing](computer-science/distributed-system/computing.md)
   * [Message Queue](computer-science/distributed-system/message-queue.md)
   * [Cache](computer-science/distributed-system/cache.md)
   * [Consistent Hashing](computer-science/distributed-system/consistent-hashing.md)
