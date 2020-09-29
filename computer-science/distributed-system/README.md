@@ -9,7 +9,7 @@
 * [分布式体系结构](resource-management-and-scheduling.md)
   * [集中式](resource-management-and-scheduling.md#ji-zhong-shi-jie-gou)
   * [非集中式](resource-management-and-scheduling.md#fei-ji-zhong-shi-jie-gou)
-* 分布式调度
+* [分布式调度](scheduling.md)
   * 单体调度
   * 两层调度
   * 共享状态调度
