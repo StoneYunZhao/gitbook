@@ -26,5 +26,5 @@
 
 以 Akka、Redis、Cassandra 为例。
 
-![](../../.gitbook/assets/image%20%28278%29.png)
+![](../../.gitbook/assets/image%20%28279%29.png)
 

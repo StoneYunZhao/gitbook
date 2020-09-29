@@ -14,7 +14,7 @@
   * [两层调度](scheduling.md#liang-ceng-tiao-du)
   * [共享状态调度](scheduling.md#gong-xiang-zhuang-tai-tiao-du)
 * 分布式计算
-  * Map-Reduce
+  * [Map-Reduce](computing.md#mr)
 * 分布式系统
   * 为什么要进行系统拆分？
   * 分布式服务框架

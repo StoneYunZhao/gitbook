@@ -11,6 +11,8 @@
 * 分解有终止条件。
 * 合并操作的复杂度不能太高。
 
+[Map-Reduce](../distributed-system/computing.md#mr) 也是利用了分治的思想。
+
 ## 例题
 
 * [LeetCode 50：求 x 的 n 次方。](https://github.com/StoneYunZhao/algorithm/blob/master/src/main/java/com/zhaoyun/leetcode/divide/LT50.java)
