@@ -84,6 +84,7 @@
   * [Application layer](computer-science/network-protocol/application-layer.md)
   * [HTTP](computer-science/network-protocol/http.md)
 * [Operating System](computer-science/linux/README.md)
+  * [Basic](computer-science/linux/basic.md)
   * [System Initialization](computer-science/linux/system-initialization.md)
 * [Design Patterns](computer-science/design-patterns/README.md)
   * [UML](computer-science/design-patterns/uml.md)
