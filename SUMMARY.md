@@ -86,6 +86,7 @@
 * [Operating System](computer-science/linux/README.md)
   * [Basic](computer-science/linux/basic.md)
   * [System Initialization](computer-science/linux/system-initialization.md)
+  * [CPU Diagnosis](computer-science/linux/cpu-diagnosis.md)
 * [Design Patterns](computer-science/design-patterns/README.md)
   * [UML](computer-science/design-patterns/uml.md)
   * [OOP](computer-science/design-patterns/oop.md)

@@ -11,7 +11,7 @@
 
 以及性能优化手段：
 
-* CPU
+* [CPU](cpu-diagnosis.md)
 * 内存
 * I/O
 * 网络
