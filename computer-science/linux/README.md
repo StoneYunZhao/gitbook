@@ -12,6 +12,8 @@
 以及性能优化手段：
 
 * [CPU](cpu-diagnosis.md)
+  * [平均负载](cpu-diagnosis.md#ping-jun-fu-zai)
+  * [CPU 上下文切换](cpu-diagnosis.md#shang-xia-wen-qie-huan)
 * 内存
 * I/O
 * 网络
