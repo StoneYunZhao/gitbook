@@ -2,7 +2,7 @@
 
 ## 平均负载
 
-我们经常会用 uptime、top 等工具查询 cpu 的平均负载，那到底什么是平均负载呢？
+我们经常会用 uptime、top 等工具查询 cpu 的平均负载（Load Average），那到底什么是平均负载呢？
 
 uptime 命令显示的分别是当前时间，系统运行时间，1、3、15 分钟的平均负载。
 
@@ -47,10 +47,14 @@ uptime 命令显示的分别是当前时间，系统运行时间，1、3、15 �
   * pidstat：进程性能分析工具
 
 ```bash
-## CPU 密集型
-
-# 模拟一个 CPU 使用 100%
+# CPU 密集型, 模拟一个 CPU 使用 100%
 stress --cpu 1 --timeout 10
+
+# IO 密集型, 不停地执行 sync
+stress -i 1 --timeout 600
+
+# 大量进程
+stress -c 8 --timeout 600
 
 # 查看 uptime 命令输出的变化
 watch -d uptime
@@ -60,12 +64,6 @@ mpstat -P ALL 5
 
 # 查看哪个进程占用的 CPU
 pidstat -u 5 1
-
-## IO 密集型, 不停地执行 sync
-stress -i 1 --timeout 600
-
-## 大量进程
-stress -c 8 --timeout 600
 ```
 
 ## 上下文切换
