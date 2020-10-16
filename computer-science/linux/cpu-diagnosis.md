@@ -2,7 +2,9 @@
 
 ## 工具
 
-### cpu
+### 基础
+
+查看cpu：
 
 ```bash
 cat /proc/cpuinfo
@@ -10,27 +12,44 @@ lscpu
 cpuid
 ```
 
+查看系统负载：
+
+```bash
+top
+
+uptime
+
+// output: 当前时间，系统运行时间，1、3、15 分钟的平均负载
+17:44:09 up  1:58,  3 users,  load average: 0.00, 0.00, 0.00
+```
+
+观察某个命令输出的变化：
+
+```bash
+watch -d uptime
+// -d, --differences 高亮变化的部分
+```
+
 ### stress
 
-系统压力测试工具：`apt install stress`
+系统压力测试工具：`apt install stress`，重要的参数有：
+
+* -i, --io 模拟 N 个进程执行 sync\(\)
+* -c,--cpu 模拟 N 个进程执行 sqrt\(\)
+* -t,--timeout 执行 N 秒
 
 ### sysstat
 
 系统压力测试工具：`apt install sysstat`
 
 * mpstat：CPU 性能分析工具
+  * -P ALL，输出所有 CPU 的统计
 * pidstat：进程性能分析工具
+  * -u，输出 CPU 使用率
 
 ## 平均负载
 
 我们经常会用 uptime、top 等工具查询 cpu 的平均负载（Load Average），那到底什么是平均负载呢？
-
-uptime 命令显示的分别是当前时间，系统运行时间，1、3、15 分钟的平均负载。
-
-```bash
-➜  ~ uptime
- 17:44:09 up  1:58,  3 users,  load average: 0.00, 0.00, 0.00
-```
 
 通过 man uptime 可以看到平均负载的定义：**System load averages is the average number of processes that are either in a runnable or uninterruptable state. A process in a runnable state is either using the CPU or waiting to use the CPU. A process in uninterruptable state is wait- ing for some I/O access, eg waiting for disk.** 
 
@@ -56,13 +75,13 @@ uptime 命令显示的分别是当前时间，系统运行时间，1、3、15 �
 
 ```bash
 # CPU 密集型, 模拟一个 CPU 使用 100%
-stress --cpu 1 --timeout 10
+stress -c 1 -t 10
 
 # IO 密集型, 不停地执行 sync
-stress -i 1 --timeout 600
+stress -i 1 -t 600
 
 # 大量进程
-stress -c 8 --timeout 600
+stress -c 8 -t 600
 
 # 查看 uptime 命令输出的变化
 watch -d uptime
