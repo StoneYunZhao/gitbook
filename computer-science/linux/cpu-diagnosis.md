@@ -1,5 +1,26 @@
 # CPU Diagnosis
 
+## 工具
+
+### cpu
+
+```bash
+cat /proc/cpuinfo
+lscpu
+cpuid
+```
+
+### stress
+
+系统压力测试工具：`apt install stress`
+
+### sysstat
+
+系统压力测试工具：`apt install sysstat`
+
+* mpstat：CPU 性能分析工具
+* pidstat：进程性能分析工具
+
 ## 平均负载
 
 我们经常会用 uptime、top 等工具查询 cpu 的平均负载（Load Average），那到底什么是平均负载呢？
@@ -22,14 +43,6 @@ uptime 命令显示的分别是当前时间，系统运行时间，1、3、15 �
 
 **经验：当平均负载高于 CPU 个数的 70% 的时候，就需要关注性能问题了。**
 
-{% hint style="info" %}
-获取 CPU 个数的方法
-
-* `cat /proc/cpuinfo`
-* `lscpu`
-* `cpuid`
-{% endhint %}
-
 {% hint style="success" %}
 **平均负载与 CPU 使用率**  
 两者并不一定是完全对应的，从定义可以看出，平均负载是指活跃的进程个数，活跃的进程还包括了等待 CPU 和等待 IO 的进程。
@@ -40,11 +53,6 @@ uptime 命令显示的分别是当前时间，系统运行时间，1、3、15 �
 {% endhint %}
 
 ### 压力测试
-
-* stress：系统压力测试工具
-* sysstat：性能分析工具
-  * mpstat：CPU 性能分析工具
-  * pidstat：进程性能分析工具
 
 ```bash
 # CPU 密集型, 模拟一个 CPU 使用 100%
