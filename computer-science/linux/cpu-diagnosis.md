@@ -46,6 +46,29 @@ watch -d uptime
   * -P ALL，输出所有 CPU 的统计
 * pidstat：进程性能分析工具
   * -u，输出 CPU 使用率
+  * -w，输出任务切换
+    * cswch：每秒自愿上下文切换数。进程无法获取资源（IO、内存）导致上下文切换。
+    * nvcswch：每秒非自愿上下文切换数。进程的时间片已到，系统强制调度。
+
+### vmstat
+
+系统性能分析工具，主要用于分析系统内存使用情况、CPU 上下文切换、中断次数等。
+
+```bash
+vmstat [options] [delay [count]]
+
+// 每隔 5 秒输出一次
+➜  ~ vmstat 5
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 0  0      0 1719840  17412 151560    0    0     1     0   24   31  0  0 100  0  0
+ 0  0      0 1719808  17420 151560    0    0     0     6   59   66  0  0 100  0  0
+```
+
+* cs\(context switch\)：每秒上下文切换次数。
+* in\(interrupt\)：每秒中断次数。
+* r\(runnable\)：正在运行和等待 CPU 的进程数。
+* b\(uninterruptible\)：不可中断睡眠状态的进程数。
 
 ## 平均负载
 
