@@ -70,6 +70,13 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
 * r\(runnable\)：正在运行和等待 CPU 的进程数。
 * b\(uninterruptible\)：不可中断睡眠状态的进程数。
 
+### sysbench
+
+多线程基准测试工具。
+
+* --thread: 线程数
+* --time: 执行多少秒
+
 ## 平均负载
 
 我们经常会用 uptime、top 等工具查询 cpu 的平均负载（Load Average），那到底什么是平均负载呢？
