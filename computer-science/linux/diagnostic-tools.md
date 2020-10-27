@@ -48,6 +48,10 @@ watch -d uptime
     * cswch：每秒自愿上下文切换数。进程无法获取资源（IO、内存）导致上下文切换。
     * nvcswch：每秒非自愿上下文切换数。进程的时间片已到，系统强制调度。
 
+### sar
+
+
+
 ## vmstat
 
 系统性能分析工具，主要用于分析系统内存使用情况、CPU 上下文切换、中断次数等。
@@ -104,5 +108,17 @@ HTTP 服务性能测试工具。
 $ ab -c 10 -n 100 http://192.168.0.10:10000/
 ```
 
+## pstree
 
+用树型显示所有进程之间的关系。
+
+## execsnoop
+
+专为短时进程设计的工具。它通过 ftrace 实时监控进程的 exec\(\) 行为，并输出短时进程的基本信息。
+
+```bash
+cd /usr/bin
+wget https://raw.githubusercontent.com/brendangregg/perf-tools/master/execsnoop
+chmod 755 execsnoop
+```
 

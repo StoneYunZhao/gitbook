@@ -241,6 +241,16 @@ reboot
 export XXX=sss
 ```
 
+### grep
+
+```text
+# 在文件中查找某段文本
+grep 'text' file.name
+
+# 在目录中的所有文件中查找某段文本
+grep 'text' -r folder
+```
+
 ### find
 
 ```bash

@@ -169,3 +169,15 @@ $$
 
 通常查看 CPU 使用率的工具有：ps、top、pidstat。可用 perf、GDB 来定位具体的函数。
 
+{% hint style="info" %}
+系统的 CPU 使用率很高，不一定能找到对应高 CPU 使用率的进程。
+
+* 进程在不断的崩溃重启，如配置错误等等。
+* 应用调用其它二进制程序，这些程序运行时间较短。
+
+若要检测上述问题，可通过：
+
+* perf record -g，perf report
+* execsnoop，专为短时进程设计的工具
+{% endhint %}
+
