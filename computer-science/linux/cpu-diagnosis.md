@@ -77,6 +77,35 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
 * --thread: 线程数
 * --time: 执行多少秒
 
+### perf
+
+```bash
+// 按方向键可定位对象，按回车可展开
+$ perf top [-g]
+Samples: 833  of event 'cpu-clock', Event count (approx.): 97742399
+Overhead  Shared Object       Symbol
+   7.28%  perf                [.] 0x00000000001f78a4
+   4.72%  [kernel]            [k] vsnprintf
+   4.32%  [kernel]            [k] module_get_kallsym
+   3.65%  [kernel]            [k] _raw_spin_unlock_irqrestore
+```
+
+* Overhead: 比例
+* Shard：动态共享对象
+* Object：\[.\] 表示用户空间可以执行程序，\[k\] 表示内核空间。
+* Symbol：函数名
+
+还有`perf record [-g]`， `perf report [-g]` 等。
+
+### ab
+
+HTTP 服务性能测试工具。
+
+```bash
+# 并发10个请求，总共测试100个请求
+$ ab -c 10 -n 100 http://192.168.0.10:10000/
+```
+
 ## 平均负载
 
 我们经常会用 uptime、top 等工具查询 cpu 的平均负载（Load Average），那到底什么是平均负载呢？
@@ -200,4 +229,49 @@ watch -d cat /proc/interrupts
 * 自愿上下文切换变多，说明进程都在等待资源，可能发生了 IO 等其它问题。
 * 非自愿上下文切换变多，说明都在争抢 CPU，确实 CPU 出现了瓶颈。
 * 中断次数变多，需要查看 /proc/interrupts 具体分析。
+
+## 使用率
+
+Linux 将 CPU 运行划分成很短的时间片，通过定义节拍率（HZ）来触发时间中断，Jiffies 记录了开机以来的节拍数。
+
+```bash
+# 查看内核配置的节拍率。
+➜  ~ grep 'CONFIG_HZ=' /boot/config-4.19.0-11-amd64
+CONFIG_HZ=250 # 表示每秒触发 250 次时间中断
+```
+
+用户空间的节拍率 USER\_HZ 固定为 100。
+
+Linux 通过 /proc 虚拟文件系统，向用户提供了内核信息。/proc/stat 提供了 CPU 和任务统计信息，进程的的 CPU 使用情况可以查看 /proc/\[pid\]/stat。
+
+```bash
+# 后面的每一列表示不同场景下 CPU 的累积节拍数，单位为 USER_HZ（10ms）
+➜  ~ cat /proc/stat | grep cpu
+cpu  62730 26 81989 40792338 728 0 424 0 0 0
+cpu0 31578 11 42637 20389529 667 0 237 0 0 0
+cpu1 31152 14 39352 20402809 61 0 186 0 0 0
+```
+
+可通过 man proc 查看每一列的意义：
+
+* user：用户态。不包括 nice，包括 guest。
+* nice：低优先级用户态。
+* system：内核态。
+* idle：空闲。不包括 iowait。
+* iowait：等待 I/O。
+* irq：硬中断。
+* softirq：软中断。
+* steal：若当前系统运行在虚拟机中，CPU 被其它虚拟机占用的时间。
+* guest：虚拟化运行其它操作系统时，运行虚拟机的时间。
+* guest\_nice：低优先级运行虚拟机的时间。
+
+CPU 使用率为：
+
+$$
+utility = 1 - 空间时间 / 总 CPU 时间
+$$
+
+上面是开机以来的平均使用率，应该计算某段时间范围内的使用率，所以需要做个差值。需要注意：不同的性能分析工具做差值的时间范围不同，如 top 默认是 3s，ps 是进程的整个生命周期。
+
+通常查看 CPU 使用率的工具有：ps、top、pidstat。可用 perf、GDB 来定位具体的函数。
 

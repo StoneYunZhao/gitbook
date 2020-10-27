@@ -14,6 +14,7 @@
 * [CPU](cpu-diagnosis.md)
   * [平均负载](cpu-diagnosis.md#ping-jun-fu-zai)
   * [CPU 上下文切换](cpu-diagnosis.md#shang-xia-wen-qie-huan)
+  * [CPU 使用率](cpu-diagnosis.md#shi-yong-lv)
 * 内存
 * I/O
 * 网络
