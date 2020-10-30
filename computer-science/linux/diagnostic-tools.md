@@ -13,8 +13,6 @@ cpuid
 查看系统负载：
 
 ```bash
-top
-
 uptime
 
 // output: 当前时间，系统运行时间，1、3、15 分钟的平均负载
@@ -28,6 +26,18 @@ watch -d uptime
 // -d, --differences 高亮变化的部分
 ```
 
+## top
+
+常用查看系统负载、进程状态的工具。
+
+S（Status） 列表示进程状态：
+
+* R：Running or Runnable，正在运行或正在等待运行。
+* D：Disk Sleep，不可中断睡眠（Uninterruptible Sleep），一般表示正在和硬件交互，且交互过程不允许被其它进程中断或打断。
+* Z：Zombie，僵尸进程，进程实际上已经结束，但是父进程还没有回收它的资源。
+* S：Interruptible Sleep，可中断睡眠，进程等待某个事件而被系统挂起，唤醒后会进入 R 状态。
+* I：Idle，空闲状态，不可中断的内核线程。D 会导致平均负载升高，但是 I 不会。
+
 ## stress
 
 系统压力测试工具：`apt install stress`，重要的参数有：
@@ -40,17 +50,36 @@ watch -d uptime
 
 系统压力测试工具：`apt install sysstat`
 
-* mpstat：CPU 性能分析工具
-  * -P ALL，输出所有 CPU 的统计
-* pidstat：进程性能分析工具
-  * -u，输出 CPU 使用率
-  * -w，输出任务切换
-    * cswch：每秒自愿上下文切换数。进程无法获取资源（IO、内存）导致上下文切换。
-    * nvcswch：每秒非自愿上下文切换数。进程的时间片已到，系统强制调度。
+### mpstat
+
+CPU 性能分析工具
+
+* -P ALL，输出所有 CPU 的统计
+
+### pidstat
+
+进程性能分析工具
+
+* -u，输出 CPU 使用率
+* -d，输出 I/O 统计
+* -w，输出任务切换
+  * cswch：每秒自愿上下文切换数。进程无法获取资源（IO、内存）导致上下文切换。
+  * nvcswch：每秒非自愿上下文切换数。进程的时间片已到，系统强制调度。
+* -p，指定某个进程
 
 ### sar
 
 
+
+## dstat
+
+新的性能工具，吸收了 vmstat、iostat、ifstat 等工具的优点。
+
+```bash
+yum install dstat
+
+dstat 1 10
+```
 
 ## vmstat
 
@@ -71,6 +100,14 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
 * in\(interrupt\)：每秒中断次数。
 * r\(runnable\)：正在运行和等待 CPU 的进程数。
 * b\(uninterruptible\)：不可中断睡眠状态的进程数。
+
+## strace
+
+跟踪进程的系统调用。
+
+```bash
+strace -p ${pid}
+```
 
 ## sysbench
 
@@ -114,6 +151,8 @@ $ ab -c 10 -n 100 http://192.168.0.10:10000/
 
 ```bash
 yum install psmisc
+
+pstress -aps ${pid}
 ```
 
 ## execsnoop
