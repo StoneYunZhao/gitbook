@@ -73,7 +73,7 @@ CPU 性能分析工具
 
 ### sar
 
-
+系统活动报告工具，可以实时查看系统当前的活动，也可以配置保存和报告历史统计数据。
 
 ## dstat
 
@@ -167,5 +167,22 @@ pstress -aps ${pid}
 cd /usr/bin
 wget https://raw.githubusercontent.com/brendangregg/perf-tools/master/execsnoop
 chmod 755 execsnoop
+```
+
+## hping3
+
+可以构造 TCP/IP 协议数据包的工具。
+
+```bash
+yum install -y epel-release
+yum install -y hping3
+```
+
+## tcpdump
+
+常用的网络抓包工具。
+
+```bash
+yum install -y tcpdump
 ```
 
