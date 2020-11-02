@@ -75,6 +75,11 @@ CPU 性能分析工具
 
 系统活动报告工具，可以实时查看系统当前的活动，也可以配置保存和报告历史统计数据。
 
+```bash
+# -n DEV, 报告网络设备
+sar -n DEV 1
+```
+
 ## dstat
 
 新的性能工具，吸收了 vmstat、iostat、ifstat 等工具的优点。
@@ -180,11 +185,23 @@ yum install -y hping3
 brew install hping
 ```
 
+```bash
+# -S tcp 协议的 SYN
+# -p 目标端口哦
+# 发送间隔
+hping3 -S -p 80 -i u100 10.93.245.152
+```
+
 ## tcpdump
 
 常用的网络抓包工具。
 
 ```bash
 yum install -y tcpdump
+```
+
+```bash
+# -i 网卡
+tcpdump -i ens33 -n tcp port 80
 ```
 
