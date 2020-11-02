@@ -176,6 +176,8 @@ chmod 755 execsnoop
 ```bash
 yum install -y epel-release
 yum install -y hping3
+
+brew install hping
 ```
 
 ## tcpdump
