@@ -227,3 +227,23 @@ cat /proc/interrupts
 ps aux | grep softirq
 ```
 
+## 总结
+
+### CPU 性能指标
+
+![](../../.gitbook/assets/image%20%28287%29.png)
+
+### 指标 -&gt; 工具
+
+![](../../.gitbook/assets/image%20%28289%29.png)
+
+### 工具 -&gt; 指标
+
+![](../../.gitbook/assets/image%20%28288%29.png)
+
+### 指标的关联性
+
+![](../../.gitbook/assets/image%20%28286%29.png)
+
+
+
