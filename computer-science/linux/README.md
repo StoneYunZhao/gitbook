@@ -20,6 +20,7 @@
     * [iowait 过高](cpu-diagnosis.md#bu-ke-zhong-duan-zhuang-tai)，表现为进程长时间处于 D 状态，或较多进程处于 D 状态
     * [僵尸进程过多](cpu-diagnosis.md#jiang-shi-jin-cheng)
     * [软中断过多](cpu-diagnosis.md#ruan-zhong-duan)
+  * [CPU 优化思路](cpu-diagnosis.md#cpu-xing-neng-you-hua)
 * 内存
 * I/O
 * 网络
