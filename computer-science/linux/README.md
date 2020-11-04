@@ -22,6 +22,7 @@
     * [软中断过多](cpu-diagnosis.md#ruan-zhong-duan)
   * [CPU 优化思路](cpu-diagnosis.md#cpu-xing-neng-you-hua)
 * [内存](memory-diagnosis.md)
+  * Linux 内存的一些[基本原理](memory-diagnosis.md#yuan-li)
 * I/O
 * 网络
 
