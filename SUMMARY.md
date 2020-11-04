@@ -88,6 +88,7 @@
   * [System Initialization](computer-science/linux/system-initialization.md)
   * [Diagnostic Tools](computer-science/linux/diagnostic-tools.md)
   * [CPU Diagnosis](computer-science/linux/cpu-diagnosis.md)
+  * [Memory Diagnosis](computer-science/linux/memory-diagnosis.md)
 * [Design Patterns](computer-science/design-patterns/README.md)
   * [UML](computer-science/design-patterns/uml.md)
   * [OOP](computer-science/design-patterns/oop.md)
