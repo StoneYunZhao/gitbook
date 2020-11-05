@@ -51,6 +51,8 @@ free 输出的缓存一列是 Buffer 与 Cache 之和，那两者有什么区别
 进一步查看 /proc/meminfo 的定义，通过 man proc：
 
 * Buffers: Relatively temporary storage for raw disk blocks that shouldn't get tremendously large \(20MB or so\). 原始磁盘块的临时存储。
-* Cached: In-memory cache for files read from the disk \(the page cache\). Doesn't include SwapCached. 读取文件的页缓存。
+* Cached: In-memory cache for files read from the disk \(the page cache\). Doesn't include SwapCached. 读取文件的页缓存。**实际上，用 dd 和 vmstat 观测下来，写文件也会使用 Cache缓存**。
 * SReclaimable: Part of Slab, that might be reclaimed, such as caches. Slab 中可回收的部分。
+
+**Buffer 是对磁盘数据的缓存，而 Cache 是文件数据的缓存，它们既会用在读请求中，也会用在写请求中**。
 
