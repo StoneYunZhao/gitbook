@@ -91,6 +91,24 @@ S（Status） 列表示进程状态：
 * -c,--cpu 模拟 N 个进程执行 sqrt\(\)
 * -t,--timeout 执行 N 秒
 
+## dd
+
+转换和复制文件的工具。
+
+```bash
+# 从随机设备读取，写入文件
+dd if=/dev/urandom of=/tmp/file bs=1M count=500
+
+# 从随机设备数据，直接写入磁盘
+dd if=/dev/urandom of=/dev/sdb1 bs=1M count=2048
+
+# 从文件读取，写入空设备
+dd if=/tmp/file of=/dev/null
+
+# 从磁盘读取，写入空设备
+dd if=/dev/sda1 of=/dev/null bs=1M count=1024
+```
+
 ## sysstat
 
 系统压力测试工具：`apt install sysstat`
