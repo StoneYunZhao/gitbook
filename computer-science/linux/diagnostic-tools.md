@@ -26,6 +26,24 @@ watch -d uptime
 // -d, --differences 高亮变化的部分
 ```
 
+## /proc
+
+/proc 是 linux 提供的一种特殊的文件系统，是用户与内核交互的接口。可以从 /proc 中查询运行状态和配置选项，也可以修改 /proc 来修改内核的配置。
+
+```bash
+/proc/softirqs # 软中断
+/proc/interrupts # 硬中断
+
+/proc/stat # CPU 和任务统计信息 
+/proc/[pid]/stat # 进程的 CPU 和任务统计信息
+
+/proc/meminfo # 内存信息
+
+/proc/[pid]/oom_adj # 配置 oom_score
+
+echo 3 > /proc/sys/vm/drop_caches # 清理文件页、目录项、Inodes 等各种缓存
+```
+
 ## free
 
 ```bash

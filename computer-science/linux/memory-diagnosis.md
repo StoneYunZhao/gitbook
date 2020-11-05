@@ -41,3 +41,16 @@ malloc 对应到系统调用上，有 brk\(\) 和 mmap\(\) 两种，brk 适合�
 
 可以通过 free 查看系统的整体内存情况，通过 top、ps 查看进程的内存使用情况。
 
+## Buffer vs. Cache
+
+free 输出的缓存一列是 Buffer 与 Cache 之和，那两者有什么区别呢？通过 man free 可以看到：
+
+* buffers: Memory used by kernel buffers \(Buffers in /proc/meminfo\)
+* cache: Memory used by the page cache and slabs \(Cached and SReclaimable in /proc/meminfo\)
+
+进一步查看 /proc/meminfo 的定义，通过 man proc：
+
+* Buffers: Relatively temporary storage for raw disk blocks that shouldn't get tremendously large \(20MB or so\). 原始磁盘块的临时存储。
+* Cached: In-memory cache for files read from the disk \(the page cache\). Doesn't include SwapCached. 读取文件的页缓存。
+* SReclaimable: Part of Slab, that might be reclaimed, such as caches. Slab 中可回收的部分。
+
