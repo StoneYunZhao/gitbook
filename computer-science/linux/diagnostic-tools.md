@@ -93,7 +93,7 @@ S（Status） 列表示进程状态：
 
 ## dd
 
-转换和复制文件的工具。
+转换和复制磁盘和文件的工具。
 
 ```bash
 # 从随机设备读取，写入文件
@@ -108,6 +108,10 @@ dd if=/tmp/file of=/dev/null
 # 从磁盘读取，写入空设备
 dd if=/dev/sda1 of=/dev/null bs=1M count=1024
 ```
+
+{% hint style="info" %}
+如果把 dd 当做测试文件系统性能的工具，由于缓存的存在，会导致测试结果严重失真。
+{% endhint %}
 
 ## sysstat
 
@@ -223,6 +227,10 @@ yum install psmisc
 pstress -aps ${pid}
 ```
 
+## pgrep
+
+根据进程名查找进程号。
+
 ## execsnoop
 
 专为短时进程设计的工具。它通过 ftrace 实时监控进程的 exec\(\) 行为，并输出短时进程的基本信息。
@@ -262,5 +270,56 @@ yum install -y tcpdump
 ```bash
 # -i 网卡
 tcpdump -i ens33 -n tcp port 80
+```
+
+## bcc
+
+基于 Linux 内核的 eBPF 机制。
+
+### cachestat
+
+提供整个操作系统缓存的读写命中情况。
+
+```bash
+$ cachestat 1 3
+   TOTAL   MISSES     HITS  DIRTIES   BUFFERS_MB  CACHED_MB
+       2        0        2        1           17        279
+       2        0        2        1           17        279
+       2        0        2        1           17        279 
+```
+
+* TOTAL: 总 IO 次数。一次代表一页，为 4KB。
+* MISSES: 未命中缓存次数
+* HITS: 命中缓存次数
+* DIRTIES: 新增到缓存中的脏页数
+* BUFFERS\_MB: Buffer的大小
+* CACHED\_MB: Cache 的大小
+
+### cachetop
+
+提供每个进程的缓存命中情况。
+
+```bash
+$ cachetop
+11:58:50 Buffers MB: 258 / Cached MB: 347 / Sort: HITS / Order: ascending
+PID      UID      CMD              HITS     MISSES   DIRTIES  READ_HIT%  WRITE_HIT%
+   13029 root     python                  1        0        0     100.0%       0.0%
+```
+
+{% hint style="info" %}
+不会吧 Direct IO 算进来。
+{% endhint %}
+
+## pcstat
+
+Go 开发的。查看文件在内存中的缓存大小及缓存比例。
+
+```bash
+$ pcstat /bin/ls
++---------+----------------+------------+-----------+---------+
+| Name    | Size (bytes)   | Pages      | Cached    | Percent |
+|---------+----------------+------------+-----------+---------|
+| /bin/ls | 133792         | 33         | 0         | 000.000 |
++---------+----------------+------------+-----------+---------+
 ```
 

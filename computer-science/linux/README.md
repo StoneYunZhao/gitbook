@@ -23,6 +23,8 @@
   * [CPU 优化思路](cpu-diagnosis.md#cpu-xing-neng-you-hua)
 * [内存](memory-diagnosis.md)
   * Linux 内存的一些[基本原理](memory-diagnosis.md#yuan-li)
+  * [Buffer 与 Cache 的区别](memory-diagnosis.md#buffer-vs-cache)
+  * [缓存命中率](memory-diagnosis.md#huan-cun-ming-zhong-lv)
 * I/O
 * 网络
 
