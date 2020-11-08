@@ -310,6 +310,10 @@ PID      UID      CMD              HITS     MISSES   DIRTIES  READ_HIT%  WRITE_H
 不会吧 Direct IO 算进来。
 {% endhint %}
 
+### memleak
+
+可以跟踪系统或指定进程的内存分配、释放请求，然后定期输出一个未释放内存和相应调用栈的汇总情况。
+
 ## pcstat
 
 Go 开发的。查看文件在内存中的缓存大小及缓存比例。
