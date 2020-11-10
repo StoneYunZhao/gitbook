@@ -106,7 +106,7 @@ kswap0 定义了三个阈值（watermark），pages\_min, pages\_low, pages\_hig
 * pages\_low ~ pages\_high，内存有一定压力，可以满足新内存请求。
 * 大于 pages\_high，没有内存压力。
 
-![](../../.gitbook/assets/image%20%28294%29.png)
+![](../../.gitbook/assets/image%20%28295%29.png)
 
 可以通过`/proc/sys/vm/min_free_kbytes`设置 pages\_min，其它两个阈值的关系是固定的：
 
@@ -117,5 +117,42 @@ pages_high = pages_min*3/2
 
 ### NUMA 与 Swap
 
+有时发现系统 swap 升高，但是系统还有很多空余内存，这可能就是 NUMA（Non-Uniform Memory Access）导致的。在 NUMA 架构下，多个处理器划分到不同的 Node 上，每个 Node 有自己的本地内存空间。每个 node 内部内存又分为不同的区域：直接内存访问区（DMA）、普通内存区（NORMAL）、伪内存区（MOVABLE）。可通过 numactl 查看 node 信息。
 
+![](../../.gitbook/assets/image%20%28294%29.png)
+
+可通过 /proc/zoneinfo 查看每个 node 的三个阈值：
+
+* nr\_\*\_anon：活跃和非活跃的匿名页数。
+* nr\_\*\_file：活跃和非活跃的文件页数。
+
+```bash
+cat /proc/zoneinfo
+
+Node 0, zone    DMA32
+  pages free     34699
+        min      9454
+        low      11817
+        high     14180
+...
+      nr_free_pages 34699
+      nr_zone_inactive_anon 19437
+      nr_zone_active_anon 17516
+      nr_zone_inactive_file 27432
+      nr_zone_active_file 42315
+```
+
+某个 Node 内存不足时，可以从其它 node 寻找空闲内存，也可以从本地内存中回收。可通过 /proc/sys/vm/zone\_reclaim\_mode 调整：
+
+* 0 表示两种方式都可以
+* 1，2，4 表示只回收本地内存，2 表示可回写脏数据回收内存，4 表示可用 Swap 的方式。
+
+### swappiness
+
+通过上文，我们知道内存回收：
+
+* 文件页：直接回收或把脏页写回磁盘再回收
+* 匿名页：通过 Swap 回收
+
+那么 Linux 优先采用哪种呢，可设置 /proc/sys/vm/swappiness 来调整使用 swap 的积极程度，范围是 0 ~ 100。注意这是权重，就算设置为 0，也会使用 swap。
 

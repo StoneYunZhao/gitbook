@@ -38,6 +38,8 @@ watch -d uptime
 /proc/[pid]/stat # 进程的 CPU 和任务统计信息
 
 /proc/meminfo # 内存信息
+
+/proc/zoneinfo # NUMA 架构中每个 node 的信息
 ```
 
 ```bash
@@ -49,6 +51,12 @@ watch -d uptime
 
 # 清理文件页、目录项、Inodes 等各种缓存
 echo 3 > /proc/sys/vm/drop_caches 
+
+# NUMA 架构下，节点回收内存的方式，具体查看内存一节。
+/proc/sys/vm/zone_reclaim_mode
+
+# 配置系统使用 swap 的积极程度，具体查看内存一节。
+/proc/sys/vm/swappiness
 ```
 
 ## free
@@ -332,5 +340,13 @@ $ pcstat /bin/ls
 |---------+----------------+------------+-----------+---------|
 | /bin/ls | 133792         | 33         | 0         | 000.000 |
 +---------+----------------+------------+-----------+---------+
+```
+
+## numactl
+
+查看、控制 NUMA 中的 node 信息。
+
+```bash
+numactl --hardware
 ```
 
