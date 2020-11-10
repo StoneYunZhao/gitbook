@@ -38,10 +38,17 @@ watch -d uptime
 /proc/[pid]/stat # 进程的 CPU 和任务统计信息
 
 /proc/meminfo # 内存信息
+```
 
-/proc/[pid]/oom_adj # 配置 oom_score
+```bash
+# 配置 pages_min 值，控制 kswapd0 的行为
+/proc/sys/vm/min_free_kbytes
 
-echo 3 > /proc/sys/vm/drop_caches # 清理文件页、目录项、Inodes 等各种缓存
+# 配置 oom_score
+/proc/[pid]/oom_adj 
+
+# 清理文件页、目录项、Inodes 等各种缓存
+echo 3 > /proc/sys/vm/drop_caches 
 ```
 
 ## free
