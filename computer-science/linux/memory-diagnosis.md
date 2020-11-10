@@ -92,6 +92,17 @@ Swap 可以是一块磁盘，也可以是一个文件，当成内存来使用，
 
 Swap 可以使系统内存变大，笔记本电脑的休眠和快速开机功能，也是基于 Swap。
 
+```bash
+swapoff -a
+swapon -a
+```
+
+可通过 sar、/proc/zoneinfo、/proc/pid/status 等方式查看系统和进程的内存使用情况。swap 会影响性能，常用如下方法降低 swap 的使用：
+
+* 禁用 swap
+* 降低 swappiness 的值
+* mlock\(\), mlockall\(\) 锁定内存，阻止换出
+
 ### kswap0
 
 触发系统回收内存有两种方式：

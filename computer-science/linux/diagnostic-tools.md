@@ -156,6 +156,12 @@ CPU 性能分析工具
 ```bash
 # -n DEV, 报告网络设备
 sar -n DEV 1
+
+# -r 显示内存使用情况，-S 显示 Swap 使用情况
+sar -r -S 1
+# kbcommit, %commit: 对内存需求的预估
+# kbactive: 活跃内存
+# kbinact: 非活跃内存
 ```
 
 ## dstat
@@ -318,7 +324,7 @@ $ cachestat 1 3
 $ cachetop
 11:58:50 Buffers MB: 258 / Cached MB: 347 / Sort: HITS / Order: ascending
 PID      UID      CMD              HITS     MISSES   DIRTIES  READ_HIT%  WRITE_HIT%
-   13029 root     python                  1        0        0     100.0%       0.0%
+13029 root     python                  1        0        0     100.0%       0.0%
 ```
 
 {% hint style="info" %}
