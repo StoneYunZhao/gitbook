@@ -117,7 +117,7 @@ kswap0 定义了三个阈值（watermark），pages\_min, pages\_low, pages\_hig
 * pages\_low ~ pages\_high，内存有一定压力，可以满足新内存请求。
 * 大于 pages\_high，没有内存压力。
 
-![](../../.gitbook/assets/image%20%28295%29.png)
+![](../../.gitbook/assets/image%20%28299%29.png)
 
 可以通过`/proc/sys/vm/min_free_kbytes`设置 pages\_min，其它两个阈值的关系是固定的：
 
@@ -130,7 +130,7 @@ pages_high = pages_min*3/2
 
 有时发现系统 swap 升高，但是系统还有很多空余内存，这可能就是 NUMA（Non-Uniform Memory Access）导致的。在 NUMA 架构下，多个处理器划分到不同的 Node 上，每个 Node 有自己的本地内存空间。每个 node 内部内存又分为不同的区域：直接内存访问区（DMA）、普通内存区（NORMAL）、伪内存区（MOVABLE）。可通过 numactl 查看 node 信息。
 
-![](../../.gitbook/assets/image%20%28294%29.png)
+![](../../.gitbook/assets/image%20%28297%29.png)
 
 可通过 /proc/zoneinfo 查看每个 node 的三个阈值：
 
@@ -166,4 +166,69 @@ Node 0, zone    DMA32
 * 匿名页：通过 Swap 回收
 
 那么 Linux 优先采用哪种呢，可设置 /proc/sys/vm/swappiness 来调整使用 swap 的积极程度，范围是 0 ~ 100。注意这是权重，就算设置为 0，也会使用 swap。
+
+## 总结
+
+### 内存指标
+
+![](../../.gitbook/assets/image%20%28294%29.png)
+
+#### 系统内存使用情况
+
+* 已用内存
+* 剩余内存
+* 共享内存，通过 tempfs 实现，大小等于 tmpfs 的大小。
+* 可用内存，剩余内存+可回收缓存
+* 缓存（Cache）：
+  * 磁盘读取文件的页缓存
+  * slab 分配器中的可回收内存
+* 缓冲区（Buffer），对原始磁盘块的临时存储
+
+#### 进程内存使用情况
+
+* 虚拟内存，代码段+数据段+共享内存+已经申请的堆内存+已经换出的内存（Swap）。注意：已经申请，还未分配物理内存，也算在内。
+* 常驻内存，实际使用的物理内存，不包括 Swap 和共享内存。一般换算成系统总内存的百分比。
+* 共享内存，动态加载的链接库+程序代码段。
+* Swap 内存。
+
+#### 缺页异常
+
+进程申请内存后，首次访问时系统才会通过缺页异常分配内存，有两种场景：
+
+* 次缺页异常：可以直接从物理内存分配
+* 主缺页异常：需要磁盘 I/O 介入（如 Swap）
+
+#### Swap 使用情况
+
+* 已用空间
+* 剩余空间
+* 换入和换出速度
+
+### 指标 -&gt; 工具
+
+![](../../.gitbook/assets/image%20%28296%29.png)
+
+### 工具 -&gt; 指标
+
+![](../../.gitbook/assets/image%20%28295%29.png)
+
+### 分析思路
+
+先运行几个覆盖面较大的性能工具，free, top, vmstat, pidstat 等：
+
+1. free, top 查看系统整体内存情况
+2. vmstat, pidstat 查看一段时间的趋势，判断内存问题类型
+3. 详细分析
+
+![](../../.gitbook/assets/image%20%28298%29.png)
+
+### 优化思路
+
+内存调优最重要的就是，保证应用程序的热点数据放到内存中，并尽量减少换页和交换。
+
+* 禁止 Swap。若必须开启，则降低 swappiness 的值。
+* 减少动态内存分配。使用内存池、大页（HugePage）等。
+* 尽量使用 Cache、Buffer 来访问数据。
+* 使用 cgroups 限制进程内存使用。
+* 调整核心进程的 /proc/pid/oom\_adj，保证内存紧张时，核心进程不会被 OOM 杀死。
 
