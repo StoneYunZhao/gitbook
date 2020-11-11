@@ -297,6 +297,46 @@ tcpdump -i ens33 -n tcp port 80
 
 基于 Linux 内核的 eBPF 机制。
 
+### CentOS Install
+
+CentOS 7
+
+#### 升级内核
+
+```bash
+# 升级系统
+yum update -y
+
+# 安装ELRepo
+rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
+rpm -Uvh https://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
+
+# 安装新内核
+yum remove -y kernel-headers kernel-tools kernel-tools-libs
+yum --enablerepo="elrepo-kernel" install -y kernel-ml kernel-ml-devel kernel-ml-headers kernel-ml-tools kernel-ml-tools-libs kernel-ml-tools-libs-devel
+
+# 更新Grub后重启
+grub2-mkconfig -o /boot/grub2/grub.cfg
+grub2-set-default 0
+reboot
+
+# 重启后确认内核版本已升级为4.20.0-1.el7.elrepo.x86_64
+uname -r
+```
+
+#### 安装 bcc-tools
+
+```bash
+# 安装bcc-tools
+yum install -y bcc-tools
+
+# 配置PATH路径
+export PATH=$PATH:/usr/share/bcc/tools
+
+# 验证安装成功
+cachestat 
+```
+
 ### cachestat
 
 提供整个操作系统缓存的读写命中情况。
