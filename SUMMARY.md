@@ -89,6 +89,7 @@
   * [Diagnostic Tools](computer-science/linux/diagnostic-tools.md)
   * [CPU Diagnosis](computer-science/linux/cpu-diagnosis.md)
   * [Memory Diagnosis](computer-science/linux/memory-diagnosis.md)
+  * [I/O Diagnosis](computer-science/linux/i-o-diagnosis.md)
 * [Design Patterns](computer-science/design-patterns/README.md)
   * [UML](computer-science/design-patterns/uml.md)
   * [OOP](computer-science/design-patterns/oop.md)

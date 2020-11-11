@@ -25,7 +25,11 @@
   * Linux 内存的一些[基本原理](memory-diagnosis.md#yuan-li)
   * [Buffer 与 Cache 的区别](memory-diagnosis.md#buffer-vs-cache)
   * [缓存命中率](memory-diagnosis.md#huan-cun-ming-zhong-lv)
-* I/O
+  * [内存泄漏](memory-diagnosis.md#nei-cun-xie-lou)
+  * [Swap](memory-diagnosis.md#swap)
+  * [优化思路](memory-diagnosis.md#zong-jie)
+* [I/O](i-o-diagnosis.md)
+  * [文件系统](i-o-diagnosis.md#wen-jian-xi-tong)
 * 网络
 
 ![](../../.gitbook/assets/image%20%28280%29.png)
