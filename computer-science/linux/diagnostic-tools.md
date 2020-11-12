@@ -396,3 +396,14 @@ $ pcstat /bin/ls
 numactl --hardware
 ```
 
+## df
+
+查看文件系统的磁盘使用情况。
+
+```bash
+df -h
+
+# 查看索引节点（inode）
+df -i
+```
+

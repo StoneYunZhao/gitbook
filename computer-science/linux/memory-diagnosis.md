@@ -122,7 +122,7 @@ kswap0 定义了三个阈值（watermark），pages\_min, pages\_low, pages\_hig
 * pages\_low ~ pages\_high，内存有一定压力，可以满足新内存请求。
 * 大于 pages\_high，没有内存压力。
 
-![](../../.gitbook/assets/image%20%28299%29.png)
+![](../../.gitbook/assets/image%20%28300%29.png)
 
 可以通过`/proc/sys/vm/min_free_kbytes`设置 pages\_min，其它两个阈值的关系是固定的：
 
@@ -135,7 +135,7 @@ pages_high = pages_min*3/2
 
 有时发现系统 swap 升高，但是系统还有很多空余内存，这可能就是 NUMA（Non-Uniform Memory Access）导致的。在 NUMA 架构下，多个处理器划分到不同的 Node 上，每个 Node 有自己的本地内存空间。每个 node 内部内存又分为不同的区域：直接内存访问区（DMA）、普通内存区（NORMAL）、伪内存区（MOVABLE）。可通过 numactl 查看 node 信息。
 
-![](../../.gitbook/assets/image%20%28297%29.png)
+![](../../.gitbook/assets/image%20%28298%29.png)
 
 可通过 /proc/zoneinfo 查看每个 node 的三个阈值：
 
@@ -211,7 +211,7 @@ Node 0, zone    DMA32
 
 ### 指标 -&gt; 工具
 
-![](../../.gitbook/assets/image%20%28296%29.png)
+![](../../.gitbook/assets/image%20%28297%29.png)
 
 ### 工具 -&gt; 指标
 
@@ -225,7 +225,7 @@ Node 0, zone    DMA32
 2. vmstat, pidstat 查看一段时间的趋势，判断内存问题类型
 3. 详细分析
 
-![](../../.gitbook/assets/image%20%28298%29.png)
+![](../../.gitbook/assets/image%20%28299%29.png)
 
 ### 优化思路
 
