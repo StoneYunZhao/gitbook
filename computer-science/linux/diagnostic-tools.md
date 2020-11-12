@@ -39,6 +39,8 @@ watch -d uptime
 
 /proc/meminfo # 内存信息
 
+/proc/slabinfo # 查看 slab 信息
+
 /proc/zoneinfo # NUMA 架构中每个 node 的信息
 ```
 
@@ -74,6 +76,10 @@ Swap:       2097148        5408     2091740
 * shared: 
 * buff/cache: 并不是所有的缓存都可以回收。
 * available: 新进程可用的内存大小。不仅包含未使用内存，还包括了可回收的缓存。
+
+## slabtop
+
+查看 slab 信息。
 
 ## ps
 
