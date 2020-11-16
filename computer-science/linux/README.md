@@ -30,6 +30,7 @@
   * [优化思路](memory-diagnosis.md#zong-jie)
 * [I/O](i-o-diagnosis.md)
   * [文件系统](i-o-diagnosis.md#wen-jian-xi-tong)
+  * [磁盘](i-o-diagnosis.md#ci-pan)
 * 网络
 
 ![](../../.gitbook/assets/image%20%28280%29.png)
