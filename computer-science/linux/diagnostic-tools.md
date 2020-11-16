@@ -42,6 +42,8 @@ watch -d uptime
 /proc/slabinfo # 查看 slab 信息
 
 /proc/zoneinfo # NUMA 架构中每个 node 的信息
+
+/proc/diskstats # 查看磁盘统计信息
 ```
 
 ```bash
@@ -169,6 +171,24 @@ sar -r -S 1
 # kbactive: 活跃内存
 # kbinact: 非活跃内存
 ```
+
+### iostat
+
+数据来自 /proc/diskstats。
+
+```bash
+iostat -d -x 1
+```
+
+![](../../.gitbook/assets/image%20%28303%29.png)
+
+* r/s + w/s 就是 IOPS
+* rKB/s + wKB/s 就是吞吐量
+* r\_await + w\_await 就是响应时间
+
+{% hint style="info" %}
+饱和度一般无法直接获取，可通过与基础测试结果（fio）比较来评估饱和度。
+{% endhint %}
 
 ## dstat
 
@@ -411,5 +431,19 @@ df -h
 
 # 查看索引节点（inode）
 df -i
+```
+
+## fio
+
+磁盘性能测试工具。
+
+```bash
+yum install -y fio
+```
+
+## iotop
+
+```bash
+yum install -y iotop
 ```
 
