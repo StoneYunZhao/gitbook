@@ -114,28 +114,6 @@ S（Status） 列表示进程状态：
 * -c,--cpu 模拟 N 个进程执行 sqrt\(\)
 * -t,--timeout 执行 N 秒
 
-## dd
-
-转换和复制磁盘和文件的工具。
-
-```bash
-# 从随机设备读取，写入文件
-dd if=/dev/urandom of=/tmp/file bs=1M count=500
-
-# 从随机设备数据，直接写入磁盘
-dd if=/dev/urandom of=/dev/sdb1 bs=1M count=2048
-
-# 从文件读取，写入空设备
-dd if=/tmp/file of=/dev/null
-
-# 从磁盘读取，写入空设备
-dd if=/dev/sda1 of=/dev/null bs=1M count=1024
-```
-
-{% hint style="info" %}
-如果把 dd 当做测试文件系统性能的工具，由于缓存的存在，会导致测试结果严重失真。
-{% endhint %}
-
 ## sysstat
 
 系统压力测试工具：`apt install sysstat`
@@ -424,7 +402,31 @@ $ pcstat /bin/ls
 numactl --hardware
 ```
 
-## df
+## 磁盘相关
+
+### dd
+
+转换和复制磁盘和文件的工具。
+
+```bash
+# 从随机设备读取，写入文件
+dd if=/dev/urandom of=/tmp/file bs=1M count=500
+
+# 从随机设备数据，直接写入磁盘
+dd if=/dev/urandom of=/dev/sdb1 bs=1M count=2048
+
+# 从文件读取，写入空设备
+dd if=/tmp/file of=/dev/null
+
+# 从磁盘读取，写入空设备
+dd if=/dev/sda1 of=/dev/null bs=1M count=1024
+```
+
+{% hint style="info" %}
+如果把 dd 当做测试文件系统性能的工具，由于缓存的存在，会导致测试结果严重失真。
+{% endhint %}
+
+### df
 
 查看文件系统的磁盘使用情况。
 
@@ -435,7 +437,7 @@ df -h
 df -i
 ```
 
-## fio
+### fio
 
 磁盘性能测试工具。
 
@@ -443,13 +445,13 @@ df -i
 yum install -y fio
 ```
 
-## iotop
+### iotop
 
 ```bash
 yum install -y iotop
 ```
 
-## lsof
+### lsof
 
 查看进程打开的文件列表，文件包括普通文件、目录、块设备、动态库、网络套接字等。
 
