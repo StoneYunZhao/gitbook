@@ -225,6 +225,8 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
 跟踪进程的系统调用。
 
 ```bash
+yum install -y strace
+
 strace -p ${pid}
 ```
 
@@ -445,5 +447,15 @@ yum install -y fio
 
 ```bash
 yum install -y iotop
+```
+
+## lsof
+
+查看进程打开的文件列表，文件包括普通文件、目录、块设备、动态库、网络套接字等。
+
+```bash
+yum install -y lsof
+
+lsof -p ${pid}
 ```
 
