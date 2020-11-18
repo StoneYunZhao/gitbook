@@ -69,8 +69,7 @@ echo 3 > /proc/sys/vm/drop_caches
 
 ```bash
 ps -ef
-
-ps -efT # 展示线程
+# -T 展示线程
 ```
 
 ## top
