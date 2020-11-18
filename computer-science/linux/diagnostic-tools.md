@@ -484,5 +484,52 @@ $ ab -c 10 -n 100 http://192.168.0.10:10000/
 
 ```bash
 yum install -y fio
+
+
+# 随机读
+fio -name=randread -direct=1 -iodepth=64 -rw=randread -ioengine=libaio -bs=4k -size=1G -numjobs=1 -runtime=1000 -group_reporting -filename=/dev/sdb
+
+# 随机写
+fio -name=randwrite -direct=1 -iodepth=64 -rw=randwrite -ioengine=libaio -bs=4k -size=1G -numjobs=1 -runtime=1000 -group_reporting -filename=/dev/sdb
+
+# 顺序读
+fio -name=read -direct=1 -iodepth=64 -rw=read -ioengine=libaio -bs=4k -size=1G -numjobs=1 -runtime=1000 -group_reporting -filename=/dev/sdb
+
+# 顺序写
+fio -name=write -direct=1 -iodepth=64 -rw=write -ioengine=libaio -bs=4k -size=1G -numjobs=1 -runtime=1000 -group_reporting -filename=/dev/sdb 
+
+# direct，是否跳过系统缓存
+# iodepth，使用异步 io 时，同时发出 io 请求的上限
+# rw，io 模式
+# ioengine，io 引擎
+# bs，io 大小
+# filename，文件或磁盘路径
+```
+
+* slat，从 io 提交到实际执行 io 的时长。
+* clat，从 io 提交到完成 io 的时长。
+* lat，fio 创建 io 到 io 完成的时长。
+* bw，吞吐量。
+* iops，每秒 io 次数。
+
+{% hint style="info" %}
+对于同步 IO，clat = 0；对于异步 IO，lat ≈ slat + clat。
+{% endhint %}
+
+```bash
+### fio 还支持重放
+
+# 使用blktrace跟踪磁盘I/O，注意指定应用程序正在操作的磁盘
+$ blktrace /dev/sdb
+
+# 查看blktrace记录的结果
+$ ls
+sdb.blktrace.0  sdb.blktrace.1
+
+# 将结果转化为二进制文件
+$ blkparse sdb -d sdb.bin
+
+# 使用fio重放日志
+$ fio --name=replay --filename=/dev/sdb --direct=1 --read_iolog=sdb.bin 
 ```
 
