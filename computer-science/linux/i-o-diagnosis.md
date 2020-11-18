@@ -140,3 +140,37 @@ Linux 每个块设备都会有主、次设备号，主设备号用于驱动程�
 
 ![](../../.gitbook/assets/image%20%28303%29.png)
 
+### 优化思路
+
+#### 应用程序优化
+
+* 追加写替代随机写
+* 借助缓存 IO，充分利用系统缓存
+* 程序内部构建自己的缓存。如 C 标准库 fopen、fread 会利用库函数的缓存；直接使用 open、read 等系统调用时，就只能利用系统的页缓存和缓冲区。
+* 用 mmap 代替 read、write。
+* fsync\(\) 替代 O\_SYNC。
+* 使用 cgroups 的 IO 子系统。
+* 在使用 CFQ 调度器时，使用 ionice 调整优先级。
+
+#### 文件系统优化
+
+* 选择合适的文件系统。
+* 优化文件系统的配置。特性（ext\_addr, dir\_index），日志模式（journal, ordered, writeback），挂载（noatime）等。tune2fs 调整特性，/etc/fstab 或 mount 调整日志模式和挂载。
+* 优化文件系统缓存。
+  * pdflush 脏页的刷新频率。如 dirty\_expire\_centisecs, dirty\_writeback\_centisecs
+  * pdflush 脏页的限额。如 dirty\_background\_ratio, dirty\_ratio
+  * 内核目录项缓存和索引节点缓存。vfs\_cache\_pressure
+* 若不需要持久化，可以用内存文件系统 tmpfs。如 /dev/shm。
+
+#### 磁盘优化
+
+* SSD 替换 HDD。
+* 使用 RAID。
+* 选择合适的 IO 调度算法。SSD 和虚拟机磁盘使用 noop，数据库使用 deadline。
+* 磁盘隔离。比如日志和数据可以放不同的盘。
+* 若顺序读比较多，可以增大预读数据。
+  * 调整 /sys/block/sdb/queue/read\_ahead\_kb
+  * 使用 blockdev 工具。
+* 优化内核块设备 IO 选项。如磁盘队列长度 /sys/block/sdb/queue/nr\_requests
+* 查看磁盘是否有硬件问题。dmesg 查看硬件 IO 错误日志；badblocks、smartctl 等工具检查硬件问题；e2fsck 检查文件系统错误；fsck 修复错误等。
+
