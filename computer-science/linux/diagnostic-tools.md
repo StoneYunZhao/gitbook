@@ -67,6 +67,12 @@ echo 3 > /proc/sys/vm/drop_caches
 
 线程名字有中括号，表示无法获取它们的命令行参数，一般都是内核线程。
 
+```bash
+ps -ef
+
+ps -efT # 展示线程
+```
+
 ## top
 
 常用查看系统负载、进程状态的工具。
@@ -128,6 +134,8 @@ sar -r -S 1
 
 ```bash
 iostat -d -x 1
+# -d 展示设备使用率
+# -x 展示扩展统计信息
 ```
 
 ![](../../.gitbook/assets/image%20%28303%29.png)
@@ -177,7 +185,8 @@ procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
 ```bash
 yum install -y strace
 
-strace -p ${pid}
+strace -p ${pid} -f
+# -f 跟踪多线程。
 ```
 
 ## perf
@@ -313,6 +322,14 @@ PID      UID      CMD              HITS     MISSES   DIRTIES  READ_HIT%  WRITE_H
 ### memleak
 
 可以跟踪系统或指定进程的内存分配、释放请求，然后定期输出一个未释放内存和相应调用栈的汇总情况。
+
+### filetop
+
+跟踪内核中文件的读写情况。
+
+### opensnoop
+
+动态跟踪内核中 open 系统调用。
 
 ## 内存相关
 
