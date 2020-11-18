@@ -187,6 +187,9 @@ yum install -y strace
 
 strace -p ${pid} -f
 # -f 跟踪多线程。
+# -T 系统调用时长
+# -tt 跟踪时间
+# -e expr 跟踪特定的系统调用
 ```
 
 ## perf
