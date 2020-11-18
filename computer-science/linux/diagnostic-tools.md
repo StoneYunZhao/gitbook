@@ -137,7 +137,7 @@ iostat -d -x 1
 # -x 展示扩展统计信息
 ```
 
-![](../../.gitbook/assets/image%20%28303%29.png)
+![](../../.gitbook/assets/image%20%28306%29.png)
 
 * r/s + w/s 就是 IOPS
 * rKB/s + wKB/s 就是吞吐量
