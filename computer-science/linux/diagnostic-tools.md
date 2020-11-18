@@ -63,26 +63,6 @@ echo 3 > /proc/sys/vm/drop_caches
 /proc/sys/vm/swappiness
 ```
 
-## free
-
-```bash
-➜  ~ free
-              total        used        free      shared  buff/cache   available
-Mem:         810492      323488      125568        1848      361436      360564
-Swap:       2097148        5408     2091740
-```
-
-* total: 
-* used: 包含了共享内存
-* free: 
-* shared: 
-* buff/cache: 并不是所有的缓存都可以回收。
-* available: 新进程可用的内存大小。不仅包含未使用内存，还包括了可回收的缓存。
-
-## slabtop
-
-查看 slab 信息。
-
 ## ps
 
 线程名字有中括号，表示无法获取它们的命令行参数，一般都是内核线程。
@@ -105,14 +85,6 @@ S（Status） 列表示进程状态：
 * RES：常驻内存大小，实际使用的物理内存，不包括 swap 和共享内存。
 * SHR：共享内存，不一定全部共享，程序代码段、非共享的动态链接库也计算在 SHR 内；不过真正共享的内存，共享的动态链接库自然也计算在内。
 * %MEM：进程使用的物理内存占系统内存的百分比。
-
-## stress
-
-系统压力测试工具：`apt install stress`，重要的参数有：
-
-* -i, --io 模拟 N 个进程执行 sync\(\)
-* -c,--cpu 模拟 N 个进程执行 sqrt\(\)
-* -t,--timeout 执行 N 秒
 
 ## sysstat
 
@@ -208,13 +180,6 @@ yum install -y strace
 strace -p ${pid}
 ```
 
-## sysbench
-
-多线程基准测试工具。
-
-* --thread: 线程数
-* --time: 执行多少秒
-
 ## perf
 
 ```bash
@@ -234,15 +199,6 @@ Overhead  Shared Object       Symbol
 * Symbol：函数名
 
 还有`perf record [-g]`， `perf report [-g]` 等。
-
-## ab
-
-HTTP 服务性能测试工具。
-
-```bash
-# 并发10个请求，总共测试100个请求
-$ ab -c 10 -n 100 http://192.168.0.10:10000/
-```
 
 ## pstree
 
@@ -268,35 +224,12 @@ wget https://raw.githubusercontent.com/brendangregg/perf-tools/master/execsnoop
 chmod 755 execsnoop
 ```
 
-## hping3
+## numactl
 
-可以构造 TCP/IP 协议数据包的工具。
-
-```bash
-yum install -y epel-release
-yum install -y hping3
-
-brew install hping
-```
+查看、控制 NUMA 中的 node 信息。
 
 ```bash
-# -S tcp 协议的 SYN
-# -p 目标端口哦
-# 发送间隔
-hping3 -S -p 80 -i u100 10.93.245.152
-```
-
-## tcpdump
-
-常用的网络抓包工具。
-
-```bash
-yum install -y tcpdump
-```
-
-```bash
-# -i 网卡
-tcpdump -i ens33 -n tcp port 80
+numactl --hardware
 ```
 
 ## bcc
@@ -381,7 +314,29 @@ PID      UID      CMD              HITS     MISSES   DIRTIES  READ_HIT%  WRITE_H
 
 可以跟踪系统或指定进程的内存分配、释放请求，然后定期输出一个未释放内存和相应调用栈的汇总情况。
 
-## pcstat
+## 内存相关
+
+### free
+
+```bash
+➜  ~ free
+              total        used        free      shared  buff/cache   available
+Mem:         810492      323488      125568        1848      361436      360564
+Swap:       2097148        5408     2091740
+```
+
+* total: 
+* used: 包含了共享内存
+* free: 
+* shared: 
+* buff/cache: 并不是所有的缓存都可以回收。
+* available: 新进程可用的内存大小。不仅包含未使用内存，还包括了可回收的缓存。
+
+### slabtop
+
+查看 slab 信息。
+
+### pcstat
 
 Go 开发的。查看文件在内存中的缓存大小及缓存比例。
 
@@ -392,14 +347,6 @@ $ pcstat /bin/ls
 |---------+----------------+------------+-----------+---------|
 | /bin/ls | 133792         | 33         | 0         | 000.000 |
 +---------+----------------+------------+-----------+---------+
-```
-
-## numactl
-
-查看、控制 NUMA 中的 node 信息。
-
-```bash
-numactl --hardware
 ```
 
 ## 磁盘相关
@@ -437,14 +384,6 @@ df -h
 df -i
 ```
 
-### fio
-
-磁盘性能测试工具。
-
-```bash
-yum install -y fio
-```
-
 ### iotop
 
 ```bash
@@ -459,5 +398,72 @@ yum install -y iotop
 yum install -y lsof
 
 lsof -p ${pid}
+```
+
+## 网络相关
+
+### tcpdump
+
+常用的网络抓包工具。
+
+```bash
+yum install -y tcpdump
+```
+
+```bash
+# -i 网卡
+tcpdump -i ens33 -n tcp port 80
+```
+
+### hping3
+
+可以构造 TCP/IP 协议数据包的工具。
+
+```bash
+yum install -y epel-release
+yum install -y hping3
+
+brew install hping
+```
+
+```bash
+# -S tcp 协议的 SYN
+# -p 目标端口哦
+# 发送间隔
+hping3 -S -p 80 -i u100 10.93.245.152
+```
+
+## 测试相关
+
+### sysbench
+
+多线程基准测试工具。
+
+* --thread: 线程数
+* --time: 执行多少秒
+
+### stress
+
+系统压力测试工具：`apt install stress`，重要的参数有：
+
+* -i, --io 模拟 N 个进程执行 sync\(\)
+* -c,--cpu 模拟 N 个进程执行 sqrt\(\)
+* -t,--timeout 执行 N 秒
+
+### ab
+
+HTTP 服务性能测试工具。
+
+```bash
+# 并发10个请求，总共测试100个请求
+$ ab -c 10 -n 100 http://192.168.0.10:10000/
+```
+
+### fio
+
+磁盘性能测试工具。
+
+```bash
+yum install -y fio
 ```
 
