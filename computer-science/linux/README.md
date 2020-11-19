@@ -28,10 +28,11 @@
   * [内存泄漏](memory-diagnosis.md#nei-cun-xie-lou)
   * [Swap](memory-diagnosis.md#swap)
   * [优化思路](memory-diagnosis.md#zong-jie)
-* [I/O](i-o-diagnosis.md)
+* [磁盘](i-o-diagnosis.md)
   * [文件系统](i-o-diagnosis.md#wen-jian-xi-tong)
   * [磁盘](i-o-diagnosis.md#ci-pan)
-* 网络
+  * [优化思路](i-o-diagnosis.md#you-hua-si-lu)
+* [网络](network-diagnosis.md)
 
 ![](../../.gitbook/assets/image%20%28280%29.png)
 
