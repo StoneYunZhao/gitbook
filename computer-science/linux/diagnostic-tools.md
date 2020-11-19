@@ -421,6 +421,33 @@ lsof -p ${pid}
 
 ## 网络相关
 
+### net-tools
+
+```bash
+yum install -y net-tools
+```
+
+#### ifconfig
+
+```bash
+ifconfig [$interface]
+```
+
+### iproute
+
+```bash
+yum install -y iproute
+```
+
+net-tools 的下一代，建议使用这个。
+
+#### ip
+
+```bash
+ip -s addr show dev $interface
+# -s, -stats：显示一些统计信息
+```
+
 ### tcpdump
 
 常用的网络抓包工具。
