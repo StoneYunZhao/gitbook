@@ -117,7 +117,7 @@ CPU 性能分析工具
 系统活动报告工具，可以实时查看系统当前的活动，也可以配置保存和报告历史统计数据。
 
 ```bash
-# -n DEV, 报告网络设备
+# -n 查看网络统计信息。DEV（网络接口）、EDEV（网络接口错误）、TCP、UDP、ICMP
 sar -n DEV 1
 
 # -r 显示内存使用情况，-S 显示 Swap 使用情况
@@ -126,6 +126,11 @@ sar -r -S 1
 # kbactive: 活跃内存
 # kbinact: 非活跃内存
 ```
+
+* rxpck/s, txpck/s：PPS，包/秒。
+* rxKB/s, txKB/s：吞吐量。
+* rxcmp/s, tcxmp/s：压缩包数据包数。
+* %ifutil：网络接口使用率。半双工模式下为 \(rxkB/s+txkB/s\)/Bandwidth，而全双工模式下为 max\(rxkB/s, txkB/s\)/Bandwidth。Bandwidth 可用ethtool 查看。
 
 ### iostat
 
@@ -433,6 +438,8 @@ yum install -y net-tools
 ifconfig [$interface]
 ```
 
+* RUNNING：同 ip 的 LOWER\_UP。
+
 ### iproute
 
 ```bash
@@ -446,6 +453,72 @@ net-tools 的下一代，建议使用这个。
 ```bash
 ip -s addr show dev $interface
 # -s, -stats：显示一些统计信息
+```
+
+* LOWER\_UP：物理网络连通，网卡已经连到交换机或路由器。
+* MTU：默认 1500。
+* errors：校验错误、帧同步错误等。
+* dropped：丢弃的数据包数。如内存不足。
+* overruns：超限的数据包数。如网络 IO 过快，Ring Buffer 来不及处理。
+* carrier：发生 carrier 错误的数据包数。如双工模式不匹配、物理电缆出问题等。
+* collisions：碰撞数据包数。
+
+### netstat
+
+查看套接字、网络栈、网络接口以及路由表的信息。
+
+```bash
+netstat -nlp
+# -n 显示数字地址和端口，而不是名字
+# -p 显示进程信息
+# -l 只显示监听的套接字
+
+netstat -s
+```
+
+### ss
+
+与 netstat 类似，但是性能更好。
+
+```bash
+ss -nplt
+# -n 显示数字地址和端口，而不是名字
+# -p 显示进程
+# -l 只显示监听的套接字
+# -t 只显示 tcp 套接字
+
+ss -s
+# -s 统计信息
+```
+
+接收队列（Recv-Q）和发送队列（Send-Q）通常应该是 0。若不是 0 时，说明有网络包的堆积发生。
+
+若 Socket 处于 Established 状态时：
+
+* Recv-Q：Socket 缓冲区还未被应用程序取走的字节数（接收队列长度）。
+* Send-Q：还未被远端主机确认的字节数（发送队列长度）。
+
+若 Socket 处于 Listen 状态：
+
+* Recv-Q：全连接队列的长度。
+* Send-Q：全连接队列的最大长度。
+
+{% hint style="info" %}
+全连接指完成了三次 TCP 握手。需要被 accept\(\) 系统调用取走。半连接指还未完成 TCP 三次握手，服务器收到客户端 SYN 后，会把连接放到半连接队列中，再向客户端发送 SYN+ACK。
+{% endhint %}
+
+### ethtool
+
+```bash
+ethtool $interface
+```
+
+### ping
+
+测试主机连通性和延时。
+
+```bash
+ping -c3 $ip
 ```
 
 ### tcpdump
