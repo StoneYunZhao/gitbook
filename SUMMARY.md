@@ -139,7 +139,6 @@
 * [Redis](database/basic.md)
 * [Elasticsearch](database/elasticsearch/README.md)
   * [Local Debug](database/elasticsearch/local-debug.md)
-  * [Discovery](database/elasticsearch/discovery.md)
 * [HBase](database/hbase.md)
 * [Kafka](database/kafka.md)
 * [ZooKeeper](database/zookeeper-1.md)
