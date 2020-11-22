@@ -633,3 +633,31 @@ $ blkparse sdb -d sdb.bin
 $ fio --name=replay --filename=/dev/sdb --direct=1 --read_iolog=sdb.bin 
 ```
 
+### iperf
+
+TCP、UDP 性能测试工具。
+
+```bash
+yum install -y iperf3
+
+## 服务端（被测试端）启动服务
+iperf3 -s -i 1 -p 10000
+# -s 启动服务端
+# -i 汇报时间间隔
+# -p 监听端口
+
+## 客户端运行测试
+iperf3 -c 192.168.0.30 -b 1G -t 15 -P 2 -p 10000
+# -c 启动客户端，后面为目标服务器 IP
+# -b 目标带宽
+# -t 测试时间
+# -P 并发数
+# -p 服务端端口
+```
+
+SUM 行就是测试汇总结果。包括测试时间、数据传输量、带宽等。又分为 sender 和 receiver 两行。
+
+### netperf
+
+TCP、UDP 性能测试工具。
+
