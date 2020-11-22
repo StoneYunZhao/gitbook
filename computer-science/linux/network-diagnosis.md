@@ -76,11 +76,13 @@ Linux 基于 TCP/IP 协议栈，所以评估网络性能需要明确属于协议
 
 ### TCP/UDP 性能
 
-可用 iperf、netperf 测试 TCP、UDP 性能。详见[性能测试工具](diagnostic-tools.md#iperf)。
+可用 iperf、netperf 测试 TCP、UDP 性能。详见 [iperf 使用介绍](diagnostic-tools.md#iperf)。
 
 ### HTTP 性能
 
-
+可用 ab、webbench 等测试 HTTP 性能。详见 [ab 使用介绍](diagnostic-tools.md#ab)。
 
 ### 应用负载性能
+
+使用 iperf、ab 等工具测试了 TCP、HTTP 等性能数据并不等同于应用程序的实际性能。因为实际用户请求大不相同，带有不同的业务逻辑。所以需要模拟用户请求来做测试。可用 wrk、TCPCopy、Jmeter、LoadRunner 等工具实现。
 
