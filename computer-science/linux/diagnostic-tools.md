@@ -580,6 +580,16 @@ dig trace 的输出主要有四部分：
 * 三：从 com. 的 NS 记录中选一个，查找二级域名 baidu.com. 的 NS 记录。
 * 四：从 baidu.com. 的 NS 记录中选一个，查询 baidu.com. 的 A 记录。
 
+### dnsmasq
+
+最常用的 DNS 缓存服务器，还可作为 DHCP 服务器使用。
+
+```bash
+/etc/init.d/dnsmasq start
+
+echo nameserver 127.0.0.1 > /etc/resolv.conf
+```
+
 ## 测试相关
 
 ### sysbench
