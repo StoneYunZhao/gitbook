@@ -562,6 +562,7 @@ yum install -y bind-utils
 
 ```bash
 nslookup $domain
+# -debug 开启调试模式
 ```
 
 #### dig
