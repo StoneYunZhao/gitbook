@@ -552,6 +552,33 @@ brew install hping
 hping3 -S -p 80 -i u100 10.93.245.152
 ```
 
+### bind-utils
+
+```bash
+yum install -y bind-utils
+```
+
+#### nslookup
+
+```bash
+nslookup $domain
+```
+
+#### dig
+
+```bash
+dig +trace +nodnssec baidu.com
+# +trace 开启跟踪查询
+# +nodnssec 禁止 DNS 安全扩展
+```
+
+dig trace 的输出主要有四部分：
+
+* 一：查到根域名服务器 \(.\) 的 NS 记录。
+* 二：从 NS 中选一个，查询顶级域名 com. 的 NS 记录。
+* 三：从 com. 的 NS 记录中选一个，查找二级域名 baidu.com. 的 NS 记录。
+* 四：从 baidu.com. 的 NS 记录中选一个，查询 baidu.com. 的 A 记录。
+
 ## 测试相关
 
 ### sysbench
