@@ -128,7 +128,8 @@
 ## database
 
 * [InfluxDB](database/influxdb/README.md)
-  * [Source Code - In-Memory Index](database/influxdb/source-code-in-memory-index.md)
+  * [In-Memory Index](database/influxdb/source-code-in-memory-index.md)
+  * [Meta](database/influxdb/meta.md)
 * [MySQL](database/mysql/README.md)
   * [SQL](database/mysql/sql.md)
   * [Architecture](database/mysql/architecture.md)

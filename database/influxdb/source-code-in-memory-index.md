@@ -1,4 +1,4 @@
-# Source Code - In-Memory Index
+# In-Memory Index
 
 我们可以理解为 TSM 存储的是正排索引，而 Index 存储的是倒排索引。Index 有两种实现，In-Memory index 和 TSI。最初，InfluxDB 仅提供了 In-Memory 实现，后来为了适应大量短暂的 series 的场景，避免内存不足，实现了 TSI。若要使用 TSI，可以通过如下配置：
 
