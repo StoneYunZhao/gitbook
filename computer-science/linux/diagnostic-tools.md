@@ -523,16 +523,30 @@ ping -c3 $ip
 
 ### tcpdump
 
-常用的网络抓包工具。
+常用的网络抓包工具。基于 libpcap。
 
 ```bash
 yum install -y tcpdump
 ```
 
 ```bash
+tcpdump [option] [filter-expression]
+
 # -i 网卡
 tcpdump -i ens33 -n tcp port 80
+
+tcpdump -i any -nn udp port 53 or host 35.190.27.188
+# -i any 所有网卡
+# -nn 不解析抓包中的域名、协议、端口号
+# udp port 53 仅显示 udp 协议的 53 端口
+# host 35.190.27.188 只显示特定 IP（包括源地址和目的地址）
 ```
+
+基本输出格式：`时间戳 协议 源地址.源端口 > 目的地址.目的端口 网络包详细信息`。可以通过选项增加其它字段。
+
+![](../../.gitbook/assets/image%20%28313%29.png)
+
+![](../../.gitbook/assets/image%20%28314%29.png)
 
 ### Wireshark
 
@@ -541,6 +555,10 @@ tcpdump -i ens33 -n tcp port 80
 ```bash
 yum install -y wireshark
 ```
+
+tcpdump 通过 -w 选项保持抓包文件，可通过 wireshark 图形界面打开，以更加友好的方式展示。
+
+比如 Statistics -&gt; Flow Graph 可以查看整个 TCP 的流程。推荐书籍 《Wireshark网络分析就这么简单》、《Wireshark网络分析的艺术》
 
 ### hping3
 
@@ -571,6 +589,9 @@ yum install -y bind-utils
 ```bash
 nslookup $domain
 # -debug 开启调试模式
+
+# 通过 ip 查找域名
+nslookup -type=PTR 35.190.27.188 8.8.8.8
 ```
 
 #### dig
