@@ -79,6 +79,33 @@ A 发送 ACK 之后不能直接关闭，需要进入 TIME-WAIT 状态。原因�
 
 ![](../../.gitbook/assets/image%20%28237%29.png)
 
+![](../../.gitbook/assets/image%20%28315%29.png)
+
+半开状态（SYN\_RECEIVED）的 TCP 连接会放入连接表中。
+
+```bash
+# 查看半开状态的连接
+ss -n -p | grep SYN_REC
+
+# 查看半开状态连接的限制
+sysctl net.ipv4.tcp_max_syn_backlog
+
+# 修改限制
+sysctl -w net.ipv4.tcp_max_syn_backlog=1024
+
+# 连接 SYN_RECV 的重试次数
+sysctl -w net.ipv4.tcp_synack_retries=1
+
+# 开启 TCP SYN Cookies
+sysctl -w net.ipv4.tcp_syncookies=1
+
+# 持久化配置
+cat /etc/sysctl.conf
+
+# 配置生效
+sysctl -p
+```
+
 ### 滑动窗口
 
 滑动窗口是依据接收端的处理能力的。

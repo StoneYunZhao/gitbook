@@ -574,7 +574,7 @@ brew install hping
 ```bash
 # -S tcp 协议的 SYN
 # -p 目标端口哦
-# 发送间隔
+# -i u100 发送间隔为 100 微秒
 hping3 -S -p 80 -i u100 10.93.245.152
 ```
 
