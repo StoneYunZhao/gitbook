@@ -628,6 +628,17 @@ echo nameserver 127.0.0.1 > /etc/resolv.conf
 * --thread: 线程数
 * --time: 执行多少秒
 
+```bash
+apt-get install sysbench
+
+sysbench --num-threads=8 --max-requests=100000 --test=cpu run
+
+sysbench --test=memory --memory-oper=read --memory-access-mode=seq run
+sysbench --test=memory --memory-oper=write --memory-access-mode=seq run
+sysbench --test=memory --memory-oper=read --memory-access-mode=rnd run
+sysbench --test=memory --memory-oper=write --memory-access-mode=rnd run
+```
+
 ### stress
 
 系统压力测试工具：`apt install stress`，重要的参数有：
