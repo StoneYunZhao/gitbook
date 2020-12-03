@@ -578,6 +578,15 @@ brew install hping
 hping3 -S -p 80 -i u100 10.93.245.152
 ```
 
+### traceroute
+
+```bash
+yum install -y "traceroute"
+
+traceroute --tcp -p 80 -n baidu.com
+# -n 不对结果中的 IP 进行反向域名解析
+```
+
 ### bind-utils
 
 ```bash
@@ -742,4 +751,12 @@ SUM 行就是测试汇总结果。包括测试时间、数据传输量、带宽�
 ### netperf
 
 TCP、UDP 性能测试工具。
+
+### wrk
+
+网络性能测试工具。
+
+```bash
+wrk --latency -c 100 -t 2 --timeout 2 http://192.168.0.30/
+```
 
