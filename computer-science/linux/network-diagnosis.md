@@ -98,3 +98,11 @@ DDoS（Distributed Denail of Service）在 DoS 的基础上，采用分布式架
 
 DDoS 只能缓解，不能测地解决。比如购买专业的流量清洗设备、网络防火墙，内核调优、DPDK、XDP 等方式，在应用程序中利用各级缓存、WAF、CDN 等方式。
 
+## NAT
+
+先了解相关[基础知识](../network-protocol/network-layer.md#nat-wang-guan)。Linux 提供 Netfilter 框架可以对数据包修改和过滤。iptables、ip6tables、ebtables 就是基于 Netfilter，提供了易用的命令行接口。
+
+![&#x6570;&#x636E;&#x5305;&#x901A;&#x8FC7; Netfilter &#x65F6;&#x7684;&#x6D41;&#x5411;](../../.gitbook/assets/image%20%28316%29.png)
+
+
+

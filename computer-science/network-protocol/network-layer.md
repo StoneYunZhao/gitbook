@@ -118,7 +118,14 @@ qdisc pfifo\_fast 表示排队规则为 pfifo\_fast。qdisc 全称是 **queueing
 
 ### NAT 网关
 
-**NAT** （**N**etwork **A**ddress **T**ranslation）**网关**：改变 IP 地址的网关。MAC 地址的行为和转发网关是一致的；源 IP 和目标 IP 通过配置的 NAT 修改。
+**NAT** （**N**etwork **A**ddress **T**ranslation）**网关**：改变 IP 地址（源和目标）的网关。MAC 地址的行为和转发网关是一致的；源 IP 和目标 IP 通过配置的 NAT 修改。NAT 可以分为三类：
+
+* 静态 NAT，内网 IP 与公网 IP 是一对一的映射关系。
+* 动态 NAT，内网 IP 从公网 IP 池中动态选一个映射。
+* 网络地址端口转换 NAPT（Network Address and Port Translation），内网 IP 映射到公网 IP 的不同端口，多个内网 IP共享同一个公网 IP。又可以分为三类：
+  * SNAT，仅替换源 IP 或端口。主要用于内网多个 IP 共享一个公网 IP 来访问外网资源。
+  * DNAT，仅替换目标 IP 或端口。主要用于公网 IP 通过不同端口号来访问内网资源，屏蔽真实 IP。
+  * 双向地址转换。主要用于公网 IP 与内网 IP 一一对应，在虚拟环境中为虚拟机分配浮动的公网 IP。
 
 ![](../../.gitbook/assets/image%20%28162%29.png)
 
