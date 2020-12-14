@@ -150,6 +150,8 @@ qdisc pfifo\_fast 表示排队规则为 pfifo\_fast。qdisc 全称是 **queueing
 * 源 IP：192.168.56.1
 * 目标 IP：192.168.1.101
 
+关于 NAT 的具体应用可见[操作系统-NAT](../linux/network-diagnosis.md#nat)。
+
 ## 路由
 
 网关往往是一个路由器，是一个三层转发的设备，它有五个网口或者网卡，分别连着五个局域网。每个口的 IP 地址都和局域网的 IP 地址相同的网段，每个口都是对应局域网的网关。

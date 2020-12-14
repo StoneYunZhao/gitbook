@@ -104,5 +104,35 @@ DDoS 只能缓解，不能测地解决。比如购买专业的流量清洗设备
 
 ![&#x6570;&#x636E;&#x5305;&#x901A;&#x8FC7; Netfilter &#x65F6;&#x7684;&#x6D41;&#x5411;](../../.gitbook/assets/image%20%28316%29.png)
 
+图中，绿色背景方框表示表（table），用于管理链。分为四种类型：filter、nat、mangle（修改分组元数据）、raw（原始数据包）。白色背景方框表示链（chain），管理具体的 iptables 规则。每个表可以包含多个链，有内置链，也可创建自定义链，如：
 
+* filter 表：内置 INPUT、OUTPUT、FORWARD 链。
+* nat 表：内置三种链。
+  * PREROUTING：路由判断前所执行的规则，如 DNAT。
+  * POSTROUTING：路由判断后所执行的规则，如 SNAT 或 MASQUERADE。
+  * OUTPUT：类似 PREROUTING，仅处理本机发送出去的包。
+
+灰色的 conntrack 表示连接跟踪模块，通过内核中的连接跟踪表（Hash），记录网络连接状态，是 iptables 状态过滤（-m state）和 NAT 的实现基础。
+
+```bash
+# SNAT
+
+## 配置一个子网
+iptables -t nat -A POSTROUTING -s 192.168.0.0/16 -j MASQUERADE
+
+## 配置一个具体 IP
+iptables -t nat -A POSTROUTING -s 192.168.0.2 -j SNAT --to-source 100.100.100.100
+
+# DNAT
+iptables -t nat -A PREROUTING -d 100.100.100.100 -j DNAT --to-destination 192.168.0.2
+
+# 双向地址转换
+iptables -t nat -A POSTROUTING -s 192.168.0.2 -j SNAT --to-source 100.100.100.100
+iptables -t nat -A PREROUTING -d 100.100.100.100 -j DNAT --to-destination 192.168.0.2
+
+# 需要开启 linux 的 IP 转发功能
+sysctl net.ipv4.ip_forward
+sysctl -w net.ipv4.ip_forward=1
+cat /etc/sysctl.conf | grep ip_forward # 持久化
+```
 
