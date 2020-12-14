@@ -136,3 +136,41 @@ sysctl -w net.ipv4.ip_forward=1
 cat /etc/sysctl.conf | grep ip_forward # 持久化
 ```
 
+## 总结
+
+### 指标 -&gt; 工具
+
+![](../../.gitbook/assets/image%20%28319%29.png)
+
+### 工具 -&gt; 指标
+
+![](../../.gitbook/assets/image%20%28317%29.png)
+
+### 优化思路
+
+#### 应用程序
+
+* epoll 取代 select 和 poll。
+* 使用 AIO
+* 主进程 + 多个 worker 子进程的工作模型。
+* 监听相同端口的多进程模型。
+* 长连接取代短连接。
+* 使用缓存降低 IO 次数。
+* 使用 proto buffer 等序列化方式压缩网络传输数据量。
+* 使用 DNS 缓存等减少 DNS 延迟。
+
+#### 套接字
+
+套接字可以屏蔽 Linux 内核中不同协议的差别，提供统一的访问接口，每个套接字都有读写缓冲区。
+
+* 读缓冲区：缓存远端发来的数据，若满，则不能接受新数据。
+* 写缓冲区：缓存要发送出去的数据，若满，则写操作阻塞。
+
+![](../../.gitbook/assets/image%20%28318%29.png)
+
+另外可以优化套接字的配置选项：
+
+* TCP\_NODEPLAY，仅有 Nagle 算法。
+* TCP\_CORK，小包聚合成大包一起发送。
+* SO\_SNDBUF, SORCVBUF。
+
