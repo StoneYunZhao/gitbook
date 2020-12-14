@@ -140,7 +140,7 @@ cat /etc/sysctl.conf | grep ip_forward # 持久化
 
 ### 指标 -&gt; 工具
 
-![](../../.gitbook/assets/image%20%28319%29.png)
+![](../../.gitbook/assets/image%20%28320%29.png)
 
 ### 工具 -&gt; 指标
 
@@ -173,4 +173,57 @@ cat /etc/sysctl.conf | grep ip_forward # 持久化
 * TCP\_NODEPLAY，仅有 Nagle 算法。
 * TCP\_CORK，小包聚合成大包一起发送。
 * SO\_SNDBUF, SORCVBUF。
+
+#### 传输层
+
+**TCP**
+
+![](../../.gitbook/assets/image%20%28319%29.png)
+
+**UDP**
+
+* 增大缓冲区
+* 增大端口号范围
+* 根据 MTU 调整 UDP 数据包大小
+
+#### 网络层
+
+网络层负责网络包的封装、寻址、路由，包括 IP、ICMP 等。
+
+路由和转发的角度：
+
+* `net.ipv4.ip_forward`
+* `ip.ipv4.ip_default_ttl`
+* `ip.ipv4.conf.eth0.rp_filter`
+
+从分片的角度主要调整 MTU 大小。
+
+从 ICMP 的角度：
+
+* `net.ipv4.icmp_echo_ignore_all`
+* `net.ipv4.icmp_echo_ignore_broadcasts`
+
+#### 链路层
+
+链路层负责网络包在物理网络中的传输。
+
+从中断的角度：
+
+* 配置网卡硬中断的亲和性。
+* 开启 RPS、RFS。
+
+利用网卡的能力：
+
+* TSO、UFO
+* GSO
+* LRO
+* GRO
+* RSS
+* VXLAN 卸载
+
+网络接口本身：
+
+* 网络接口多队列
+* 网络接口缓冲区
+* 配置 QoS
 
