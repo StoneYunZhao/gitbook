@@ -474,6 +474,10 @@ netstat -nlp
 # -l 只显示监听的套接字
 
 netstat -s
+# -s, 协议的收发汇总情况及错误
+
+netstat -i
+# -i, 查看网卡，比如丢包等信息
 ```
 
 ### ss
