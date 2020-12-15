@@ -273,8 +273,8 @@ type Index struct {
     sfile    *tsdb.SeriesFile
     fieldset *tsdb.MeasurementFieldSet
 
-  measurements map[string]*measurement // key: measurement name
-  series       map[string]*series // key: series key(measurement + tag set)
+    measurements map[string]*measurement // key: measurement name
+    series       map[string]*series // key: series key(measurement + tag set)
 
     seriesSketch, seriesTSSketch             estimator.Sketch
     measurementsSketch, measurementsTSSketch estimator.Sketch
@@ -309,8 +309,8 @@ type measurement struct {
     mu         sync.RWMutex
     fieldNames map[string]struct{}
 
-  seriesByID          map[uint64]*series // key: series id  
-  seriesByTagKeyValue map[string]*tagKeyValue // key: tag key
+    seriesByID          map[uint64]*series // key: series id  
+    seriesByTagKeyValue map[string]*tagKeyValue // key: tag key
 
     sortedSeriesIDs seriesIDs 
 
@@ -319,11 +319,11 @@ type measurement struct {
 
 type tagKeyValue struct {
     mu      sync.RWMutex
-  entries map[string]*tagKeyValueEntry // key: tag value
+    entries map[string]*tagKeyValueEntry // key: tag value
 }
 
 type tagKeyValueEntry struct {
-  m map[uint64]struct{} // key: series id
+    m map[uint64]struct{} // key: series id
     a seriesIDs  // 有序的 series ids
 }
 
