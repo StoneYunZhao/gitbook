@@ -70,6 +70,10 @@ echo 3 > /proc/sys/vm/drop_caches
 ```bash
 ps -ef
 # -T 展示线程
+
+# 查看所有内核线程
+ps -f --ppid 2 -p 2
+ps -ef | grep "\[.*\]"
 ```
 
 ## top
