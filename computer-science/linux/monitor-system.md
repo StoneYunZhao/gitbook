@@ -4,19 +4,33 @@
 
 ## USE 法
 
-用于性能监控，Utilization Saturation and Errors。即使用率、饱和度、错误数。
+用于性能监控，Utilization Saturation and Errors。即使用率、饱和度、错误数。适用于系统监控。
 
 USE 只关注提现系统性能瓶颈的指标。其它指标有时也很重要，如缓存、IOPS 等。
 
 ![](../../.gitbook/assets/image%20%28325%29.png)
 
 {% hint style="info" %}
-除了 USE 原则，还有偏重于应用的 RED 原则：Rate、Error、Duration。
+除了 USE 原则，还有偏重于应用的 RED 原则（适用于应用监控）：Rate、Error、Duration。
 {% endhint %}
 
 ## 系统监控
 
+主要包括 CPU、内存、磁盘、文件系统、网络等。还有文件描述符、连接数、链接跟踪数等。
+
 有很多开源的监控工具，如 Zabbix、Nagios、Prometheus，以 Prometheus 为例：
 
 ![](../../.gitbook/assets/image%20%28324%29.png)
+
+## 应用监控
+
+适用于 RED 原则，即请求数、错误率、响应时间。RED 用于知道是否发生了性能问题，若要快速定位性能瓶颈，还需要如下监控：
+
+* 应用程序的资源使用情况，如进程占用的 CPU、内存、磁盘、网络等。
+* 应用程序之间的调用情况，如调用频率、错误数、延时等。
+* 应用程序内部核心逻辑的运行情况，如关键环节的耗时及错误。
+
+由于业务系统通常涉及多个服务，性能复杂的调用链，所以可使用 Zipkin、Jaeger、Pinpoint 等工具构建全链路跟踪系统。
+
+指标监控可以定位到性能瓶颈的位置，具体的性能问题有时还需要上下文，日志提供了上下文来源。指标适合实时监控，而日志适合历史问题查找。日志监控系统经典的就是 ELK（或 EFK）。
 
