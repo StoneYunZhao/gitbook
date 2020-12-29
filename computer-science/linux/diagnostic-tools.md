@@ -260,7 +260,7 @@ numactl --hardware
 
 基于 Linux 内核的 eBPF 机制。
 
-![](../../.gitbook/assets/image%20%28323%29.png)
+![](../../.gitbook/assets/image%20%28324%29.png)
 
 ### CentOS Install
 
@@ -643,6 +643,8 @@ echo nameserver 127.0.0.1 > /etc/resolv.conf
 ```
 
 ## 测试相关
+
+![](../../.gitbook/assets/image%20%28321%29.png)
 
 ### sysbench
 
