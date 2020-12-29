@@ -202,6 +202,8 @@ strace -p ${pid} -f
 
 ## perf
 
+利用[动态追踪技术](basic.md#dong-tai-zhui-zong-ji-shu)。
+
 ```bash
 // 按方向键可定位对象，按回车可展开
 $ perf top [-g]
@@ -219,6 +221,8 @@ Overhead  Shared Object       Symbol
 * Symbol：函数名
 
 还有`perf record [-g]`， `perf report [-g]` 等。
+
+可以追踪内核线程。可以通过其它工具把输出结果以火焰图的方式展示。
 
 ## pstree
 
@@ -255,6 +259,8 @@ numactl --hardware
 ## bcc
 
 基于 Linux 内核的 eBPF 机制。
+
+![](../../.gitbook/assets/image%20%28323%29.png)
 
 ### CentOS Install
 
