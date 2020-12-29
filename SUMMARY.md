@@ -91,6 +91,7 @@
   * [Memory Diagnosis](computer-science/linux/memory-diagnosis.md)
   * [Disk Diagnosis](computer-science/linux/i-o-diagnosis.md)
   * [Network Diagnosis](computer-science/linux/network-diagnosis.md)
+  * [Monitor System](computer-science/linux/monitor-system.md)
 * [Design Patterns](computer-science/design-patterns/README.md)
   * [UML](computer-science/design-patterns/uml.md)
   * [OOP](computer-science/design-patterns/oop.md)

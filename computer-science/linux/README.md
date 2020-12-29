@@ -33,6 +33,7 @@
   * [磁盘](i-o-diagnosis.md#ci-pan)
   * [优化思路](i-o-diagnosis.md#you-hua-si-lu)
 * [网络](network-diagnosis.md)
+* [监控系统](monitor-system.md)建设
 
 ![](../../.gitbook/assets/image%20%28280%29.png)
 
