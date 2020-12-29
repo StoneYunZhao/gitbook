@@ -1,6 +1,0 @@
-# Composite Types
-
-## Struct
-
-### Basic
-

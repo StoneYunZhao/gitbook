@@ -5,9 +5,7 @@
 ## Go
 
 * [Grammar](go/grammar/README.md)
-  * [Basic Data Types](go/grammar/basic-data-types.md)
-  * [Composite Types](go/grammar/composite-types.md)
-  * [Method](go/grammar/method.md)
+  * [Basic](go/grammar/basic.md)
   * [Goroutines & Channels](go/grammar/goroutines-and-channels.md)
   * [Test](go/grammar/test.md)
 * [System Library](go/system-library/README.md)

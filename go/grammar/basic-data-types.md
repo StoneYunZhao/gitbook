@@ -1,4 +1,0 @@
-# Basic Data Types
-
-## string
-
