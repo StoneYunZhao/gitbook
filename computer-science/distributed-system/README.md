@@ -1,5 +1,7 @@
 # Distributed System
 
+* [协议和算法](protocol-and-algorithm.md)
+  * 
 * [理论](theory.md)
   * [分布式互斥](theory.md#mutual-exclusion)
   * [分布式选举](theory.md#election)
