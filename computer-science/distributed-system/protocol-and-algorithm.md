@@ -2,6 +2,8 @@
 
 ## 大纲
 
+![](../../.gitbook/assets/image%20%28330%29.png)
+
 对于一个分布式算法，我们常从拜占庭容错、一致性、性能、可用性四个角度来分析。
 
 ![](../../.gitbook/assets/image%20%28328%29.png)
@@ -27,11 +29,9 @@
 
 ### 可用性
 
-Gossip 只有可以节点也能提供服务；Paxos、ZAB、Raft、Quorum NWR、PBFT、POW 能容忍一定数量的节点故障；2PC、TCC 只有所有节点都健康时才能运行。
+Gossip 只有一个节点也能提供服务；Paxos、ZAB、Raft、Quorum NWR、PBFT、POW 能容忍一定数量的节点故障；2PC、TCC 只有所有节点都健康时才能运行。
 
 ### 性能
 
 Gossip 是 AP 系统，性能最高；Paxos、ZAB、Raft 都是领导者模型，写性能受限于领导者，读性能取决于一致性实现；2PC、TCC 需要预留和锁定资源，性能较低。
-
-![](../../.gitbook/assets/image%20%28329%29.png)
 
