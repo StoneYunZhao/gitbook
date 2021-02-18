@@ -111,6 +111,11 @@ Gossip 是 AP 系统，性能最高；Paxos、ZAB、Raft 都是领导者模型�
 
 对于 InfluxDB 的集群版本，Meta 集群采用 CP 系统设计，Data 集群采用 AP 系统设计。
 
+{% hint style="info" %}
+* 可以把 ACID 理解为 CAP 理论中 CP 系统的对一致性的要求。
+* 可以把 BASE 理解为 CAP 理论中 AP 系统对可用性的描述。
+{% endhint %}
+
 ## ACID
 
 ACID 理论是对事务特性的抽象和总结。可以理解为无论是单机系统还是分布式系统，只要实现了操作的 ACID 特性，那么这个系统就实现了事务。
@@ -121,4 +126,8 @@ ACID 理论是对事务特性的抽象和总结。可以理解为无论是单机
 * Durability：持久性，事务提交之后对数据的修改是持久性的。
 
 单机事务的原理、实现等相关介绍见[ MySQL 一章](../../database/mysql/transaction.md)。分布式事务的实现、算法见[分布式事务一章](transcation.md)。
+
+## BASE
+
+
 
