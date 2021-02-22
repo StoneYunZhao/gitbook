@@ -149,10 +149,6 @@
 * [ZooKeeper](database/zookeeper-1.md)
 * [MongoDB](database/mongodb.md)
 
-## LIFE
-
-* [Glasses](life/glasses.md)
-
 ## Other
 
 * [v2ray](other/v2ray.md)

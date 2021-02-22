@@ -36,8 +36,6 @@
   * [Kafka](database/kafka.md)
   * [ZooKeeper](database/zookeeper-1.md)
   * [MongoDB](database/mongodb.md)
-* 生活
-  * [眼镜](life/glasses.md)
 * **其它**： 
   * [Kubernetes](other/kubernetes.md)
   * [Git](other/git.md)
