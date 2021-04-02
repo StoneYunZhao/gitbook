@@ -13,6 +13,7 @@
   * [sync](go/system-library/sync.md)
   * [context](go/system-library/context.md)
   * [net](go/system-library/net.md)
+* [Concurrency in Go](go/concurrency-in-go.md)
 
 ## JAVA
 
