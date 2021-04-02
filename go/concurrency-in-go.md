@@ -97,3 +97,9 @@ We haven’t really added another layer of abstraction on top of OS threads, we�
 
 ### CSP
 
+Inputs and outputs needed to be considered language primitives. 
+
+Hoare’s CSP programming language contained primitives to model input and output, or communication, between processes correctly.
+
+Hoare applied the term processes to any encapsulated portion of logic that required input to run and produced output other processes would consume.
+
