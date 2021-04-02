@@ -113,5 +113,15 @@ Go’s runtime multiplexes goroutines onto OS threads automatically and manages 
 
 Goroutines are only one piece of the puzzle. The other concepts from CSP, channels and select statements, add value as well.
 
+### Philosophy
 
+Package sync provides basic synchronization primitives such as mutual exclusion locks. Other than the Once and WaitGroup types, most are intended for use by low- level library routines. Higher-level synchronization is better done via channels and communication.
+
+Regarding mutexes, the sync package implements them, but we hope Go programming style will encourage people to try higher-level techniques. In particular, consider structuring your program so that only one goroutine at a time is ever responsible for a particular piece of data.
+
+Do not communicate by sharing memory. Instead, share memory by communicating.
+
+Aim for simplicity, use channels when possible, and treat goroutines like a free resource.
+
+![](../.gitbook/assets/image%20%28331%29.png)
 
