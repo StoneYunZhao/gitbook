@@ -125,3 +125,19 @@ Aim for simplicity, use channels when possible, and treat goroutines like a free
 
 ![](../.gitbook/assets/image%20%28331%29.png)
 
+## Chapter 3: Concurrency Building Blocks
+
+### Goroutines
+
+
+
+### sync package
+
+
+
+### Channels
+
+
+
+### Select Statement
+
