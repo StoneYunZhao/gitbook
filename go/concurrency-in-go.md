@@ -103,3 +103,15 @@ Hoare’s CSP programming language contained primitives to model input and outpu
 
 Hoare applied the term processes to any encapsulated portion of logic that required input to run and produced output other processes would consume.
 
+### Benefits
+
+Goroutines free us from having to think about our problem space in terms of parallelism and instead allow us to model problems closer to their natural level of concurrency.
+
+Goroutines are lightweight, and we normally won’t have to worry about creating one.
+
+Go’s runtime multiplexes goroutines onto OS threads automatically and manages their scheduling for us.
+
+Goroutines are only one piece of the puzzle. The other concepts from CSP, channels and select statements, add value as well.
+
+
+
