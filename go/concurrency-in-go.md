@@ -129,7 +129,50 @@ Aim for simplicity, use channels when possible, and treat goroutines like a free
 
 ### Goroutines
 
+Go program has at least one goroutine: the main goroutine, which is automatically created and started when the process begins.
 
+A goroutine is a function that is running concurrently \(remember: not necessarily in parallel!\) alongside other code.
+
+Goroutines are not OS threads, and they’re not exactly **green threads**—threads that are managed by a language’s runtime—they’re a higher level of abstraction known as **coroutines**.
+
+Coroutines are simply concurrent subroutines \(functions, closures, or methods in Go\) that are nonpreemptive—that is, they cannot be interrupted. Instead, coroutines have multiple points throughout which allow for suspension or reentry.
+
+Goroutines don’t define their own suspension or reentry points; Go’s runtime observes the runtime behavior of goroutines and automatically suspends them when they block and then resumes them when they become unblocked. In a way this makes them preemptable, but only at points where the goroutine has become blocked. **Thus, goroutines can be considered a special class of coroutine**.
+
+Concurrency is not a property of a coroutine: something must host several coroutines simultaneously and give each an opportunity to execute. 
+
+**M:N scheduler**, which means it maps M green threads to N OS threads. Goroutines are then scheduled onto the green threads.
+
+Go follows a model of concurrency called the **fork-join model**.
+
+![](../.gitbook/assets/image%20%28332%29.png)
+
+**Closures** close around the lexical scope they are created in, thereby capturing variables.
+
+The Go runtime is observant enough to know that a reference to the salutation variable is still being held, and therefore will transfer the memory to the heap so that the goroutines can continue to access it.
+
+```go
+var wg sync.WaitGroup
+for _, salutation := range []string{"hello", "greetings", "good day"} {
+  wg.Add(1) 
+  go func() {
+    defer wg.Done()
+    fmt.Println(salutation)
+  }()
+} 
+wg.Wait()
+```
+
+Creating goroutines is very cheap, and so you should only be discussing their cost if you’ve proven they are the root cause of a performance issue. Goroutines are extraordinarily lightweight.
+
+A few kilobytes per goroutine.
+
+**Context switching**, which is when something hosting a concurrent process must save its state to switch to running a different concurrent process.
+
+* At the OS level, with threads, this can be quite costly. The OS thread must save things like register values, lookup tables, and memory maps to successfully be able to switch back to the current thread when it is time. Then it has to load the same information for the incoming thread. 
+* Context switching in software is comparatively much, much cheaper. Under a software-defined scheduler, the runtime can be more selective in what is persisted for retrieval, how it is persisted, and when the persisting need occur.
+
+A struct{}{} is called an empty struct and takes up no memory;
 
 ### sync package
 
