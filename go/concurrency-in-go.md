@@ -176,7 +176,83 @@ A struct{}{} is called an empty struct and takes up no memory;
 
 ### sync package
 
+The sync package contains the concurrency primitives that are most useful for low level memory access synchronization.
 
+#### WaitGroup
+
+WaitGroup is a great way to wait for a set of concurrent operations to complete when you either don’t care about the result of the concurrent operation, or you have other means of collecting their results.
+
+You can think of a WaitGroup like a concurrent-safe counter: calls to **Add** increment the counter by the integer passed in, and calls to **Done** decrement the counter by one. Calls to **Wait** block until the counter is zero.
+
+#### Mutex & RWMutex
+
+**Mutex** stands for “mutual exclusion” and is a way to guard critical sections of your program.
+
+Whereas channels share memory by communicating, a Mutex shares memory by creating a convention developers must follow to synchronize access to the memory.
+
+**Critical sections** are so named because they reflect a bottleneck in your program. It is somewhat expensive to enter and exit a critical section, and so generally people attempt to minimize the time spent in critical sections.
+
+**RWMutex** gives you a little bit more control over the memory. You can request a lock for reading, in which case you will be granted access unless the lock is being held for writing. This means that an arbitrary number of readers can hold a reader lock so long as nothing else is holding a writer lock.
+
+#### Cond
+
+**Cond** is a rendezvous point for goroutines waiting for or announcing the occurrence of an event.
+
+An “event” is any arbitrary signal between two or more goroutines that carries no information other than the fact that it has occurred. Very often you’ll want to wait for one of these signals before continuing execution on a goroutine.
+
+There were some kind of way for a goroutine to efficiently sleep until it was signaled to wake and check its condition. This is exactly what the Cond type does for us.
+
+```go
+c := sync.NewCond(&sync.Mutex{})
+c.L.Lock()
+for conditionTrue() == false {
+    c.Wait() 
+}
+c.L.Unlock()
+```
+
+The **call** to Wait doesn’t just block, it suspends the current goroutine. 
+
+Call **Wait**: upon entering Wait, Unlock is called on the Cond variable’s Locker, and upon exiting Wait, Lock is called on the Cond variable’s Locker.
+
+**Signal**: one of two methods that the Cond type provides for notifying goroutines blocked on a Wait call that the condition has been triggered. The other is a method called **Broadcast**.
+
+Internally, the runtime maintains a FIFO list of goroutines waiting to be signaled; Signal finds the goroutine that’s been waiting the longest and notifies that, whereas Broadcast sends a signal to all goroutines that are waiting.
+
+We can trivially reproduce Signal with channels, but reproducing the behavior of repeated calls to Broadcast would be more difficult. In addition, the Cond type is much more performant than utilizing channels.
+
+Like most other things in the sync package, usage of Cond works best when constrained to a tight scope, or exposed to a broader scope through a type that encapsulates it.
+
+#### Once
+
+**sync.Once** is a type that utilizes some sync primitives internally to ensure that only one call to Do ever calls the function passed in—even on different goroutines.
+
+sync.Once only counts the number of times Do is called, not how many times unique functions passed into Do are called.
+
+copies of sync.Once are tightly coupled to the functions they are intended to be called with;
+
+wrapping any usage of sync.Once in a small lexical block: either a small function, or by wrapping both in a type.
+
+#### pool
+
+**Pool** is a concurrent-safe implementation of the object pool pattern.
+
+**Get** will first check whether there are any available instances within the pool to return to the caller, and if not, call its **New** member variable to create a new one.
+
+Call **Put** to place the instance they were working with back in the pool for use by other processes.
+
+Another common situation where a Pool is useful is for warming a cache of pre-allocated objects for operations that must run as quickly as possible.
+
+The object pool design pattern is best used either when you have concurrent processes that require objects, but dispose of them very rapidly after instantiation, or when construction of these objects could negatively impact memory.
+
+If the code that utilizes the Pool requires things that are not roughly homogenous, you may spend more time converting what you’ve retrieved from the Pool than it would have taken to just instantiate it in the first place.
+
+When working with a Pool, following points:
+
+* When instantiating sync.Pool, give it a New member variable that is thread-safe when called.
+* When you receive an instance from Get, make no assumptions regarding the state of the object you receive back.
+* Make sure to call Put when you’re finished with the object you pulled out of the pool. Otherwise, the Pool is useless. Usually this is done with defer.
+* Objects in the pool must be roughly uniform in makeup.
 
 ### Channels
 
