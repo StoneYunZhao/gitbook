@@ -335,3 +335,25 @@ Channels are the glue that binds goroutines together.
 
 ### Select Statement
 
+The select statement is the glue that binds channels together; it’s how we’re able to compose channels together in a program to form larger abstractions.
+
+Select statements can help safely bring channels together with concepts like cancellations, timeouts, waiting, and default values.
+
+Just like a switch block, a select block encompasses a series of case statements that guard a series of statements;
+
+All channel reads and writes are considered simultaneously to see if any of them are ready: populated or closed channels in the case of reads, and channels that are not at capacity in the case of writes. If none of the channels are ready, the entire select statement blocks.
+
+The Go runtime will perform a pseudo- random uniform selection over the set of case statements. This just means that of your set of case statements, each has an equal chance of being selected as all the others.
+
+The select statement also allows for a default clause in case you’d like to do something if all the channels you’re selecting against are blocking.
+
+Empty select statements: select statements with no case clauses. This statement will simply block forever. These look like this:
+
+```go
+select {}
+```
+
+{% hint style="info" %}
+The time.After function takes in a time.Duration argument and returns a channel that will send the current time after the duration you provide it.
+{% endhint %}
+
