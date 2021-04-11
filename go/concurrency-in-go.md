@@ -357,3 +357,7 @@ select {}
 The time.After function takes in a time.Duration argument and returns a channel that will send the current time after the duration you provide it.
 {% endhint %}
 
+### GOMAXPROCS
+
+GOMAXPROCS controls the number of OS threads that will host so-called “work queues.”
+
