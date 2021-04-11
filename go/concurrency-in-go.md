@@ -361,3 +361,7 @@ The time.After function takes in a time.Duration argument and returns a channel 
 
 GOMAXPROCS controls the number of OS threads that will host so-called “work queues.”
 
+## Chapter 4: Concurrency Patterns
+
+
+
