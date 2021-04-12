@@ -363,5 +363,22 @@ GOMAXPROCS controls the number of OS threads that will host so-called “work qu
 
 ## Chapter 4: Concurrency Patterns
 
+### Confinement
 
+There are a couple of other options that are implicitly safe within multiple concurrent processes:
+
+* Immutable data
+* Data protected by confinement
+
+In Go, you can achieve **immutable** by writing code that utilizes copies of values instead of pointers to values in memory.
+
+**Confinement** can also allow for a lighter cognitive load on the developer and smaller critical sections.
+
+Confinement is the simple yet powerful idea of ensuring information is only ever available from one concurrent process.
+
+**Ad hoc confinement** is when you achieve confinement through a convention—whether it be set by the languages community, the group you work within, or the codebase you work within. Sticking to convention is difficult to achieve on projects of any size unless you have tools to perform static analysis on your code every time someone commits some code.
+
+**Lexical confinement** involves using lexical scope to expose only the correct data and concurrency primitives for multiple concurrent processes to use. It makes it impossible to do the wrong thing. Only exposing read or write aspects of a channel to the concurrent processes that need them.
+
+Why pursue confinement if we have synchronization available to us? The answer is **improved performance** and **reduced cognitive load** on developers.
 
