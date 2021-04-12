@@ -382,3 +382,42 @@ Confinement is the simple yet powerful idea of ensuring information is only ever
 
 Why pursue confinement if we have synchronization available to us? The answer is **improved performance** and **reduced cognitive load** on developers.
 
+### The for-select Loop
+
+Sending iteration variables out on a channel:
+
+```go
+for _, s := range []string{"a", "b", "c"} { 
+  select {
+  case <-done: 
+    return
+  case stringStream <- s:
+  } 
+}
+```
+
+Looping infinitely waiting to be stopped: 
+
+```go
+// pattern 1
+for { 
+  select {
+  case <-done: 
+    return
+  default: 
+  }
+  
+  // Do non-preemptable work
+}
+
+// pattern 2
+for { 
+  select {
+  case <-done: 
+    return
+  default:
+    // Do non-preemptable work
+  } 
+}
+```
+
