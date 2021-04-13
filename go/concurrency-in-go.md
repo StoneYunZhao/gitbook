@@ -469,3 +469,48 @@ fmt.Println("Done.")
 
 How to ensure goroutines don’t leak, we can stipulate a convention: I**f a goroutine is responsible for creating a goroutine, it is also responsible for ensuring it can stop the goroutine**.
 
+### The or-channel
+
+This pattern creates a composite done channel through recursion and goroutines.
+
+```go
+var or func(channels ...<-chan interface{}) <-chan interface{}
+
+or = func(channels ...<-chan interface{}) <-chan interface{} {
+	switch len(channels) {
+	case 0:
+		return nil
+	case 1:
+		return channels[0]
+	}
+
+	orDone := make(chan interface{})
+	go func() {
+		defer close(orDone)
+		
+		switch len(channels) {
+		case 2:
+			select {
+			case <-channels[0]:
+			case <-channels[1]:
+			}
+		default:
+			select {
+			case <-channels[0]:
+			case <-channels[1]:
+			case <-channels[2]:
+			case <-or(append(channels[3:], orDone)...):
+			}
+		}
+	}()
+
+	return orDone
+}
+```
+
+This is a fairly concise function that enables you to combine any number of channels together into a single channel that will close as soon as any of its component channels are closed, or written to.
+
+We achieve this terseness at the cost of additional goroutines—f\(x\)=⌊x/2⌋ where x is the number of goroutines.
+
+This pattern is useful to employ at the intersection of modules in your system. At these intersections, you tend to have multiple conditions for canceling trees of goroutines through your call stack. Using the or function, you can simply combine these together and pass it down the stack.
+
