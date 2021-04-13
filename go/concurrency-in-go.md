@@ -517,3 +517,50 @@ We achieve this terseness at the cost of additional goroutines—f\(x\)=⌊x/2�
 
 This pattern is useful to employ at the intersection of modules in your system. At these intersections, you tend to have multiple conditions for canceling trees of goroutines through your call stack. Using the or function, you can simply combine these together and pass it down the stack.
 
+### Error Handling
+
+When Go eschewed the popular exception model of errors, it made a statement that error handling was important, and that as we develop our programs, we should give our error paths the same attention we give our algorithms.
+
+In general, your concurrent processes should send their errors to another part of your program that has complete information about the state of your program, and can make a more informed decision about what to do.
+
+```go
+  type Result struct {
+		Error    error
+		Response *http.Response
+	}
+	
+	checkStatus := func(done <-chan interface{}, urls ...string) <-chan Result {
+		results := make(chan Result)
+		go func() {
+			defer close(results)
+			for _, url := range urls {
+				var result Result
+				resp, err := http.Get(url)
+				result = Result{Error: err, Response: resp}
+				select {
+				case <-done:
+					return
+				case results <- result:
+				}
+			}
+		}()
+		return results
+	}
+	
+	done := make(chan interface{})
+	defer close(done)
+	
+	urls := []string{"https://www.google.com", "https://badhost"}
+	for result := range checkStatus(done, urls...) {
+		if result.Error != nil {
+			fmt.Printf("error: %v", result.Error)
+			continue
+		}
+		fmt.Printf("Response: %v\n", result.Response.Status)
+	}
+```
+
+The key thing to note here is how we’ve coupled the potential result with the potential error.
+
+The main takeaway here is that **errors should be considered first-class citizens** when constructing values to return from goroutines. If your goroutine can produce errors, those errors should be tightly coupled with your result type, and passed along through the same lines of communication—just like regular synchronous functions.
+
