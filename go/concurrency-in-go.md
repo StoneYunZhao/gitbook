@@ -421,3 +421,51 @@ for {
 }
 ```
 
+### Preventing Goroutine Leaks
+
+Goroutines are not garbage collected by the runtime. The goroutine has a few paths to termination:
+
+* When it has completed its work.
+* When it cannot continue its work due to an unrecoverable error.
+* When it’s told to stop working.
+
+Establish a signal between the parent goroutine and its children that allows the parent to signal cancellation to its children. By convention, this signal is usually a read-only channel named done.
+
+```go
+doWork := func(
+  done <-chan interface{}, 
+  strings <-chan string,
+) <-chan interface{} {
+  terminated := make(chan interface{}) 
+  go func() {
+    defer fmt.Println("doWork exited.") 
+    defer close(terminated)
+    for {
+      select {
+      case s := <-strings:
+        // Do something interesting
+        fmt.Println(s) 
+      case <-done:
+        return
+      } 
+    }
+  }()
+  return terminated 
+}
+
+done := make(chan interface{}) 
+terminated := doWork(done, nil)
+go func() {
+  time.Sleep(1 * time.Second) 
+  fmt.Println("Canceling doWork goroutine...") 
+  close(done)
+}()
+
+<-terminated
+fmt.Println("Done.")
+```
+
+* Pass the done channel to the doWork function. As a convention, this channel is the first parameter.
+
+How to ensure goroutines don’t leak, we can stipulate a convention: I**f a goroutine is responsible for creating a goroutine, it is also responsible for ensuring it can stop the goroutine**.
+
