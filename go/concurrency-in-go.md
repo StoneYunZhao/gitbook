@@ -499,6 +499,9 @@ or = func(channels ...<-chan interface{}) <-chan interface{} {
 			case <-channels[0]:
 			case <-channels[1]:
 			case <-channels[2]:
+			
+			// We also pass in the orDone channel so that 
+			// when goroutines up the tree exit, goroutines down the tree also exit.
 			case <-or(append(channels[3:], orDone)...):
 			}
 		}
