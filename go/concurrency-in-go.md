@@ -564,3 +564,165 @@ The key thing to note here is how we’ve coupled the potential result with the 
 
 The main takeaway here is that **errors should be considered first-class citizens** when constructing values to return from goroutines. If your goroutine can produce errors, those errors should be tightly coupled with your result type, and passed along through the same lines of communication—just like regular synchronous functions.
 
+### Pipelines
+
+A _pipeline_ is just another tool you can use to form an abstraction in your system. In particular, it is a very powerful tool to use when your program needs to process streams, or batches of data. A pipeline is nothing more than a series of things that take data in, perform an operation on it, and pass the data back out. We call each of these operations a _stage_ of the pipeline.
+
+By using a pipeline, you separate the concerns of each stage, which provides numer‐ ous benefits. You can modify stages independent of one another, you can mix and match how stages are combined independent of modifying the stages, you can pro‐ cess each stage concurrent to upstream or downstream stages, and you can _fan-out_, or _rate-limit_ portions of your pipeline.
+
+What _are_ the properties of a pipeline stage?
+
+* A stage consumes and returns the same type.
+* A stage must be reified by the language so that it may be passed around. Func‐ tions in Go are reified and fit this purpose nicely.
+
+Pipeline stages are very closely related to functional programming and can be considered a subset of monads.
+
+* _batch processing_: Means that they operate on chunks of data all at once instead of one discrete value at a time.
+* _stream processing_: Means that the stage receives and emits one element at a time.
+
+Channels are uniquely suited to constructing pipelines in Go because they fulfill all of our basic requirements. They can receive and emit values, they can safely be used concurrently, they can be ranged over, and they are reified by the language.
+
+```go
+	generator := func(done <-chan interface{}, integers ...int) <-chan int {
+		intStream := make(chan int)
+		go func() {
+			defer close(intStream)
+			for _, i := range integers {
+				select { case <-done:
+					return
+				case intStream <- i: }
+			}
+		}()
+		return intStream
+	}
+
+	multiply := func(
+		done <-chan interface{}, intStream <-chan int, multiplier int,
+	) <-chan int {
+		multipliedStream := make(chan int)
+		go func() {
+			defer close(multipliedStream)
+			for i := range intStream {
+				select { case <-done:
+					return
+				case multipliedStream <- i * multiplier: }
+			}
+		}()
+		return multipliedStream
+	}
+
+	add := func(
+		done <-chan interface{}, intStream <-chan int, additive int,
+	) <-chan int {
+		addedStream := make(chan int)
+		go func() {
+			defer close(addedStream)
+			for i := range intStream {
+				select { case <-done:
+					return
+				case addedStream <- i + additive: }
+			}
+		}()
+		return addedStream
+	}
+
+	done := make(chan interface{})
+	defer close(done)
+
+	intStream := generator(done, 1, 2, 3, 4)
+	pipeline := multiply(done, add(done, multiply(done, intStream, 2), 1), 2)
+
+	for v := range pipeline {
+		fmt.Println(v)
+	}
+```
+
+This is obvious but significant because it allows two things: at the end of our pipeline, we can use a range statement to extract the values, and at each stage we can safely execute concurrently because our inputs and outputs are safe in concurrent contexts.
+
+How closing the done channel cascades through the pipeline? This is made possible by two things in each stage of the pipeline:
+
+* Ranging over the incoming channel. When the incoming channel is closed, the range will exit.
+* The send sharing a select statement with the done channel.
+
+Regardless of what state the pipeline stage is in—waiting on the incoming channel, or waiting on the send—closing the done channel will force the pipeline stage to terminate.
+
+The final stage is preemptable because the stream we rely on is preemptable. Our entire pipeline is always preemptable by closing the done channel.
+
+The generator function converts a discrete set of values into a stream of data on a channel. Aptly, this type of function is called a _generator_.
+
+```go
+  // repeat the values you pass to it infinitely until you tell it to stop.
+	repeat := func(
+		done <-chan interface{}, values ...interface{},
+	) <-chan interface{} {
+		valueStream := make(chan interface{})
+		go func() {
+			defer close(valueStream)
+			for {
+				for _, v := range values {
+					select {
+					case <-done:
+						return
+					case valueStream <- v:
+					}
+				}
+			}
+		}()
+		return valueStream
+	}
+
+	take := func(
+		done <-chan interface{}, valueStream <-chan interface{}, num int,
+	) <-chan interface{} {
+		takeStream := make(chan interface{})
+		go func() {
+			defer close(takeStream)
+			for i := 0; i < num; i++ {
+				select { case <-done:
+					return
+				case takeStream <- <-valueStream: }
+			}
+		}()
+		return takeStream
+	}
+
+	done := make(chan interface{})
+	defer close(done)
+
+	for num := range take(done, repeat(done, 1), 10) {
+		fmt.Printf("%v ", num)
+	}
+```
+
+```go
+	repeatFn := func(
+		done <-chan interface{}, fn func() interface{},
+	) <-chan interface{} {
+		valueStream := make(chan interface{})
+		go func() {
+			defer close(valueStream)
+			for {
+				select { case <-done:
+					return
+				case valueStream <- fn(): }
+			}
+		}()
+		return valueStream
+	}
+
+	done := make(chan interface{})
+	defer close(done)
+
+	rand := func() interface{} { return rand.Int() }
+
+	for num := range take(done, repeatFn(done, rand), 10) {
+		fmt.Println(num)
+	}
+```
+
+Empty interfaces are a bit taboo in Go, but for pipeline stages it is my opinion that it’s OK to deal in channels of interface{} so that you can use a standard library of pipeline patterns.
+
+When you need to deal in specific types, you can place a stage that performs the type assertion for you.
+
+Generally, the limiting factor on your pipeline will either be your genera‐ tor, or one of the stages that is computationally intensive.
+
