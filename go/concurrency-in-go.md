@@ -726,3 +726,58 @@ When you need to deal in specific types, you can place a stage that performs the
 
 Generally, the limiting factor on your pipeline will either be your genera‐ tor, or one of the stages that is computationally intensive.
 
+### Fan-Out, Fan-In
+
+Sometimes, stages in your pipeline can be particularly computationally expensive. When this happens, upstream stages in your pipeline can become blocked while wait‐ ing for your expensive stages to complete.
+
+One of the interesting properties of pipelines is the ability they give you to operate on the stream of data using a combination of separate, often reorderable stages. You can even reuse stages of the pipeline multiple times. Wouldn’t it be interesting to reuse a single stage of our pipeline on multiple goroutines in an attempt to parallelize pulls from an upstream stage? Maybe that would help improve the performance of the pipeline. In fact, it turns out it can, and this pattern has a name: _**fan-out, fan-in**_.
+
+**Fan-out** is a term to describe the process of starting multiple goroutines to handle input from the pipeline, and **fan-in** is a term to describe the process of combining multiple results into one channel.
+
+You might consider **fanning out** one of your stages if both of the following apply:
+
+* It doesn’t rely on values that the stage had calculated before.
+* It takes a long time to run.
+
+```go
+  numFinders := runtime.NumCPU()
+	finders := make([]<-chan int, numFinders)
+	for i := 0; i < numFinders; i++ {
+		finders[i] = primeFinder(done, randIntStream)
+	}
+```
+
+**Fanning in** means _multiplexing_ or joining together multiple streams of data into a single stream.
+
+```go
+	fanIn := func(
+		done <-chan interface{}, channels ...<-chan interface{},
+	) <-chan interface{} {
+		var wg sync.WaitGroup
+		multiplexedStream := make(chan interface{})
+		multiplex := func(c <-chan interface{}) {
+			defer wg.Done()
+			for i := range c {
+				select {
+				case <-done:
+					return
+				case multiplexedStream <- i:
+				}
+			}
+		}
+		// Select from all the channels
+		wg.Add(len(channels))
+		for _, c := range channels {
+			go multiplex(c)
+		}
+		// Wait for all the reads to complete
+		go func() {
+			wg.Wait()
+			close(multiplexedStream)
+		}()
+		return multiplexedStream
+	}
+```
+
+In a nutshell, fanning in involves creating the multiplexed channel consumers will read from, and then spinning up one goroutine for each incoming channel, and one goroutine to close the multiplexed channel when the incoming channels have all been closed.
+
