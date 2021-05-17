@@ -851,3 +851,48 @@ Taking its name from the tee command in Unix-like systems, the _tee-channel_ doe
 
 Writes to out1 and out2 are tightly coupled. The iteration over in cannot continue until both out1 and out2 have been written to.
 
+### The bridge-channel
+
+In some circumstances, you may find yourself wanting to consume values from a sequence of channels:
+
+```go
+<-chan <-chan interface{}
+```
+
+This is slightly different than coalescing a slice of channels into a single channel, as we saw in “The or-channel” or “Fan-Out, Fan-In”. A sequence of channels suggests an **ordered write**, albeit from different sources.
+
+As a consumer, the code may not care about the fact that its values come from a sequence of channels. If we instead define a function that can destructure the channel of channels into a simple channel—a technique called _bridging_ the channels—this will make it much easier for the consumer to focus on the problem at hand.
+
+```go
+	bridge := func(
+		done <-chan interface{},
+		chanStream <-chan <-chan interface{},
+	) <-chan interface{} {
+		valStream := make(chan interface{})
+		go func() {
+			defer close(valStream)
+
+			for {
+				var stream <-chan interface{}
+				select {
+				case maybeStream, ok := <-chanStream:
+					if ok == false {
+						return
+					}
+					stream = maybeStream
+				case <-done:
+					return
+				}
+
+				for val := range orDone(done, stream) {
+					select {
+					case valStream <- val:
+					case <-done:
+					}
+				}
+			}
+		}()
+		return valStream
+	}
+```
+
