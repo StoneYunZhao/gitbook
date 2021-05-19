@@ -896,3 +896,37 @@ As a consumer, the code may not care about the fact that its values come from a 
 	}
 ```
 
+### Queuing
+
+All this means is that once your stage has completed some work, it stores it in a temporary location in memory so that other stages can retrieve it later, and your stage doesn’t need to hold a reference to it. We discussed _buffered_ _channels_, a type of queue.
+
+While introducing queuing into your system is very useful, it’s usually one of the last techniques you want to employ when optimizing your program. Adding queuing prematurely can hide synchronization issues such as deadlocks and livelocks, and further, as your program converges toward correctness, you may find that you need more or less queuing.
+
+Queuing will almost **never speed up the total runtime of your program**; it will only allow the program to behave differently.
+
+The utility of introducing a queue isn’t that the runtime of one of stages has been reduced, but rather that the time it’s in a _blocking state_ is reduced. This allows the stage to continue doing its job. The true utility of queues is to _decouple stages_ so that the runtime of one stage has no impact on the runtime of another.
+
+Situations in which queuing _can_ increase the overall performance of your system. The only applicable situations are:
+
+* If batching requests in a stage saves time. Like bufio.
+* If delays in a stage produce a feedback loop into the system.
+
+Queuing should be implemented either:
+
+* At the entrance to your pipeline.
+* In stages where batching will lead to higher efficiency.
+
+L=λW, where:
+
+* L = the average number of units in the system.
+* λ = the average arrival rate of units.
+* W = the average time a unit spends in the system.
+
+In a pipeline, a stable system is one in which the rate that work enters the pipeline, or _ingress_, is equal to the rate in which it exits the system, or _egress_. If the rate of ingress exceeds the rate of egress, your system is _unstable_ and has entered a _death-spiral_. If the rate of ingress is less than the rate of egress, you still have an unstable system, but all that’s happening is that your resources aren’t being utilized completely.
+
+Remember that as you increase the queue size, it takes your work longer to make it through the system! You’re effectively trading system utilization for lag.
+
+Keep in mind that if for some reason your pipeline panics, you’ll lose all the requests in your queue. This might be something to guard against if re-creating the requests is difficult or won’t happen. To mitigate this, you can either stick to a queue size of zero, or you can move to a _persistent queue_, which is simply a queue that is persisted somewhere that can be later read from should the need arise.
+
+Queuing can be useful in your system, but because of its complexity, it’s usually one of the last optimizations I would suggest implementing.
+
