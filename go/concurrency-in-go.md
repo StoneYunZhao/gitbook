@@ -930,3 +930,97 @@ Keep in mind that if for some reason your pipeline panics, you’ll lose all the
 
 Queuing can be useful in your system, but because of its complexity, it’s usually one of the last optimizations I would suggest implementing.
 
+### The Context Package
+
+```go
+var Canceled = errors.New("context canceled")
+var DeadlineExceeded error = deadlineExceededError{} 
+
+type CancelFunc
+type Context
+
+type Context interface {
+  // Deadline returns the time when work done on behalf of this
+  // context should be canceled. Deadline returns ok==false when no
+  // deadline is set. Successive calls to Deadline return the same 
+  // results.
+  Deadline() (deadline time.Time, ok bool)
+
+  // Done returns a channel that's closed when work done on behalf 
+  // of this context should be canceled. Done may return nil if this 
+  // context can never be canceled. Successive calls to Done return // the same value.
+  Done() <-chan struct{}
+
+  // Err returns a non-nil error value after Done is closed. Err
+  // returns Canceled if the context was canceled or
+  // DeadlineExceeded if the context's deadline passed. No other
+  // values for Err are defined.  After Done is closed, successive
+  // calls to Err return the same value.
+  Err() error
+
+  // Value returns the value associated with this context for key, 
+  // or nil if no value is associated with key. Successive calls to 
+  // Value with the same key returns the same result.
+  Value(key interface{}) interface{}
+}
+```
+
+There’s a **Done** method which returns a channel that’s closed when our function is to be preempted. A **Deadline** function to indicate if a goroutine will be canceled after a certain time. An **Err** method that will return non-nil if the goroutine was canceled.
+
+The context package serves two primary purposes:
+
+* To provide an API for canceling branches of your call-graph.
+* To provide a data-bag for transporting request-scoped data through your call-graph.
+
+Cancellation in a function has three aspects. The context package helps manage all three of these.
+
+* A goroutine’s parent may want to cancel it.
+* A goroutine may want to cancel its children.
+* Any blocking operations within a goroutine need to be preemptable so that it may be canceled.
+
+There’s nothing present that can mutate the state of the underlying structure. Further, there’s nothing that allows the function accepting the Context to cancel it. This protects functions up the call stack from children canceling the context. Combined with the Done method, which provides a done channel, this allows the Context type to safely manage cancellation from its antecedents.
+
+```go
+func WithCancel(parent Context) (ctx Context, cancel CancelFunc)
+func WithDeadline(parent Context, deadline time.Time) (Context, CancelFunc) 
+func WithTimeout(parent Context, timeout time.Duration) (Context, CancelFunc)
+```
+
+**WithCancel** returns a new Context that closes its done channel when the returned cancel function is called. **WithDeadline** returns a new Context that closes its done channel when the machine’s clock advances past the given deadline. **WithTimeout** returns a new Context that closes its done channel after the given timeout duration.
+
+If your function needs to cancel functions below it in the call-graph in some manner, it will call one of these functions and pass in the Context it was given, and then pass the Context returned into its children. If your function doesn’t need to modify the cancellation behavior, the function simply passes on the Context it was given.
+
+In this way, successive layers of the call-graph can create a Context that adheres to their needs without affecting their parents. This provides a very composable, elegant solution for how to manage branches of your call-graph.
+
+```go
+func Background() Context
+func TODO() Context
+```
+
+Background simply returns an empty Context. TODO is not meant for use in produc‐ tion, but also returns an empty Context; TODO’s intended purpose is to serve as a placeholder for when you don’t know which Context to utilize, or if you expect your code to be provided with a Context, but the upstream code hasn’t yet furnished one.
+
+```go
+func WithValue(parent Context, key, val interface{}) Context
+```
+
+The only qualifications for using **WithValue** are that:
+
+* The key you use must satisfy Go’s notion of _comparability_; that is, the equality operators == and != need to return correct results when used.
+* Values returned must be safe to access from multiple goroutines.
+
+Follow a few rules when storing and retrieving value from a Context:
+
+* Define a custom key-type in your package. Since the type you define for your package’s keys is unexported, other packages cannot conflict with keys you generate within your package.
+* Since we don’t export the keys we use to store the data, we must therefore export functions that retrieve the data for us.
+* Create packages centered around data types that are imported from multiple locations. 
+
+The rules for data stored in Context:
+
+1. _The_ _data should transit process or API boundaries._
+2. _The_ _data should be immutable._
+3. _The_ _data should trend toward simple types._
+4. _The_ _data should be data, not types with methods._
+5. _The_ _data should help decorate operations, not drive them._
+
+**The cancellation functionality provided by Context is very useful, and your feelings about the data-bag shouldn’t deter you from using it.**
+
