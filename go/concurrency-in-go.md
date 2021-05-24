@@ -1028,3 +1028,44 @@ The rules for data stored in Context:
 
 ### Error Propagation
 
+Errors indicate that your system has entered a state in which it cannot fulfill an operation that a user either explicitly or implicitly requested. It needs to relay a few pieces of critical information:
+
+* _**What happened**_: Like “disk full,” “socket closed,” or “credentials expired.”
+* _**When and where it occurred**_: 
+  * Contain a complete stack trace starting with how the call was initiated and ending with where the error was instantiated.
+  * Contain information regarding the context it’s running within.
+  * Contain the time on the machine the error was instantiated on, in UTC.
+* _**A friendly user-facing message**_: only contain abbreviated and relevant information. about one line of text.
+* _**How the user can get more information**_: should provide an ID that can be cross-referenced to a corresponding log that displays the full information of the error. 
+
+It’s possible to place all errors into one of two categories:
+
+* Bugs
+* Known edge cases \(e.g., broken network connections, failed disk writes, etc.\)
+
+Bugs are errors that you have not customized to your system, or “raw” errors. Raw errors are always bugs.
+
+At the boundaries of each component, all incoming errors must be wrapped in a well-formed error for the component our code is within.
+
+Any error that escapes _our_ module without our module’s error type can be considered malformed, and a bug. Note that it is only necessary to wrap errors in this fashion at your _own_ module boundaries \(public functions/methods\).
+
+```go
+type MyError struct {
+    Inner      error
+    Message    string
+    StackTrace string
+    Misc       map[string]interface{}
+}
+
+func wrapError(err error, messagef string, msgArgs ...interface{}) MyError {
+    return MyError{
+        Inner:   err,
+        Message: fmt.Sprintf(messagef, msgArgs...), StackTrace: string(debug.Stack()),
+        Misc: make(map[string]interface{}),
+    }
+}
+func (err MyError) Error() string {
+    return err.Message
+}
+```
+
