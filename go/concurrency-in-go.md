@@ -997,7 +997,7 @@ func Background() Context
 func TODO() Context
 ```
 
-Background simply returns an empty Context. TODO is not meant for use in produc‐ tion, but also returns an empty Context; TODO’s intended purpose is to serve as a placeholder for when you don’t know which Context to utilize, or if you expect your code to be provided with a Context, but the upstream code hasn’t yet furnished one.
+Background simply returns an empty Context. TODO is not meant for use in production, but also returns an empty Context; TODO’s intended purpose is to serve as a placeholder for when you don’t know which Context to utilize, or if you expect your code to be provided with a Context, but the upstream code hasn’t yet furnished one.
 
 ```go
 func WithValue(parent Context, key, val interface{}) Context
