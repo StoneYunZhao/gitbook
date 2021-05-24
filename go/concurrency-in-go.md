@@ -1060,7 +1060,8 @@ type MyError struct {
 func wrapError(err error, messagef string, msgArgs ...interface{}) MyError {
     return MyError{
         Inner:   err,
-        Message: fmt.Sprintf(messagef, msgArgs...), StackTrace: string(debug.Stack()),
+        Message: fmt.Sprintf(messagef, msgArgs...), 
+        StackTrace: string(debug.Stack()),
         Misc: make(map[string]interface{}),
     }
 }
