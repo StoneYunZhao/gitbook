@@ -15,6 +15,10 @@
   * [net](go/system-library/net.md)
 * [Concurrency in Go](go/concurrency-in-go.md)
 
+## Rust
+
+* [The Rust Programming Language](rust/the-rust-programming-language.md)
+
 ## JAVA
 
 * [Preface](java/preface.md)
