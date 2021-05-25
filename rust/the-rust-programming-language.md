@@ -14,3 +14,14 @@ Most lines of Rust code end with a semicolon.
 
 Rust is an _ahead-of-time compiled_ language, meaning you can compile a program and give the executable to someone else, and they can run it even without having Rust installed. 
 
+### 1.3 Hello, Cargo!
+
+In Rust, packages of code are referred to as _crates_.
+
+```text
+cargo new
+cargo build [--release /* make your Rust code run faster */]
+cargo run
+cargo check // much faster than cargo build
+```
+
