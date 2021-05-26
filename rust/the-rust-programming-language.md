@@ -218,6 +218,8 @@ for number in (1..4).rev() {
 
 ## 4. Understanding Ownership
 
+Ownership enables Rust to make memory safety guarantees without needing a garbage collector.
+
 ### 4.1 What is Ownership?
 
 
