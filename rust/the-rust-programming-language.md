@@ -23,17 +23,23 @@ cargo new
 cargo build [--release /* make your Rust code run faster */]
 cargo run
 cargo check // much faster than cargo build
+cargo update
+cargo doc --open
 ```
 
 ## 2. Programming a Guessing Game
 
 `let` statement, which is used to create a _variable_.
 
-variables are immutable by default.
+variables, references are immutable by default.
 
 use `mut` before the variable name to make a variable mutable.
 
 An associated function is implemented on a type, rather than on a particular instance.
 
 The `&` indicates that is a _reference_, which gives you a way to let multiple parts of your code access one piece of data without needing to copy that data into memory multiple times.
+
+An enumeration is a type that can have a fixed set of values, and those values are called the enum’s _variants_.
+
+_binary crate_, which is an executable. _library crate_, which contains code intended to be used in other programs.
 
