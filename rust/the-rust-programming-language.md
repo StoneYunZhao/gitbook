@@ -216,3 +216,9 @@ for number in (1..4).rev() {
 }
 ```
 
+## 4. Understanding Ownership
+
+### 4.1 What is Ownership?
+
+
+
