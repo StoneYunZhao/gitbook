@@ -173,5 +173,46 @@ fn plus_one(x: i32) -> i32 {
 
 ### 3.5 Control Flow
 
+`if` is an expression. You must be explicit and always provide `if` with a Boolean as its condition. The values that have the potential to be results from each arm of the `if` must be the same type.
 
+```rust
+let number = if condition { 5 } else { 6 };
+```
+
+Rust has three kinds of loops: `loop`, `while`, and `for`.
+
+The **`loop`** keyword tells Rust to execute a block of code over and over again forever or until you explicitly tell it to stop. 
+
+You can add the value you want returned after the `break` expression you use to stop the loop; that value will be returned out of the loop so you can use it.
+
+```rust
+let result = loop {
+    counter += 1;
+
+    if counter == 10 {
+        break counter * 2;
+    }
+};
+
+while number != 0 {
+    println!("{}!", number);
+
+    number -= 1;
+}
+```
+
+You can use a `for` loop and execute some code for each item in a collection.
+
+```rust
+let a = [10, 20, 30, 40, 50];
+
+for element in a.iter() {
+    println!("the value is: {}", element);
+}
+
+// range over 3, 2, 1
+for number in (1..4).rev() {
+    println!("{}!", number);
+}
+```
 
