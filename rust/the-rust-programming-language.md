@@ -167,5 +167,11 @@ fn plus_one(x: i32) -> i32 {
 
 ### 3.4 Comments
 
+```rust
+// comments
+```
+
+### 3.5 Control Flow
+
 
 
