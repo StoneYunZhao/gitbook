@@ -137,5 +137,31 @@ let second = a[1];
 
 ### 3.3 Functions
 
+Rust code uses _**snake case**_ as the conventional style for function and variable names. In snake case, all letters are lowercase and underscores separate words.
 
+In function signatures, you _must_ declare the type of each parameter.
+
+Function bodies are made up of a series of statements optionally ending in an expression. Rust is an **expression-based language**.
+
+_**Statements**_ are instructions that perform some action and do not return a value. _**Expressions**_ evaluate to a resulting value.
+
+Function definitions are statements. Calling a function is an expression. Calling a macro is an expression. The block that we use to create new scopes, `{}`, is an expression. **Expressions do not include ending semicolons**.
+
+```rust
+let y = 6; // statement
+let x = (let y = 6); // compile error
+
+let y = {
+    let x = 3;
+    x + 1 // NOTICE: without a semicolon at the end
+};
+```
+
+The return value of the function is synonymous with the value of the final expression in the block of the body of a function. You can return early from a function by using the `return` keyword and specifying a value.
+
+```rust
+fn plus_one(x: i32) -> i32 {
+    x + 1
+}
+```
 
