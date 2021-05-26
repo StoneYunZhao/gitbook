@@ -135,3 +135,7 @@ let first = a[0];
 let second = a[1];
 ```
 
+### 3.3 Functions
+
+
+
