@@ -49,5 +49,38 @@ _binary crate_, which is an executable. _library crate_, which contains code int
 
 ### 3.1 Variables and Mutability
 
+By default variables are **immutable**.
+
+```rust
+let x = 5; // immutable
+let mut y = 6; // mutable
+
+
+// Rust’s naming convention for constants is to 
+// use all uppercase with underscores between words.
+const MAX_POINTS: u32 = 100_000;
+```
+
+Like immutable variables, **constants** are values that are bound to a name and are not allowed to change. But there are some difference:
+
+* Not allowed to use `mut` with constants.
+* When using the `const` keyword, the type of the value _must_ be annotated.
+* Constants can be declared in any scope, including the global scope.
+* Constants may be set only to a constant expression, not the result of a function call or any other value that could only be computed at runtime.
+
+You can declare a new variable with the same name as a previous variable. That means the first variable is _**shadowed**_ by the second, which means that the second variable’s value is what appears when the variable is used. 
+
+```rust
+let x = 5; // shadowed by the second x
+let x = x + 1;
+
+let spaces = "   ";
+let spaces = spaces.len(); // type changed
+```
+
+Shadowing is different from marking a variable as `mut`. By using `let`, we can perform a few transformations on a value but have the variable be immutable after those transformations have been completed. We can change the type of the value but reuse the same name.
+
+### 3.2 Data Types
+
 
 
