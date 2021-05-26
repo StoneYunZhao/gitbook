@@ -43,3 +43,5 @@ An enumeration is a type that can have a fixed set of values, and those values a
 
 _binary crate_, which is an executable. _library crate_, which contains code intended to be used in other programs.
 
+[https://github.com/StoneYunZhao/the-rust-programming-language/tree/master/guessing\_game](https://github.com/StoneYunZhao/the-rust-programming-language/tree/master/guessing_game)
+
