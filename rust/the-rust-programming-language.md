@@ -222,5 +222,15 @@ Ownership enables Rust to make memory safety guarantees without needing a garbag
 
 ### 4.1 What is Ownership?
 
+Memory is managed through a system of ownership with a set of rules that the compiler checks at compile time. None of the ownership features slow down your program while it’s running.
 
+The **stack** stores values in the order it gets them and removes the values in the opposite order. All data stored on the stack must have a known, fixed size. Pushing to the stack is faster than allocating on the heap. Accessing data in the heap is slower than accessing data on the stack because you have to follow a pointer to get there.
+
+**Ownership rules**:
+
+* Each value in Rust has a variable that’s called its _owner_.
+* There can only be one owner at a time.
+* When the owner goes out of scope, the value will be dropped.
+
+A **scope** is the range within a program for which an item is valid.
 
