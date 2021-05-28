@@ -265,3 +265,9 @@ Rust has a special annotation called the `Copy` trait that we can place on types
 * The character type, `char`.
 * Tuples, if they only contain types that also implement `Copy`. For example, `(i32, i32)` implements `Copy`, but `(i32, String)` does not.
 
+The semantics for passing a value to a function are similar to those for assigning a value to a variable. Passing a variable to a function will **move** or **copy**. 
+
+Returning values can also transfer ownership.
+
+The ownership of a variable follows the same pattern every time: assigning a value to another variable moves it. When a variable that includes data on the heap goes out of scope, the value will be cleaned up by `drop` unless the data has been moved to be owned by another variable.
+
