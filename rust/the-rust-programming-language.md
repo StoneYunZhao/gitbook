@@ -1,3 +1,7 @@
+---
+description: 'https://doc.rust-lang.org/book/title-page.html'
+---
+
 # The Rust Programming Language
 
 ## 1. Getting Started
@@ -442,5 +446,53 @@ println!("{:#?}", user); // should annotate with #[derive(Debug)]
 
 ### 5.3 Method Syntax
 
+_Methods_ are similar to functions. But are different from functions in that they’re defined within the context of a struct \(or an enum or a trait object\), and their first parameter is always `self`, which represents the instance of the struct the method is being called on.
 
+Having a method that takes ownership of the instance by using just `self` as the first parameter is rare; this technique is usually used when the method transforms `self` into something else and you want to prevent the caller from using the original instance after the transformation.
+
+**Associated functions** are often used for constructors that will return a new instance of the struct. And let you namespace functionality that is particular to your struct without having an instance available.
+
+Each struct is allowed to have multiple `impl` blocks.
+
+```rust
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    // If we wanted to change the instance that we’ve called the method on
+    // as part of what the method does, we’d use &mut self as the first parameter.
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+
+    fn can_hold(&self, other: &Rectangle) -> bool {
+        self.width > other.width && self.height > other.height
+    }
+
+    // associated functions: namespaced by the struct
+    fn square(size: u32) -> Rectangle {
+        Rectangle {
+            width: size,
+            height: size,
+        }
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+
+    println!(
+        "The area of the rectangle is {} square pixels.",
+        rect1.area()
+    );
+
+    let sq = Rectangle::square(3);
+}
+```
 
