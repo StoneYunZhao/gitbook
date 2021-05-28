@@ -496,3 +496,9 @@ fn main() {
 }
 ```
 
+## 6. Enums and Pattern Matching
+
+### 6.1 Defining an Enum
+
+
+
