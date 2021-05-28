@@ -273,5 +273,57 @@ The ownership of a variable follows the same pattern every time: assigning a val
 
 ### 4.2 References and Borrowing
 
+_**References**_ allow you to refer to some value without taking ownership of it.
 
+The opposite of referencing by using `&` is _dereferencing_, which is accomplished with the dereference operator, `*`. 
+
+When functions have references as parameters instead of the actual values, we won’t need to return the values in order to give back ownership, because we never had ownership.
+
+We call having references as function parameters _**borrowing**_. 
+
+Just as variables are immutable by default, so are references. We’re not allowed to modify something we have a reference to.
+
+You can have only one **mutable reference** to a particular piece of data in a particular scope. The benefit of having this restriction is that Rust can prevent data races at compile time.
+
+```rust
+// compile error
+let mut s = String::from("hello");
+
+let r1 = &mut s;
+let r2 = &mut s;
+```
+
+```rust
+let mut s = String::from("hello");
+
+{
+    let r1 = &mut s;
+} // r1 goes out of scope here, so we can make a new reference with no problems.
+
+let r2 = &mut s;
+```
+
+We _also_ cannot have a mutable reference while we have an immutable one.
+
+```rust
+let mut s = String::from("hello");
+
+let r1 = &s; // no problem
+let r2 = &s; // no problem
+let r3 = &mut s; // BIG PROBLEM
+```
+
+A reference’s scope starts from where it is introduced and continues through the last time that reference is used.
+
+```rust
+let mut s = String::from("hello");
+
+let r1 = &s; // no problem
+let r2 = &s; // no problem
+println!("{} and {}", r1, r2);
+// r1 and r2 are no longer used after this point
+
+let r3 = &mut s; // no problem
+println!("{}", r3);
+```
 
