@@ -434,7 +434,11 @@ struct User {
 
 ### 5.2 An Example Program Using Structs
 
-
+```rust
+println!("{}", user); // compile error
+println!("{:?}", user); // should annotate with #[derive(Debug)]
+println!("{:#?}", user); // should annotate with #[derive(Debug)]
+```
 
 ### 5.3 Method Syntax
 
