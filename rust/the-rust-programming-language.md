@@ -387,9 +387,50 @@ let slice = &a[1..3]; // type: &[i32]
 
 ## 5. Using Structs to Structure Related Data
 
+A _struct_, or _structure_, is a custom data type that lets you name and package together multiple related values that make up a meaningful group.
+
 ### 5.1 Defining and Instantiating Structs
 
+Rust doesn’t allow us to mark only certain fields as mutable.
 
+Tuple structs have the added meaning the struct name provides but don’t have names associated with their fields; rather, they just have the types of the fields.
+
+_**unit-like structs**_ ****behave similarly to `()`, the unit type. 
+
+```rust
+fn main() {
+    let mut user1 = User {
+        username: String::from("someone@example.com"),
+        active: true,
+    };
+
+    user1.username = String::from("anotheremail@example.com");
+
+    let user2 = User {
+        username: String::from("anotherusername567"),
+        // struct update syntax: the remaining fields not explicitly set
+        // should have the same value as the fields in the given instance.
+        ..user1
+    };
+
+    // tuple struct
+    struct Color(i32, i32, i32);
+
+    let black = Color(0, 0, 0);
+}
+
+fn build_user(username: string) -> User {
+    User {
+        username, // field init shorthand syntax
+        active: true,
+    }
+}
+
+struct User {
+    username: String, // field
+    active: bool,
+}
+```
 
 ### 5.2 An Example Program Using Structs
 
