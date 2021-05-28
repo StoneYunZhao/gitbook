@@ -356,3 +356,7 @@ fn no_dangle() -> String {
 } // Ownership is moved out, and nothing is deallocated.
 ```
 
+### 4.3 The Slice Type
+
+
+
