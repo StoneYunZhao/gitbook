@@ -498,7 +498,57 @@ fn main() {
 
 ## 6. Enums and Pattern Matching
 
+Enums allow you to define a type by enumerating its possible _variants_. 
+
 ### 6.1 Defining an Enum
 
+You can put any kind of data inside an enum variant: strings, numeric types, or structs.
 
+```rust
+enum IPAddrKind {
+    V4,
+    V6,
+}
+
+enum IpAddr {
+    // each variant can have different types and amounts of associated data.
+    V4(u8, u8, u8, u8),
+    V6(String),
+}
+
+impl IpAddr {
+    fn call(&self) {
+        // body
+    }
+}
+
+fn main() {
+    let four = IpAddrKind::V4;
+
+    let home = IpAddr::V4(127, 0, 0, 1);
+
+    let loopback = IpAddr::V6(String::from("::1"));
+
+    home.call();
+}
+```
+
+Rust doesn’t have the null feature that many other languages have, but it does have an enum that can encode the concept of a value being present or absent. This enum is `Option<T>` included in the **prelude**.
+
+If we use `None` rather than `Some`, we need to tell Rust what type of `Option<T>` we have.
+
+```rust
+enum Option<T> {
+    Some(T),
+    None,
+}
+
+let some_string = Some("a string");
+
+let absent_number: Option<i32> = None;
+```
+
+Everywhere that a value has a type that isn’t an `Option<T>`, you _can_ safely assume that the value isn’t null. This was a deliberate design decision for Rust to limit null’s pervasiveness and increase the safety of Rust code.
+
+[https://doc.rust-lang.org/std/option/enum.Option.html](https://doc.rust-lang.org/std/option/enum.Option.html)
 
