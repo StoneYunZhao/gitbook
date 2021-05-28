@@ -291,6 +291,8 @@ let mut s = String::from("hello");
 
 let r1 = &mut s;
 let r2 = &mut s;
+
+println!("{}, {}", r1, r2);
 ```
 
 ```rust
@@ -311,6 +313,8 @@ let mut s = String::from("hello");
 let r1 = &s; // no problem
 let r2 = &s; // no problem
 let r3 = &mut s; // BIG PROBLEM
+
+println!("{}, {}, and {}", r1, r2, r3);
 ```
 
 A reference’s scope starts from where it is introduced and continues through the last time that reference is used.
@@ -325,5 +329,30 @@ println!("{} and {}", r1, r2);
 
 let r3 = &mut s; // no problem
 println!("{}", r3);
+```
+
+The compiler guarantees that references will never be dangling references: if you have a reference to some data, the compiler will ensure that the data will not go out of scope before the reference to the data does.
+
+```rust
+// compile error: this function's return type contains a borrowed value, 
+// but there is no value for it to be borrowed from.
+for it to be borrowed from.
+fn main() {
+    let reference_to_nothing = dangle();
+}
+
+fn dangle() -> &String { // dangle returns a reference to a String
+    let s = String::from("hello"); // s is a new String
+
+    &s // we return a reference to the String, s
+} // Here, s goes out of scope, and is dropped. Its memory goes away.
+
+
+// solve method
+fn no_dangle() -> String {
+    let s = String::from("hello");
+
+    s
+} // Ownership is moved out, and nothing is deallocated.
 ```
 
