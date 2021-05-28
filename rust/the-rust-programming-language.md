@@ -358,5 +358,44 @@ fn no_dangle() -> String {
 
 ### 4.3 The Slice Type
 
+Another data type that does not have ownership is the _slice_. Slices let you reference a contiguous sequence of elements in a collection rather than the whole collection.
+
+A _string slice_ is a reference to part of a `String`. Internally, the slice data structure stores the starting position and the length of the slice. String slice range indices must occur at valid UTF-8 character boundaries.
+
+```rust
+let s = String::from("hello world");
+
+let s1 = &s[0..5];
+let s2 = &s[..6];
+let s3 = &s[7..];
+let s4 = &s[..];
+```
+
+String literals is stored inside the binary. The type of `s` here is `&str`: it’s a slice pointing to that specific point of the binary.
+
+```rust
+let s = "Hello, world!"; // immutable reference.
+```
+
+Defining a function to take a string slice instead of a reference to a `String` makes our API more general and useful without losing any functionality.
+
+```rust
+let a = [1, 2, 3, 4, 5];
+
+let slice = &a[1..3]; // type: &[i32]
+```
+
+## 5. Using Structs to Structure Related Data
+
+### 5.1 Defining and Instantiating Structs
+
+
+
+### 5.2 An Example Program Using Structs
+
+
+
+### 5.3 Method Syntax
+
 
 
