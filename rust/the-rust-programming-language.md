@@ -234,3 +234,34 @@ The **stack** stores values in the order it gets them and removes the values in 
 
 A **scope** is the range within a program for which an item is valid.
 
+The memory is automatically returned once the variable that owns it goes out of scope.
+
+Rust calls `drop` automatically at the closing curly bracket.
+
+```rust
+let s1 = String::from("hello");
+let s2 = s1; // s1 moved into s2
+
+
+println!("s1: {}", s1) // compile error because s1 is invalid
+```
+
+Rust will never automatically create “deep” copies of your data. If we _do_ want to deeply copy the heap data of the `String`, not just the stack data, we can use a common method called `clone`.
+
+```rust
+let s1 = String::from("hello");
+let s2 = s1.clone();
+
+println!("s1 = {}, s2 = {}", s1, s2);
+```
+
+Types such as integers that have a known size at compile time are stored entirely on the stack.
+
+Rust has a special annotation called the `Copy` trait that we can place on types like integers that are stored on the stack. If a type implements the `Copy` trait, an older variable is still usable after assignment. Rust won’t let us annotate a type with the `Copy` trait if the type, or any of its parts, has implemented the `Drop` trait. Any group of simple scalar values can implement `Copy`. Here are some of the types that implement `Copy`:
+
+* All the integer types, such as `u32`.
+* The Boolean type, `bool`, with values `true` and `false`.
+* All the floating point types, such as `f64`.
+* The character type, `char`.
+* Tuples, if they only contain types that also implement `Copy`. For example, `(i32, i32)` implements `Copy`, but `(i32, String)` does not.
+
