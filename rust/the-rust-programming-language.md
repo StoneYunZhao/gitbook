@@ -533,7 +533,7 @@ fn main() {
 }
 ```
 
-Rust doesn’t have the null feature that many other languages have, but it does have an enum that can encode the concept of a value being present or absent. This enum is `Option<T>` included in the **prelude**.
+Rust **doesn’t have the null feature** that many other languages have, but it does have an enum that can encode the concept of a value being present or absent. This enum is `Option<T>` included in the **prelude**.
 
 If we use `None` rather than `Some`, we need to tell Rust what type of `Option<T>` we have.
 
