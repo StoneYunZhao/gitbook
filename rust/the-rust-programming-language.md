@@ -271,3 +271,7 @@ Returning values can also transfer ownership.
 
 The ownership of a variable follows the same pattern every time: assigning a value to another variable moves it. When a variable that includes data on the heap goes out of scope, the value will be cleaned up by `drop` unless the data has been moved to be owned by another variable.
 
+### 4.2 References and Borrowing
+
+
+
