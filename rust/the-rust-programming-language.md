@@ -550,5 +550,9 @@ let absent_number: Option<i32> = None;
 
 Everywhere that a value has a type that isn’t an `Option<T>`, you _can_ safely assume that the value isn’t null. This was a deliberate design decision for Rust to limit null’s pervasiveness and increase the safety of Rust code.
 
-[https://doc.rust-lang.org/std/option/enum.Option.html](https://doc.rust-lang.org/std/option/enum.Option.html)
+{% embed url="https://doc.rust-lang.org/std/option/enum.Option.html" %}
+
+### 6.2 The `match` Control Flow Operator
+
+`match` allows you to compare a value against a series of patterns and then execute code based on which pattern matches. Patterns can be made up of literal values, variable names, wildcards, and many other things.
 
