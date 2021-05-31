@@ -556,3 +556,37 @@ Everywhere that a value has a type that isn’t an `Option<T>`, you _can_ safely
 
 `match` allows you to compare a value against a series of patterns and then execute code based on which pattern matches. Patterns can be made up of literal values, variable names, wildcards, and many other things.
 
+Match arms can bind to the parts of the values that match the pattern.
+
+```rust
+#[derive(Debug)] // so we can inspect the state in a minute
+enum UsState {
+    Alabama,
+    Alaska,
+    // --snip--
+}
+
+enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter(UsState),
+}
+
+fn value_in_cents(coin: Coin) -> u8 {
+    match coin {
+        Coin::Penny => 1,
+        Coin::Nickel => 5,
+        Coin::Dime => 10,
+        Coin::Quarter(state) => { // patterns that bind to value
+            println!("State quarter from {:?}!", state);
+            25
+        }
+    }
+}
+```
+
+Matches in Rust are _exhaustive_: we must exhaust every last possibility in order for the code to be valid. 
+
+The `_` pattern will match any value. 
+
