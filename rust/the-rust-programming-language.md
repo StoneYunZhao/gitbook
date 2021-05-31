@@ -633,6 +633,8 @@ if let Coin::Quarter(state) = coin {
 
 ## 7. Managing Growing Projects with Packages, Crates and Modules
 
+A package can contain multiple binary crates and optionally one library crate.
+
 ### 7.1 Packages and Crates
 
 
