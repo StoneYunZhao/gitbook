@@ -637,5 +637,23 @@ A package can contain multiple binary crates and optionally one library crate.
 
 ### 7.1 Packages and Crates
 
+A **crate** is a binary or library. The _crate root_ is a source file that the Rust compiler starts from and makes up the root module of your crate. 
+
+A _**package**_ is one or more crates that provide a set of functionality. A package contains a _Cargo.toml_ file that describes how to build those crates.
+
+A package _must_ contain zero or one library crates, and no more. It can contain as many binary crates as you’d like, but it must contain at least one crate \(either library or binary\).
+
+`cargo new XX` command will give us a package.
+
+Cargo follows conventions:
+
+* _**src/main.rs**_: is the crate root of a binary crate with the same name as the package. 
+* _**src/lib.rs**_: is the crate root of a library crate with the same name as the package.
+* _**src/bin**_ **directory**_:_ each file will be a separate binary crate.
+
+If a package contains _src/main.rs_ and _src/lib.rs_, it has two crates: a library and a binary, both with the same name as the package.
+
+### 7.2 Defining Modules to Control Scope and Privacy
+
 
 
