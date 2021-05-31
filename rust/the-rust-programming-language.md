@@ -727,3 +727,47 @@ If we use `pub` before a struct definition, we make the struct public, but the s
 
 If we make an enum public, all of its variants are then public.
 
+### 7.4 Bringing Paths into Scope with the `use` Keyword
+
+We can bring a path into a scope once and then call the items in that path as if they’re local items with the `use` keyword.
+
+Paths brought into scope with `use` also check privacy.
+
+You can also bring an item into scope with `use` and a relative path.
+
+Bringing the function’s parent module into scope with `use` so we have to specify the parent module when calling the function makes it clear that the function isn’t locally defined while still minimizing repetition of the full path. On the other hand, when bringing in structs, enums, and other items with `use`, it’s idiomatic to specify the full path. 
+
+After the path, we can specify `as` and a new local name, or alias, for the type.
+
+When we bring a name into scope with the `use` keyword, the name available in the new scope is private. To enable the code that calls our code to refer to that name as if it had been defined in that code’s scope, we can combine `pub` and `use`. 
+
+The standard library \(`std`\) is also a crate that’s external to our package. The name of the standard library crate is `std`.
+
+We can use nested paths to bring the same items into scope in one line. We do this by specifying the common part of the path, followed by two colons, and then curly brackets around a list of the parts of the paths that differ.
+
+If we want to bring _all_ public items defined in a path into scope, we can specify that path followed by `*`, the glob operator.  Glob can make it harder to tell what names are in scope and where a name used in your program was defined.
+
+```rust
+use crate::front_of_house::hosting; // parent module
+
+use std::collections::HashMap; // full path
+
+use std::io::Result as IoResult;
+
+pub use crate::front_of_house::hosting;
+
+use std::{cmp::Ordering, io};
+
+use std::io::{self, Write};
+
+use std::collections::*;
+```
+
+### 7.5 Separating Modules into Different Files
+
+Using a semicolon after `mod xxx` rather than using a block tells Rust to load the contents of the module from another file with the same name as the module. 
+
+The `mod` keyword declares modules, and Rust looks in a file with the same name as the module for the code that goes into that module.
+
+[https://github.com/StoneYunZhao/the-rust-programming-language/tree/master/modules](https://github.com/StoneYunZhao/the-rust-programming-language/tree/master/modules)
+
