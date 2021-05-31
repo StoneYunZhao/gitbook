@@ -590,3 +590,50 @@ Matches in Rust are _exhaustive_: we must exhaust every last possibility in orde
 
 The `_` pattern will match any value. 
 
+### 6.3 Concise Control Flow with `if let`
+
+The `if let` syntax lets you combine `if` and `let` into a less verbose way to handle values that match one pattern while ignoring the rest. 
+
+```rust
+let some_u8_value = Some(0u8);
+match some_u8_value {
+    Some(3) => println!("three"),
+    _ => (),
+}
+
+// simplified by if let
+
+let some_u8_value = Some(0u8);
+if let Some(3) = some_u8_value {
+    println!("three");
+}
+```
+
+you can think of `if let` as syntax sugar for a `match` that runs code when the value matches one pattern and then ignores all other values.
+
+```rust
+let coin = Coin::Penny;
+let mut count = 0;
+match coin {
+    Coin::Quarter(state) => println!("State quarter from {:?}!", state),
+    _ => count += 1,
+}
+
+
+// equivalent to if let ... else ...
+
+let coin = Coin::Penny;
+let mut count = 0;
+if let Coin::Quarter(state) = coin {
+    println!("State quarter from {:?}!", state);
+} else {
+    count += 1;
+}
+```
+
+## 7. Managing Growing Projects with Packages, Crates and Modules
+
+### 7.1 Packages and Crates
+
+
+
