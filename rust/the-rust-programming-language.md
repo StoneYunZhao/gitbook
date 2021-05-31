@@ -769,5 +769,11 @@ Using a semicolon after `mod xxx` rather than using a block tells Rust to load t
 
 The `mod` keyword declares modules, and Rust looks in a file with the same name as the module for the code that goes into that module.
 
-[https://github.com/StoneYunZhao/the-rust-programming-language/tree/master/modules](https://github.com/StoneYunZhao/the-rust-programming-language/tree/master/modules)
+{% embed url="https://github.com/StoneYunZhao/the-rust-programming-language/tree/master/modules" %}
+
+## 8. Common Collections
+
+### 8.1 Storing Lists of Values with Vectors
+
+
 
