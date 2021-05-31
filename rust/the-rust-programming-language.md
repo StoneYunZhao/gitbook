@@ -655,5 +655,75 @@ If a package contains _src/main.rs_ and _src/lib.rs_, it has two crates: a libra
 
 ### 7.2 Defining Modules to Control Scope and Privacy
 
+Modules can hold definitions for other items, such as structs, enums, constants, traits, functions.
 
+```rust
+// src/lib.rs
+mod front_of_house {
+    mod hosting {
+        fn add_to_waitlist() {}
+
+        fn seat_at_table() {}
+    }
+
+    mod serving {
+        fn take_order() {}
+    }
+}
+
+
+// module tree
+crate
+ └── front_of_house
+     ├── hosting
+     │   ├── add_to_waitlist
+     │   └── seat_at_table
+     └── serving
+         ├── take_order
+         ├── serve_order
+         └── take_payment
+```
+
+If module A is contained inside module B, we say that module A is the _child_ of module B and that module B is the _parent_ of module A. Notice that the entire module tree is rooted under the implicit module named `crate`.
+
+### 7.3 Paths for Referring to an Item in the Module Tree
+
+A path can take two forms:
+
+* An _absolute path_ starts from a crate root by using a crate name or a literal `crate`.
+* A _relative path_ starts from the current module and uses `self`, `super`, or an identifier in the current module.
+
+All items \(functions, methods, structs, enums, modules, and constants\) are private by default. Items in a parent module can’t use the private items inside child modules, but items in child modules can use the items in their ancestor modules\(include siblings\).
+
+Making the module public doesn’t make its contents public. The `pub` keyword on a module only lets code in its ancestor modules refer to it.
+
+```rust
+mod front_of_house {
+    pub mod hosting {
+        pub fn add_to_waitlist() {}
+    }
+
+    mod serving {
+        fn serve_order() {}
+
+        mod back_of_house {
+            fn fix_incorrect_order() {
+                super::serve_order();
+            }
+        }
+    
+}
+
+pub fn eat_at_restaurant() {
+    // Absolute path
+    crate::front_of_house::hosting::add_to_waitlist();
+
+    // Relative path
+    front_of_house::hosting::add_to_waitlist();
+}
+```
+
+If we use `pub` before a struct definition, we make the struct public, but the struct’s fields will still be private.
+
+If we make an enum public, all of its variants are then public.
 
