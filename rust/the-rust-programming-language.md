@@ -775,5 +775,146 @@ The `mod` keyword declares modules, and Rust looks in a file with the same name 
 
 ### 8.1 Storing Lists of Values with Vectors
 
+Vectors allow you to store more than one value in a single data structure that puts all the values next to each other in memory. Vectors can only store values of the same type.
+
+```rust
+// initialize
+let v: Vec<i32> = Vec::new();
+let v = vec![1, 2, 3];
+
+// update
+let mut v = Vec::new();
+v.push(5);
+
+// get
+let third: &i32 = &v[2];
+let opt: Option<&i32> = v.get(2);
+
+// iterate
+let v = vec![100, 32, 57];
+for i in &v {
+    println!("{}", i);
+}
+
+let mut v = vec![100, 32, 57];
+for i in &mut v {
+    *i += 50;
+}
+```
+
+Adding a new element onto the end of the vector might require allocating new memory and copying the old elements to the new space.
+
+```rust
+let mut v = vec![1, 2, 3, 4, 5];
+
+let first = &v[0]; // immutable borrow
+
+v.push(6); // compile error: mutable borrow
+
+println!("The first element is: {}", first);
+```
+
+When we need to store elements of a different type in a vector, we can define and use an enum! If you don’t know the exhaustive set of types the program will get at runtime to store in a vector, the enum technique won’t work. Instead, you can use a trait object.
+
+### 8.2 Storing UTF-8 Encoded Text with Strings
+
+Strings are implemented as a collection of bytes.
+
+Rust has only one string type in the core language, which is the string slice `str` that is usually seen in its borrowed form `&str`.
+
+The `String` type, which is provided by Rust’s standard library rather than coded into the core language, is a growable, mutable, owned, UTF-8 encoded string type.
+
+Rust’s standard library also includes a number of other string types, such as `OsString`, `OsStr`, `CString`, and `CStr`. 
+
+You can conveniently use the `+` operator or the `format!` macro to concatenate `String` values.
+
+```rust
+// initialize
+let mut s = String::new();
+let s2 = "initial contents".to_string();
+let s3 = String::from("initial contents");
+
+// update
+s.push_str("bar");
+s.push('l');
+
+let s1 = String::from("Hello, ");
+let s2 = String::from("world!");
+let s3 = s1 + &s2; // note s1 has been moved here and can no longer be used
+
+let s1 = String::from("tic");
+let s2 = String::from("tac");
+let s3 = String::from("toe");
+
+let s = format!("{}-{}-{}", s1, s2, s3); // doesn’t take ownership of any of its parameters
+```
+
+The `+` operator uses the `add` method, whose signature looks something like this:
+
+```rust
+fn add(self, s: &str) -> String {
+```
+
+The compiler can _coerce_ the `&String` argument into a `&str`. 
+
+Rust strings don’t support indexing.
+
+A `String` is a wrapper over a `Vec<u8>`.
+
+ You can use `[]` with a range to create a string slice containing particular bytes:
+
+```rust
+let hello = "Здравствуйте";
+let s = &hello[0..4]; // s is &str
+```
+
+If you need to perform operations on individual Unicode scalar values, the best way to do so is to use the `chars` method. The `bytes` method returns each raw byte.
+
+### 8.3 Storing Keys with Associated Values in  Hash Maps
+
+The type `HashMap<K, V>` stores a mapping of keys of type `K` to values of type `V`. 
+
+```rust
+use std::collections::HashMap;
+
+let mut scores = HashMap::new();
+scores.insert(String::from("Blue"), 10);
+scores.insert(String::from("Yellow"), 50);
+
+let team_name = String::from("Blue");
+let score = scores.get(&team_name);
+
+let teams = vec![String::from("Blue"), String::from("Yellow")];
+let initial_scores = vec![10, 50];
+let mut scores: HashMap<_, _> =
+    teams.into_iter().zip(initial_scores.into_iter()).collect();
+    
+for (key, value) in &scores {
+    println!("{}: {}", key, value);
+}
+```
+
+For types that implement the `Copy` trait, like `i32`, the values are copied into the hash map. For owned values like `String`, the values will be moved and the hash map will be the owner of those values.
+
+The `or_insert` method on `Entry` is defined to return a mutable reference to the value for the corresponding `Entry` key if that key exists, and if not, inserts the parameter as the new value for this key and returns a mutable reference to the new value. 
+
+```rust
+let mut scores = HashMap::new();
+
+// insert or overwriting
+scores.insert(String::from("Blue"), 10);
+
+// insert or ignore if key exists
+scores.entry(String::from("Blue")).or_insert(50);
+```
+
+## 9. Error Handling
+
+Rust groups errors into two major categories: _recoverable_ and _unrecoverable_ errors.
+
+Rust has the type `Result<T, E>` for recoverable errors and the `panic!` macro that stops execution when the program encounters an unrecoverable error.
+
+### 9.1 Unrecoverable Errors with `panic`!
+
 
 
