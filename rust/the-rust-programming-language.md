@@ -916,5 +916,13 @@ Rust has the type `Result<T, E>` for recoverable errors and the `panic!` macro t
 
 ### 9.1 Unrecoverable Errors with `panic`!
 
+When the `panic!` macro executes, your program will print a failure message, unwind and clean up the stack, and then quit.
+
+You can switch from unwinding to aborting upon a panic by adding `panic = 'abort'` to the appropriate `[profile]` sections in your _Cargo.toml_ file. 
+
+We can set the `RUST_BACKTRACE` environment variable to get a backtrace of exactly what happened to cause the error. 
+
+### 9.2 Recoverable Errors with `Result`
+
 
 
