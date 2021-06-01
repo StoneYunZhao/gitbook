@@ -949,5 +949,25 @@ fn main() -> Result<(), Box<dyn Error>> {
 
 ### 9.3 To `panic!` or Not to `panic!`
 
+Use `panic` for examples, prototype code, and tests.
+
+It would also be appropriate to call `unwrap` when you have some other logic that ensures the `Result` will have an `Ok` value, but the logic isn’t something the compiler understands.
+
+It’s advisable to have your code panic when it’s possible that your code could end up in a bad state. A _bad state_ is when some assumption, guarantee, contract, or invariant has been broken:
+
+* The bad state is not something that’s _expected_ to happen occasionally.
+* Your code after this point needs to rely on not being in this bad state.
+* There’s not a good way to encode this information in the types you use.
+
+If someone calls your code and passes in values that don’t make sense, the best choice might be to call `panic!` and alert the person using your library to the bug in their code so they can fix it during development. Similarly, `panic!` is often appropriate if you’re calling external code that is out of your control and it returns an invalid state that you have no way of fixing.
+
+When failure is expected, it’s more appropriate to return a `Result` than to make a `panic!` call. 
+
+When your code performs operations on values, your code should verify the values are valid first and panic if the values aren’t valid.
+
+Having lots of error checks in all of your functions would be verbose and annoying. Fortunately, you can use Rust’s type system to do many of the checks for you.
+
+## 10. Generic Types, Traits, and Lifetimes
+
 
 
