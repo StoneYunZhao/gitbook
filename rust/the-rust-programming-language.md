@@ -924,5 +924,30 @@ We can set the `RUST_BACKTRACE` environment variable to get a backtrace of exact
 
 ### 9.2 Recoverable Errors with `Result`
 
+The `Result` enum and its variants have been brought into scope by the prelude.
+
+```rust
+let res = File::open("hello.txt");
+res.unwrap_or_else(...);
+res.unwrap();
+res.expect("xxx");
+```
+
+The `?` placed after a `Result` value is defined to work in almost the same way as the `match` expressions.  If the value of the `Result` is an `Ok`, the value inside the `Ok` will get returned from this expression, and the program will continue. If the value is an `Err`, the `Err` will be returned from the whole function as if we had used the `return` keyword.
+
+Error values that have the `?` operator called on them go through the `from` function. When the `?` operator calls the `from` function, the error type received is converted into the error type defined in the return type of the current function. As long as each error type implements the `from` function to define how to convert itself to the returned error type, the `?` operator takes care of the conversion automatically.
+
+We’re only allowed to use the `?` operator in a function that returns `Result` or `Option` or another type that implements `std::ops::Try`. The `main` function is special:
+
+```rust
+fn main() -> Result<(), Box<dyn Error>> {
+    let f = File::open("hello.txt")?;
+
+    Ok(())
+}
+```
+
+### 9.3 To `panic!` or Not to `panic!`
+
 
 
