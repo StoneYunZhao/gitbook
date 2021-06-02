@@ -969,5 +969,55 @@ Having lots of error checks in all of your functions would be verbose and annoyi
 
 ## 10. Generic Types, Traits, and Lifetimes
 
+### 10.1 Generic Data Types
+
+```rust
+fn largest<T>(list: &[T]) -> T
+
+struct Point<T> {
+    x: T,
+    y: T,
+}
+
+// implement for all types
+impl<T> Point<T> {
+    fn x(&self) -> &T {
+        &self.x
+    }
+    
+    // not same as in struct
+    fn mixup<U>(self, other: Point<U>) -> (T, U) {
+        (self.x, other.y)
+    }
+}
+
+// impelement only for f32
+impl Point<f32> {
+    fn distance_from_origin(&self) -> f32 {
+        (self.x.powi(2) + self.y.powi(2)).sqrt()
+    }
+}
+
+enum Option<T> {
+    Some(T),
+    None,
+}
+
+enum Result<T, E> {
+    Ok(T),
+    Err(E),
+}
+```
+
+Generic type parameters in a struct definition aren’t always the same as those you use in that struct’s method signatures.
+
+Rust implements generics in such a way that your code doesn’t run any slower using generic types than it would with concrete types.
+
+Rust accomplishes this by performing **monomorphization** of the code that is using generics at compile time. _Monomorphization_ is the process of turning generic code into specific code by filling in the concrete types that are used when compiled. The process of monomorphization makes Rust’s generics **extremely efficient at runtime**.
+
+The compiler looks at all the places where generic code is called and generates code for the concrete types the generic code is called with.
+
+### 10.2 Traits: Defining Shared Behavior
+
 
 
