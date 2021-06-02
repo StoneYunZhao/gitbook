@@ -1021,3 +1021,85 @@ The compiler looks at all the places where generic code is called and generates 
 
 A _trait_ tells the Rust compiler about functionality a particular type has and can share with other types. 
 
+```rust
+pub trait Summary {
+    fn summarize(&self) -> String;
+
+    // with default implementation
+    fn summarize2(&self) -> String {
+        String::from("Read more...")
+    }
+}
+
+pub struct Tweet {
+    pub username: String,
+    pub content: String,
+}
+
+impl Summary for Tweet {
+    fn summarize(&self) -> String {
+        format!("{}: {}", self.username, self.content)
+    }
+}
+
+// traits as parameters
+pub fn notify(item: &impl Summary) {}
+
+// trait bound syntax, same as notify
+pub fn notify2<T: Summary>(item: &T) {}
+
+// multiple traits
+pub fn notify3(item: &(impl Summary + Display)) {}
+
+// trait bound with + syntax, same as notify3
+pub fn notify4<T: Summary + Display>(item: &T) {}
+
+// where syntax
+fn f1<T, U>(t: &T, u: &U) -> ()
+    where T: Display + Clone,
+          U: Clone + Debug {}
+
+// return traits
+fn f2() -> impl Summary {
+    Tweet {
+        username: "a".to_string(),
+        content: "b".to_string(),
+    }
+}
+```
+
+We can implement a trait on a type only if either the trait or the type is local to our crate. But we can’t implement external traits on external types. This rule ensures that other people’s code can’t break your code and vice versa.
+
+Default implementations can call other methods in the same trait, even if those other methods don’t have a default implementation.
+
+**You can only use `impl Trait` if you’re returning a single type**. 
+
+By using a trait bound with an `impl` block that uses generic type parameters, we can implement methods conditionally for types that implement the specified traits.
+
+```rust
+struct Pair<T> {
+    x: T,
+    y: T,
+}
+
+impl<T: Display + PartialOrd> Pair<T> {
+    fn cmp_display(&self) {
+        if self.x >= self.y {
+            println!("The largest member is x = {}", self.x);
+        } else {
+            println!("The largest member is y = {}", self.y);
+        }
+    }
+}
+```
+
+We can also conditionally implement a trait for any type that implements another trait. Called _blanket implementations_.
+
+```rust
+impl<T: Display> ToString for T {
+    // --snip--
+}
+```
+
+Rust check errors **at compile time** if we called a method on a type which didn’t define the method. Dynamic languages check it at runtime, like Java. So it improves performance.
+
