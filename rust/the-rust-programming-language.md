@@ -1019,5 +1019,5 @@ The compiler looks at all the places where generic code is called and generates 
 
 ### 10.2 Traits: Defining Shared Behavior
 
-
+A _trait_ tells the Rust compiler about functionality a particular type has and can share with other types. 
 
