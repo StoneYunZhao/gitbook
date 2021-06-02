@@ -1103,3 +1103,33 @@ impl<T: Display> ToString for T {
 
 Rust check errors **at compile time** if we called a method on a type which didn’t define the method. Dynamic languages check it at runtime, like Java. So it improves performance.
 
+### 10.3 Validating References with Lifetimes
+
+Every reference in Rust has a _lifetime_, which is the scope for which that reference is valid. Most of the time, lifetimes are implicit and inferred.
+
+The Rust compiler has a _borrow checker_ that compares scopes to determine whether all borrows are valid.
+
+Lifetime annotations don’t change how long any of the references live. Lifetime annotations describe the relationships of the lifetimes of multiple references to each other without affecting the lifetimes.
+
+```rust
+&i32        // a reference
+&'a i32     // a reference with an explicit lifetime
+&'a mut i32 // a mutable reference with an explicit lifetime
+```
+
+When a function has references to or from code outside that function, it becomes almost impossible for Rust to figure out the lifetimes of the parameters or return values on its own. The lifetimes might be different each time the function is called. This is why we need to annotate the lifetimes manually.
+
+When returning a reference from a function, the lifetime parameter for the return type needs to match the lifetime parameter for one of the parameters.
+
+Ultimately, lifetime syntax is about connecting the lifetimes of various parameters and return values of functions.
+
+The Rust team programmed some patterns into the compiler’s code so the borrow checker could infer the lifetimes in these situations and wouldn’t need explicit annotations. Called the _**lifetime elision rules**_.
+
+Lifetimes on function or method parameters are called _**input lifetimes**_, and lifetimes on return values are called _**output lifetimes**_.
+
+The compiler uses three rules to figure out what lifetimes references have when there aren’t explicit annotations:
+
+* The first rule is that each parameter that is a reference gets its own lifetime parameter.
+* The second rule is if there is exactly one input lifetime parameter, that lifetime is assigned to all output lifetime parameters.
+* The third rule is if there are multiple input lifetime parameters, but one of them is `&self` or `&mut self` because this is a method, the lifetime of `self` is assigned to all output lifetime parameters.
+
