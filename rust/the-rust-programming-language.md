@@ -1240,5 +1240,38 @@ mod tests {
 
 ### 11.2 Controlling How Tests Are Run
 
+When you run multiple tests, by default they run in parallel using threads.
 
+By default, if a test passes, Rust’s test library captures anything printed to standard output.
+
+The module in which a test appears becomes part of the test’s name, so we can run all the tests in a module by filtering on the module’s name.
+
+You can annotate the time-consuming tests using the `ignore` attribute to exclude them.
+
+```bash
+cargo test -- --test-threads=1
+cargo test -- --show-output
+cargo test ${fn_name_pattern}
+cargo test -- --ignored # include ignored tests
+```
+
+### 11.3 Test Organization
+
+The Rust community thinks about tests in terms of two main categories: _unit tests_ and _integration tests_. **Unit tests** are small and more focused, testing one module in isolation at a time, and can test private interfaces. **Integration tests** are entirely external to your library and use your code in the same way any other external code would, using only the public interface and potentially exercising multiple modules per test.
+
+The purpose of unit tests is to test each unit of code in isolation from the rest of the code to quickly pinpoint where code is and isn’t working as expected. You’ll put unit tests in the _src_ directory in each file with the code that they’re testing.
+
+The `#[cfg(test)]` annotation on the tests module tells Rust to compile and run the test code only when you run `cargo test`, not when you run `cargo build`. The attribute `cfg` stands for _configuration_ and tells Rust that the following item should only be included given a certain configuration option. 
+
+To create integration tests, you first need a _tests_ directory. Each file in the `tests` directory is a separate crate.
+
+```bash
+cargo test --test ${file_name} # run particular test file
+```
+
+_tests/common/mod.rs_ is a naming convention that Rust understands. Naming the file this way tells Rust not to treat the `common` module as an integration test file.
+
+Files in subdirectories of the _tests_ directory don’t get compiled as separate crates or have sections in the test output.
+
+If our project is a binary crate that only contains a _src/main.rs_ file and doesn’t have a _src/lib.rs_ file, we can’t create integration tests in the _tests_ directory and bring functions defined in the _src/main.rs_ file into scope with a `use` statement. We can provide a binary have a straightforward _src/main.rs_ file that calls logic that lives in the _src/lib.rs_ file. 
 
