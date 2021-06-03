@@ -1275,3 +1275,22 @@ Files in subdirectories of the _tests_ directory don’t get compiled as separat
 
 If our project is a binary crate that only contains a _src/main.rs_ file and doesn’t have a _src/lib.rs_ file, we can’t create integration tests in the _tests_ directory and bring functions defined in the _src/main.rs_ file into scope with a `use` statement. We can provide a binary have a straightforward _src/main.rs_ file that calls logic that lives in the _src/lib.rs_ file. 
 
+## 12. An I/O Project: Building a Command Line Program
+
+### 12.3 Refactoring to Improve Modularity and Error Handling
+
+The Rust community has developed a process to use as a guideline for splitting the separate concerns of a binary program when `main` starts getting large. The process has the following steps:
+
+* Split your program into a _main.rs_ and a _lib.rs_ and move your program’s logic to _lib.rs_.
+* As long as your command line parsing logic is small, it can remain in _main.rs_.
+* When the command line parsing logic starts getting complicated, extract it from _main.rs_ and move it to _lib.rs_.
+
+The responsibilities that remain in the `main` function after this process should be limited to the following:
+
+* Calling the command line parsing logic with the argument values
+* Setting up any other configuration
+* Calling a `run` function in _lib.rs_
+* Handling the error if `run` returns an error
+
+This pattern is about separating concerns: _main.rs_ handles running the program, and _lib.rs_ handles all the logic of the task at hand. Because you can’t test the `main` function directly, this structure lets you test all of your program’s logic by moving it into functions in _lib.rs_.
+
