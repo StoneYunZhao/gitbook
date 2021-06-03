@@ -1190,3 +1190,55 @@ fn longest_with_an_announcement<'a, T>(
 
 **Generic type** parameters let you apply the code to different types. **Traits and trait bounds** ensure that even though the types are generic, they’ll have the behavior the code needs. You learned how to use **lifetime annotations** to ensure that this flexible code won’t have any dangling references. And all of this analysis happens at **compile time**, which doesn’t affect runtime performance!
 
+## 11. Writing Automated Tests
+
+### 11.1 How to Write Tests
+
+Attributes are metadata about pieces of Rust code. To change a function into a test function, add `#[test]` on the line before `fn`. 
+
+The `cargo test` command runs all tests in our project.
+
+Tests fail when something in the test function panics. Each test is run in a new thread, and when the main thread sees that a test thread has died, the test is marked as failed.
+
+The `assert!` macro, provided by the standard library, is useful when you want to ensure that some condition in a test evaluates to `true`.
+
+You can’t use the `#[should_panic]` annotation on tests that use `Result<T, E>`. 
+
+```rust
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn it_works() {
+        assert_eq!(2 + 2, 4);
+        assert_ne!(2 + 3, 4);
+        assert!(1 + 2 == 3);
+        assert!(1 == 1, "assert with custom message: {}", 123)
+    }
+
+    #[test]
+    #[should_panic]
+    fn should_panic() {
+        panic!("asf")
+    }
+
+    #[test]
+    #[should_panic(expected = "too long")]
+    fn should_panic2() {
+        panic!("too long a")
+    }
+
+    #[test]
+    fn result() -> Result<(), String> {
+        if 2 + 2 == 4 {
+            Ok(())
+        } else {
+            Err(String::from("failed"))
+        }
+    }
+}
+```
+
+### 11.2 Controlling How Tests Are Run
+
+
+
