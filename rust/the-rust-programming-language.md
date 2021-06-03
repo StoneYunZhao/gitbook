@@ -1119,6 +1119,38 @@ Lifetime annotations don’t change how long any of the references live. Lifetim
 
 When a function has references to or from code outside that function, it becomes almost impossible for Rust to figure out the lifetimes of the parameters or return values on its own. The lifetimes might be different each time the function is called. This is why we need to annotate the lifetimes manually.
 
+```rust
+// it means that the lifetime of the reference returned by the longest function
+// is the same as the smaller of the lifetimes of the references passed in.
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
+
+// This annotation means an instance of ImportantExcerpt
+// can’t outlive the reference it holds in its part field.
+struct ImportantExcerpt<'a> {
+    part: &'a str,
+}
+
+impl<'a> ImportantExcerpt<'a> {
+
+    // the first elision rule
+    fn level(&self) -> i32 {
+        3
+    }
+
+    // the third lifetime elision rule
+    fn announce_and_return_part(&self, announcement: &str) -> &str {
+        println!("Attention please: {}", announcement);
+        self.part
+    }
+}
+```
+
 When returning a reference from a function, the lifetime parameter for the return type needs to match the lifetime parameter for one of the parameters.
 
 Ultimately, lifetime syntax is about connecting the lifetimes of various parameters and return values of functions.
@@ -1132,4 +1164,29 @@ The compiler uses three rules to figure out what lifetimes references have when 
 * The first rule is that each parameter that is a reference gets its own lifetime parameter.
 * The second rule is if there is exactly one input lifetime parameter, that lifetime is assigned to all output lifetime parameters.
 * The third rule is if there are multiple input lifetime parameters, but one of them is `&self` or `&mut self` because this is a method, the lifetime of `self` is assigned to all output lifetime parameters.
+
+One special lifetime we need to discuss is `'static`, which means that this reference _can_ live for the entire duration of the program. 
+
+```rust
+// generic + trait bounds + lifetimes
+fn longest_with_an_announcement<'a, T>(
+    x: &'a str,
+    y: &'a str,
+    ann: T,
+) -> &'a str
+    where
+        T: Display,
+{
+    println!("Announcement! {}", ann);
+    if x.len() > y.len() {
+        x
+    } else {
+        y
+    }
+}
+```
+
+### Summary
+
+**Generic type** parameters let you apply the code to different types. **Traits and trait bounds** ensure that even though the types are generic, they’ll have the behavior the code needs. You learned how to use **lifetime annotations** to ensure that this flexible code won’t have any dangling references. And all of this analysis happens at **compile time**, which doesn’t affect runtime performance!
 
