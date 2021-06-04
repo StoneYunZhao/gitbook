@@ -1305,3 +1305,68 @@ Test-driven development \(TDD\) process:
 3. Refactor the code you just added or changed and make sure the tests continue to pass.
 4. Repeat from step 1!
 
+## 13. Functional Language Features: Iterators and Closures
+
+### 13.1 Closures: Anonymous Functions that Can Capture Their Environment
+
+Rust’s closures are anonymous functions you can save in a variable or pass as arguments to other functions. Unlike functions, closures can capture values from the scope in which they’re defined.
+
+Closures don’t require you to annotate the types of the parameters or the return value like `fn` functions do. Closures are usually short and relevant only within a narrow context rather than in any arbitrary scenario. Within these limited contexts, the compiler is reliably able to infer the types of the parameters and the return type. 
+
+As with variables, we can add type annotations if we want to increase explicitness and clarity at the cost of being more verbose than is strictly necessary.
+
+Closure definitions will have one concrete type inferred for each of their parameters and for their return value.
+
+Each closure instance has its own unique anonymous type: that is, even if two closures have the same signature, their types are still considered different.
+
+The `Fn` traits are provided by the standard library. All closures implement at least one of the traits: `Fn`, `FnMut`, or `FnOnce`.
+
+Closures can capture values from their environment in three ways, which directly map to the three ways a function can take a parameter: **taking ownership**, **borrowing mutably**, and **borrowing immutably** :
+
+* `FnOnce` consumes the variables it captures from its enclosing scope, known as the closure’s _environment_. To consume the captured variables, the closure must take ownership of these variables and move them into the closure when it is defined. The `Once` part of the name represents the fact that the closure can’t take ownership of the same variables more than once, so it can be called only once.
+* `FnMut` can change the environment because it mutably borrows values.
+* `Fn` borrows values from the environment immutably.
+
+When you create a closure, Rust infers which trait to use based on how the closure uses the values from the environment. All closures implement `FnOnce` because they can all be called at least once. Closures that don’t move the captured variables also implement `FnMut`, and closures that don’t need mutable access to the captured variables also implement `Fn`. 
+
+If you want to force the closure to take ownership of the values it uses in the environment, you can use the `move` keyword before the parameter list. This technique is mostly useful when passing a closure to a new thread to move the data so it’s owned by the new thread.
+
+> `move` closures may still implement `Fn` or `FnMut`, even though they capture variables by move. This is because the traits implemented by a closure type are determined by what the closure does with captured values, not how it captures them. The `move` keyword only specifies the latter.
+
+```rust
+fn add_one_v1(x: u32) -> u32 { x + 1 }
+let add_one_v2 = |x: u32| -> u32 { x + 1 };
+let add_one_v3 = |x| { x + 1 };
+let add_one_v4 = |x| x + 1;
+
+// compile error
+let example_closure = |x| x;
+let s = example_closure(String::from("hello"));
+let n = example_closure(5);
+
+// move keyword
+let x = vec![1, 2, 3];
+let equal_to_x = move |z| z == x;
+
+
+struct Cacher<T>
+    where
+        T: Fn(u32) -> u32,
+{
+    calculation: T,
+    value: Option<u32>,
+}
+
+impl<T> Cacher<T>
+    where
+        T: Fn(u32) -> u32,
+{
+    fn new(calculation: T) -> Cacher<T> {
+        Cacher {
+            calculation,
+            value: None,
+        }
+    }
+}
+```
+
