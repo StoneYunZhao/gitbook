@@ -1277,6 +1277,8 @@ If our project is a binary crate that only contains a _src/main.rs_ file and doe
 
 ## 12. An I/O Project: Building a Command Line Program
 
+{% embed url="https://github.com/StoneYunZhao/the-rust-programming-language/tree/master/minigrep" %}
+
 ### 12.3 Refactoring to Improve Modularity and Error Handling
 
 The Rust community has developed a process to use as a guideline for splitting the separate concerns of a binary program when `main` starts getting large. The process has the following steps:
