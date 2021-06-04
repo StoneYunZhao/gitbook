@@ -1370,3 +1370,40 @@ impl<T> Cacher<T>
 }
 ```
 
+### 13.2 Processing a Series of Items with Iterators
+
+In Rust, iterators are _lazy_, meaning they have no effect until you call methods that consume the iterator to use it up. 
+
+All iterators implement a trait named `Iterator` that is defined in the standard library.
+
+```rust
+pub trait Iterator {
+    type Item;
+    
+    fn next(&mut self) -> Option<Self::Item>;
+}
+```
+
+```rust
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn iterator_demonstration() {
+        let v1 = vec![1, 2, 3];
+
+        let mut v1_iter = v1.iter();
+
+        assert_eq!(v1_iter.next(), Some(&1));
+        assert_eq!(v1_iter.next(), Some(&2));
+        assert_eq!(v1_iter.next(), Some(&3));
+        assert_eq!(v1_iter.next(), None);
+    }
+}
+```
+
+Note that we needed to make `v1_iter` mutable: calling the `next` method on an iterator changes internal state that the iterator uses to keep track of where it is in the sequence. We didn’t need to make `v1_iter` mutable when we used a `for` loop because the loop took ownership of `v1_iter` and made it mutable behind the scenes.
+
+The `iter` method produces an iterator over immutable references. If we want to create an iterator that takes ownership of `v1` and returns owned values, we can call `into_iter` instead of `iter`. Similarly, if we want to iterate over mutable references, we can call `iter_mut` instead of `iter`.
+
+Methods that call `next` are called _**consuming adaptors**_, because calling them uses up the iterator. Other methods defined on the `Iterator` trait, known as _**iterator adaptors**_, allow you to change iterators into different kinds of iterators. You can chain multiple calls to iterator adaptors to perform complex actions in a readable way. But because all iterators are lazy, you have to call one of the consuming adaptor methods to get results from calls to iterator adaptors.
+
