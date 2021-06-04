@@ -1407,3 +1407,17 @@ The `iter` method produces an iterator over immutable references. If we want to 
 
 Methods that call `next` are called _**consuming adaptors**_, because calling them uses up the iterator. Other methods defined on the `Iterator` trait, known as _**iterator adaptors**_, allow you to change iterators into different kinds of iterators. You can chain multiple calls to iterator adaptors to perform complex actions in a readable way. But because all iterators are lazy, you have to call one of the consuming adaptor methods to get results from calls to iterator adaptors.
 
+### 13.4 Comparing Performance: Loops vs. Iterators
+
+iterators, although a high-level abstraction, get compiled down to roughly the same code as if you’d written the lower-level code yourself. Iterators are one of Rust’s _zero-cost abstractions_, by which we mean using the abstraction imposes no additional runtime overhead. 
+
+_Unrolling_ is an optimization that removes the overhead of the loop controlling code and instead generates repetitive code for each iteration of the loop.
+
+You can use iterators and closures without fear! Rust make code seem like it’s higher level but don’t impose a runtime performance penalty for doing so.
+
+## 14. More About Cargo and Crates.io
+
+### 14.1 Customizing Builds with Release Profiles
+
+
+
