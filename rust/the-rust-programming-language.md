@@ -1294,3 +1294,12 @@ The responsibilities that remain in the `main` function after this process shoul
 
 This pattern is about separating concerns: _main.rs_ handles running the program, and _lib.rs_ handles all the logic of the task at hand. Because you can’t test the `main` function directly, this structure lets you test all of your program’s logic by moving it into functions in _lib.rs_.
 
+### 12.4 Developing the Library’s Functionality with Test-Driven Development
+
+Test-driven development \(TDD\) process:
+
+1. Write a test that fails and run it to make sure it fails for the reason you expect.
+2. Write or modify just enough code to make the new test pass.
+3. Refactor the code you just added or changed and make sure the tests continue to pass.
+4. Repeat from step 1!
+
