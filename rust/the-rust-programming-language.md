@@ -1518,8 +1518,10 @@ Implementing the `Deref` trait allows you to customize the behavior of the _dere
 The `deref` method gives the compiler the ability to take a value of any type that implements `Deref` and call the `deref` method to **get a `&` reference** that it knows how to dereference. If the `deref` method returned the value directly instead of a reference to the value, the value would be moved out of `self`. 
 
 ```rust
-*(y) // the type of y implemented deref trait
-*(y.deref()) // same as above
+// the type of y implemented deref trait
+*y ==> *(y.deref())
+
+&y ==> y.deref() // deref coercion
 ```
 
 Deref coercion happens automatically when we pass a reference to a particular type’s value as an argument to a function or method that doesn’t match the parameter type in the function or method definition. A sequence of calls to the `deref` method converts the type we provided into the type the parameter needs.
