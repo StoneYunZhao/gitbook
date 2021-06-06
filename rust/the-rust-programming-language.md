@@ -1536,3 +1536,17 @@ Rust does deref coercion when it finds types and trait implementations in three 
 * From `&mut T` to `&mut U` when `T: DerefMut<Target=U>`
 * From `&mut T` to `&U` when `T: Deref<Target=U>`
 
+### 15.3 Running Code on Cleanup with the `Drop` Trait
+
+`Drop` lets you customize what happens when a value is about to go out of scope.  The `Drop` trait is included in the prelude.
+
+Variables are dropped in the reverse order of their creation.
+
+Rust doesn’t let you call the `Drop` trait’s `drop` method manually; instead you have to call the `std::mem::drop` function provided by the standard library which is prelude if you want to force a value to be dropped before the end of its scope.
+
+The ownership system that makes sure references are always valid also ensures that `drop` gets called only once when the value is no longer being used.
+
+### 15.4 `Rc<T>`, the Reference Counted Smart Pointer
+
+
+
