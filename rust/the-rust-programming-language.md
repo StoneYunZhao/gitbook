@@ -1469,3 +1469,21 @@ cargo test -p ${crate}
 
 You must change to each crate’s directory and run `cargo publish` on each crate in the workspace to publish the crates.
 
+### 14.4 Installing Binaries from Crates.io with `cargo install`
+
+The `cargo install` command allows you to install and use binary crates locally.
+
+You can only install packages that have binary targets. 
+
+### 14.5 Extending Cargo with Custom Commands
+
+If a binary in your `$PATH` is named `cargo-something`, you can run it as if it was a Cargo subcommand by running `cargo something`.
+
+Custom commands like this are also listed when you run `cargo --list`. 
+
+## 15. Smart Pointers
+
+### 15.1 Using `Box<T>` to Point to Data on the Heap
+
+
+
