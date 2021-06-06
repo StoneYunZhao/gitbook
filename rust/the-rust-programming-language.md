@@ -1560,5 +1560,21 @@ Rc::strong_count(xx);
 
 ### 15.5 `RefCell<T>` and the Interior Mutability Pattern
 
+_Interior mutability_ is a design pattern in Rust that allows you to mutate data even when there are immutable references to that data. The pattern uses `unsafe` code inside a data structure to bend Rust’s usual rules that govern mutation and borrowing. 
 
+With `RefCell<T>`, the borrowing rules’ invariants are enforced _at runtime_. The `RefCell<T>` type is useful when you’re sure your code follows the borrowing rules but the compiler is unable to understand and guarantee that.
+
+`RefCell<T>` is only for use in single-threaded scenarios and will give you a compile-time error if you try using it in a multithreaded context.
+
+When creating immutable and mutable references, we use the `&` and `&mut` syntax, respectively. With `RefCell<T>`, we use the `borrow` and `borrow_mut` methods, which are part of the safe API that belongs to `RefCell<T>`. The `borrow` method returns the smart pointer type `Ref<T>`, and `borrow_mut` returns the smart pointer type `RefMut<T>`.
+
+The `RefCell<T>` keeps track of how many `Ref<T>` and `RefMut<T>` smart pointers are currently active. Every time we call `borrow`, the `RefCell<T>` increases its count of how many immutable borrows are active. When a `Ref<T>` value goes out of scope, the count of immutable borrows goes down by one. Just like the compile-time borrowing rules, `RefCell<T>` lets us have many immutable borrows or one mutable borrow at any point in time.
+
+If you have an `Rc<T>` that holds a `RefCell<T>`, you can get a value that can have multiple owners _and_ that you can mutate!
+
+### 15.6 Reference Cycles Can Leak Memory
+
+If you have `RefCell<T>` values that contain `Rc<T>` values or similar nested combinations of types with interior mutability and reference counting, you must ensure that you don’t create cycles; you can’t rely on Rust to catch them. 
+
+You can create a _weak reference_ to the value within an `Rc<T>` instance by calling `Rc::downgrade` and passing a reference to the `Rc<T>`. Calling `Rc::downgrade` increases the `weak_count` by 1. The `weak_count` doesn’t need to be 0 for the `Rc<T>` instance to be cleaned up.
 
