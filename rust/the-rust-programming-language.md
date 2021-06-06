@@ -1548,5 +1548,17 @@ The ownership system that makes sure references are always valid also ensures th
 
 ### 15.4 `Rc<T>`, the Reference Counted Smart Pointer
 
+The `Rc<T>` type keeps track of the number of references to a value which determines whether or not a value is still in use. 
+
+Note that `Rc<T>` is only for use in single-threaded scenarios.
+
+```rust
+Rc::new(xx);
+Rc::clone(xx);
+Rc::strong_count(xx);
+```
+
+### 15.5 `RefCell<T>` and the Interior Mutability Pattern
+
 
 
