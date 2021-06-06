@@ -1425,5 +1425,36 @@ The `opt-level` setting controls the number of optimizations Rust will apply to 
 
 ### 14.2 Publishing a Crate to Crates.io
 
+Documentation comments use three slashes, `///`, instead of two and support Markdown notation for formatting the text.
+
+```bash
+cargo doc
+cargo doc --open
+cargo login XXX
+cargo publish
+
+cargo yank --vers 1.0.1
+cargo yank --vers 1.0.1 --undo
+```
+
+Some commonly used sections: 
+
+* Examples.
+* Panics.
+* Errors.
+* Safety.
+
+Running `cargo test` will run the code examples in your documentation as tests!
+
+Another style of doc comment, `//!`, adds documentation to the item that contains the comments rather than adding documentation to the items following the comments. 
+
+You can re-export items to make a public structure that’s different from your private structure by using `pub use`. Re-exporting takes a public item in one location and makes it public in another location, as if it were defined in the other location instead.
+
+Before publishing, you’ll need to add some metadata to your crate by adding it to the `[package]` section of the crate’s _Cargo.toml_ file.
+
+Yanking a version prevents new projects from starting to depend on that version while allowing all existing projects that depend on it to continue to download and depend on that version.
+
+### 14.3 Cargo Workspaces
+
 
 
