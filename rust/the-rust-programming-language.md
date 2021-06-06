@@ -1483,7 +1483,54 @@ Custom commands like this are also listed when you run `cargo --list`.
 
 ## 15. Smart Pointers
 
+_Smart pointers_ are data structures that not only act like a pointer but also have additional metadata and capabilities. 
+
+References are pointers that only borrow data; in contrast, in many cases, smart pointers _own_ the data they point to.
+
+The characteristic that distinguishes a smart pointer from an ordinary struct is that smart pointers implement the `Deref` and `Drop` traits.
+
+The most common smart pointers in the standard library:
+
+* `Box<T>` for allocating values on the heap
+* `Rc<T>`, a reference counting type that enables multiple ownership
+* `Ref<T>` and `RefMut<T>`, accessed through `RefCell<T>`, a type that enforces the borrowing rules at runtime instead of compile time
+
 ### 15.1 Using `Box<T>` to Point to Data on the Heap
 
+Boxes don’t have performance overhead. You’ll use them most often in these situations:
 
+* When you have a type whose size can’t be known at compile time and you want to use a value of that type in a context that requires an exact size
+* When you have a large amount of data and you want to transfer ownership but ensure the data won’t be copied when you do so
+* When you want to own a value and you care only that it’s a type that implements a particular trait rather than being of a specific type.
+
+Just like any owned value, when a box goes out of scope, it will be deallocated. The deallocation happens for the box \(stored on the stack\) and the data it points to \(stored on the heap\).
+
+_recursive type_, where a value can have as part of itself another value of the same type. 
+
+To determine how much space to allocate for enum type, Rust goes through each of the variants to see which variant needs **the most space**.
+
+The `Box<T>` type is a smart pointer because it implements the `Deref` trait, which allows `Box<T>` values to be treated like references. When a `Box<T>` value goes out of scope, the heap data that the box is pointing to is cleaned up as well because of the `Drop` trait implementation. 
+
+### 15.2 Treating Smart Pointers Like Regular References with the `Deref` Trait
+
+Implementing the `Deref` trait allows you to customize the behavior of the _dereference operator_, `*`.
+
+The `deref` method gives the compiler the ability to take a value of any type that implements `Deref` and call the `deref` method to **get a `&` reference** that it knows how to dereference. If the `deref` method returned the value directly instead of a reference to the value, the value would be moved out of `self`. 
+
+```rust
+*(y) // the type of y implemented deref trait
+*(y.deref()) // same as above
+```
+
+Deref coercion happens automatically when we pass a reference to a particular type’s value as an argument to a function or method that doesn’t match the parameter type in the function or method definition. A sequence of calls to the `deref` method converts the type we provided into the type the parameter needs.
+
+When the `Deref` trait is defined for the types involved, Rust will analyze the types and use `Deref::deref` as many times as necessary to get a reference to match the parameter’s type. The number of times that `Deref::deref` needs to be inserted is resolved at compile time.
+
+You can use the `DerefMut` trait to override the `*` operator on mutable references.
+
+Rust does deref coercion when it finds types and trait implementations in three cases:
+
+* From `&T` to `&U` when `T: Deref<Target=U>`
+* From `&mut T` to `&mut U` when `T: DerefMut<Target=U>`
+* From `&mut T` to `&U` when `T: Deref<Target=U>`
 
