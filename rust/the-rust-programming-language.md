@@ -1456,5 +1456,16 @@ Yanking a version prevents new projects from starting to depend on that version 
 
 ### 14.3 Cargo Workspaces
 
+A _workspace_ is a set of packages that share the same _Cargo.lock_ and output directory. 
 
+The crates in a workspace are meant to depend on each other.
+
+Cargo doesn’t assume that crates in a workspace will depend on each other, so we need to be explicit about the dependency relationships between the crates.
+
+```rust
+cargo run -p ${crate}
+cargo test -p ${crate}
+```
+
+You must change to each crate’s directory and run `cargo publish` on each crate in the workspace to publish the crates.
 
