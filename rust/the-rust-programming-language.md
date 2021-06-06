@@ -1419,5 +1419,11 @@ You can use iterators and closures without fear! Rust make code seem like it’s
 
 ### 14.1 Customizing Builds with Release Profiles
 
+Cargo has two main profiles: the `dev` profile Cargo uses when you run `cargo build` and the `release` profile Cargo uses when you run `cargo build --release`.
+
+The `opt-level` setting controls the number of optimizations Rust will apply to your code, with a range of 0 to 3.
+
+### 14.2 Publishing a Crate to Crates.io
+
 
 
