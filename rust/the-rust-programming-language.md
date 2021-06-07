@@ -1624,5 +1624,70 @@ handle.join().unwrap();
 
 ### 16.2 Using Message Passing to Transfer Data Between Threads
 
+One major tool Rust has for accomplishing message-sending concurrency is the _channel._ A channel is said to be _closed_ if either the transmitter or receiver half is dropped.
+
+We create a new channel using the `mpsc::channel` function; `mpsc` stands for _multiple producer, single consumer_.
+
+`recv` will block the main thread’s execution and wait until a value is sent down the channel. The `try_recv` method doesn’t block.
+
+The `send` function takes ownership of its parameter.
+
+```rust
+let (tx, rx) = mpsc::channel();
+
+thread::spawn(move || {
+    tx.send(String::from("hi")).unwrap();
+});
+
+let rev = rx.recv().unwrap();
+
+println!("got: {}", rev)
+
+
+let tx1 = tx.clone(); // tx1 could be used in another thread to send value
+```
+
+### 16.3 Shared-State Concurrency
+
+_Mutex_ is an abbreviation for _mutual exclusion_, as in, a mutex allows only one thread to access some data at any given time. The lock is a data structure that is part of the mutex that keeps track of who currently has exclusive access to the data.
+
+`Mutex<T>` is a smart pointer. The call to `lock` _returns_ a smart pointer called `MutexGuard`. The `MutexGuard` smart pointer implements `Deref` to point at our inner data; the smart pointer also has a `Drop` implementation that releases the lock automatically when a `MutexGuard` goes out of scope.
+
+`Arc<T>` _is_ a type like `Rc<T>` that is safe to use in concurrent situations.
+
+ to allow us to mutate contents inside an `Rc<T>`, we use `Mutex<T>` to mutate contents inside an `Arc<T>`.
+
+```rust
+let m = Mutex::new(5);
+
+{
+    let mut num = m.lock().unwrap(); // num is MutexGuard<i32>
+    *num = 6;
+} // release lock automatically by Drop implementation
+```
+
+```rust
+let counter = Arc::new(Mutex::new(0));
+let mut handles = vec![];
+
+for _ in 0..10 {
+    let counter = Arc::clone(&counter);
+    let handle = thread::spawn(move || {
+        let mut num = counter.lock().unwrap();
+
+        *num += 1;
+    });
+    handles.push(handle);
+}
+
+for handle in handles {
+    handle.join().unwrap();
+}
+
+println!("Result: {}", *counter.lock().unwrap());
+```
+
+### 16.4 Extensible Concurrency with the `Sync` and `Send` Traits
+
 
 
