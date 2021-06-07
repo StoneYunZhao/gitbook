@@ -1689,5 +1689,17 @@ println!("Result: {}", *counter.lock().unwrap());
 
 ### 16.4 Extensible Concurrency with the `Sync` and `Send` Traits
 
+Two concurrency concepts are embedded in the language: the `std::marker` traits `Sync` and `Send`.
+
+The `Send` marker trait indicates that ownership of values of the type implementing `Send` can be transferred between threads. Any type composed entirely of `Send` types is automatically marked as `Send` as well. Almost all primitive types are `Send`, aside from raw pointers.
+
+The `Sync` marker trait indicates that it is safe for the type implementing `Sync` to be referenced from multiple threads. Similar to `Send`, primitive types are `Sync`, and types composed entirely of types that are `Sync` are also `Sync`.
+
+So any type `T` is `Sync` if `&T` is `Send`.
+
+## 17. Object Oriented Programming Features of Rust
+
+### 17.1 Characteristics of Object-Oriented Languages
+
 
 
