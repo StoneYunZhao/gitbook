@@ -1597,7 +1597,32 @@ Rc::weak_count();
 
 ## 16. Fearless Concurrency
 
+_Concurrent programming_, where different parts of a program execute independently, and _parallel programming_, where different parts of a program execute at the same time. 
+
+* _**Message-passing**_ **concurrency**, where channels send messages between threads
+* _**Shared-state**_ **concurrency**, where multiple threads have access to some piece of data
+
 ### 16.1 Using Threads to Run Code Simultaneously
+
+Programming language-provided threads are known as _green_ threads. The Rust standard library only provides an implementation of 1:1 threading.
+
+The calls to `thread::sleep` force a thread to stop its execution for a short duration, allowing a different thread to run.
+
+The return type of `thread::spawn` is `JoinHandle`. A `JoinHandle` is an owned value that, when we call the `join` method on it, will wait for its thread to finish. 
+
+We can use the `move` keyword before the parameter list of a closure to force the closure to take ownership of the values it uses in the environment. The `move` closure is often used alongside `thread::spawn` because it allows you to use data from one thread in another thread.
+
+```rust
+let v = vec![1, 2, 3];
+
+let handle = thread::spawn(move || {
+    println!("vector: {:?}", v)
+});
+
+handle.join().unwrap();
+```
+
+### 16.2 Using Message Passing to Transfer Data Between Threads
 
 
 
