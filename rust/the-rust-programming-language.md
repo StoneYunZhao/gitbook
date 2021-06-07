@@ -1572,9 +1572,32 @@ The `RefCell<T>` keeps track of how many `Ref<T>` and `RefMut<T>` smart pointers
 
 If you have an `Rc<T>` that holds a `RefCell<T>`, you can get a value that can have multiple owners _and_ that you can mutate!
 
+```rust
+// x's type is RefCell<T>
+x.borrow();
+x.borrow_mut();
+```
+
 ### 15.6 Reference Cycles Can Leak Memory
 
 If you have `RefCell<T>` values that contain `Rc<T>` values or similar nested combinations of types with interior mutability and reference counting, you must ensure that you don’t create cycles; you can’t rely on Rust to catch them. 
 
 You can create a _weak reference_ to the value within an `Rc<T>` instance by calling `Rc::downgrade` and passing a reference to the `Rc<T>`. Calling `Rc::downgrade` increases the `weak_count` by 1. The `weak_count` doesn’t need to be 0 for the `Rc<T>` instance to be cleaned up.
+
+Strong references are how you can share ownership of an `Rc<T>` instance. Weak references don’t express an ownership relationship. Weak references will be broken once the strong reference count of values involved is 0.
+
+Because the value that `Weak<T>` references might have been dropped, to do anything with the value that a `Weak<T>` is pointing to, you must make sure the value still exists. Do this by calling the `upgrade` method on a `Weak<T>` instance, which will return an `Option<Rc<T>>`.
+
+```rust
+Week::new();
+Rc::downgrade(&x); // x's type is Rc<T>
+y.upgrade(); // y's type is Week<T>
+Rc::weak_count();
+```
+
+## 16. Fearless Concurrency
+
+### 16.1 Using Threads to Run Code Simultaneously
+
+
 
