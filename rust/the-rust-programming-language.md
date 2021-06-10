@@ -1701,5 +1701,24 @@ So any type `T` is `Sync` if `&T` is `Send`.
 
 ### 17.1 Characteristics of Object-Oriented Languages
 
+OOP languages share certain common characteristics, namely **objects, encapsulation, and inheritance**.
+
+Object-oriented programs are made up of objects. An _object_ packages both data and the procedures that operate on that data. The procedures are typically called _methods_ or _operations_.
+
+**Objects**: structs and enums have data, and `impl` blocks provide methods on structs and enums. 
+
+**Encapsulation**: we can use the `pub` keyword to decide which modules, types, functions, and methods in our code should be public, and by default everything else is private. 
+
+_Inheritance_ is a mechanism whereby an object can inherit from another object’s definition, thus gaining the parent object’s data and behavior without you having to define them again.
+
+**Inheritance**: Rust not support. There is no way to define a struct that inherits the parent struct’s fields and method implementations. But you can use other solution in Rust: 
+
+* You can share Rust code using default trait method implementations instead. We can also override the default implementation.
+* Rust use trait objects instead of inheritance. See next section.
+
+> To many people, **polymorphism\(多态\)** is synonymous with inheritance. But it’s actually a more general concept that refers to code that can work with data of multiple types. For inheritance, those types are generally subclasses.
+
+### 17.2 Using Trait Objects That Allow for Values of Different Types
+
 
 
