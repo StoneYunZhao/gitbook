@@ -1714,11 +1714,75 @@ _Inheritance_ is a mechanism whereby an object can inherit from another object�
 **Inheritance**: Rust not support. There is no way to define a struct that inherits the parent struct’s fields and method implementations. But you can use other solution in Rust: 
 
 * You can share Rust code using default trait method implementations instead. We can also override the default implementation.
-* Rust use trait objects instead of inheritance. See next section.
+* Rust use trait objects instead of inheritance. Go to next section for detail.
 
 > To many people, **polymorphism\(多态\)** is synonymous with inheritance. But it’s actually a more general concept that refers to code that can work with data of multiple types. For inheritance, those types are generally subclasses.
 
 ### 17.2 Using Trait Objects That Allow for Values of Different Types
+
+A trait object points to both an instance of a type implementing our specified trait as well as a table used to look up trait methods on that type at runtime. We create a trait object by specifying some sort of **pointer**, such as a `&` reference or a `Box<T>` smart pointer, then the `dyn` keyword, and then specifying the relevant trait. 
+
+Wherever we use a trait object, Rust’s type system will ensure **at compile time** that any value used in that context will implement the trait object’s trait.
+
+A generic type parameter with trait bounds can only be substituted with one concrete type at a time, whereas trait objects allow for multiple concrete types to fill in for the trait object at runtime.
+
+```rust
+pub trait Draw {
+    fn draw(&self);
+}
+
+// Sreen1 use trait objects
+// allow for multiple concrete types
+pub struct Screen1 {
+    pub components: Vec<Box<dyn Draw>>,
+}
+
+impl Screen1 {
+    pub fn run(&self) {
+        for component in self.components.iter(){
+            component.draw();
+        }
+    }
+}
+
+// Secreen2 use generic type parameter
+// T can only be substituted with only one concrete type
+pub struct Screen2<T: Draw> {
+    pub components: Vec<T>,
+}
+
+impl<T> Screen2<T>
+    where
+        T: Draw,
+{
+    pub fn run(&self) {
+        for component in self.components.iter() {
+            component.draw();
+        }
+    }
+}
+```
+
+* **static dispatch**: monomorphization. The compiler generates nongeneric implementations of functions and methods for each concrete type that we use in place of a generic type parameter.
+* **dynamic dispatch**: the compiler emits code that at runtime will figure out which method to call.
+
+When we use trait objects, Rust must use dynamic dispatch. At runtime, Rust uses the pointers inside the trait object to know which method to call. There is a runtime cost. Dynamic dispatch also prevents the compiler from choosing to inline a method’s code, which in turn prevents some optimizations.
+
+You can only make _object-safe_ traits into trait objects. A trait is object safe if all the methods defined in the trait have the following properties:
+
+* The return type isn’t `Self`.
+* There are no generic type parameters.
+
+The `Self` keyword is an alias for the type we’re implementing the traits or methods on. Trait objects must be object safe because once you’ve used a trait object, Rust no longer knows the concrete type that’s implementing that trait. If a trait method returns the concrete `Self` type, but a trait object forgets the exact type that `Self` is, there is no way the method can use the original concrete type. The same is true of generic type parameters that are filled in with concrete type parameters when the trait is used: the concrete types become part of the type that implements the trait. When the type is forgotten through the use of a trait object, there is no way to know what types to fill in the generic type parameters with.
+
+```rust
+// not object safe
+pub trait Clone {
+    fn clone(&self) -> Self;
+}
+```
+
+### 17.3 Implementing an Object-Oriented Design Pattern
 
 
 
