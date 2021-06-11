@@ -1784,5 +1784,94 @@ pub trait Clone {
 
 ### 17.3 Implementing an Object-Oriented Design Pattern
 
+{% embed url="https://github.com/StoneYunZhao/the-rust-programming-language/blob/master/oop/src/post.rs" %}
+
+## 18. Patterns and Matching
+
+A pattern consists of some combination of the following:
+
+* Literals
+* Destructured arrays, enums, structs, or tuples
+* Variables
+* Wildcards
+* Placeholders
+
+### 18.1 All the Places Patterns Can Be Used
+
+One requirement for `match` expressions is that they need to be _exhaustive_ in the sense that all possibilities for the value in the `match` expression must be accounted for. A variable name matching any value can never fail and thus covers every remaining case. A particular pattern `_` will match anything, but it never binds to a variable.
+
+```rust
+match VALUE {
+    PATTERN => EXPRESSION,
+    PATTERN => EXPRESSION,
+}
+```
+
+`if let` expressions mainly as a shorter way to write the equivalent of a `match` that only matches one case. `if let` can also introduce shadowed variables in the same way that `match` arms can. The downside of using `if let` expressions is that the compiler doesn’t check exhaustiveness, whereas with `match` expressions it does.
+
+```rust
+fn main() {
+    let favorite_color: Option<&str> = None;
+    let is_tuesday = false;
+    let age: Result<u8, _> = "34".parse();
+
+    if let Some(color) = favorite_color {
+        println!("Using your favorite color, {}, as the background", color);
+    } else if is_tuesday {
+        println!("Tuesday is green day!");
+    } else if let Ok(age) = age { // introduced a new shadowed age variable
+        if age > 30 {
+            println!("Using purple as the background color");
+        } else {
+            println!("Using orange as the background color");
+        }
+    } else {
+        println!("Using blue as the background color");
+    }
+}
+```
+
+The `while let` conditional loop allows a `while` loop to run for as long as a pattern continues to match. 
+
+```rust
+let mut stack = Vec::new();
+
+while let Some(top) = stack.pop() {
+    println!("{}", top);
+}
+```
+
+In a `for` loop, the pattern is the value that directly follows the keyword `for`, so in `for x in y` the `x` is the pattern.
+
+```rust
+let v = vec!['a', 'b', 'c'];
+
+for (index, value) in v.iter().enumerate() {
+    println!("{} is at index {}", value, index);
+}
+```
+
+```rust
+let PATTERN = EXPRESSION;
+let x = 5;
+let (x, y, z) = (1, 2, 3); // destructure a tuple
+```
+
+Function parameters can also be patterns. We can also use patterns in closure parameter lists in the same way as in function parameter lists.
+
+```rust
+// The values &(3, 5) match the pattern &(x, y)
+fn print_coordinates(&(x, y): &(i32, i32)) {
+    println!("Current location: ({}, {})", x, y);
+}
+
+fn main() {
+    let point = (3, 5);
+    print_coordinates(&point);
+}
+```
+
+### 18.2 Refutability: Whether a Pattern Might Fail to Match
+
 
 
