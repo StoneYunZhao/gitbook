@@ -1873,5 +1873,24 @@ fn main() {
 
 ### 18.2 Refutability: Whether a Pattern Might Fail to Match
 
+Patterns come in two forms: refutable and irrefutable. Patterns that will match for any possible value passed are _**irrefutable**_. Patterns that can fail to match for some possible value are _**refutable**_.
+
+Function parameters, `let` statements, and `for` loops can only accept irrefutable patterns, because the program cannot do anything meaningful when values don’t match. 
+
+The `if let` and `while let` expressions accept refutable and irrefutable patterns, but the compiler warns.
+
+Match arms must use refutable patterns, except for the last arm.
+
+```rust
+let Some(x) = some_option_value; // compile error: must use irrefutable pattern
+
+// warn: using irrefutable here doesn't make sense
+if let x = 5 {
+    println!("{}", x);
+};
+```
+
+### 18.3 Pattern Syntax
+
 
 
