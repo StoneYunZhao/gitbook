@@ -2064,5 +2064,108 @@ unsafe {
 
 #### Calling an Unsafe Function or Method
 
+Bodies of unsafe functions are effectively `unsafe` blocks, so to perform other unsafe operations within an unsafe function, we don’t need to add another `unsafe` block.
+
+```rust
+unsafe fn dangerous() {}
+
+unsafe {
+    dangerous()
+}
+```
+
+#### Creating a Safe Abstraction over Unsafe Code
+
+```rust
+impl<T, A: Allocator> Vec<T, A> {
+
+    #[inline]
+    pub fn split_at_spare_mut(&mut self) -> (&mut [T], &mut [MaybeUninit<T>]) {
+        // SAFETY:
+        // - len is ignored and so never changed
+        let (init, spare, _) = unsafe { self.split_at_spare_mut_with_len() };
+        (init, spare)
+    }
+}
+```
+
+**Using extern Functions to Call External Code**
+
+Rust has a keyword, `extern`, that facilitates the creation and use of a _Foreign Function Interface \(FFI\)_. ****An FFI is a way for a programming language to define functions and enable a different \(foreign\) programming language to call those functions.
+
+Functions declared within `extern` blocks are always unsafe to call from Rust code.
+
+The ABI\(_application binary interface_\) defines how to call the function at the assembly level.
+
+```rust
+extern "C" {
+    fn abs(input: i32) -> i32;
+}
+
+unsafe {
+    println!("Absolute value of -3 according to C: {}", abs(-3));
+}
+```
+
+We can also use `extern` to create an interface that allows other languages to call Rust functions.
+
+```rust
+#[no_mangle]
+pub extern "C" fn call_from_c() {
+    println!("Just called a Rust function from C!");
+}
+```
+
+#### Accessing or Modifying a Mutable Static Variable <a id="accessing-or-modifying-a-mutable-static-variable"></a>
+
+In Rust, global variables are called _static_ variables. Static variables can only store references with the `'static` lifetime. Accessing an immutable static variable is safe. Accessing and modifying mutable static variables is _unsafe_. 
+
+With mutable data that is globally accessible, it’s difficult to ensure there are no data races, which is why Rust considers mutable static variables to be unsafe.
+
+Constants .vs static variables
+
+* values in a static variable have a fixed address in memory. Constants are allowed to duplicate their data whenever they’re used.
+* static variables can be mutable.
+
+```rust
+static HELLO_WORLD: &str = "Hello, world!";
+
+fn main() {
+    println!("name is: {}", HELLO_WORLD);
+}
+
+static mut COUNTER: u32 = 0;
+
+fn add_to_count(inc: u32) {
+    unsafe {
+        COUNTER += inc;
+    }
+}
+```
+
+#### Implementing an Unsafe Trait <a id="implementing-an-unsafe-trait"></a>
+
+A trait is unsafe when at least one of its methods has some invariant that the compiler can’t verify.
+
+```rust
+unsafe trait Foo {
+    // methods go here
+}
+
+unsafe impl Foo for i32 {
+    // method implementations go here
+}
+```
+
+The compiler implements traits automatically if our types are composed entirely of `Send` and `Sync` types. If we implement a type that contains a type that is not `Send` or `Sync`, and we want to mark that type as `Send` or `Sync`, we must use `unsafe`. 
+
+#### Accessing Fields of a Union <a id="accessing-fields-of-a-union"></a>
+
+ A `union` is similar to a `struct`, but only one declared field is used in a particular instance at one time. Unions are primarily used to interface with unions in C code. 
+
+Accessing union fields is unsafe because Rust can’t guarantee the type of the data currently being stored in the union instance.
+
+### 19.2 Advanced Traits
+
 
 
