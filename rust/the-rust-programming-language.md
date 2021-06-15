@@ -1892,5 +1892,124 @@ if let x = 5 {
 
 ### 18.3 Pattern Syntax
 
+The `..=` syntax allows us to match to an inclusive range of values. 
 
+Ranges are only allowed with numeric values or `char` values.
+
+```rust
+// matching literals
+let x = 1;
+match x {
+    1 => println!("one"),
+    2 => println!("two"),
+    _ => println!("others"),
+}
+
+// matching named variables
+let x = Some(5);
+match x {
+    Some(y) => println!("y = {:?}", y),
+    _ => println!("others"),
+}
+
+// multiple pattern
+let x = 1;
+match x {
+    1 | 2 => println!("one or two"),
+    _ => println!("others"),
+}
+
+// matching ranges of values
+let x = 5;
+match x {
+    1..=5 => println!("one through five"),
+    _ => println!("others"),
+}
+```
+
+We can also use patterns to destructure structs, enums, tuples, and references to use different parts of these values.
+
+The pattern to destructure an enum should correspond to the way the data stored within the enum is defined.
+
+We can mix, match, and nest destructuring patterns in even more complex ways.
+
+```rust
+// destructuring structs
+let p = Point { x: 0, y: 7 };
+let Point { x: a, y: b } = p; // a and b are variables
+let Point { x, y } = p; // x and y are variables
+match p { // destruct with literal values
+    Point { x, y: 0 } => println!("y is zero"),
+    Point { x: 0, y } => println!("x is zero"),
+    Point { x, y } => println!("others")
+}
+
+// destructuring enums
+// mentioned before, like Option<T>, Result<T, E>
+
+// destructuring nested structs and enums
+let msg = Message::ChangeColor(Color::Hsv(0, 160, 255));
+match msg {
+    Message::ChangeColor(Color::Rgb(r, g, b)) => println!("rgb");
+    Message::ChangeColor(Color::Hsv(g, s, v)) => println!("hsv"),
+    _ => println!("others"),
+}
+
+// destructuring structs and tuples
+let ((feet, inches), Point { x, y }) = ((3, 10), Point { x: 3, y: -10 });
+```
+
+It’s sometimes useful to ignore values in a pattern, such as in the last arm of a `match`.
+
+There is a subtle difference between using only `_` and using a name that starts with an underscore. The syntax `_x` still binds the value to the variable, whereas `_` doesn’t bind at all.
+
+The `..` pattern ignores any parts of a value that we haven’t explicitly matched in the rest of the pattern. Using `..` must be unambiguous.
+
+```rust
+// ignoring an entire value with _
+fn foo(_: i32, y: i32) {}
+
+// ignoring parts of a value with a nested _
+let numbers = (2, 4, 8, 16, 32);
+match numbers {
+    (first, _, third, _, fifth) => println!("numbers"),
+}
+
+// ignoring an unused variable by starting its name with _
+let _x = 5; // no compile warning even though _x is not used anywhere
+
+// ignoring remaining parts of a value with ..
+let numbers = (2, 4, 8, 16, 32);
+match numbers {
+    (first, .., last) => println!("first and last"),
+}
+```
+
+A _match guard_ is an additional `if` condition specified after the pattern in a `match` arm that must also match, along with the pattern matching, for that arm to be chosen. The condition can use variables created in the pattern.
+
+You can also use the _or_ operator `|` in a match guard to specify multiple patterns; the match guard condition will apply to all the patterns. 
+
+```rust
+let num = Some(4);
+match num {
+    Some(x) if x < 5 => println!("x < 5"),
+    Some(x) => println!("other x"),
+    _ => println!("others"),
+}
+```
+
+The _at_ operator \(`@`\) lets us create a variable that holds a value at the same time we’re testing that value to see whether it matches a pattern. Using `@` lets us test a value and save it in a variable within one pattern.
+
+```rust
+enum Msg {
+    Hello { id: i32 },
+}
+
+let msg = Msg::Hello { id: 5 };
+match msg {
+    Msg::Hello { id: id_var @ 3..=7, } => println!("id: {}", id_var),
+    Msg::Hello { id: 10..=12 } => println!("10 to 12"),
+    Msg::Hello { id } => println!("other"),
+}
+```
 
