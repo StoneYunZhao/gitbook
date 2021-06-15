@@ -2017,5 +2017,52 @@ match msg {
 
 ### 19.1 Unsafe Rust
 
+Unsafe Rust exists because, by nature, static analysis is conservative.
+
+To switch to unsafe Rust, use the `unsafe` keyword and then start a new block that holds the unsafe code. You can take five actions in unsafe Rust:
+
+* Dereference a raw pointer
+* Call an unsafe function or method
+* Access or modify a mutable static variable
+* Implement an unsafe trait
+* Access fields of `union`s
+
+`unsafe` doesn’t turn off the borrow checker or disable any other of Rust’s safety checks. The `unsafe` keyword only gives you access to these five features that are then not checked by the compiler for memory safety. Any errors related to memory safety must be within an `unsafe` block. It’s best to enclose unsafe code within a safe abstraction and provide a safe API.
+
+#### Deference a Raw Pointer
+
+Unsafe Rust has two new types called _raw pointers_ that are similar to references. Raw pointers can be immutable or mutable and are written as `*const T` and `*mut T`, respectively. _immutable_ means that the pointer can’t be directly assigned to after being dereferenced.
+
+Different from references and smart pointers, raw pointers:
+
+* Are allowed to ignore the borrowing rules by having both immutable and mutable pointers or multiple mutable pointers to the same location
+* Aren’t guaranteed to point to valid memory
+* Are allowed to be null
+* Don’t implement any automatic cleanup
+
+You can get greater performance or the ability to interface with another language or hardware from raw pointers.
+
+We can create raw pointers in safe code; we just can’t dereference raw pointers outside an unsafe block.
+
+Situations using raw pointers: 
+
+* interfacing with C code
+* building up safe abstractions that the borrow checker doesn’t understand
+
+```rust
+let address = 0x012345usize;
+let r = address as *const i32;
+
+let mut num = 5;
+let r1 = &num as *const i32;
+let r2 = &mut num as *mut i32;
+unsafe {
+    println!("r1 is: {}", *r1);
+    println!("r2 is: {}", *r2);
+}
+```
+
+#### Calling an Unsafe Function or Method
+
 
 
