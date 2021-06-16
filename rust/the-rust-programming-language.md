@@ -2270,3 +2270,78 @@ fn bar() -> ! {
 }
 ```
 
+Rust needs to know how much memory to allocate for any value of a particular type, and all values of a type must use the same amount of memory. It’s not possible to create a variable holding a dynamically sized type.
+
+So although a `&T` is a single value that stores the memory address of where the `T` is located, a `&str` is _two_ values: the address of the `str` and its length.
+
+The golden rule of dynamically sized types is that we must always put values of dynamically sized types behind a pointer of some kind.
+
+Every trait is a dynamically sized type. To use traits as trait objects, we must put them behind a pointer, such as `&dyn Trait` or `Box<dyn Trait>` \(`Rc<dyn Trait>` would work too\).
+
+Rust has a particular trait called the `Sized` trait to determine whether or not a type’s size is known at compile time. This trait is automatically implemented for everything whose size is known at compile time. In addition, Rust implicitly adds a bound on `Sized` to every generic function. 
+
+```rust
+// compile error
+let s1: str = "Hello there!";
+let s2: str = "How's it going?";
+
+// ok
+let s1: &str = "Hello there!";
+```
+
+By default, generic functions will work only on types that have a known size at compile time. However, you can use the following special syntax to relax this restriction. This syntax is only available for `Sized`, not any other traits.
+
+```rust
+// parameter must be &T
+fn generic<T: ?Sized>(t: &T) {
+    // --snip--
+}
+```
+
+### 19.4 Advanced Functions and Closures
+
+#### Function Pointers
+
+Functions coerce to the type `fn` \(with a lowercase f\), not to be confused with the `Fn` closure trait. The `fn` type is called a _function pointer_. 
+
+```rust
+fn do_twice(f: fn(i32) -> i32, arg: i32) -> i32 {
+    f(arg) + f(arg)
+}
+```
+
+Unlike closures, `fn` is a type rather than a trait, so we specify `fn` as the parameter type directly rather than declaring a generic type parameter with one of the `Fn` traits as a trait bound.
+
+Function pointers implement all three of the closure traits \(`Fn`, `FnMut`, and `FnOnce`\), so you can always pass a function pointer as an argument for a function that expects a closure.
+
+Tuple structs and tuple-struct enum variants use `()` as initializer syntax, which looks like a function call. The initializers are actually implemented as functions. We can use these initializer functions as function pointers.
+
+```rust
+enum Status {
+    Value(u32),
+    Stop,
+}
+
+let list_of_statuses: Vec<Status> = (0u32..20).map(Status::Value).collect();
+```
+
+#### Return Closures
+
+Closures are represented by traits, which means you can’t return closures directly. You’re not allowed to use the function pointer `fn` as a return type.
+
+```rust
+// compile error
+fn returns_closure() -> dyn Fn(i32) -> i32 {
+    |x| x + 1
+}
+
+// ok
+fn returns_closure() -> Box<dyn Fn(i32) -> i32> {
+    Box::new(|x| x + 1)
+}
+```
+
+### 19.5 Macros
+
+
+
