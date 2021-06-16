@@ -2167,5 +2167,33 @@ Accessing union fields is unsafe because Rust can’t guarantee the type of the 
 
 ### 19.2 Advanced Traits
 
+_Associated types_ connect a type placeholder with a trait such that the trait method definitions can use these placeholder types in their signatures. The implementor of a trait will specify the concrete type to be used in this type’s place for the particular implementation. That way, we can define a trait that uses some types without needing to know exactly what those types are until the trait is implemented.
 
+We can’t implement a trait on a type multiple times.
+
+```rust
+pub trait Iterator {
+    type Item;
+
+    fn next(&mut self) -> Option<Self::Item>;
+}
+
+impl Iterator for Counter {
+    type Item = u32;
+
+    fn next(&mut self) -> Option<Self::Item> {}
+}
+```
+
+When we use generic type parameters, we can specify a default concrete type for the generic type. The syntax is `<PlaceholderType=ConcreteType>`.
+
+_Operator overloading_ is customizing the behavior of an operator \(such as `+`\) in particular situations. You can overload the operations and corresponding traits listed in `std::ops` by implementing the traits associated with the operator. 
+
+```rust
+trait Add<Rhs=Self> {
+    type Output;
+
+    fn add(self, rhs: Rhs) -> Self::Output;
+}
+```
 
