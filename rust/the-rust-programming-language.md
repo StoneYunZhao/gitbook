@@ -35,9 +35,9 @@ cargo doc --open
 
 `let` statement, which is used to create a _variable_.
 
-variables, references are immutable by default.
+Variables, references are immutable by default.
 
-use `mut` before the variable name to make a variable mutable.
+Use `mut` before the variable name to make a variable mutable.
 
 An associated function is implemented on a type, rather than on a particular instance.
 
@@ -2342,6 +2342,103 @@ fn returns_closure() -> Box<dyn Fn(i32) -> i32> {
 ```
 
 ### 19.5 Macros
+
+The term _macro_ refers to a family of features in Rust: _**declarative**_ **macros with `macro_rules!`** and **three kinds of** _**procedural**_ **macros**:
+
+* Custom **`#[derive]` macros** that specify code added with the `derive` attribute used on structs and enums
+* **Attribute-like macros** that define custom attributes usable on any item
+* **Function-like macros** that look like function calls but operate on the tokens specified as their argument
+
+#### The Difference Between Maros and Functions
+
+Fundamentally, macros are a way of writing code that writes other code, which is known as _metaprogramming_. All of macros _expand_ to produce more code than the code you’ve written manually.
+
+A function signature must declare the number and type of parameters the function has. Macros, on the other hand, can take a variable number of parameters.
+
+Macros are expanded before the compiler interprets the meaning of the code.
+
+You must define macros or bring them into scope _before_ you call them in a file, as opposed to functions you can define anywhere and call anywhere.
+
+#### Declarative Macros with `macro_rules!` for General Metaprogramming
+
+**Declarative macros** compare a value to patterns that are associated with particular code: in this situation, the value is the literal Rust source code passed to the macro; the patterns are compared with the structure of that source code; and the code associated with each pattern, when matched, replaces the code passed to the macro.
+
+To define a macro, you use the `macro_rules!` construct. 
+
+The `#[macro_export]` annotation indicates that this macro should be made available whenever the crate in which the macro is defined is brought into scope. Without this annotation, the macro can’t be brought into scope.
+
+```rust
+#[macro_export]
+macro_rules! vec {
+    () => (
+        $crate::__rust_force_expr!($crate::vec::Vec::new())
+    );
+    ($elem:expr; $n:expr) => (
+        $crate::__rust_force_expr!($crate::vec::from_elem($elem, $n))
+    );
+    ($($x:expr),+ $(,)?) => (
+        $crate::__rust_force_expr!(<[_]>::into_vec(box [$($x),+]))
+    );
+}
+```
+
+There are some strange edge cases with `macro_rules!`. In the future, Rust will have a second kind of declarative macro and `macro_rules!` will be effectively deprecated. 
+
+#### Procedural Macros for Generating Code from Attributes <a id="procedural-macros-for-generating-code-from-attributes"></a>
+
+**Procedural macros** accept some code as an input, operate on that code, and produce some code as an output rather than matching against patterns and replacing the code with other code as declarative macros do.
+
+When creating procedural macros, the definitions must reside in their own crate with a special crate type.
+
+```rust
+use proc_macro;
+
+#[some_attribute]
+pub fn some_name(input: TokenStream) -> TokenStream { }
+```
+
+#### Write a Custom `derive` Macro <a id="how-to-write-a-custom-derive-macro"></a>
+
+Rust doesn’t have reflection capabilities.
+
+The convention for structuring crates and macro crates is as follows: for a crate named `foo`, a custom derive procedural macro crate is called `foo_derive`.
+
+{% embed url="https://github.com/StoneYunZhao/the-rust-programming-language/tree/master/ch19\_macros" %}
+
+```rust
+#[proc_macro_derive(XXX)]
+pub fn route(attr: TokenStream, item: TokenStream) -> TokenStream { ... }
+
+#[derive(XXX)]
+sturct AAA;
+```
+
+#### Attribute-like macros <a id="attribute-like-macros"></a>
+
+Attribute-like macros allow you to create new attributes.
+
+`derive` only works for structs and enums; attributes can be applied to other items as well, such as functions.
+
+```rust
+#[proc_macro_attribute]
+pub fn route(attr: TokenStream, item: TokenStream) -> TokenStream { ... }
+
+#[route(GET, "/")]
+fn index() { ... }
+```
+
+#### Function-like macros <a id="function-like-macros"></a>
+
+Function-like macros define macros that look like function calls.
+
+```rust
+#[proc_macro]
+pub fn sql(input: TokenStream) -> TokenStream { ... }
+
+let sql = sql!(SELECT * FROM posts WHERE id=1);
+```
+
+## 20. Final Project: Building a Multithreaded Web Server
 
 
 
