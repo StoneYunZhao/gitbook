@@ -2252,5 +2252,21 @@ impl fmt::Display for Wrapper {
 
 ### 19.3 Advanced Types
 
+The new type can expose a public API that is different from the API of the private inner type. The newtype pattern is a lightweight way to achieve encapsulation to hide implementation details.
 
+```rust
+// type alias
+type Kilometers = i32;
+type Thunk = Box<dyn Fn() + Send + 'static>;
+type Result<T> = std::result::Result<T, std::io::Error>;
+```
+
+Functions that return never are called _diverging functions_. Expressions of type `!` can be coerced into any other type. 
+
+```rust
+// never type
+fn bar() -> ! {
+    // --snip--
+}
+```
 
