@@ -2167,6 +2167,8 @@ Accessing union fields is unsafe because Rust can’t guarantee the type of the 
 
 ### 19.2 Advanced Traits
 
+#### Associated Types
+
 _Associated types_ connect a type placeholder with a trait such that the trait method definitions can use these placeholder types in their signatures. The implementor of a trait will specify the concrete type to be used in this type’s place for the particular implementation. That way, we can define a trait that uses some types without needing to know exactly what those types are until the trait is implemented.
 
 We can’t implement a trait on a type multiple times.
@@ -2185,6 +2187,8 @@ impl Iterator for Counter {
 }
 ```
 
+#### Default Generic Type Parameters and Operator Overloading
+
 When we use generic type parameters, we can specify a default concrete type for the generic type. The syntax is `<PlaceholderType=ConcreteType>`.
 
 _Operator overloading_ is customizing the behavior of an operator \(such as `+`\) in particular situations. You can overload the operations and corresponding traits listed in `std::ops` by implementing the traits associated with the operator. 
@@ -2196,4 +2200,57 @@ trait Add<Rhs=Self> {
     fn add(self, rhs: Rhs) -> Self::Output;
 }
 ```
+
+#### Fully Qualified Syntax
+
+The compiler defaults to calling the method that is directly implemented on the type.
+
+You’re allowed to omit any part of this syntax that Rust can figure out from other information in the program.
+
+```rust
+// fully qualified syntax
+<Type as Trait>::function(receiver_if_method, next_arg, ...);
+
+Pilot::fly(&person); // Omit Type
+
+<Dog as Animal>::baby_name();
+```
+
+#### Supertraits
+
+```rust
+// work only for types that also implement Display
+trait OutlinePrint: fmt::Display {
+    fn outline_print(&self) {
+        let output = self.to_string(); // use Display trait's functionality
+        let len = output.len();
+        println!("{}", "*".repeat(len + 4));
+        println!("*{}*", " ".repeat(len + 2));
+        println!("* {} *", output);
+        println!("*{}*", " ".repeat(len + 2));
+        println!("{}", "*".repeat(len + 4));
+    }
+}
+```
+
+#### newtype pattern
+
+**orphan rule**: we’re allowed to implement a trait on a type as long as either the trait or the type are local to our crate.
+
+There is no runtime performance penalty for using this pattern, and the wrapper type is elided at compile time.
+
+```rust
+// wrapper type
+struct Wrapper(Vec<String>); // tuple struct
+
+impl fmt::Display for Wrapper {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "[{}]", self.0.join(", "))
+    }
+}
+```
+
+### 19.3 Advanced Types
+
+
 
