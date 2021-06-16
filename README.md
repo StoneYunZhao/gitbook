@@ -11,6 +11,7 @@
   * [《Concurrency in Go》](go/concurrency-in-go.md)
 * **Rust**
   * [《The Rust Programming Language》](rust/the-rust-programming-language.md)
+  * [《Rust by Example》](rust/rust-by-example.md)
 * **Java**：
   * [序言](java/preface.md)
   * [基本语法](java/grammar/)

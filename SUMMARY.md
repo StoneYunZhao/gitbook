@@ -18,6 +18,7 @@
 ## Rust
 
 * [The Rust Programming Language](rust/the-rust-programming-language.md)
+* [Rust by Example](rust/rust-by-example.md)
 
 ## JAVA
 
