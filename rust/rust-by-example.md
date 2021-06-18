@@ -136,5 +136,69 @@ It's possible to declare variable bindings first, and initialize them later.
 
 ## 5. Types
 
+Rust provides no implicit type conversion \(coercion\) between primitive types. But, explicit type conversion \(casting\) can be performed using the `as` keyword.
+
+Numeric literals can be type annotated by adding the type as a suffix.
+
+The `type` statement can be used to give a new name to an existing type.
+
+## 6. Conversion
+
+The `From` trait allows for a type to define how to create itself from another type.
+
+The [`Into`](https://doc.rust-lang.org/std/convert/trait.Into.html) trait is simply the reciprocal of the `From` trait.
+
+Similar to [`From` and `Into`](https://doc.rust-lang.org/stable/rust-by-example/conversion/from_into.html), [`TryFrom`](https://doc.rust-lang.org/std/convert/trait.TryFrom.html) and [`TryInto`](https://doc.rust-lang.org/std/convert/trait.TryInto.html) are generic traits for converting between types.
+
+## 7. Expressions
+
+If the last expression of the block ends with a semicolon, the return value will be `()`.
+
+## 8. Flow of Control
+
+if/else, loop/break/continue, while, for/in, match, if let, while let
+
+## 9. Functions
+
+### 9.1 Methods
+
+Methods are functions attached to objects. These methods have access to the data of the object and its other methods via the `self` keyword.
+
+### 9.2 Closures
+
+Closures are functions that can capture the enclosing environment.
+
+## 10. Modules
+
+By default, the items in a module have private visibility, but this can be overridden with the `pub` modifier.
+
+## 11. Crates
+
+## 12. Cargo
+
+## 13. Attributes
+
+## 14. Generics
+
+## 15. Scoping Rules
+
+## 16. Traits
+
+## 17. `macro_rules!`
+
+## 18. Error Handling
+
+## 19. Std library types
+
+## 20. Std misc
+
+## 21. Testing
+
+## 22. Unsafe Operations
+
+## 23. Compatibility
+
+## 24. Meta
+
 
 
