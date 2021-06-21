@@ -1070,3 +1070,24 @@ func (err MyError) Error() string {
 }
 ```
 
+### Timeouts and Cancellation
+
+Timeouts are crucial to creating a system with behavior you can understand. Cancellation is one natural response to a timeout.
+
+What are the reasons we might want our concurrent processes to support timeouts:
+
+* _System saturation_
+* _Stale data_
+* _Attempting to prevent deadlocks_
+
+The reasons why a concurrent process might be canceled:
+
+* _Timeouts_
+* _User intervention_
+* _Parent cancellation_
+* _Replicated requests_
+
+Two ways to cancel concurrent processes: a done channel, and the context.Context type.
+
+When designing your concurrent processes, be sure to take into account timeouts and cancellation.
+
