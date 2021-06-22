@@ -1119,7 +1119,126 @@ We will probably want to establish multiple tiers of limits: fine-grained contro
 
 ### Healing Unhealthy Goroutines
 
+In a long-running process, it can be useful to create a mechanism that ensures your gor‐ outines remain healthy and restarts them if they become unhealthy.
 
+To heal goroutines, we’ll use our heartbeat pattern to check up on the liveliness of the goroutine we’re monitoring.
 
+We’ll call the logic that monitors a goroutine’s health a _steward_, and the goroutine that it monitors a _ward_. Stewards will also be responsible for restarting a ward’s goroutine should it become unhealthy.
 
+```go
+type startGoroutineFn func(
+	done <-chan interface{},
+	pulseInterval time.Duration,
+) (heartbeat <-chan interface{})
+
+var newSteward = func(
+	timeout time.Duration,
+	startGoroutine startGoroutineFn,
+) startGoroutineFn {
+	return func(
+		done <-chan interface{},
+		pulseInterval time.Duration,
+	) <-chan interface{} {
+		heartbeat := make(chan interface{})
+
+		go func() {
+			defer close(heartbeat)
+
+			var wardDone chan interface{}
+			var wardHeartbeat <-chan interface{}
+
+			startWard := func() {
+				wardDone = make(chan interface{})
+				wardHeartbeat = startGoroutine(or(wardDone, done), timeout/2)
+			}
+
+			startWard()
+
+			pulse := time.Tick(pulseInterval)
+
+		monitorLoop:
+			for {
+				timeoutSignal := time.After(timeout)
+				for {
+					select {
+					case <-pulse:
+						select {
+						case heartbeat <- struct{}{}: default:
+						}
+					case <-wardHeartbeat:
+						continue monitorLoop
+					case <-timeoutSignal:
+						log.Println("steward: ward unhealthy; restarting")
+						close(wardDone)
+						startWard()
+						continue monitorLoop
+					case <-done:
+						return
+					}
+				}
+			}
+		}()
+
+		return heartbeat
+	}
+}
+```
+
+## Chapter 6: Goroutines and the Go Runtime
+
+### Work Stealing
+
+Go will handle multiplexing goroutines onto OS threads for you. The algorithm it uses to do this is known as a _work stealing_ strategy.
+
+Go models concurrency using a fork-join model.
+
+We could give each processor its own thread and a double-ended queue, or _deque_. Work stealing algorithm:
+
+* At a fork point, add tasks to the tail of the deque associated with the thread.
+* If the thread is idle, steal work from the head of deque associated with some other random thread.
+* At a join point that cannot be realized yet \(i.e., the goroutine it is synchronized with has not completed yet\), pop work off the tail of the thread’s own deque.
+* If the thread’s deque is empty, either:
+  * Stall at a join.
+  * Steal work from the head of a random thread’s associated deque.
+
+Under our algorithm, when a thread of execution reaches an unrealized join point, the thread must pause execution and go fishing for a task to steal.
+
+Go’s work-stealing algorithm enqueues and steals continuations. All things considered, stealing continuations are considered to be theoretically supe‐ rior to stealing tasks, and therefore it is best to queue the continuation and not the goroutine.
+
+When creating a goroutine, it is very likely that your program will want the function in that goroutine to execute. It is also reasonably likely that the continuation from that goroutine will at some point want to join with that goroutine. And it’s not uncommon for the continuation to attempt a join before the goroutine has finished completing. Given these axioms, when scheduling a goroutine, it makes sense to immediately begin working on it.
+
+![](../.gitbook/assets/image%20%28335%29.png)
+
+The GOMAXPROCS setting controls how many contexts\(P\) are available for use by the runtime. The default setting is for there to be one context per logical CPU on the host machine.
+
+There may be more or less OS threads\(M\) than cores to help Go’s runtime manage things like garbage collection and goroutines. There will always be at least enough OS threads\(M\) available to handle hosting every context.
+
+When a context’s queue is empty, it will first check the global context for work to steal before checking other OS threads’ contexts.
+
+Go also allows goroutines to be preempted during any function call. Goroutines that perform no input/output, system calls, or function calls are not preemptable and can cause significant issues like long GC waits.
+
+## Appendix
+
+### Anatomy of a Goroutine Error
+
+### Race Detection
+
+```bash
+go test -race
+go run -race
+go build -race 
+go install -race 
+```
+
+### pprof
+
+```go
+pprof.Lookup("goroutine")
+
+// goroutine
+// heap
+// threadcreate
+// block
+// mutex
+```
 
