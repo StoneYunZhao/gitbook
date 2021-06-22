@@ -1091,3 +1091,35 @@ Two ways to cancel concurrent processes: a done channel, and the context.Context
 
 When designing your concurrent processes, be sure to take into account timeouts and cancellation.
 
+### Heartbeats
+
+Heartbeats are a way for concurrent processes to signal life to outside parties.
+
+Heartbeats that occur on a time interval are useful for concurrent code that might be waiting for something else to happen for it to process a unit of work.
+
+For any long-running goroutines, or goroutines that need to be tested, I highly recommend heartbeat.
+
+### Replicated Requests
+
+You can replicate the request to multiple handlers \(whether those be goroutines, processes, or servers\), and one of them will return faster than the other ones; you can then immediately return the result.
+
+In addition, this naturally provides fault tolerance and scalability.
+
+### Rate Limiting
+
+Rate limiting, which constrains the number of times some kind of resource is accessed to some finite number per unit of time.
+
+Most rate limiting is done by utilizing an algorithm called the _token bucket_.
+
+Two settings: how many tokens are available for immediate use—d, the depth of the bucket—and the rate at which they are replen‐ ished—r. Between these two we can control both the _burstiness_ and overall rate limit.
+
+golang.org/x/time/rate
+
+We will probably want to establish multiple tiers of limits: fine-grained controls to limit requests per second, and coarse-grained controls to limit requests per minute, hour, or day.
+
+### Healing Unhealthy Goroutines
+
+
+
+
+
