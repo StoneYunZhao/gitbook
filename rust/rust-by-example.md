@@ -180,6 +180,16 @@ By default, the items in a module have private visibility, but this can be overr
 
 ## 14. Generics
 
+### 14.1 Functions
+
+Using generic functions sometimes requires explicitly specifying type parameters. This may be the case if the function is called where the return type is generic, or if the compiler doesn't have enough information to infer the necessary type parameters.
+
+A function call with explicitly specified type parameters looks like: `fun::<A, B, ...>()`.
+
+### 14.4 Bounds
+
+When working with generics, the type parameters often must use traits as _bounds_ to stipulate what functionality a type implements. 
+
 ## 15. Scoping Rules
 
 ## 16. Traits
