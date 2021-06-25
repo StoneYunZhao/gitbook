@@ -190,6 +190,20 @@ A function call with explicitly specified type parameters looks like: `fun::<A, 
 
 When working with generics, the type parameters often must use traits as _bounds_ to stipulate what functionality a type implements. 
 
+A consequence of how bounds work is that even if a `trait` doesn't include any functionality, you can still use it as a bound. `Eq` and `Copy` are examples of such `trait`s from the `std` library.
+
+### 14.5 Multiple bounds
+
+Multiple bounds for a single type can be applied with a `+`.
+
+### 14.6 Where clauses
+
+`where` clauses can apply bounds to arbitrary types, rather than just to type parameters.
+
+### 14.9 Phantom type parameters
+
+A phantom type parameter is one that doesn't show up at runtime, but is checked statically \(and only\) at compile time.
+
 ## 15. Scoping Rules
 
 ## 16. Traits
