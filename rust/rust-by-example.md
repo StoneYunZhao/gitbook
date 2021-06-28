@@ -230,6 +230,20 @@ A phantom type parameter is one that doesn't show up at runtime, but is checked 
 
 ## 15. Scoping Rules
 
+### 15.1 RAII
+
+Variables in Rust do more than just hold data in the stack: they also _own_ resources, e.g. `Box<T>` owns memory in the heap. Rust enforces RAII \(Resource Acquisition Is Initialization\), so whenever an object goes out of scope, its destructor is called and its owned resources are freed.
+
+The notion of a destructor in Rust is provided through the `Drop` trait. The destructor is called when the resource goes out of scope. 
+
+### 15.2 Ownership and moves
+
+**Resources can only have one owner**. Note that not all variables own resources \(e.g. references\).
+
+When doing assignments \(`let x = y`\) or passing function arguments by value \(`foo(x)`\), the _ownership_ of the resources is transferred. In Rust-speak, this is known as a _**move**_. After moving resources, the previous owner can no longer be used.
+
+
+
 ## 16. Traits
 
 ## 17. `macro_rules!`
