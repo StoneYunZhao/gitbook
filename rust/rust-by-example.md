@@ -178,6 +178,30 @@ By default, the items in a module have private visibility, but this can be overr
 
 ## 13. Attributes
 
+An attribute is metadata applied to some module, crate or item. This metadata can be used to/for:
+
+* conditional compilation of code
+* set crate name, version and type \(binary or library\)
+* disable lints \(warnings\)
+* enable compiler features \(macros, glob imports, etc.\)
+* link to a foreign library
+* mark functions as unit tests
+* mark functions that will be part of a benchmark
+
+When attributes apply to a whole crate, their syntax is `#![crate_attribute]`, and when they apply to a module or item, the syntax is `#[item_attribute]` .
+
+Attributes can take arguments with different syntaxes:
+
+* `#[attribute = "value"]`
+* `#[attribute(key = "value")]`
+* `#[attribute(value)]`
+
+### 13.2 Crates
+
+The `crate_type` attribute can be used to tell the compiler whether a crate is a binary or a library \(and even which type of library\), and the `crate_name` attribute can be used to set the name of the crate.
+
+Both the `crate_type` and `crate_name` attributes have **no** effect whatsoever when using Cargo. Since Cargo is used for the majority of Rust projects, this means real-world uses of `crate_type` and `crate_name` are relatively limited.
+
 ## 14. Generics
 
 ### 14.1 Functions
