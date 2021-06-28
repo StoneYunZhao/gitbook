@@ -242,7 +242,19 @@ The notion of a destructor in Rust is provided through the `Drop` trait. The des
 
 When doing assignments \(`let x = y`\) or passing function arguments by value \(`foo(x)`\), the _ownership_ of the resources is transferred. In Rust-speak, this is known as a _**move**_. After moving resources, the previous owner can no longer be used.
 
+### 15.3 Borrowing
 
+Most of the time, we'd like to access data without taking ownership over it. To accomplish this, Rust uses a _**borrowing**_ mechanism. Instead of passing objects by value \(`T`\), objects can be passed by reference \(`&T`\).
+
+The compiler statically guarantees \(via its borrow checker\) that references _always_ point to valid objects. That is, while references to an object exist, the object cannot be destroyed.
+
+Mutable data can be **mutably borrowed** using `&mut T`. This is called a _mutable reference_ and gives read/write access to the borrower. In contrast, `&T` borrows the data via an immutable reference, and the borrower can read the data but not modify it.
+
+`&'static str` is a reference to a string allocated in read only memory. string literals have type `&'static str`
+
+Data can be immutably borrowed any number of times, but while immutably borrowed, the original data can't be mutably borrowed. On the other hand, only _one_ mutable borrow is allowed at a time. The original data can be borrowed again only _after_ the mutable reference has been used for the last time.
+
+When doing pattern matching or destructuring via the `let` binding, the **`ref` keyword** can be used to take references to the fields of a struct/tuple. 
 
 ## 16. Traits
 
