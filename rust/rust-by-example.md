@@ -256,6 +256,75 @@ Data can be immutably borrowed any number of times, but while immutably borrowed
 
 When doing pattern matching or destructuring via the `let` binding, the **`ref` keyword** can be used to take references to the fields of a struct/tuple. 
 
+### 15.4 Lifetimes
+
+A _lifetime_ is a construct the compiler \(or more specifically, its _borrow checker_\) uses to ensure all borrows are valid. 
+
+#### Functions
+
+Ignoring elision, function signatures with lifetimes have a few constraints:
+
+* any reference _must_ have an annotated lifetime.
+* any reference being returned _must_ have the same lifetime as an input or be `static`.
+
+Returning references without input is banned if it would result in returning references to invalid data.
+
+#### Methods
+
+Methods are annotated similarly to functions.
+
+#### Structs
+
+Annotation of lifetimes in structures are also similar to functions.
+
+#### Traits
+
+Annotation of lifetimes in trait methods basically are similar to functions. Note that `impl` may have annotation of lifetimes too.
+
+#### Bounds
+
+Just like generic types can be bounded, lifetimes \(themselves generic\) use bounds as well.
+
+1. `T: 'a`: _All_ references in `T` must outlive lifetime `'a`.
+2. `T: Trait + 'a`: Type `T` must implement trait `Trait` and _all_ references in `T` must outlive `'a`.
+
+#### Coercion
+
+A longer lifetime can be coerced into a shorter one so that it works inside a scope it normally wouldn't work in.
+
+#### Static
+
+Rust has a few reserved lifetime names. One of those is `'static`.
+
+```rust
+// A reference with 'static lifetime:
+let s: &'static str = "hello world";
+
+// 'static as part of a trait bound:
+fn generic<T>(x: T) where T: 'static {}
+```
+
+Both are related but subtly different.
+
+**Reference lifetime**
+
+As a reference lifetime `'static` indicates that the data pointed to by the reference lives for the entire lifetime of the running program. It can still be coerced to a shorter lifetime.
+
+There are two ways to make a variable with `'static` lifetime, and both are stored in the read-only memory of the binary:
+
+* Make a constant with the `static` declaration.
+* Make a `string` literal which has type: `&'static str`.
+
+**Trait bound**
+
+As a trait bound, it means the type does not contain any non-static references. Eg. the receiver can hold on to the type for as long as they want and it will never become invalid until they drop it.
+
+It's important to understand this means that any owned data always passes a `'static` lifetime bound, but a reference to that owned data generally does not.
+
+#### Elision
+
+Some lifetime patterns are overwhelmingly common and so the borrow checker will allow you to omit them to save typing and to improve readability.
+
 ## 16. Traits
 
 ## 17. `macro_rules!`
