@@ -9,6 +9,7 @@
   * [基本语法](go/grammar/)
   * [系统库](go/system-library/)
   * [《Concurrency in Go》](go/concurrency-in-go.md)
+  * [The Go Memory Model](go/the-go-memory-model.md)
 * **Rust**
   * [《The Rust Programming Language》](rust/the-rust-programming-language.md)
   * [《Rust by Example》](rust/rust-by-example.md)
