@@ -6,6 +6,9 @@
 由于作为笔记用，一个技术点在工作、学习过程中会不断增补。目录如下：
 
 * \*\*\*\*[**开源贡献**](open-source-contribution.md)：对 Github 上某些项目提的 bug fix, feature 等。
+  * [InfluxDB](open-source-contribution.md#influxdb)
+  * [InfluxDB Document](open-source-contribution.md#influxdb-document)
+  * [NSQ](open-source-contribution.md#nsq)
 * **Go：**
   * [基本语法](go/grammar/)
   * [系统库](go/system-library/)
