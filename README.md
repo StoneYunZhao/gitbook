@@ -5,6 +5,7 @@
 
 由于作为笔记用，一个技术点在工作、学习过程中会不断增补。内容主要有 6 大块：
 
+* \*\*\*\*[**开源贡献**](open-source-contribution.md)：对 Github 上某些项目提的 bug fix, feature 等。
 * **Go：**
   * [基本语法](go/grammar/)
   * [系统库](go/system-library/)
