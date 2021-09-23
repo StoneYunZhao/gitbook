@@ -3,7 +3,7 @@
 * GitBook地址：[https://yunzhao.gitbook.io/notes/](https://yunzhao.gitbook.io/notes/)
 * GitHub 地址：[https://github.com/StoneYunZhao](https://github.com/StoneYunZhao)
 
-由于作为笔记用，一个技术点在工作、学习过程中会不断增补。内容主要有 6 大块：
+由于作为笔记用，一个技术点在工作、学习过程中会不断增补。目录如下：
 
 * \*\*\*\*[**开源贡献**](open-source-contribution.md)：对 Github 上某些项目提的 bug fix, feature 等。
 * **Go：**
