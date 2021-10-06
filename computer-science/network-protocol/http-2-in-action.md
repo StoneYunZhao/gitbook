@@ -126,7 +126,25 @@ Web 服务器未启用 ALPN 支持，有些浏览器仅支持 ALPN。ALPN 是 TL
 
 #### 4.3 HTTP/2 帧
 
+每个HTTP/2帧由一个固定长度的头部和不定长度的负载组成。
 
+![HTTP/2 &#x5E27;&#x5934;&#x90E8;&#x683C;&#x5F0F;](../../.gitbook/assets/image%20%28339%29.png)
+
+标志位的含义和值取决于帧类型。
+
+* SETTING 帧：服务器和客户端必须发送的第一个帧（除了魔法字符串），只包含键值对。流 ID 为 0。标志位 0 表示发起设置，标志位 1 表示确认设置。
+* WINDOW\_UPDATE 帧：用于流量控制。流量控制仅用于 DATA 帧。
+* PRIORITY 帧：优先级设定。
+* HEADERS 帧：冒号开头是严格定义的伪首部，不能自己随便添加。可以自定义非冒号开头的普通 header。有四个标志位：END\__STREAM, END\__HEADERS, PADDED, PRIORITY
+* DATA 帧：消息体。
+* GOAWAY 帧：错误或关闭连接。
+* CONTINUATION 帧：太大的首部需要。必须紧跟在 HEADERS 帧后面。降低了多路复用性。
+* PING 帧：计算消息往返时间。保持一个不使用的连接。
+* PUSH\_PROMISE 帧：服务端通知客户端要发起推送。
+* RST\_STREAM 帧：直接取消一个流。
+* ALTSVC 帧：允许服务端宣告获取资源时可用的其他服务。
+* ORIGIN 帧：服务器使用它来宣告自己可以处理哪些源（比如域名）的请求。
+* CACHE\_DIGEST 帧：客户端可以使用这个帧来表明自己缓存了哪些资源。
 
 ### Chapter 5. 实现 HTTP/2 推送
 
