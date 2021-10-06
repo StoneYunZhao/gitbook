@@ -8,7 +8,7 @@ description: 《HTTP/2 in Action》by Barry Pollard 的读书笔记。
 
 ### Chapter 1. 万维网与 HTTP
 
-
+#### 1.1 万维网的原理
 
 ### Chapter 2. 通向 HTTP/2 之路
 
