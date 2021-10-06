@@ -12,7 +12,7 @@ description: 《HTTP/2 in Action》by Barry Pollard 的读书笔记。
 
 因特网使用 IP（Internet Protocol）协议，万维网（World Wide Web）有三项核心技术，HTTP、URL、HTML。
 
-![](../../.gitbook/assets/image%20%28336%29.png)
+![](../../.gitbook/assets/image%20%28337%29.png)
 
 #### 1.2 什么是 HTTP
 
@@ -104,7 +104,7 @@ Web 服务器未启用 ALPN 支持，有些浏览器仅支持 ALPN。ALPN 是 TL
 * 二进制的、基于数据包的协议，而 HTTP/1 是完全基于文本的。
 * 多路复用替代同步请求，每个帧分配一个流标识符表名属于哪个流。客户端发起的请求使用奇数流 ID，服务器使用偶数流 ID。ID 为 0 的流为管理连接的控制流。
 
-![](../../.gitbook/assets/image%20%28337%29.png)
+![](../../.gitbook/assets/image%20%28338%29.png)
 
 * 流有优先级。
 * 流可以流量控制。TCP 在连接层限流，HTTP/2 在流的层面限流。
@@ -113,7 +113,16 @@ Web 服务器未启用 ALPN 支持，有些浏览器仅支持 ALPN。ALPN 是 TL
 
 #### 4.2 如何创建一个 HTTP/2 连接
 
+浏览器仅支持基于 HTTPS\(h2\) 建立 HTTP/2，服务器之间可以基于 HTTP\(h2c\) 的 HTTP/2。
 
+* 使用 HTTPS 协商，在 HTTPS 握手过程中，同时完成 HTTP/2 协商。ALPN 不会引入额外的消息往返。
+
+![](../../.gitbook/assets/image%20%28336%29.png)
+
+* 使用 HTTP Upgrade header，仅适用于 h2c。客户端发起升级请求，服务端响应是否支持，客户端决定是否升级。
+* 使用先验知识。
+
+不管使用哪种方法启用HTTP/2连接，在HTTP/2连接上发送的第一个消息必须是HTTP/2连接前奏，或者说是“魔法”字符串。
 
 #### 4.3 HTTP/2 帧
 
