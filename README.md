@@ -30,6 +30,7 @@
   * [计算机组成原理](computer-science/computer-organization.md)
   * [算法](computer-science/algorithm/)
   * [网络协议](computer-science/network-protocol/)
+    * [《HTTP/2 in Action》](computer-science/network-protocol/http-2-in-action.md)
   * [操作系统](computer-science/linux/)
   * [设计模式](computer-science/design-patterns/)
   * [微服务](computer-science/microservice/)
