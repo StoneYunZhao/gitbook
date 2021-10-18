@@ -2,13 +2,13 @@
 
 ## InfluxDB
 
-汇总 =&gt; [link](https://github.com/influxdata/influxdb/pulls?q=is%3Apr+author%3AStoneYunZhao+)
+汇总 => [link](https://github.com/influxdata/influxdb/pulls?q=is%3Apr+author%3AStoneYunZhao+)
 
 
 
 ### 2021.06.25 httpd/handler - review required
 
-Master-1.x: [fix\(httpd\): abort processing write request when encountering a precision error.](https://github.com/influxdata/influxdb/pull/21746)
+Master-1.x: [fix(httpd): abort processing write request when encountering a precision error.](https://github.com/influxdata/influxdb/pull/21746)
 
 简单的小 bug。可见这么多 star 的开源项目中也有这么显而易见的疏忽。
 
@@ -34,7 +34,7 @@ tsmFullCompactionQueue 统计值错误。
 
 ### 2021.03.08 Cache - Suggestion Accepted
 
-在 [\#20843](https://github.com/influxdata/influxdb/pull/20843) 中建议删除一段代码，他们开了个 PR：
+在 [#20843](https://github.com/influxdata/influxdb/pull/20843) 中建议删除一段代码，他们开了个 PR：
 
 [https://github.com/influxdata/influxdb/pull/20890](https://github.com/influxdata/influxdb/pull/20890)
 
@@ -78,7 +78,7 @@ Cache ring 中存在数据竞争，同时修复了一些 Test。原始 PR 合并
 
 ## NSQ
 
-### 2021.01.11 NSQ - approved
+### 2021.01.11 NSQ - merged
 
 [https://github.com/nsqio/go-diskqueue/pull/24](https://github.com/nsqio/go-diskqueue/pull/24)
 
@@ -86,7 +86,7 @@ Cache ring 中存在数据竞争，同时修复了一些 Test。原始 PR 合并
 
 ## InfluxDB Document
 
-汇总 =&gt; [link](https://github.com/influxdata/docs-v2/pulls?q=+is%3Apr+author%3AStoneYunZhao+)
+汇总 => [link](https://github.com/influxdata/docs-v2/pulls?q=+is%3Apr+author%3AStoneYunZhao+)
 
 ### 2021.09.17 InfluxDB docs - merged
 
@@ -105,4 +105,3 @@ Master: [values of query parameter \`precision\` for write api.](https://github.
 [https://github.com/influxdata/docs-v2/pull/1900](https://github.com/influxdata/docs-v2/pull/1900)
 
 对 ALTER RETENTION POLICY 的描述不严谨。
-
