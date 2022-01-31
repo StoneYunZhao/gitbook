@@ -5,7 +5,7 @@
 
 由于作为笔记用，一个技术点在工作、学习过程中会不断增补。目录如下：
 
-* \*\*\*\*[**开源贡献**](open-source-contribution.md)：对 Github 上某些项目提的 bug fix, feature 等。
+* ****[**开源贡献**](open-source-contribution.md)：对 Github 上某些项目提的 bug fix, feature 等。
   * [InfluxDB](open-source-contribution.md#influxdb)
   * [InfluxDB Document](open-source-contribution.md#influxdb-document)
   * [NSQ](open-source-contribution.md#nsq)
@@ -44,10 +44,13 @@
   * [Kafka](database/kafka.md)
   * [ZooKeeper](database/zookeeper-1.md)
   * [MongoDB](database/mongodb.md)
-* **其它**： 
+* 阅读
+  * [《Concurrency in Go》](go/concurrency-in-go.md)
+  * [《HTTP/2 in Action》](computer-science/network-protocol/http-2-in-action.md)
+  * [《RocketMQ 实战与原理解析》](reading/rocketmq.md)
+* **其它**：&#x20;
   * [Kubernetes](other/kubernetes.md)
   * [Git](other/git.md)
   * [Maven](other/maven.md)
   * [Conda](other/anaconda-and-conda.md)
   * [踩的坑](other/fuck-shit/)
-
