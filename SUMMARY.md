@@ -160,6 +160,7 @@
 ## Reading
 
 * [RocketMQ](reading/rocketmq.md)
+* [演说之禅](reading/yan-shuo-zhi-chan.md)
 
 ## Other
 

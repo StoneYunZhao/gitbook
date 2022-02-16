@@ -48,6 +48,7 @@
   * [《Concurrency in Go》](go/concurrency-in-go.md)
   * [《HTTP/2 in Action》](computer-science/network-protocol/http-2-in-action.md)
   * [《RocketMQ 实战与原理解析》](reading/rocketmq.md)
+  * [《演说之禅》](reading/yan-shuo-zhi-chan.md)
 * **其它**：&#x20;
   * [Kubernetes](other/kubernetes.md)
   * [Git](other/git.md)
