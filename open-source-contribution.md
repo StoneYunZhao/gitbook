@@ -6,7 +6,7 @@
 
 
 
-### 2021.06.25 httpd/handler - review required
+### 2021.06.25 httpd/handler - merged
 
 Master-1.x: [fix(httpd): abort processing write request when encountering a precision error.](https://github.com/influxdata/influxdb/pull/21746)
 
