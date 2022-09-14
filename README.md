@@ -14,6 +14,7 @@
   * [系统库](go/system-library/)
   * [《Concurrency in Go》](go/concurrency-in-go.md)
   * [The Go Memory Model](go/the-go-memory-model.md)
+  * [代码片段](go/code-snippet.md)
 * **Rust**
   * [《The Rust Programming Language》](rust/the-rust-programming-language.md)
   * [《Rust by Example》](rust/rust-by-example.md)

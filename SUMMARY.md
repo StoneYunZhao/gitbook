@@ -15,6 +15,7 @@
   * [net](go/system-library/net.md)
 * [Concurrency in Go](go/concurrency-in-go.md)
 * [The Go Memory Model](go/the-go-memory-model.md)
+* [Code Snippet](go/code-snippet.md)
 
 ## Rust
 
