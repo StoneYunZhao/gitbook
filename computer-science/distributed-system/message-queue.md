@@ -8,21 +8,21 @@
 
 **解耦：**如果一个系统A，调用了多个系统BCD。可能有新的系统E需要调用，老的系统D不再需要调用等情况。系统A还需要考虑C挂掉怎么办？需不需要重新调用？维护起来很麻烦。如果这个调用是不需要同步调用的，那么可以用MQ给他异步化解耦。
 
-![](../../.gitbook/assets/tu-pian%20%286%29.png)
+![](<../../.gitbook/assets/tu-pian (6).png>)
 
 **异步：**引入消息队列，将不是必须的业务逻辑异步处理，可以显著提高系统吞吐量。
 
-![](../../.gitbook/assets/tu-pian%20%284%29.png)
+![](<../../.gitbook/assets/tu-pian (4).png>)
 
 **削峰：**可以缓解短时间内高流量压垮应用**，**比如秒杀活动。
 
-![](../../.gitbook/assets/tu-pian%20%282%29.png)
+![](<../../.gitbook/assets/tu-pian (2).png>)
 
 ### 1.2 缺点
 
 引入消息队列可以有上述这么多作用，但是也会带来一些问题。
 
-![](../../.gitbook/assets/tu-pian%20%285%29.png)
+![](<../../.gitbook/assets/tu-pian (5).png>)
 
 **可用性降低：**系统引入的外部依赖越多，越容易挂掉。本来系统A调用BCD即可，现在加入MQ，若MQ挂了，整个系统就崩溃了。
 
@@ -34,70 +34,14 @@
 
 市面上常用的消息队列产品有ActiveMQ、RabbitMQ、RocketMQ、Kafka等。
 
-<table>
-  <thead>
-    <tr>
-      <th style="text-align:center">&#x7279;&#x6027;</th>
-      <th style="text-align:center">ActiveMQ</th>
-      <th style="text-align:center">RabbitMQ</th>
-      <th style="text-align:center">RocketMQ</th>
-      <th style="text-align:center">Kafka</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align:center">&#x5355;&#x673A;&#x541E;&#x5410;&#x91CF;</td>
-      <td style="text-align:center">&#x4E07;&#x7EA7;</td>
-      <td style="text-align:center">&#x4E07;&#x7EA7;</td>
-      <td style="text-align:center">10&#x4E07;&#x7EA7;</td>
-      <td style="text-align:center">10&#x4E07;&#x7EA7;</td>
-    </tr>
-    <tr>
-      <td style="text-align:center">topic</td>
-      <td style="text-align:center"></td>
-      <td style="text-align:center"></td>
-      <td style="text-align:center">topic&#x53EF;&#x4EE5;&#x8FBE;&#x5230;&#x51E0;&#x767E;&#xFF0C;&#x51E0;&#x5343;&#x4E2A;&#x7684;&#x7EA7;&#x522B;&#xFF0C;&#x541E;&#x5410;&#x91CF;&#x4F1A;&#x6709;&#x8F83;&#x5C0F;&#x5E45;&#x5EA6;&#x7684;&#x4E0B;&#x964D;</td>
-      <td
-      style="text-align:center">
-        <p>topic&#x4ECE;&#x51E0;&#x5341;&#x4E2A;&#x5230;&#x51E0;&#x767E;&#x4E2A;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x541E;&#x5410;&#x91CF;&#x4F1A;&#x5927;&#x5E45;&#x5EA6;&#x4E0B;&#x964D;</p>
-        <p></p>
-        </td>
-    </tr>
-    <tr>
-      <td style="text-align:center">&#x65F6;&#x6548;&#x6027;</td>
-      <td style="text-align:center">ms&#x7EA7;</td>
-      <td style="text-align:center">us&#x7EA7;</td>
-      <td style="text-align:center">ms&#x7EA7;</td>
-      <td style="text-align:center">ms&#x7EA7;</td>
-    </tr>
-    <tr>
-      <td style="text-align:center">&#x53EF;&#x7528;&#x6027;</td>
-      <td style="text-align:center">&#x9AD8;&#xFF0C;&#x4E3B;&#x4ECE;</td>
-      <td style="text-align:center">&#x9AD8;&#xFF0C;&#x4E3B;&#x4ECE;</td>
-      <td style="text-align:center">&#x975E;&#x5E38;&#x9AD8;&#xFF0C;&#x5206;&#x5E03;&#x5F0F;</td>
-      <td style="text-align:center">&#x975E;&#x5E38;&#x9AD8;&#xFF0C;&#x5206;&#x5E03;&#x5F0F;</td>
-    </tr>
-    <tr>
-      <td style="text-align:center">&#x6D88;&#x606F;&#x53EF;&#x9760;&#x6027;</td>
-      <td style="text-align:center">&#x6709;&#x8F83;&#x4F4E;&#x7684;&#x6982;&#x7387;&#x4E22;&#x5931;&#x6570;&#x636E;</td>
-      <td
-      style="text-align:center"></td>
-        <td style="text-align:center">&#x7ECF;&#x8FC7;&#x53C2;&#x6570;&#x4F18;&#x5316;&#x914D;&#x7F6E;&#xFF0C;&#x53EF;&#x4EE5;&#x505A;&#x5230;0&#x4E22;&#x5931;</td>
-        <td
-        style="text-align:center">&#x7ECF;&#x8FC7;&#x53C2;&#x6570;&#x4F18;&#x5316;&#x914D;&#x7F6E;&#xFF0C;&#x6D88;&#x606F;&#x53EF;&#x4EE5;&#x505A;&#x5230;0&#x4E22;&#x5931;</td>
-    </tr>
-    <tr>
-      <td style="text-align:center">&#x529F;&#x80FD;&#x652F;&#x6301;</td>
-      <td style="text-align:center">MQ&#x9886;&#x57DF;&#x7684;&#x529F;&#x80FD;&#x6781;&#x5176;&#x5B8C;&#x5907;</td>
-      <td
-      style="text-align:center">&#x57FA;&#x4E8E;erlang&#x5F00;&#x53D1;&#xFF0C;&#x6240;&#x4EE5;&#x5E76;&#x53D1;&#x80FD;&#x529B;&#x5F88;&#x5F3A;&#xFF0C;&#x6027;&#x80FD;&#x6781;&#x5176;&#x597D;&#xFF0C;&#x5EF6;&#x65F6;&#x5F88;&#x4F4E;</td>
-        <td
-        style="text-align:center">&#x529F;&#x80FD;&#x8F83;&#x4E3A;&#x5B8C;&#x5584;&#xFF0C;&#x8FD8;&#x662F;&#x5206;&#x5E03;&#x5F0F;&#x7684;&#xFF0C;&#x6269;&#x5C55;&#x6027;&#x597D;</td>
-          <td
-          style="text-align:center">&#x529F;&#x80FD;&#x8F83;&#x4E3A;&#x7B80;&#x5355;&#xFF0C;&#x4E3B;&#x8981;&#x652F;&#x6301;&#x7B80;&#x5355;&#x7684;MQ&#x529F;&#x80FD;&#xFF0C;&#x5728;&#x5927;&#x6570;&#x636E;&#x9886;&#x57DF;&#x7684;&#x5B9E;&#x65F6;&#x8BA1;&#x7B97;&#x4EE5;&#x53CA;&#x65E5;&#x5FD7;&#x91C7;&#x96C6;&#x88AB;&#x5927;&#x89C4;&#x6A21;&#x4F7F;&#x7528;&#xFF0C;&#x662F;&#x4E8B;&#x5B9E;&#x4E0A;&#x7684;&#x6807;&#x51C6;</td>
-    </tr>
-  </tbody>
-</table>
+|   特性  |   ActiveMQ  |            RabbitMQ            |             RocketMQ            |                        Kafka                       |
+| :---: | :---------: | :----------------------------: | :-----------------------------: | :------------------------------------------------: |
+| 单机吞吐量 |      万级     |               万级               |               10万级              |                        10万级                        |
+| topic |             |                                | topic可以达到几百，几千个的级别，吞吐量会有较小幅度的下降 |      <p>topic从几十个到几百个的时候，吞吐量会大幅度下降</p><p></p>      |
+|  时效性  |     ms级     |               us级              |               ms级               |                         ms级                        |
+|  可用性  |     高，主从    |              高，主从              |             非常高，分布式             |                       非常高，分布式                      |
+| 消息可靠性 |  有较低的概率丢失数据 |                                |         经过参数优化配置，可以做到0丢失        |                 经过参数优化配置，消息可以做到0丢失                 |
+|  功能支持 | MQ领域的功能极其完备 | 基于erlang开发，所以并发能力很强，性能极其好，延时很低 |        功能较为完善，还是分布式的，扩展性好       | 功能较为简单，主要支持简单的MQ功能，在大数据领域的实时计算以及日志采集被大规模使用，是事实上的标准 |
 
 综上所述：
 
@@ -119,11 +63,11 @@
 
 **普通集群模式：**默认的集群模式，对于Queue来说，消息实体只存在于其中一个节点A，其它节点BC仅有相同的元数据。当Consumer从B拉取消息时，B会从A先拉取数据，再从B转发给Consumer。可用性没有保障，若A宕机了，没有持久化时消息直接丢失，持久化时也得等A重新启动才能工作。这个模式仅用来提高吞吐量。
 
-![](../../.gitbook/assets/tu-pian%20%288%29.png)
+![](<../../.gitbook/assets/tu-pian (8).png>)
 
 **镜像集群模式：**把队列做成镜像队列，存在于多个节点，属于RabbitMQ的HA方案。其实质和普通模式不同之处在于，消息实体会主动在镜像节点间同步，而不是在Consumer取数据时临时拉取。缺点是性能开销太大，没有扩展性可言。
 
-![](../../.gitbook/assets/tu-pian%20%281%29.png)
+![](<../../.gitbook/assets/tu-pian (1).png>)
 
 ### 2.2 分布式模式
 
@@ -133,7 +77,7 @@
 
 Producer和Consumer只与Leader交互。
 
-![](../../.gitbook/assets/tu-pian%20%283%29.png)
+![](<../../.gitbook/assets/tu-pian (3).png>)
 
 ## 3. 消息重复消费
 
@@ -218,4 +162,3 @@ Kafka 有个特性，一个 Partition 只能被一个固定的 Consumer 消费�
 **全局有序：**比如 MySQL BinLog 传输，通常采用一个 Producer，一个 Partition， 一个 Consumer。当然不同的表可以使用不同的 Topic 或者 Partition。
 
 **局部有序：**大部分业务仅需要局部有序，可以在 Producer 写入数据的时候控制统一个 Key 写入同一个 Partition，所以对同一个 Key 的消息是有序的。
-

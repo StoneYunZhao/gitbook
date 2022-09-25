@@ -16,7 +16,7 @@ Synchronized作用：
 
 Synchronized使用方式：
 
-* 修饰实例方法，加锁对象为 **this**，方法修饰符 ****`ACC_SYNCHRONIZED`。
+* 修饰实例方法，加锁对象为 **this**，方法修饰符 **** `ACC_SYNCHRONIZED`。
 * 修饰静态方法，加锁对象为**类对象**。
 * 修饰代码块，加锁对象需要**指定**，`monitorenter` 和 `monitorexit` 指令。
 
@@ -36,13 +36,13 @@ Synchronized使用方式：
   * **类型指针**：对象指向它的类对象的指针。
   * **Mark Word**：存储运行时数据，长度在32位和64位虚拟机分别占有32bit 和64bit（不考虑指针压缩）。由于运行时数据要记录很多数据，为了节约空间，采用动态的数据结构。
 
-![Mark Word&#x533A;&#x57DF;&#x5728;&#x4E0D;&#x540C;&#x72B6;&#x6001;&#x65F6;&#x7684;&#x6570;&#x636E;](../../.gitbook/assets/image%20%28212%29.png)
+![Mark Word区域在不同状态时的数据](<../../.gitbook/assets/image (212).png>)
 
 ## Monitor
 
 当锁标志位为 10 时，指针指向的是一个 monitor 对象。monitor 对象可以与对象一起创建于销毁，也可以在某个线程试图获取对象锁的时候生成，实现方式由虚拟机实现。
 
-HotSpot 虚拟机由 [ObjectMonitor](https://github.com/JetBrains/jdk8u_hotspot/blob/master/src/share/vm/runtime/objectMonitor.hpp) 实现，主要数据结构如下：
+HotSpot 虚拟机由 [ObjectMonitor](https://github.com/JetBrains/jdk8u\_hotspot/blob/master/src/share/vm/runtime/objectMonitor.hpp) 实现，主要数据结构如下：
 
 ```cpp
 ObjectMonitor() {
@@ -68,7 +68,7 @@ ObjectMonitor() {
 * **\_EntrySet**：当多个线程同时获取某一对象的锁时，会先进入\_EntrySet集合。每个线程被封装成 ObjectWaiter 对象。
 * **\_owner**：当某个线程获取到对象的锁时，会把 \_Owner 变量设置为当前线程。
 * **\_count**：同时 count 加1。
-* **\_WaitSet**：若线程调用 wait\(\) 方法，则会进入 WaitSet 集合，并释放锁（即 owner字段置为 NULL，count 减 1）。
+* **\_WaitSet**：若线程调用 wait() 方法，则会进入 WaitSet 集合，并释放锁（即 owner字段置为 NULL，count 减 1）。
 * 若线程执行完毕，也会释放锁。
 
 ## 锁优化
@@ -94,7 +94,7 @@ ObjectMonitor() {
 1. 暂停拥有偏向锁的线程，判断锁对象石是否还处于被锁定状态；
 2. 撤销偏向苏，恢复到无锁状态（01）或者轻量级锁的状态；
 
-![](../../.gitbook/assets/image%20%28257%29.png)
+![](<../../.gitbook/assets/image (257).png>)
 
 ### 轻量级锁
 
@@ -114,7 +114,7 @@ ObjectMonitor() {
 2. 用 CAS 操作将取出的数据替换当前对象的 Mark Word 中，如果成功，则说明释放锁成功，否则执行（3）；
 3. 如果CAS操作替换失败，说明有其他线程尝试获取该锁，则需要在释放锁的同时需要唤醒被挂起的线程。
 
-![](../../.gitbook/assets/image%20%2812%29.png)
+![](<../../.gitbook/assets/image (12).png>)
 
 ### 自旋锁
 
@@ -140,9 +140,9 @@ Java虚拟机在JIT编译时，通过对运行上下文的扫描，去除不可�
 
 ### 比较
 
-![&#x91CD;&#x91CF;&#x7EA7;&#x9501;&#x3001;&#x8F7B;&#x91CF;&#x7EA7;&#x9501;&#x548C;&#x504F;&#x5411;&#x9501;&#x4E4B;&#x95F4;&#x8F6C;&#x6362;](../../.gitbook/assets/image%20%28236%29.png)
+![重量级锁、轻量级锁和偏向锁之间转换](<../../.gitbook/assets/image (236).png>)
 
-![](../../.gitbook/assets/image%20%28103%29.png)
+![](<../../.gitbook/assets/image (103).png>)
 
 ## CAS
 
@@ -201,4 +201,3 @@ public final int getAndAddInt(Object var1, long var2, int var4) {
 {% hint style="warning" %}
 CAS 有 **ABA 问题**：如果变量 V 初次读取的时候是 A，并且在准备赋值的时候检查到它仍然是 A，那也不能说明在这期间没有被修改过，可能在这期间被修改成 B，然后又被修改成 A。有一个带有标记的原子引用类`AtomicStampedReference`，它可以通过控制变量值的版本来保证CAS的正确性。
 {% endhint %}
-

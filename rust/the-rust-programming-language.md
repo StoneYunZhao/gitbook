@@ -1,5 +1,5 @@
 ---
-description: 'https://doc.rust-lang.org/book/title-page.html'
+description: https://doc.rust-lang.org/book/title-page.html
 ---
 
 # The Rust Programming Language
@@ -16,13 +16,13 @@ Using a `!` means that you’re calling a macro instead of a normal function.
 
 Most lines of Rust code end with a semicolon.
 
-Rust is an _ahead-of-time compiled_ language, meaning you can compile a program and give the executable to someone else, and they can run it even without having Rust installed. 
+Rust is an _ahead-of-time compiled_ language, meaning you can compile a program and give the executable to someone else, and they can run it even without having Rust installed.&#x20;
 
 ### 1.3 Hello, Cargo!
 
 In Rust, packages of code are referred to as _crates_.
 
-```text
+```
 cargo new
 cargo build [--release /* make your Rust code run faster */]
 cargo run
@@ -47,7 +47,7 @@ An enumeration is a type that can have a fixed set of values, and those values a
 
 _binary crate_, which is an executable. _library crate_, which contains code intended to be used in other programs.
 
-{% embed url="https://github.com/StoneYunZhao/the-rust-programming-language/tree/master/guessing\_game" %}
+{% embed url="https://github.com/StoneYunZhao/the-rust-programming-language/tree/master/guessing_game" %}
 
 ## 3. Common Programming Concepts
 
@@ -72,7 +72,7 @@ Like immutable variables, **constants** are values that are bound to a name and 
 * Constants can be declared in any scope, including the global scope.
 * Constants may be set only to a constant expression, not the result of a function call or any other value that could only be computed at runtime.
 
-You can declare a new variable with the same name as a previous variable. That means the first variable is _**shadowed**_ by the second, which means that the second variable’s value is what appears when the variable is used. 
+You can declare a new variable with the same name as a previous variable. That means the first variable is _**shadowed**_ by the second, which means that the second variable’s value is what appears when the variable is used.&#x20;
 
 ```rust
 let x = 5; // shadowed by the second x
@@ -86,20 +86,20 @@ Shadowing is different from marking a variable as `mut`. By using `let`, we can 
 
 ### 3.2 Data Types
 
-Rust is a _**statically typed**_ **language**, which means that it must know the types of all variables at compile time. The compiler can usually **infer** what type we want to use based on the value and how we use it. In cases when many types are possible, we must add a type annotation.
+Rust is a _**statically typed**_** language**, which means that it must know the types of all variables at compile time. The compiler can usually **infer** what type we want to use based on the value and how we use it. In cases when many types are possible, we must add a type annotation.
 
-A _**scalar**_ **type** represents a single value. Rust has four primary scalar types: **integers, floating-point numbers, Booleans, and characters**.
+A _**scalar**_** type** represents a single value. Rust has four primary scalar types: **integers, floating-point numbers, Booleans, and characters**.
 
-| Length | Signed | Unsigned |
-| :---: | :---: | :---: |
-| 8-bit | `i8` | `u8` |
-| 16-bit | `i16` | `u16` |
-| 32-bit | `i32` | `u32` |
-| 64-bit | `i64` | `u64` |
-| 128-bit | `i128` | `u128` |
-| arch | `isize` | `usize` |
+|  Length |  Signed | Unsigned |
+| :-----: | :-----: | :------: |
+|  8-bit  |   `i8`  |   `u8`   |
+|  16-bit |  `i16`  |   `u16`  |
+|  32-bit |  `i32`  |   `u32`  |
+|  64-bit |  `i64`  |   `u64`  |
+| 128-bit |  `i128` |  `u128`  |
+|   arch  | `isize` |  `usize` |
 
-Each signed variant can store numbers from -2^\(n - 1\) to 2^\(n - 1\) - 1 inclusive. Unsigned variants can store numbers from 0 to 2^\(n - 1\).
+Each signed variant can store numbers from -2^(n - 1) to 2^(n - 1) - 1 inclusive. Unsigned variants can store numbers from 0 to 2^(n - 1).
 
 When you’re compiling in debug mode, Rust includes checks for integer overflow that cause your program to _panic_ at runtime if this behavior occurs. When you’re compiling in release mode with the `--release` flag, Rust does _not_ include checks for integer overflow that cause panics.
 
@@ -113,7 +113,7 @@ _**Compound types**_ can group multiple values into one type. Rust has two primi
 
 A **tuple** is a general way of grouping together a number of values with a variety of types into one compound type. Tuples have a fixed length: once declared, they cannot grow or shrink in size.
 
-We can use pattern matching to destructure a tuple value. We can access a tuple element directly by using a period \(`.`\) followed by the index of the value we want to access. 
+We can use pattern matching to destructure a tuple value. We can access a tuple element directly by using a period (`.`) followed by the index of the value we want to access.&#x20;
 
 ```rust
 let tup: (i32, f64, u8) = (500, 6.4, 1);
@@ -185,7 +185,7 @@ let number = if condition { 5 } else { 6 };
 
 Rust has three kinds of loops: `loop`, `while`, and `for`.
 
-The **`loop`** keyword tells Rust to execute a block of code over and over again forever or until you explicitly tell it to stop. 
+The **`loop`** keyword tells Rust to execute a block of code over and over again forever or until you explicitly tell it to stop.&#x20;
 
 You can add the value you want returned after the `break` expression you use to stop the loop; that value will be returned out of the loop so you can use it.
 
@@ -269,7 +269,7 @@ Rust has a special annotation called the `Copy` trait that we can place on types
 * The character type, `char`.
 * Tuples, if they only contain types that also implement `Copy`. For example, `(i32, i32)` implements `Copy`, but `(i32, String)` does not.
 
-The semantics for passing a value to a function are similar to those for assigning a value to a variable. Passing a variable to a function will **move** or **copy**. 
+The semantics for passing a value to a function are similar to those for assigning a value to a variable. Passing a variable to a function will **move** or **copy**.&#x20;
 
 Returning values can also transfer ownership.
 
@@ -279,11 +279,11 @@ The ownership of a variable follows the same pattern every time: assigning a val
 
 _**References**_ allow you to refer to some value without taking ownership of it.
 
-The opposite of referencing by using `&` is _dereferencing_, which is accomplished with the dereference operator, `*`. 
+The opposite of referencing by using `&` is _dereferencing_, which is accomplished with the dereference operator, `*`.&#x20;
 
 When functions have references as parameters instead of the actual values, we won’t need to return the values in order to give back ownership, because we never had ownership.
 
-We call having references as function parameters _**borrowing**_. 
+We call having references as function parameters _**borrowing**_.&#x20;
 
 Just as variables are immutable by default, so are references. We’re not allowed to modify something we have a reference to.
 
@@ -399,7 +399,7 @@ Rust doesn’t allow us to mark only certain fields as mutable.
 
 Tuple structs have the added meaning the struct name provides but don’t have names associated with their fields; rather, they just have the types of the fields.
 
-_**unit-like structs**_ ****behave similarly to `()`, the unit type. 
+_**unit-like structs**_** ** behave similarly to `()`, the unit type.&#x20;
 
 ```rust
 fn main() {
@@ -446,7 +446,7 @@ println!("{:#?}", user); // should annotate with #[derive(Debug)]
 
 ### 5.3 Method Syntax
 
-_Methods_ are similar to functions. But are different from functions in that they’re defined within the context of a struct \(or an enum or a trait object\), and their first parameter is always `self`, which represents the instance of the struct the method is being called on.
+_Methods_ are similar to functions. But are different from functions in that they’re defined within the context of a struct (or an enum or a trait object), and their first parameter is always `self`, which represents the instance of the struct the method is being called on.
 
 Having a method that takes ownership of the instance by using just `self` as the first parameter is rare; this technique is usually used when the method transforms `self` into something else and you want to prevent the caller from using the original instance after the transformation.
 
@@ -498,7 +498,7 @@ fn main() {
 
 ## 6. Enums and Pattern Matching
 
-Enums allow you to define a type by enumerating its possible _variants_. 
+Enums allow you to define a type by enumerating its possible _variants_.&#x20;
 
 ### 6.1 Defining an Enum
 
@@ -586,13 +586,13 @@ fn value_in_cents(coin: Coin) -> u8 {
 }
 ```
 
-Matches in Rust are _exhaustive_: we must exhaust every last possibility in order for the code to be valid. 
+Matches in Rust are _exhaustive_: we must exhaust every last possibility in order for the code to be valid.&#x20;
 
-The `_` pattern will match any value. 
+The `_` pattern will match any value.&#x20;
 
 ### 6.3 Concise Control Flow with `if let`
 
-The `if let` syntax lets you combine `if` and `let` into a less verbose way to handle values that match one pattern while ignoring the rest. 
+The `if let` syntax lets you combine `if` and `let` into a less verbose way to handle values that match one pattern while ignoring the rest.&#x20;
 
 ```rust
 let some_u8_value = Some(0u8);
@@ -637,19 +637,19 @@ A package can contain multiple binary crates and optionally one library crate.
 
 ### 7.1 Packages and Crates
 
-A **crate** is a binary or library. The _crate root_ is a source file that the Rust compiler starts from and makes up the root module of your crate. 
+A **crate** is a binary or library. The _crate root_ is a source file that the Rust compiler starts from and makes up the root module of your crate.&#x20;
 
 A _**package**_ is one or more crates that provide a set of functionality. A package contains a _Cargo.toml_ file that describes how to build those crates.
 
-A package _must_ contain zero or one library crates, and no more. It can contain as many binary crates as you’d like, but it must contain at least one crate \(either library or binary\).
+A package _must_ contain zero or one library crates, and no more. It can contain as many binary crates as you’d like, but it must contain at least one crate (either library or binary).
 
 `cargo new XX` command will give us a package.
 
 Cargo follows conventions:
 
-* _**src/main.rs**_: is the crate root of a binary crate with the same name as the package. 
+* _**src/main.rs**_: is the crate root of a binary crate with the same name as the package.&#x20;
 * _**src/lib.rs**_: is the crate root of a library crate with the same name as the package.
-* _**src/bin**_ **directory**_:_ each file will be a separate binary crate.
+* _**src/bin**_** directory**_:_ each file will be a separate binary crate.
 
 If a package contains _src/main.rs_ and _src/lib.rs_, it has two crates: a library and a binary, both with the same name as the package.
 
@@ -693,7 +693,7 @@ A path can take two forms:
 * An _absolute path_ starts from a crate root by using a crate name or a literal `crate`.
 * A _relative path_ starts from the current module and uses `self`, `super`, or an identifier in the current module.
 
-All items \(functions, methods, structs, enums, modules, and constants\) are private by default. Items in a parent module can’t use the private items inside child modules, but items in child modules can use the items in their ancestor modules\(include siblings\).
+All items (functions, methods, structs, enums, modules, and constants) are private by default. Items in a parent module can’t use the private items inside child modules, but items in child modules can use the items in their ancestor modules(include siblings).
 
 Making the module public doesn’t make its contents public. The `pub` keyword on a module only lets code in its ancestor modules refer to it.
 
@@ -735,13 +735,13 @@ Paths brought into scope with `use` also check privacy.
 
 You can also bring an item into scope with `use` and a relative path.
 
-Bringing the function’s parent module into scope with `use` so we have to specify the parent module when calling the function makes it clear that the function isn’t locally defined while still minimizing repetition of the full path. On the other hand, when bringing in structs, enums, and other items with `use`, it’s idiomatic to specify the full path. 
+Bringing the function’s parent module into scope with `use` so we have to specify the parent module when calling the function makes it clear that the function isn’t locally defined while still minimizing repetition of the full path. On the other hand, when bringing in structs, enums, and other items with `use`, it’s idiomatic to specify the full path.&#x20;
 
 After the path, we can specify `as` and a new local name, or alias, for the type.
 
-When we bring a name into scope with the `use` keyword, the name available in the new scope is private. To enable the code that calls our code to refer to that name as if it had been defined in that code’s scope, we can combine `pub` and `use`. 
+When we bring a name into scope with the `use` keyword, the name available in the new scope is private. To enable the code that calls our code to refer to that name as if it had been defined in that code’s scope, we can combine `pub` and `use`.&#x20;
 
-The standard library \(`std`\) is also a crate that’s external to our package. The name of the standard library crate is `std`.
+The standard library (`std`) is also a crate that’s external to our package. The name of the standard library crate is `std`.
 
 We can use nested paths to bring the same items into scope in one line. We do this by specifying the common part of the path, followed by two colons, and then curly brackets around a list of the parts of the paths that differ.
 
@@ -765,7 +765,7 @@ use std::collections::*;
 
 ### 7.5 Separating Modules into Different Files
 
-Using a semicolon after `mod xxx` rather than using a block tells Rust to load the contents of the module from another file with the same name as the module. 
+Using a semicolon after `mod xxx` rather than using a block tells Rust to load the contents of the module from another file with the same name as the module.&#x20;
 
 The `mod` keyword declares modules, and Rust looks in a file with the same name as the module for the code that goes into that module.
 
@@ -824,7 +824,7 @@ Rust has only one string type in the core language, which is the string slice `s
 
 The `String` type, which is provided by Rust’s standard library rather than coded into the core language, is a growable, mutable, owned, UTF-8 encoded string type.
 
-Rust’s standard library also includes a number of other string types, such as `OsString`, `OsStr`, `CString`, and `CStr`. 
+Rust’s standard library also includes a number of other string types, such as `OsString`, `OsStr`, `CString`, and `CStr`.&#x20;
 
 You can conveniently use the `+` operator or the `format!` macro to concatenate `String` values.
 
@@ -855,13 +855,13 @@ The `+` operator uses the `add` method, whose signature looks something like thi
 fn add(self, s: &str) -> String {
 ```
 
-The compiler can _coerce_ the `&String` argument into a `&str`. 
+The compiler can _coerce_ the `&String` argument into a `&str`.&#x20;
 
 Rust strings don’t support indexing.
 
 A `String` is a wrapper over a `Vec<u8>`.
 
- You can use `[]` with a range to create a string slice containing particular bytes:
+&#x20;You can use `[]` with a range to create a string slice containing particular bytes:
 
 ```rust
 let hello = "Здравствуйте";
@@ -872,7 +872,7 @@ If you need to perform operations on individual Unicode scalar values, the best 
 
 ### 8.3 Storing Keys with Associated Values in  Hash Maps
 
-The type `HashMap<K, V>` stores a mapping of keys of type `K` to values of type `V`. 
+The type `HashMap<K, V>` stores a mapping of keys of type `K` to values of type `V`.&#x20;
 
 ```rust
 use std::collections::HashMap;
@@ -896,7 +896,7 @@ for (key, value) in &scores {
 
 For types that implement the `Copy` trait, like `i32`, the values are copied into the hash map. For owned values like `String`, the values will be moved and the hash map will be the owner of those values.
 
-The `or_insert` method on `Entry` is defined to return a mutable reference to the value for the corresponding `Entry` key if that key exists, and if not, inserts the parameter as the new value for this key and returns a mutable reference to the new value. 
+The `or_insert` method on `Entry` is defined to return a mutable reference to the value for the corresponding `Entry` key if that key exists, and if not, inserts the parameter as the new value for this key and returns a mutable reference to the new value.&#x20;
 
 ```rust
 let mut scores = HashMap::new();
@@ -918,9 +918,9 @@ Rust has the type `Result<T, E>` for recoverable errors and the `panic!` macro t
 
 When the `panic!` macro executes, your program will print a failure message, unwind and clean up the stack, and then quit.
 
-You can switch from unwinding to aborting upon a panic by adding `panic = 'abort'` to the appropriate `[profile]` sections in your _Cargo.toml_ file. 
+You can switch from unwinding to aborting upon a panic by adding `panic = 'abort'` to the appropriate `[profile]` sections in your _Cargo.toml_ file.&#x20;
 
-We can set the `RUST_BACKTRACE` environment variable to get a backtrace of exactly what happened to cause the error. 
+We can set the `RUST_BACKTRACE` environment variable to get a backtrace of exactly what happened to cause the error.&#x20;
 
 ### 9.2 Recoverable Errors with `Result`
 
@@ -961,7 +961,7 @@ It’s advisable to have your code panic when it’s possible that your code cou
 
 If someone calls your code and passes in values that don’t make sense, the best choice might be to call `panic!` and alert the person using your library to the bug in their code so they can fix it during development. Similarly, `panic!` is often appropriate if you’re calling external code that is out of your control and it returns an invalid state that you have no way of fixing.
 
-When failure is expected, it’s more appropriate to return a `Result` than to make a `panic!` call. 
+When failure is expected, it’s more appropriate to return a `Result` than to make a `panic!` call.&#x20;
 
 When your code performs operations on values, your code should verify the values are valid first and panic if the values aren’t valid.
 
@@ -1019,7 +1019,7 @@ The compiler looks at all the places where generic code is called and generates 
 
 ### 10.2 Traits: Defining Shared Behavior
 
-A _trait_ tells the Rust compiler about functionality a particular type has and can share with other types. 
+A _trait_ tells the Rust compiler about functionality a particular type has and can share with other types.&#x20;
 
 ```rust
 pub trait Summary {
@@ -1072,7 +1072,7 @@ We can implement a trait on a type only if either the trait or the type is local
 
 Default implementations can call other methods in the same trait, even if those other methods don’t have a default implementation.
 
-**You can only use `impl Trait` if you’re returning a single type**. 
+**You can only use `impl Trait` if you’re returning a single type**.&#x20;
 
 By using a trait bound with an `impl` block that uses generic type parameters, we can implement methods conditionally for types that implement the specified traits.
 
@@ -1165,7 +1165,7 @@ The compiler uses three rules to figure out what lifetimes references have when 
 * The second rule is if there is exactly one input lifetime parameter, that lifetime is assigned to all output lifetime parameters.
 * The third rule is if there are multiple input lifetime parameters, but one of them is `&self` or `&mut self` because this is a method, the lifetime of `self` is assigned to all output lifetime parameters.
 
-One special lifetime we need to discuss is `'static`, which means that this reference _can_ live for the entire duration of the program. 
+One special lifetime we need to discuss is `'static`, which means that this reference _can_ live for the entire duration of the program.&#x20;
 
 ```rust
 // generic + trait bounds + lifetimes
@@ -1194,7 +1194,7 @@ fn longest_with_an_announcement<'a, T>(
 
 ### 11.1 How to Write Tests
 
-Attributes are metadata about pieces of Rust code. To change a function into a test function, add `#[test]` on the line before `fn`. 
+Attributes are metadata about pieces of Rust code. To change a function into a test function, add `#[test]` on the line before `fn`.&#x20;
 
 The `cargo test` command runs all tests in our project.
 
@@ -1202,7 +1202,7 @@ Tests fail when something in the test function panics. Each test is run in a new
 
 The `assert!` macro, provided by the standard library, is useful when you want to ensure that some condition in a test evaluates to `true`.
 
-You can’t use the `#[should_panic]` annotation on tests that use `Result<T, E>`. 
+You can’t use the `#[should_panic]` annotation on tests that use `Result<T, E>`.&#x20;
 
 ```rust
 #[cfg(test)]
@@ -1261,7 +1261,7 @@ The Rust community thinks about tests in terms of two main categories: _unit tes
 
 The purpose of unit tests is to test each unit of code in isolation from the rest of the code to quickly pinpoint where code is and isn’t working as expected. You’ll put unit tests in the _src_ directory in each file with the code that they’re testing.
 
-The `#[cfg(test)]` annotation on the tests module tells Rust to compile and run the test code only when you run `cargo test`, not when you run `cargo build`. The attribute `cfg` stands for _configuration_ and tells Rust that the following item should only be included given a certain configuration option. 
+The `#[cfg(test)]` annotation on the tests module tells Rust to compile and run the test code only when you run `cargo test`, not when you run `cargo build`. The attribute `cfg` stands for _configuration_ and tells Rust that the following item should only be included given a certain configuration option.&#x20;
 
 To create integration tests, you first need a _tests_ directory. Each file in the `tests` directory is a separate crate.
 
@@ -1273,7 +1273,7 @@ _tests/common/mod.rs_ is a naming convention that Rust understands. Naming the f
 
 Files in subdirectories of the _tests_ directory don’t get compiled as separate crates or have sections in the test output.
 
-If our project is a binary crate that only contains a _src/main.rs_ file and doesn’t have a _src/lib.rs_ file, we can’t create integration tests in the _tests_ directory and bring functions defined in the _src/main.rs_ file into scope with a `use` statement. We can provide a binary have a straightforward _src/main.rs_ file that calls logic that lives in the _src/lib.rs_ file. 
+If our project is a binary crate that only contains a _src/main.rs_ file and doesn’t have a _src/lib.rs_ file, we can’t create integration tests in the _tests_ directory and bring functions defined in the _src/main.rs_ file into scope with a `use` statement. We can provide a binary have a straightforward _src/main.rs_ file that calls logic that lives in the _src/lib.rs_ file.&#x20;
 
 ## 12. An I/O Project: Building a Command Line Program
 
@@ -1298,7 +1298,7 @@ This pattern is about separating concerns: _main.rs_ handles running the program
 
 ### 12.4 Developing the Library’s Functionality with Test-Driven Development
 
-Test-driven development \(TDD\) process:
+Test-driven development (TDD) process:
 
 1. Write a test that fails and run it to make sure it fails for the reason you expect.
 2. Write or modify just enough code to make the new test pass.
@@ -1311,7 +1311,7 @@ Test-driven development \(TDD\) process:
 
 Rust’s closures are anonymous functions you can save in a variable or pass as arguments to other functions. Unlike functions, closures can capture values from the scope in which they’re defined.
 
-Closures don’t require you to annotate the types of the parameters or the return value like `fn` functions do. Closures are usually short and relevant only within a narrow context rather than in any arbitrary scenario. Within these limited contexts, the compiler is reliably able to infer the types of the parameters and the return type. 
+Closures don’t require you to annotate the types of the parameters or the return value like `fn` functions do. Closures are usually short and relevant only within a narrow context rather than in any arbitrary scenario. Within these limited contexts, the compiler is reliably able to infer the types of the parameters and the return type.&#x20;
 
 As with variables, we can add type annotations if we want to increase explicitness and clarity at the cost of being more verbose than is strictly necessary.
 
@@ -1327,7 +1327,7 @@ Closures can capture values from their environment in three ways, which directly
 * `FnMut` can change the environment because it mutably borrows values.
 * `Fn` borrows values from the environment immutably.
 
-When you create a closure, Rust infers which trait to use based on how the closure uses the values from the environment. All closures implement `FnOnce` because they can all be called at least once. Closures that don’t move the captured variables also implement `FnMut`, and closures that don’t need mutable access to the captured variables also implement `Fn`. 
+When you create a closure, Rust infers which trait to use based on how the closure uses the values from the environment. All closures implement `FnOnce` because they can all be called at least once. Closures that don’t move the captured variables also implement `FnMut`, and closures that don’t need mutable access to the captured variables also implement `Fn`.&#x20;
 
 If you want to force the closure to take ownership of the values it uses in the environment, you can use the `move` keyword before the parameter list. This technique is mostly useful when passing a closure to a new thread to move the data so it’s owned by the new thread.
 
@@ -1372,7 +1372,7 @@ impl<T> Cacher<T>
 
 ### 13.2 Processing a Series of Items with Iterators
 
-In Rust, iterators are _lazy_, meaning they have no effect until you call methods that consume the iterator to use it up. 
+In Rust, iterators are _lazy_, meaning they have no effect until you call methods that consume the iterator to use it up.&#x20;
 
 All iterators implement a trait named `Iterator` that is defined in the standard library.
 
@@ -1409,7 +1409,7 @@ Methods that call `next` are called _**consuming adaptors**_, because calling th
 
 ### 13.4 Comparing Performance: Loops vs. Iterators
 
-iterators, although a high-level abstraction, get compiled down to roughly the same code as if you’d written the lower-level code yourself. Iterators are one of Rust’s _zero-cost abstractions_, by which we mean using the abstraction imposes no additional runtime overhead. 
+iterators, although a high-level abstraction, get compiled down to roughly the same code as if you’d written the lower-level code yourself. Iterators are one of Rust’s _zero-cost abstractions_, by which we mean using the abstraction imposes no additional runtime overhead.&#x20;
 
 _Unrolling_ is an optimization that removes the overhead of the loop controlling code and instead generates repetitive code for each iteration of the loop.
 
@@ -1437,7 +1437,7 @@ cargo yank --vers 1.0.1
 cargo yank --vers 1.0.1 --undo
 ```
 
-Some commonly used sections: 
+Some commonly used sections:&#x20;
 
 * Examples.
 * Panics.
@@ -1446,7 +1446,7 @@ Some commonly used sections:
 
 Running `cargo test` will run the code examples in your documentation as tests!
 
-Another style of doc comment, `//!`, adds documentation to the item that contains the comments rather than adding documentation to the items following the comments. 
+Another style of doc comment, `//!`, adds documentation to the item that contains the comments rather than adding documentation to the items following the comments.&#x20;
 
 You can re-export items to make a public structure that’s different from your private structure by using `pub use`. Re-exporting takes a public item in one location and makes it public in another location, as if it were defined in the other location instead.
 
@@ -1456,7 +1456,7 @@ Yanking a version prevents new projects from starting to depend on that version 
 
 ### 14.3 Cargo Workspaces
 
-A _workspace_ is a set of packages that share the same _Cargo.lock_ and output directory. 
+A _workspace_ is a set of packages that share the same _Cargo.lock_ and output directory.&#x20;
 
 The crates in a workspace are meant to depend on each other.
 
@@ -1473,17 +1473,17 @@ You must change to each crate’s directory and run `cargo publish` on each crat
 
 The `cargo install` command allows you to install and use binary crates locally.
 
-You can only install packages that have binary targets. 
+You can only install packages that have binary targets.&#x20;
 
 ### 14.5 Extending Cargo with Custom Commands
 
 If a binary in your `$PATH` is named `cargo-something`, you can run it as if it was a Cargo subcommand by running `cargo something`.
 
-Custom commands like this are also listed when you run `cargo --list`. 
+Custom commands like this are also listed when you run `cargo --list`.&#x20;
 
 ## 15. Smart Pointers
 
-_Smart pointers_ are data structures that not only act like a pointer but also have additional metadata and capabilities. 
+_Smart pointers_ are data structures that not only act like a pointer but also have additional metadata and capabilities.&#x20;
 
 References are pointers that only borrow data; in contrast, in many cases, smart pointers _own_ the data they point to.
 
@@ -1503,19 +1503,19 @@ Boxes don’t have performance overhead. You’ll use them most often in these s
 * When you have a large amount of data and you want to transfer ownership but ensure the data won’t be copied when you do so
 * When you want to own a value and you care only that it’s a type that implements a particular trait rather than being of a specific type.
 
-Just like any owned value, when a box goes out of scope, it will be deallocated. The deallocation happens for the box \(stored on the stack\) and the data it points to \(stored on the heap\).
+Just like any owned value, when a box goes out of scope, it will be deallocated. The deallocation happens for the box (stored on the stack) and the data it points to (stored on the heap).
 
-_recursive type_, where a value can have as part of itself another value of the same type. 
+_recursive type_, where a value can have as part of itself another value of the same type.&#x20;
 
 To determine how much space to allocate for enum type, Rust goes through each of the variants to see which variant needs **the most space**.
 
-The `Box<T>` type is a smart pointer because it implements the `Deref` trait, which allows `Box<T>` values to be treated like references. When a `Box<T>` value goes out of scope, the heap data that the box is pointing to is cleaned up as well because of the `Drop` trait implementation. 
+The `Box<T>` type is a smart pointer because it implements the `Deref` trait, which allows `Box<T>` values to be treated like references. When a `Box<T>` value goes out of scope, the heap data that the box is pointing to is cleaned up as well because of the `Drop` trait implementation.&#x20;
 
 ### 15.2 Treating Smart Pointers Like Regular References with the `Deref` Trait
 
 Implementing the `Deref` trait allows you to customize the behavior of the _dereference operator_, `*`.
 
-The `deref` method gives the compiler the ability to take a value of any type that implements `Deref` and call the `deref` method to **get a `&` reference** that it knows how to dereference. If the `deref` method returned the value directly instead of a reference to the value, the value would be moved out of `self`. 
+The `deref` method gives the compiler the ability to take a value of any type that implements `Deref` and call the `deref` method to **get a `&` reference** that it knows how to dereference. If the `deref` method returned the value directly instead of a reference to the value, the value would be moved out of `self`.&#x20;
 
 ```rust
 // the type of y implemented deref trait
@@ -1548,7 +1548,7 @@ The ownership system that makes sure references are always valid also ensures th
 
 ### 15.4 `Rc<T>`, the Reference Counted Smart Pointer
 
-The `Rc<T>` type keeps track of the number of references to a value which determines whether or not a value is still in use. 
+The `Rc<T>` type keeps track of the number of references to a value which determines whether or not a value is still in use.&#x20;
 
 Note that `Rc<T>` is only for use in single-threaded scenarios.
 
@@ -1560,7 +1560,7 @@ Rc::strong_count(xx);
 
 ### 15.5 `RefCell<T>` and the Interior Mutability Pattern
 
-_Interior mutability_ is a design pattern in Rust that allows you to mutate data even when there are immutable references to that data. The pattern uses `unsafe` code inside a data structure to bend Rust’s usual rules that govern mutation and borrowing. 
+_Interior mutability_ is a design pattern in Rust that allows you to mutate data even when there are immutable references to that data. The pattern uses `unsafe` code inside a data structure to bend Rust’s usual rules that govern mutation and borrowing.&#x20;
 
 With `RefCell<T>`, the borrowing rules’ invariants are enforced _at runtime_. The `RefCell<T>` type is useful when you’re sure your code follows the borrowing rules but the compiler is unable to understand and guarantee that.
 
@@ -1580,7 +1580,7 @@ x.borrow_mut();
 
 ### 15.6 Reference Cycles Can Leak Memory
 
-If you have `RefCell<T>` values that contain `Rc<T>` values or similar nested combinations of types with interior mutability and reference counting, you must ensure that you don’t create cycles; you can’t rely on Rust to catch them. 
+If you have `RefCell<T>` values that contain `Rc<T>` values or similar nested combinations of types with interior mutability and reference counting, you must ensure that you don’t create cycles; you can’t rely on Rust to catch them.&#x20;
 
 You can create a _weak reference_ to the value within an `Rc<T>` instance by calling `Rc::downgrade` and passing a reference to the `Rc<T>`. Calling `Rc::downgrade` increases the `weak_count` by 1. The `weak_count` doesn’t need to be 0 for the `Rc<T>` instance to be cleaned up.
 
@@ -1597,10 +1597,10 @@ Rc::weak_count();
 
 ## 16. Fearless Concurrency
 
-_Concurrent programming_, where different parts of a program execute independently, and _parallel programming_, where different parts of a program execute at the same time. 
+_Concurrent programming_, where different parts of a program execute independently, and _parallel programming_, where different parts of a program execute at the same time.&#x20;
 
-* _**Message-passing**_ **concurrency**, where channels send messages between threads
-* _**Shared-state**_ **concurrency**, where multiple threads have access to some piece of data
+* _**Message-passing**_** concurrency**, where channels send messages between threads
+* _**Shared-state**_** concurrency**, where multiple threads have access to some piece of data
 
 ### 16.1 Using Threads to Run Code Simultaneously
 
@@ -1608,7 +1608,7 @@ Programming language-provided threads are known as _green_ threads. The Rust sta
 
 The calls to `thread::sleep` force a thread to stop its execution for a short duration, allowing a different thread to run.
 
-The return type of `thread::spawn` is `JoinHandle`. A `JoinHandle` is an owned value that, when we call the `join` method on it, will wait for its thread to finish. 
+The return type of `thread::spawn` is `JoinHandle`. A `JoinHandle` is an owned value that, when we call the `join` method on it, will wait for its thread to finish.&#x20;
 
 We can use the `move` keyword before the parameter list of a closure to force the closure to take ownership of the values it uses in the environment. The `move` closure is often used alongside `thread::spawn` because it allows you to use data from one thread in another thread.
 
@@ -1655,7 +1655,7 @@ _Mutex_ is an abbreviation for _mutual exclusion_, as in, a mutex allows only on
 
 `Arc<T>` _is_ a type like `Rc<T>` that is safe to use in concurrent situations.
 
- to allow us to mutate contents inside an `Rc<T>`, we use `Mutex<T>` to mutate contents inside an `Arc<T>`.
+&#x20;to allow us to mutate contents inside an `Rc<T>`, we use `Mutex<T>` to mutate contents inside an `Arc<T>`.
 
 ```rust
 let m = Mutex::new(5);
@@ -1705,22 +1705,22 @@ OOP languages share certain common characteristics, namely **objects, encapsulat
 
 Object-oriented programs are made up of objects. An _object_ packages both data and the procedures that operate on that data. The procedures are typically called _methods_ or _operations_.
 
-**Objects**: structs and enums have data, and `impl` blocks provide methods on structs and enums. 
+**Objects**: structs and enums have data, and `impl` blocks provide methods on structs and enums.&#x20;
 
-**Encapsulation**: we can use the `pub` keyword to decide which modules, types, functions, and methods in our code should be public, and by default everything else is private. 
+**Encapsulation**: we can use the `pub` keyword to decide which modules, types, functions, and methods in our code should be public, and by default everything else is private.&#x20;
 
 _Inheritance_ is a mechanism whereby an object can inherit from another object’s definition, thus gaining the parent object’s data and behavior without you having to define them again.
 
-**Inheritance**: Rust not support. There is no way to define a struct that inherits the parent struct’s fields and method implementations. But you can use other solution in Rust: 
+**Inheritance**: Rust not support. There is no way to define a struct that inherits the parent struct’s fields and method implementations. But you can use other solution in Rust:&#x20;
 
 * You can share Rust code using default trait method implementations instead. We can also override the default implementation.
 * Rust use trait objects instead of inheritance. Go to next section for detail.
 
-> To many people, **polymorphism\(多态\)** is synonymous with inheritance. But it’s actually a more general concept that refers to code that can work with data of multiple types. For inheritance, those types are generally subclasses.
+> To many people, **polymorphism(多态)** is synonymous with inheritance. But it’s actually a more general concept that refers to code that can work with data of multiple types. For inheritance, those types are generally subclasses.
 
 ### 17.2 Using Trait Objects That Allow for Values of Different Types
 
-A trait object points to both an instance of a type implementing our specified trait as well as a table used to look up trait methods on that type at runtime. We create a trait object by specifying some sort of **pointer**, such as a `&` reference or a `Box<T>` smart pointer, then the `dyn` keyword, and then specifying the relevant trait. 
+A trait object points to both an instance of a type implementing our specified trait as well as a table used to look up trait methods on that type at runtime. We create a trait object by specifying some sort of **pointer**, such as a `&` reference or a `Box<T>` smart pointer, then the `dyn` keyword, and then specifying the relevant trait.&#x20;
 
 Wherever we use a trait object, Rust’s type system will ensure **at compile time** that any value used in that context will implement the trait object’s trait.
 
@@ -1831,7 +1831,7 @@ fn main() {
 }
 ```
 
-The `while let` conditional loop allows a `while` loop to run for as long as a pattern continues to match. 
+The `while let` conditional loop allows a `while` loop to run for as long as a pattern continues to match.&#x20;
 
 ```rust
 let mut stack = Vec::new();
@@ -1875,7 +1875,7 @@ fn main() {
 
 Patterns come in two forms: refutable and irrefutable. Patterns that will match for any possible value passed are _**irrefutable**_. Patterns that can fail to match for some possible value are _**refutable**_.
 
-Function parameters, `let` statements, and `for` loops can only accept irrefutable patterns, because the program cannot do anything meaningful when values don’t match. 
+Function parameters, `let` statements, and `for` loops can only accept irrefutable patterns, because the program cannot do anything meaningful when values don’t match.&#x20;
 
 The `if let` and `while let` expressions accept refutable and irrefutable patterns, but the compiler warns.
 
@@ -1892,7 +1892,7 @@ if let x = 5 {
 
 ### 18.3 Pattern Syntax
 
-The `..=` syntax allows us to match to an inclusive range of values. 
+The `..=` syntax allows us to match to an inclusive range of values.&#x20;
 
 Ranges are only allowed with numeric values or `char` values.
 
@@ -1987,7 +1987,7 @@ match numbers {
 
 A _match guard_ is an additional `if` condition specified after the pattern in a `match` arm that must also match, along with the pattern matching, for that arm to be chosen. The condition can use variables created in the pattern.
 
-You can also use the _or_ operator `|` in a match guard to specify multiple patterns; the match guard condition will apply to all the patterns. 
+You can also use the _or_ operator `|` in a match guard to specify multiple patterns; the match guard condition will apply to all the patterns.&#x20;
 
 ```rust
 let num = Some(4);
@@ -1998,7 +1998,7 @@ match num {
 }
 ```
 
-The _at_ operator \(`@`\) lets us create a variable that holds a value at the same time we’re testing that value to see whether it matches a pattern. Using `@` lets us test a value and save it in a variable within one pattern.
+The _at_ operator (`@`) lets us create a variable that holds a value at the same time we’re testing that value to see whether it matches a pattern. Using `@` lets us test a value and save it in a variable within one pattern.
 
 ```rust
 enum Msg {
@@ -2044,7 +2044,7 @@ You can get greater performance or the ability to interface with another languag
 
 We can create raw pointers in safe code; we just can’t dereference raw pointers outside an unsafe block.
 
-Situations using raw pointers: 
+Situations using raw pointers:&#x20;
 
 * interfacing with C code
 * building up safe abstractions that the borrow checker doesn’t understand
@@ -2091,11 +2091,11 @@ impl<T, A: Allocator> Vec<T, A> {
 
 **Using extern Functions to Call External Code**
 
-Rust has a keyword, `extern`, that facilitates the creation and use of a _Foreign Function Interface \(FFI\)_. ****An FFI is a way for a programming language to define functions and enable a different \(foreign\) programming language to call those functions.
+Rust has a keyword, `extern`, that facilitates the creation and use of a _Foreign Function Interface (FFI)_. **** An FFI is a way for a programming language to define functions and enable a different (foreign) programming language to call those functions.
 
 Functions declared within `extern` blocks are always unsafe to call from Rust code.
 
-The ABI\(_application binary interface_\) defines how to call the function at the assembly level.
+The ABI(_application binary interface_) defines how to call the function at the assembly level.
 
 ```rust
 extern "C" {
@@ -2116,9 +2116,9 @@ pub extern "C" fn call_from_c() {
 }
 ```
 
-#### Accessing or Modifying a Mutable Static Variable <a id="accessing-or-modifying-a-mutable-static-variable"></a>
+#### Accessing or Modifying a Mutable Static Variable <a href="#accessing-or-modifying-a-mutable-static-variable" id="accessing-or-modifying-a-mutable-static-variable"></a>
 
-In Rust, global variables are called _static_ variables. Static variables can only store references with the `'static` lifetime. Accessing an immutable static variable is safe. Accessing and modifying mutable static variables is _unsafe_. 
+In Rust, global variables are called _static_ variables. Static variables can only store references with the `'static` lifetime. Accessing an immutable static variable is safe. Accessing and modifying mutable static variables is _unsafe_.&#x20;
 
 With mutable data that is globally accessible, it’s difficult to ensure there are no data races, which is why Rust considers mutable static variables to be unsafe.
 
@@ -2143,7 +2143,7 @@ fn add_to_count(inc: u32) {
 }
 ```
 
-#### Implementing an Unsafe Trait <a id="implementing-an-unsafe-trait"></a>
+#### Implementing an Unsafe Trait <a href="#implementing-an-unsafe-trait" id="implementing-an-unsafe-trait"></a>
 
 A trait is unsafe when at least one of its methods has some invariant that the compiler can’t verify.
 
@@ -2157,11 +2157,11 @@ unsafe impl Foo for i32 {
 }
 ```
 
-The compiler implements traits automatically if our types are composed entirely of `Send` and `Sync` types. If we implement a type that contains a type that is not `Send` or `Sync`, and we want to mark that type as `Send` or `Sync`, we must use `unsafe`. 
+The compiler implements traits automatically if our types are composed entirely of `Send` and `Sync` types. If we implement a type that contains a type that is not `Send` or `Sync`, and we want to mark that type as `Send` or `Sync`, we must use `unsafe`.&#x20;
 
-#### Accessing Fields of a Union <a id="accessing-fields-of-a-union"></a>
+#### Accessing Fields of a Union <a href="#accessing-fields-of-a-union" id="accessing-fields-of-a-union"></a>
 
- A `union` is similar to a `struct`, but only one declared field is used in a particular instance at one time. Unions are primarily used to interface with unions in C code. 
+&#x20;A `union` is similar to a `struct`, but only one declared field is used in a particular instance at one time. Unions are primarily used to interface with unions in C code.&#x20;
 
 Accessing union fields is unsafe because Rust can’t guarantee the type of the data currently being stored in the union instance.
 
@@ -2191,7 +2191,7 @@ impl Iterator for Counter {
 
 When we use generic type parameters, we can specify a default concrete type for the generic type. The syntax is `<PlaceholderType=ConcreteType>`.
 
-_Operator overloading_ is customizing the behavior of an operator \(such as `+`\) in particular situations. You can overload the operations and corresponding traits listed in `std::ops` by implementing the traits associated with the operator. 
+_Operator overloading_ is customizing the behavior of an operator (such as `+`) in particular situations. You can overload the operations and corresponding traits listed in `std::ops` by implementing the traits associated with the operator.&#x20;
 
 ```rust
 trait Add<Rhs=Self> {
@@ -2261,7 +2261,7 @@ type Thunk = Box<dyn Fn() + Send + 'static>;
 type Result<T> = std::result::Result<T, std::io::Error>;
 ```
 
-Functions that return never are called _diverging functions_. Expressions of type `!` can be coerced into any other type. 
+Functions that return never are called _diverging functions_. Expressions of type `!` can be coerced into any other type.&#x20;
 
 ```rust
 // never type
@@ -2276,9 +2276,9 @@ So although a `&T` is a single value that stores the memory address of where the
 
 The golden rule of dynamically sized types is that we must always put values of dynamically sized types behind a pointer of some kind.
 
-Every trait is a dynamically sized type. To use traits as trait objects, we must put them behind a pointer, such as `&dyn Trait` or `Box<dyn Trait>` \(`Rc<dyn Trait>` would work too\).
+Every trait is a dynamically sized type. To use traits as trait objects, we must put them behind a pointer, such as `&dyn Trait` or `Box<dyn Trait>` (`Rc<dyn Trait>` would work too).
 
-Rust has a particular trait called the `Sized` trait to determine whether or not a type’s size is known at compile time. This trait is automatically implemented for everything whose size is known at compile time. In addition, Rust implicitly adds a bound on `Sized` to every generic function. 
+Rust has a particular trait called the `Sized` trait to determine whether or not a type’s size is known at compile time. This trait is automatically implemented for everything whose size is known at compile time. In addition, Rust implicitly adds a bound on `Sized` to every generic function.&#x20;
 
 ```rust
 // compile error
@@ -2302,7 +2302,7 @@ fn generic<T: ?Sized>(t: &T) {
 
 #### Function Pointers
 
-Functions coerce to the type `fn` \(with a lowercase f\), not to be confused with the `Fn` closure trait. The `fn` type is called a _function pointer_. 
+Functions coerce to the type `fn` (with a lowercase f), not to be confused with the `Fn` closure trait. The `fn` type is called a _function pointer_.&#x20;
 
 ```rust
 fn do_twice(f: fn(i32) -> i32, arg: i32) -> i32 {
@@ -2312,7 +2312,7 @@ fn do_twice(f: fn(i32) -> i32, arg: i32) -> i32 {
 
 Unlike closures, `fn` is a type rather than a trait, so we specify `fn` as the parameter type directly rather than declaring a generic type parameter with one of the `Fn` traits as a trait bound.
 
-Function pointers implement all three of the closure traits \(`Fn`, `FnMut`, and `FnOnce`\), so you can always pass a function pointer as an argument for a function that expects a closure.
+Function pointers implement all three of the closure traits (`Fn`, `FnMut`, and `FnOnce`), so you can always pass a function pointer as an argument for a function that expects a closure.
 
 Tuple structs and tuple-struct enum variants use `()` as initializer syntax, which looks like a function call. The initializers are actually implemented as functions. We can use these initializer functions as function pointers.
 
@@ -2343,7 +2343,7 @@ fn returns_closure() -> Box<dyn Fn(i32) -> i32> {
 
 ### 19.5 Macros
 
-The term _macro_ refers to a family of features in Rust: _**declarative**_ **macros with `macro_rules!`** and **three kinds of** _**procedural**_ **macros**:
+The term _macro_ refers to a family of features in Rust: _**declarative**_** macros with `macro_rules!`** and **three kinds of **_**procedural**_** macros**:
 
 * Custom **`#[derive]` macros** that specify code added with the `derive` attribute used on structs and enums
 * **Attribute-like macros** that define custom attributes usable on any item
@@ -2363,7 +2363,7 @@ You must define macros or bring them into scope _before_ you call them in a file
 
 **Declarative macros** compare a value to patterns that are associated with particular code: in this situation, the value is the literal Rust source code passed to the macro; the patterns are compared with the structure of that source code; and the code associated with each pattern, when matched, replaces the code passed to the macro.
 
-To define a macro, you use the `macro_rules!` construct. 
+To define a macro, you use the `macro_rules!` construct.&#x20;
 
 The `#[macro_export]` annotation indicates that this macro should be made available whenever the crate in which the macro is defined is brought into scope. Without this annotation, the macro can’t be brought into scope.
 
@@ -2382,9 +2382,9 @@ macro_rules! vec {
 }
 ```
 
-There are some strange edge cases with `macro_rules!`. In the future, Rust will have a second kind of declarative macro and `macro_rules!` will be effectively deprecated. 
+There are some strange edge cases with `macro_rules!`. In the future, Rust will have a second kind of declarative macro and `macro_rules!` will be effectively deprecated.&#x20;
 
-#### Procedural Macros for Generating Code from Attributes <a id="procedural-macros-for-generating-code-from-attributes"></a>
+#### Procedural Macros for Generating Code from Attributes <a href="#procedural-macros-for-generating-code-from-attributes" id="procedural-macros-for-generating-code-from-attributes"></a>
 
 **Procedural macros** accept some code as an input, operate on that code, and produce some code as an output rather than matching against patterns and replacing the code with other code as declarative macros do.
 
@@ -2397,13 +2397,13 @@ use proc_macro;
 pub fn some_name(input: TokenStream) -> TokenStream { }
 ```
 
-#### Write a Custom `derive` Macro <a id="how-to-write-a-custom-derive-macro"></a>
+#### Write a Custom `derive` Macro <a href="#how-to-write-a-custom-derive-macro" id="how-to-write-a-custom-derive-macro"></a>
 
 Rust doesn’t have reflection capabilities.
 
 The convention for structuring crates and macro crates is as follows: for a crate named `foo`, a custom derive procedural macro crate is called `foo_derive`.
 
-{% embed url="https://github.com/StoneYunZhao/the-rust-programming-language/tree/master/ch19\_macros" %}
+{% embed url="https://github.com/StoneYunZhao/the-rust-programming-language/tree/master/ch19_macros" %}
 
 ```rust
 #[proc_macro_derive(XXX)]
@@ -2413,7 +2413,7 @@ pub fn route(attr: TokenStream, item: TokenStream) -> TokenStream { ... }
 sturct AAA;
 ```
 
-#### Attribute-like macros <a id="attribute-like-macros"></a>
+#### Attribute-like macros <a href="#attribute-like-macros" id="attribute-like-macros"></a>
 
 Attribute-like macros allow you to create new attributes.
 
@@ -2427,7 +2427,7 @@ pub fn route(attr: TokenStream, item: TokenStream) -> TokenStream { ... }
 fn index() { ... }
 ```
 
-#### Function-like macros <a id="function-like-macros"></a>
+#### Function-like macros <a href="#function-like-macros" id="function-like-macros"></a>
 
 Function-like macros define macros that look like function calls.
 
@@ -2440,7 +2440,7 @@ let sql = sql!(SELECT * FROM posts WHERE id=1);
 
 ## 20. Final Project: Building a Multithreaded Web Server
 
-{% embed url="https://github.com/StoneYunZhao/the-rust-programming-language/tree/master/ch20\_hello" %}
+{% embed url="https://github.com/StoneYunZhao/the-rust-programming-language/tree/master/ch20_hello" %}
 
 ## Appendix
 
@@ -2494,7 +2494,7 @@ let sql = sql!(SELECT * FROM posts WHERE id=1);
 * Debug
 * PartialEq & Eq
 * PartialOrd & Ord
-* Clone & Copy 
+* Clone & Copy&#x20;
 * Hash
 * Default
 
@@ -2509,4 +2509,3 @@ cargo fmt
 cargo fix
 cargo clippy
 ```
-

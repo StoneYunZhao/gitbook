@@ -1,7 +1,7 @@
 # Elasticsearch
 
 * [本地调试 Elasticsearch](local-debug.md)
-* [选主流程分析]()
+* [选主流程分析](broken-reference)
 
 ## 1. API
 
@@ -174,19 +174,19 @@ GET _cat/allocation?v
 参考 [Cluster level shard allocation](https://www.elastic.co/guide/en/elasticsearch/reference/current/shards-allocation.html)、[Disk-based shard allocation](https://www.elastic.co/guide/en/elasticsearch/reference/current/disk-allocator.html)。
 
 * **cluster.routing.allocation.enable**
-  * `all` - \(default\) Allows shard allocation for all kinds of shards.
+  * `all` - (default) Allows shard allocation for all kinds of shards.
   * `primaries` - Allows shard allocation only for primary shards.
   * `new_primaries` - Allows shard allocation only for primary shards for new indices.
   * `none` - No shard allocations of any kind are allowed for any indices.
 * **cluster.routing.rebalance.enable**
-  * `all` - \(default\) Allows shard balancing for all kinds of shards.
+  * `all` - (default) Allows shard balancing for all kinds of shards.
   * `primaries` - Allows shard balancing only for primary shards.
   * `replicas` - Allows shard balancing only for replica shards.
   * `none` - No shard balancing of any kind are allowed for any indices.
 * **cluster.routing.allocation.allow\_rebalance**
   * `always` - Always allow rebalancing.
   * `indices_primaries_active` - Only when all primaries in the cluster are allocated.
-  * `indices_all_active` - \(default\) Only when all shards \(primaries and replicas\) in the cluster are allocated.
+  * `indices_all_active` - (default) Only when all shards (primaries and replicas) in the cluster are allocated.
 * **cluster.routing.allocation.disk.threshold\_enabled**
   * `true` - default
   * `false`
@@ -233,4 +233,3 @@ PUT _template/my_config
   }
 }
 ```
-

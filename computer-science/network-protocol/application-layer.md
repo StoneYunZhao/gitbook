@@ -9,97 +9,31 @@
 
 DHCP 是 BOOTP 的增强版。
 
-![](../../.gitbook/assets/image%20%28182%29.png)
+![](<../../.gitbook/assets/image (182).png>)
 
 ### Discover
 
 当一台新机器 A 加入网络的时候，仅知道自己的 MAC 地址，所以需要广播请求 IP。
 
-<table>
-  <thead>
-    <tr>
-      <th style="text-align:center">&#x5934;</th>
-      <th style="text-align:center">&#x5185;&#x5BB9;</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align:center">MAC &#x5934;</td>
-      <td style="text-align:center">
-        <p>A &#x7684; MAC</p>
-        <p>&#x5E7F;&#x64AD;&#x7684; MAC&#xFF08;ff:ff:ff:ff:ff:ff&#xFF09;</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="text-align:center">IP &#x5934;</td>
-      <td style="text-align:center">
-        <p>A &#x7684; IP&#xFF1A;0.0.0.0</p>
-        <p>&#x5E7F;&#x64AD; IP&#xFF1A;255.255.255.255</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="text-align:center">UDP &#x5934;</td>
-      <td style="text-align:center">
-        <p>&#x6E90;&#x7AEF;&#x53E3;&#xFF1A;68</p>
-        <p>&#x76EE;&#x6807;&#x7AEF;&#x53E3;&#xFF1A;67</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="text-align:center">BOOTP &#x5934;</td>
-      <td style="text-align:center">Boot request</td>
-    </tr>
-    <tr>
-      <td style="text-align:center"></td>
-      <td style="text-align:center">&#x6211;&#x7684; MAC &#x662F;&#x8FD9;&#x4E2A;&#xFF0C;&#x6211;&#x8FD8;&#x6CA1;&#x6709;
-        IP</td>
-    </tr>
-  </tbody>
-</table>
+|    头    |                         内容                        |
+| :-----: | :-----------------------------------------------: |
+|  MAC 头  |  <p>A 的 MAC</p><p>广播的 MAC（ff:ff:ff:ff:ff:ff）</p>  |
+|   IP 头  | <p>A 的 IP：0.0.0.0</p><p>广播 IP：255.255.255.255</p> |
+|  UDP 头  |            <p>源端口：68</p><p>目标端口：67</p>            |
+| BOOTP 头 |                    Boot request                   |
+|         |                 我的 MAC 是这个，我还没有 IP                |
 
 ### Offer
 
 DHCP 会收到这个请求，发现这机器 A 的 MAC 没有 IP 地址，所以租给它一个 IP。
 
-<table>
-  <thead>
-    <tr>
-      <th style="text-align:center">&#x5934;</th>
-      <th style="text-align:center">&#x5185;&#x5BB9;</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align:center">MAC &#x5934;</td>
-      <td style="text-align:center">
-        <p>DHCP Server &#x7684; MAC</p>
-        <p>&#x5E7F;&#x64AD;&#x7684; MAC&#xFF08;ff:ff:ff:ff:ff:ff&#xFF09;</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="text-align:center">IP &#x5934;</td>
-      <td style="text-align:center">
-        <p>DHCP Server &#x7684; IP&#xFF1A;192.168.1.2</p>
-        <p>&#x5E7F;&#x64AD; IP&#xFF1A;255.255.255.255</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="text-align:center">UDP &#x5934;</td>
-      <td style="text-align:center">
-        <p>&#x6E90;&#x7AEF;&#x53E3;&#xFF1A;67</p>
-        <p>&#x76EE;&#x6807;&#x7AEF;&#x53E3;&#xFF1A;68</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="text-align:center">BOOTP &#x5934;</td>
-      <td style="text-align:center">Boot reply</td>
-    </tr>
-    <tr>
-      <td style="text-align:center"></td>
-      <td style="text-align:center">&#x8FD9;&#x662F;&#x4F60;&#x7684; MAC &#x5730;&#x5740;&#xFF0C;&#x6211;&#x7ED9;&#x4F60;&#x5206;&#x914D;&#x4E86;&#x8FD9;&#x4E2A;
-        IP&#xFF0C;&#x4F60;&#x770B;&#x5982;&#x4F55;</td>
-    </tr>
-  </tbody>
-</table>
+|    头    |                                内容                               |
+| :-----: | :-------------------------------------------------------------: |
+|  MAC 头  |    <p>DHCP Server 的 MAC</p><p>广播的 MAC（ff:ff:ff:ff:ff:ff）</p>    |
+|   IP 头  | <p>DHCP Server 的 IP：192.168.1.2</p><p>广播 IP：255.255.255.255</p> |
+|  UDP 头  |                   <p>源端口：67</p><p>目标端口：68</p>                   |
+| BOOTP 头 |                            Boot reply                           |
+|         |                   这是你的 MAC 地址，我给你分配了这个 IP，你看如何                  |
 
 ### Request
 
@@ -107,90 +41,25 @@ DHCP 会收到这个请求，发现这机器 A 的 MAC 没有 IP 地址，所以
 
 由于还没有得到 DHCP Server 的最后确认，客户端仍然使用 0.0.0.0 为源 IP 地址、255.255.255.255 为目标地址进行广播。
 
-<table>
-  <thead>
-    <tr>
-      <th style="text-align:center">&#x5934;</th>
-      <th style="text-align:center">&#x5185;&#x5BB9;</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align:center">MAC &#x5934;</td>
-      <td style="text-align:center">
-        <p>A &#x7684; MAC</p>
-        <p>&#x5E7F;&#x64AD;&#x7684; MAC&#xFF08;ff:ff:ff:ff:ff:ff&#xFF09;</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="text-align:center">IP &#x5934;</td>
-      <td style="text-align:center">
-        <p>A &#x7684; IP&#xFF1A;0.0.0.0</p>
-        <p>&#x5E7F;&#x64AD; IP&#xFF1A;255.255.255.255</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="text-align:center">UDP &#x5934;</td>
-      <td style="text-align:center">
-        <p>&#x6E90;&#x7AEF;&#x53E3;&#xFF1A;68</p>
-        <p>&#x76EE;&#x6807;&#x7AEF;&#x53E3;&#xFF1A;67</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="text-align:center">BOOTP &#x5934;</td>
-      <td style="text-align:center">Boot request</td>
-    </tr>
-    <tr>
-      <td style="text-align:center"></td>
-      <td style="text-align:center">&#x6211;&#x7684; MAC &#x662F;&#x8FD9;&#x4E2A;&#xFF0C;&#x6211;&#x51C6;&#x5907;&#x79DF;&#x7528;&#x8FD9;&#x4E2A;
-        DHCP Server &#x7ED9;&#x6211;&#x5206;&#x914D;&#x7684; IP</td>
-    </tr>
-  </tbody>
-</table>
+|    头    |                         内容                        |
+| :-----: | :-----------------------------------------------: |
+|  MAC 头  |  <p>A 的 MAC</p><p>广播的 MAC（ff:ff:ff:ff:ff:ff）</p>  |
+|   IP 头  | <p>A 的 IP：0.0.0.0</p><p>广播 IP：255.255.255.255</p> |
+|  UDP 头  |            <p>源端口：68</p><p>目标端口：67</p>            |
+| BOOTP 头 |                    Boot request                   |
+|         |      我的 MAC 是这个，我准备租用这个 DHCP Server 给我分配的 IP      |
 
 ### ACK
 
 返回给客户机一个 DHCP ACK 消息包。
 
-<table>
-  <thead>
-    <tr>
-      <th style="text-align:center">&#x5934;</th>
-      <th style="text-align:center">&#x5185;&#x5BB9;</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align:center">MAC &#x5934;</td>
-      <td style="text-align:center">
-        <p>DHCP Server &#x7684; MAC</p>
-        <p>&#x5E7F;&#x64AD;&#x7684; MAC&#xFF08;ff:ff:ff:ff:ff:ff&#xFF09;</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="text-align:center">IP &#x5934;</td>
-      <td style="text-align:center">
-        <p>DHCP Server &#x7684; IP&#xFF1A;192.168.1.2</p>
-        <p>&#x5E7F;&#x64AD; IP&#xFF1A;255.255.255.255</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="text-align:center">UDP &#x5934;</td>
-      <td style="text-align:center">
-        <p>&#x6E90;&#x7AEF;&#x53E3;&#xFF1A;67</p>
-        <p>&#x76EE;&#x6807;&#x7AEF;&#x53E3;&#xFF1A;68</p>
-      </td>
-    </tr>
-    <tr>
-      <td style="text-align:center">BOOTP &#x5934;</td>
-      <td style="text-align:center">Boot reply</td>
-    </tr>
-    <tr>
-      <td style="text-align:center"></td>
-      <td style="text-align:center">DHCP ACK</td>
-    </tr>
-  </tbody>
-</table>
+|    头    |                                内容                               |
+| :-----: | :-------------------------------------------------------------: |
+|  MAC 头  |    <p>DHCP Server 的 MAC</p><p>广播的 MAC（ff:ff:ff:ff:ff:ff）</p>    |
+|   IP 头  | <p>DHCP Server 的 IP：192.168.1.2</p><p>广播 IP：255.255.255.255</p> |
+|  UDP 头  |                   <p>源端口：67</p><p>目标端口：68</p>                   |
+| BOOTP 头 |                            Boot reply                           |
+|         |                             DHCP ACK                            |
 
 ### 客户端广播
 
@@ -206,7 +75,7 @@ DHCP 会收到这个请求，发现这机器 A 的 MAC 没有 IP 地址，所以
 
 DHCP 协议能给客户安装操作系统，这个在云计算领域大有用处。
 
-![](../../.gitbook/assets/image%20%28188%29.png)
+![](<../../.gitbook/assets/image (188).png>)
 
 ## HTTP
 
@@ -214,7 +83,7 @@ HTTP 协议是浏览器与服务器之间的数据传送协议。本质是浏览
 
 HTTP 协议是基于 TCP 的，1.1 版本的 HTTP 模式开启了 Keep-Alive（Connection: keep-alive），可以在多次 HTTP 请求中复用一个 TCP 连接，不用每次都三次握手。
 
-![HTTP &#x8BF7;&#x6C42;&#x62A5;&#x6587;&#x683C;&#x5F0F;](../../.gitbook/assets/image%20%28171%29.png)
+![HTTP 请求报文格式](<../../.gitbook/assets/image (171).png>)
 
 * **方法**：GET、POST、PUT、DELETE、HEAD、PATCH 等
 * **版本**：1.0、1.1、2.0
@@ -224,7 +93,7 @@ HTTP 协议是基于 TCP 的，1.1 版本的 HTTP 模式开启了 Keep-Alive（C
   * **Cache-Control**：max-age 为 0，则不用缓存； 否则若资源缓存时间小于 max-age，则可以使用缓存。
   * If-Modified-Since：若资源在某个时间之后没有更新，那么客户端就不用下载最新的资源了。
 
-![HTTP &#x54CD;&#x5E94;&#x62A5;&#x6587;&#x683C;&#x5F0F;](../../.gitbook/assets/image%20%28198%29.png)
+![HTTP 响应报文格式](<../../.gitbook/assets/image (198).png>)
 
 HTTP 协议是无状态的，这样就会造成 Web 应用不知道这个请求来自哪里。
 
@@ -240,7 +109,7 @@ Cookie 若明文带了用户信息，会有安全问题。所以服务端保存�
 
 ## DNS
 
-IP 不好记，所以有了域名。域名用“.”分隔的多个单词，最右边为“顶级域名”，然后是“二级域名”，往左依次降低。最左边通常用来表示主机用途，如 www 表示万维网，mail 表示邮件。所有域名都以 \(.\) 作为后缀，平时一般省略。DNS 服务器一般监听端口号 53。
+IP 不好记，所以有了域名。域名用“.”分隔的多个单词，最右边为“顶级域名”，然后是“二级域名”，往左依次降低。最左边通常用来表示主机用途，如 www 表示万维网，mail 表示邮件。所有域名都以 (.) 作为后缀，平时一般省略。DNS 服务器一般监听端口号 53。
 
 DNS 负责把域名解析成 IP 地址，它的核心系统是一个三层树状、分布式服务：
 
@@ -256,7 +125,7 @@ DNS 服务支持多种不同类型的记录：
 * CNAME 记录：用于创建别名。
 * NS 记录：表示域名对应的域名服务器的地址。
 
-可通过 /etc/resolve.conf 配置域名服务器，[nslookup、dig](../linux/diagnostic-tools.md#bind-utils) 查看域名。 
+可通过 /etc/resolve.conf 配置域名服务器，[nslookup、dig](../linux/diagnostic-tools.md#bind-utils) 查看域名。&#x20;
 
 域名的作用：
 
@@ -268,4 +137,3 @@ DNS 服务支持多种不同类型的记录：
 * 使用 DNS 缓存，比如 dnsmasq。
 * 对 DNS 解析的结果进行预取。这是浏览器等 Web 应用中最常用的方法，也就是说，不等用户点击页面上的超链接，浏览器就会在后台自动解析域名，并把结果缓存起来。
 * 使用 HTTPDNS 取代常规的 DNS 解析。域名劫持普遍存在，使用 HTTP 协议绕过链路中的 DNS 服务器，就可以避免域名劫持的问题。
-

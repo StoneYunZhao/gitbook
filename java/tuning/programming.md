@@ -29,9 +29,9 @@ for(int i=0; i<1000; i++) {
 
 如上面代码，虽然编译器会优化，但是每次循环都创建一个 StringBuilder 对象，会降低性能，所以建议显式使用 StringBuilder 对象。
 
-### String.intern\(\)
+### String.intern()
 
-调用 intern\(\) 方法后，堆内原有的 String 对象就没有引用了，可以被 GC。
+调用 intern() 方法后，堆内原有的 String 对象就没有引用了，可以被 GC。
 
 ```java
 String str1= "abc";
@@ -55,7 +55,7 @@ split 使用正则表达式，但正则的性能不稳定，使用不恰当会�
 {% hint style="info" %}
 split 有两种情况不会使用正则：
 
-* 传入参数长度为 1，且不包含 .$\|\(\)\[{^?\*+\\；
+* 传入参数长度为 1，且不包含 .$|()\[{^?\*+\\\；
 * 传入参数长度为 2，第一个字符是 \，且第二个字符不是 ASCII 数字或字母。
 {% endhint %}
 
@@ -65,7 +65,7 @@ split 有两种情况不会使用正则：
 
 正则表达式由四种元素组成，详见 [PCRE 表达式全集](https://zh.wikipedia.org/wiki/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F)：
 
-* 普通字符：字母\[a-zA-Z\]、数字\[0-9\]、下划线\[\_\]、标点等
+* 普通字符：字母\[a-zA-Z]、数字\[0-9]、下划线\[\_]、标点等
 * 标准字符：能够与多种普通字符匹配的简单表达式，如 \d（数字）、\w（包括下划线的单词字符）、\s（空白字符）等。
 * 限定字符：用于表示数量，\*、+、?、{n} 等。
 * 定位字符：符合某种条件的位置，$、^ 等。
@@ -76,14 +76,14 @@ split 有两种情况不会使用正则：
 
 正则表达式引擎有两种：
 
-* DFA 自动机：Deterministic Final Automata，确定有限状态自动机，匹配时间复杂度 O\(n\)
-* NFA 自动机：Non deterministic Final Automaton，非确定有限状态自动机，匹配时间复杂度 O\(ns\)，s 为状态数；优点是支持功能更多，如捕获 group、环视、占有有限量词等，所以**编程语言里面一般用 NFA 实现**。
+* DFA 自动机：Deterministic Final Automata，确定有限状态自动机，匹配时间复杂度 O(n)
+* NFA 自动机：Non deterministic Final Automaton，非确定有限状态自动机，匹配时间复杂度 O(ns)，s 为状态数；优点是支持功能更多，如捕获 group、环视、占有有限量词等，所以**编程语言里面一般用 NFA 实现**。
 
 ### 回溯问题
 
 假设字符串为 ”abbc“，正则表达式为 "ab{1,3}c"，则匹配过程如下图：
 
-![](../../.gitbook/assets/image%20%28133%29.png)
+![](<../../.gitbook/assets/image (133).png>)
 
 NFA 自动机默认情况时贪婪模式，即匹配尽量多的内容，在第 2 步匹配到一个 b 后，会继续尽量匹配到 3 个 b。所以第 4 步，想要匹配第三个 b 时匹配不到，就会发送回溯，已经读取到 c 会被回退，指针重新指向第三个字符 b，然后再匹配 c。
 
@@ -142,7 +142,7 @@ private static long cost(String text, Pattern p) {
 
 输出结果：
 
-```text
+```
 文本: "abbbc"
 贪婪模式: "ab{1,3}bbc"
 懒惰模式: "ab{1,3}?bbc"
@@ -168,17 +168,17 @@ regex1     regex2   percentage
 
 #### 减少分支选择
 
-"\(x\|y\|z\)" 会降低性能，可以做如下优化：
+"(x|y|z)" 会降低性能，可以做如下优化：
 
 * 常用的放在前面，就可以较快被匹配到。
-* "\(abcs\|abef\)" 改成 "ab\(cd\|ef\)"。
-* "\(x\|y\|z\)" 可以改成调用三次 String.indexOf\(\) 方法。
+* "(abcs|abef)" 改成 "ab(cd|ef)"。
+* "(x|y|z)" 可以改成调用三次 String.indexOf() 方法。
 
 #### 减少捕获组
 
-正则表达式中，子表达式匹配的内容保存到以数组编号或显示命名的数组中，方便后面引用，叫做捕获组，一般 \(\) 表示一个捕获组，捕获组可以嵌套。
+正则表达式中，子表达式匹配的内容保存到以数组编号或显示命名的数组中，方便后面引用，叫做捕获组，一般 () 表示一个捕获组，捕获组可以嵌套。
 
-可以用 \(?:exp\) 来表示不用捕获组。
+可以用 (?:exp) 来表示不用捕获组。
 
 减少捕获组可以提高性能。
 
@@ -196,11 +196,11 @@ List 主要有 [ArrayList](../class-libraries/collection.md#arraylist-yuan-ma-fe
   * 中间删除：差不多。
   * 尾部删除：ArrayList 效率较高。
 * 遍历元素：
-  * for\(;;\) 遍历：ArrayList 效率高，因为 LinkedList 每次都要找到位置。
+  * for(;;) 遍历：ArrayList 效率高，因为 LinkedList 每次都要找到位置。
   * 迭代器遍历：差不多。
 
 {% hint style="warning" %}
-使用迭代器遍历时，若需要删除元素，应该使用 Iterator.remove\(\)，而不是 List.remove\(\)，原因详见[迭代器（源码分析）](../class-libraries/collection.md#iterator-yuan-ma-fen-xi)。
+使用迭代器遍历时，若需要删除元素，应该使用 Iterator.remove()，而不是 List.remove()，原因详见[迭代器（源码分析）](../class-libraries/collection.md#iterator-yuan-ma-fen-xi)。
 {% endhint %}
 
 ## Stream
@@ -247,25 +247,25 @@ Reactor 模型有多种实现。
 
 最开始 NIO 基于单线程实现，读写还是处于阻塞状态。
 
-![](../../.gitbook/assets/image%20%2833%29.png)
+![](<../../.gitbook/assets/image (33).png>)
 
 ### 多线程 Reactor 模型
 
 Tomcat 和 Netty 都使用了一个 Acceptor 线程来监听连接请求事件，当连接成功后，会将建立的连接注册到多路复用器中。
 
-![](../../.gitbook/assets/image%20%28224%29.png)
+![](<../../.gitbook/assets/image (224).png>)
 
 ### 主从 Reactor 模型
 
 这种情况下，Acceptor 不再是一个单独的线程，而是一个线程池。
 
-![](../../.gitbook/assets/image%20%2891%29.png)
+![](<../../.gitbook/assets/image (91).png>)
 
 ### Tomcat 调优
 
 Tomcat NIO 有 Poller 线程池，Acceptor 接收到连接后，先将请求发送给 Poller 缓冲队列，在 Poller 中维护了一个 Selector 对象，Poller 从队列中取出连接后，注册到 Selector。
 
-![](../../.gitbook/assets/image%20%28177%29.png)
+![](<../../.gitbook/assets/image (177).png>)
 
 * acceptorThreadCount：默认 1。
 * maxThreads：Worker 线程池数量，默认 200。
@@ -291,4 +291,3 @@ RPC（Remote Process Call），即远程服务调用。RPC 的优化方法：
 * 编码、解码，如采用 Protobuf。
 * Linux 的 TCP 参数优化。
 * 定义合理的报文格式
-

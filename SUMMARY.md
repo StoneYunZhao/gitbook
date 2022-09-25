@@ -124,8 +124,6 @@
     * [State](computer-science/design-patterns/behavioral/state.md)
     * [Iterator](computer-science/design-patterns/behavioral/iterator.md)
     * [Chain of Responsibility](computer-science/design-patterns/behavioral/chain-of-responsibility.md)
-* [Microservice](computer-science/microservice/README.md)
-  * [Overview](computer-science/microservice/overview.md)
 * [Distributed System](computer-science/distributed-system/README.md)
   * [Protocol & Algorithm](computer-science/distributed-system/protocol-and-algorithm.md)
   * [Transcation](computer-science/distributed-system/transcation.md)
@@ -156,12 +154,13 @@
 * [HBase](database/hbase.md)
 * [Kafka](database/kafka.md)
 * [ZooKeeper](database/zookeeper-1.md)
-* [MongoDB](database/mongodb.md)
 
 ## Reading
 
 * [RocketMQ](reading/rocketmq.md)
 * [演说之禅](reading/yan-shuo-zhi-chan.md)
+* [So Good They Can't Ignore You](reading/so-good-they-cant-ignore-you.md)
+* [学会提问](reading/xue-hui-ti-wen.md)
 * [Lecture](reading/lecture.md)
 
 ## Other

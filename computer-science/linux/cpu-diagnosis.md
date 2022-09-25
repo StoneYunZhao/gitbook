@@ -4,7 +4,7 @@
 
 我们经常会用 uptime、top 等工具查询 cpu 的平均负载（Load Average），那到底什么是平均负载呢？
 
-通过 man uptime 可以看到平均负载的定义：**System load averages is the average number of processes that are either in a runnable or uninterruptable state. A process in a runnable state is either using the CPU or waiting to use the CPU. A process in uninterruptable state is wait- ing for some I/O access, eg waiting for disk.** 
+通过 man uptime 可以看到平均负载的定义：**System load averages is the average number of processes that are either in a runnable or uninterruptable state. A process in a runnable state is either using the CPU or waiting to use the CPU. A process in uninterruptable state is wait- ing for some I/O access, eg waiting for disk.**&#x20;
 
 简单来说，即单位时间内系统处于可运行状态或不可中断状态的平均进程数。如平均负载为 2 时，系统有 2 个 CPU，意味着 CPU 刚好被完全占用。三个时间间隔的平均负载反映了趋势。所以**平均负载高并不能反映问题出在哪里，可能是 CPU 使用过高，也可能是 IO 等待过长**。
 
@@ -16,8 +16,8 @@
 **经验：当平均负载高于 CPU 个数的 70% 的时候，就需要关注性能问题了。**
 
 {% hint style="success" %}
-**平均负载与 CPU 使用率**  
-两者并不一定是完全对应的，从定义可以看出，平均负载是指活跃的进程个数，活跃的进程还包括了等待 CPU 和等待 IO 的进程。
+**平均负载与 CPU 使用率**\
+****两者并不一定是完全对应的，从定义可以看出，平均负载是指活跃的进程个数，活跃的进程还包括了等待 CPU 和等待 IO 的进程。
 
 * CPU 密集型：两个是一致的
 * IO 密集型：等待 IO 会使平均负载升高，但 CPU 使用率不一定高
@@ -60,7 +60,7 @@ CPU 上下文切换就是把前一个任务的上下文（寄存器和 PC）保�
 
 Linux 把进程的运行空间分为内核空间（最高权限，可以访问所有资源）和用户空间（必须通过系统调用陷入到内核中才能访问内存等硬件设备），分别对应 Ring0 和 Ring3。
 
-![](../../.gitbook/assets/image%20%28285%29.png)
+![](<../../.gitbook/assets/image (285).png>)
 
 系统调用时，CPU 寄存器中用户态的指令位置需要先保存起来，更新为内核态指令的位置；系统调用结束后，又恢复为用户态。所以**一次系统调用会发生两次 CPU 上下文切换**。
 
@@ -136,7 +136,7 @@ CONFIG_HZ=250 # 表示每秒触发 250 次时间中断
 
 用户空间的节拍率 USER\_HZ 固定为 100。
 
-Linux 通过 /proc 虚拟文件系统，向用户提供了内核信息。/proc/stat 提供了 CPU 和任务统计信息，进程的的 CPU 使用情况可以查看 /proc/\[pid\]/stat。
+Linux 通过 /proc 虚拟文件系统，向用户提供了内核信息。/proc/stat 提供了 CPU 和任务统计信息，进程的的 CPU 使用情况可以查看 /proc/\[pid]/stat。
 
 ```bash
 # 后面的每一列表示不同场景下 CPU 的累积节拍数，单位为 USER_HZ（10ms）
@@ -195,7 +195,7 @@ $$
 
 若系统中出现大量 Z 状态的进程，则要考虑父进程是否回收自己进程的资源。回收的方式：
 
-1. 父进程通过 wait\(\), waitpid\(\) 等待子进程结束，并回收资源。
+1. 父进程通过 wait(), waitpid() 等待子进程结束，并回收资源。
 2. 父进程可以注册 SIGCHLD 信号处理函数异步回收。
 3. 父进程退出，init 进程也会回收。
 
@@ -231,19 +231,19 @@ ps aux | grep softirq
 
 ### CPU 性能指标
 
-![](../../.gitbook/assets/image%20%28287%29.png)
+![](<../../.gitbook/assets/image (287).png>)
 
-### 指标 -&gt; 工具
+### 指标 -> 工具
 
-![](../../.gitbook/assets/image%20%28289%29.png)
+![](<../../.gitbook/assets/image (289).png>)
 
-### 工具 -&gt; 指标
+### 工具 -> 指标
 
-![](../../.gitbook/assets/image%20%28288%29.png)
+![](<../../.gitbook/assets/image (288).png>)
 
 ### 指标的关联性
 
-![](../../.gitbook/assets/image%20%28286%29.png)
+![](<../../.gitbook/assets/image (286).png>)
 
 ## CPU 性能优化
 
@@ -279,6 +279,4 @@ ps aux | grep softirq
 {% hint style="info" %}
 避免过早优化
 {% endhint %}
-
-
 

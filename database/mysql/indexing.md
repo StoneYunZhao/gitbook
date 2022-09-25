@@ -17,8 +17,8 @@
 * **全文索引**，用的不多，MySQL 自带的全文索引仅支持英文。
 
 {% hint style="info" %}
-**普通索引和唯一索引的效率问题。**  
-原理上，唯一索引由于增加了唯一性约束，找到了关键字会停止检索。而普通索引还会往下继续检索，效率在理论上会第一点。  
+**普通索引和唯一索引的效率问题。**\
+****原理上，唯一索引由于增加了唯一性约束，找到了关键字会停止检索。而普通索引还会往下继续检索，效率在理论上会第一点。\
 但是这点差别可以忽略不计，原因是，根据[数据库存储方式](storage.md)，InnoDB 会把整个数据页加载到内存中，一个页中可能存在上千条记录，普通所以仅仅是在内存中多几次判断下一条记录，这点时间可以忽略不计。
 {% endhint %}
 
@@ -74,8 +74,8 @@ MySQL 中的 Memory 存储引擎支持 Hash 存储；另外 MySQL 的 InnoDB 有
 
 ### 什么时候索引失效
 
-* 索引进行了表达式计算：`WHERE id + 1 = 9001` =&gt; `WHERE id = 9000`
-* 索引进行了函数计算：`WHERE SUBSTRING(a, 1, 3) = 'abc'` =&gt; `WHERE a LIKE 'abc%'`
+* 索引进行了表达式计算：`WHERE id + 1 = 9001` => `WHERE id = 9000`
+* 索引进行了函数计算：`WHERE SUBSTRING(a, 1, 3) = 'abc'` => `WHERE a LIKE 'abc%'`
 * OR 条件中有一个列没有索引，那么其他索引列也会失效。如 WHERE a = 1 OR b = 2，a 有索引，b 没有，那么 a 的索引会失效。
 * LIKE 不能以 \`%\` 开头。
 * 索引列与 NULL 或 NOT NULL 判断时。
@@ -114,8 +114,8 @@ alter table T add primary key(id);
 
 联合索引的顺序考虑：
 
-* 如果能够通过调整顺序，减少一个索引，那么应该使用这个顺序。比如已经有 \(a,b\) 索引，就不需要单独的 a 索引了。
-* 空间原则，比如 name 和 age 两个字段，name 长度大于 age，那么应该创建 \(name,age\) 和 \(age\)，而不是 \(age,name\) 和 \(name\)。
+* 如果能够通过调整顺序，减少一个索引，那么应该使用这个顺序。比如已经有 (a,b) 索引，就不需要单独的 a 索引了。
+* 空间原则，比如 name 和 age 两个字段，name 长度大于 age，那么应该创建 (name,age) 和 (age)，而不是 (age,name) 和 (name)。
 
 ### 索引下推
 
@@ -127,9 +127,8 @@ mysql> select * from tuser where name like '张 %' and age=10 and ismale=1;
 
 在 5.6 之前需要回表四次：
 
-![](../../.gitbook/assets/image%20%2877%29.png)
+![](<../../.gitbook/assets/image (77).png>)
 
 在 5.6 仅需回表两次：
 
-![](../../.gitbook/assets/image%20%28132%29.png)
-
+![](<../../.gitbook/assets/image (132).png>)

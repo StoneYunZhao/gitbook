@@ -34,7 +34,6 @@
     * [《HTTP/2 in Action》](computer-science/network-protocol/http-2-in-action.md)
   * [操作系统](computer-science/linux/)
   * [设计模式](computer-science/design-patterns/)
-  * [微服务](computer-science/microservice/)
   * [分布式系统](computer-science/distributed-system/)
 * **数据库**：
   * [InfluxDB](database/influxdb/)
@@ -44,12 +43,13 @@
   * [HBase](database/hbase.md)
   * [Kafka](database/kafka.md)
   * [ZooKeeper](database/zookeeper-1.md)
-  * [MongoDB](database/mongodb.md)
 * **阅读**
   * [《Concurrency in Go》](go/concurrency-in-go.md)
   * [《HTTP/2 in Action》](computer-science/network-protocol/http-2-in-action.md)
   * [《RocketMQ 实战与原理解析》](reading/rocketmq.md)
   * [《演说之禅》](reading/yan-shuo-zhi-chan.md)
+  * [《优秀到不能被忽视》](reading/so-good-they-cant-ignore-you.md)
+  * [《学会提问》](reading/xue-hui-ti-wen.md)
   * [讲座](reading/lecture.md)
 * **其它**：&#x20;
   * [Kubernetes](other/kubernetes.md)
